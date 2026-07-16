@@ -353,6 +353,14 @@
   }
   document.querySelectorAll('#langbar button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
 
+  // เลือกภาษาจาก URL: ?lang=ko หรือ #ko (รองรับ alias TH/EN/KR/KO/ZH/CN)
+  (function(){
+    var alias={th:'th',en:'en',ko:'ko',kr:'ko',zh:'zh',cn:'zh',zh_cn:'zh'};
+    var q=(new URLSearchParams(location.search).get('lang')||location.hash.replace('#','')||'').toLowerCase();
+    var l=alias[q];
+    if(l) setLang(l);
+  })();
+
   document.querySelectorAll('.slide').forEach((s,i)=>{
     const o=document.createElement('div');o.className='orbit';
     o.style.width='clamp(360px,46vw,620px)';o.style.top='-16vh';o.style.right='-10vw';
