@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- [KEEP] web-publish: กัน Google index ตอนขึ้น GitHub Pages — อย่าลบ (ไม่กระทบการเปิดดู/ทำ PDF) -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>เปรียบเทียบราคา Outsource ตามภูมิภาค — Tavern Heroes</title>
+<style>
+  :root{--bg:#0f1320;--card:#171c2e;--card2:#1d2438;--line:#2a3250;--ink:#e7ebf5;--muted:#9aa6c4;--soft:#c3cbe2;--accent:#6c8cff;--green:#2ecc8f;--amber:#f4b740;--chip:#222a44;--blue:#7fa6ff}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0c101b,#0f1320 240px);color:var(--ink);font-family:"Segoe UI","Leelawadee UI",Tahoma,system-ui,sans-serif;line-height:1.5;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 20px 70px}
+  header.head{background:linear-gradient(135deg,#1a2140,#241b46);border:1px solid var(--line);border-radius:16px;padding:20px 24px;position:relative;overflow:hidden}
+  header.head::after{content:"🌏";position:absolute;right:18px;top:4px;font-size:78px;opacity:.10}
+  header.head h1{margin:0 0 4px;font-size:22px}
+  header.head .sub{color:var(--soft);font-size:13px}
+  .controls{margin:14px 0;padding:13px 16px;border-radius:13px;background:var(--card2);border:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
+  .controls label{color:var(--soft);font-size:13px}
+  .controls input{width:70px;background:#0e1424;border:1px solid var(--accent);color:var(--blue);font-weight:700;font-family:inherit;font-size:14px;padding:5px 8px;border-radius:8px;text-align:center}
+  .controls .hint{color:var(--amber);font-size:12px;width:100%}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .ccard{border-radius:14px;padding:16px 18px;border:1px solid var(--line);background:var(--card)}
+  .ccard.th{border-top:3px solid var(--green)} .ccard.cn{border-top:3px solid var(--amber)} .ccard.we{border-top:3px solid #ff6b6b}
+  .ccard .rg{font-size:14px;font-weight:700;margin-bottom:6px}
+  .ccard .baht{font-size:24px;font-weight:800}
+  .ccard .usd{color:var(--muted);font-size:13px;margin-top:2px}
+  .ccard .x{color:var(--muted);font-size:12px;margin-top:6px}
+  h2.sec{font-size:13px;letter-spacing:1px;color:var(--muted);margin:26px 0 10px;font-weight:700}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  th{background:var(--card2);color:var(--muted);text-align:right;padding:10px 11px;font-size:11.5px;border-bottom:1px solid var(--line)}
+  th:first-child{text-align:left}
+  td{padding:8px 11px;border-bottom:1px solid var(--line);text-align:right}
+  td:first-child{text-align:left}
+  tr:last-child td{border-bottom:none}
+  .grouprow td{background:rgba(108,140,255,.13);font-weight:700;color:#cdd9ff}
+  .subrow td{background:rgba(255,255,255,.03);font-weight:700}
+  .totrow td{background:rgba(244,183,64,.13);font-weight:800;font-size:14px}
+  .th{color:#7fe3b6} .cn{color:#f6c662} .we{color:#ff9b9b}
+  .base{color:#fff}
+  .note{margin-top:14px;padding:13px 16px;border-radius:12px;background:rgba(108,140,255,.08);border:1px solid rgba(108,140,255,.25);color:var(--soft);font-size:13px}
+  .note b{color:#fff}
+  .ccard.rd{border-top:3px solid var(--accent)}
+  .ccard .dt{color:var(--blue);font-weight:700;font-size:12.5px;margin-top:2px}
+  /* horizontal timeline */
+  .htl{margin:18px 0 12px;padding:6px 4px}
+  .htl .lab{display:flex}
+  .htl .lab>div{flex:1;text-align:center;padding:0 8px}
+  .htl .line{position:relative;height:28px;margin:5px 0}
+  .htl .track{position:absolute;top:12px;left:16.66%;right:16.66%;height:4px;border-radius:3px;
+    background:linear-gradient(90deg,#2ecc8f,#6c8cff,#f4b740)}
+  .htl .dots{display:flex;height:100%}
+  .htl .dots>div{flex:1;display:flex;justify-content:center;align-items:center}
+  .htl .dot{width:20px;height:20px;border-radius:50%;background:var(--bg);border:4px solid var(--accent);
+    box-shadow:0 0 0 4px rgba(108,140,255,.18)}
+  .htl .dot.g{border-color:var(--green);box-shadow:0 0 0 4px rgba(46,204,143,.18)}
+  .htl .dot.a{border-color:var(--amber);box-shadow:0 0 0 4px rgba(244,183,64,.2)}
+  .htl .rn{font-weight:800;color:#cdd9ff;font-size:13px}
+  .htl .dd{color:var(--blue);font-weight:700;font-size:13px}
+  .htl .ph{color:var(--muted);font-size:11px;margin-top:1px}
+  .htl .gm{color:var(--soft);font-size:11.5px;margin-top:5px}
+  .htl .amt{font-weight:800;font-size:15px;margin-top:3px;color:#7fe3b6}
+  .htl .amt.a{color:#f6c662}
+  @media(max-width:640px){.htl .gm{display:none}.htl .amt{font-size:12.5px}}
+  footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <h1>🌏 เปรียบเทียบราคา Outsource ตามภูมิภาค</h1>
+    <div class="sub">Tavern Heroes · ฐาน = เรตไทย freelance จริง · ปรับช่องสีฟ้าได้ · 19 มิ.ย. 2026</div>
+  </header>
+
+  <div class="controls">
+    <div><label>อัตราแลกเปลี่ยน (฿/$) </label><input id="fx" type="number" value="36"></div>
+    <div><label>🇹🇭 ไทย ×</label><input id="mTH" type="number" step="0.05" value="1.0"></div>
+    <div><label>🇨🇳 จีน ×</label><input id="mCN" type="number" step="0.05" value="1.5"></div>
+    <div><label>🌍 ตะวันตก ×</label><input id="mWE" type="number" step="0.05" value="3.5"></div>
+    <div class="hint">💡 จีน 1.5 = ค่าพรีเมียมคุณภาพ studio (สไตล์ Ragnarok/anime) ไม่ใช่ "จีนแพงกว่า" · ตะวันตก 3.5 = เทียบ baseline ไทย freelance</div>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <h2 class="sec">📦 เทียบรายรายการ (ยอดกลาง · ฿)</h2>
+  <table id="tbl"></table>
+
+  <div class="note" id="insight"></div>
+
+  <h2 class="sec">🗓️ ไทม์ไลน์ส่งมอบ Outsource — 3 รอบ (อ้างอิง Timeline พัฒนา 14 เดือน)</h2>
+  <div class="htl" id="htl"></div>
+  <div class="cards" id="roundCards"></div>
+  <table id="roundTbl"></table>
+  <div class="note" id="roundNote"></div>
+
+  <footer>RO Universal (ROU) · GGT Game Studio · Region Price Comparison · ประมาณการ</footer>
+</div>
+
+<script>
+"use strict";
+var GROUPS=[
+ {key:"A", title:"🏗️ กลุ่ม A — สร้างเกมถึง Launch (ครั้งเดียว)", items:[
+   {n:"🧪 QA Testing", q:800, lo:15, hi:25},
+   {n:"🔊 BGM (ใช้ OST Ragnarok = ฟรี)", q:0, lo:0, hi:0},
+   {n:"🔊 SFX (200 เสียง = 5×40 เกม)", q:200, lo:15, hi:40},
+   {n:"🎮 Mini Game (30 เกม ก่อน launch, เรตไทย ฿15-20K)", q:30, lo:417, hi:556},
+   {n:"🎨 Chibi character / variation (15)", q:15, lo:300, hi:800, glob:true},
+   {n:"🎨 Modular asset (288 ชิ้น, เรตไทย ฿600-2K)", q:288, lo:17, hi:56},
+   {n:"🎨 UI production (เหมา)", q:1, lo:5000, hi:15000, glob:true},
+   {n:"💰 Costume / Cosmetic (50)", q:50, lo:150, hi:400, glob:true}
+ ]},
+ {key:"B", title:"🌏 กลุ่ม B — Localization (มีแปลอยู่แล้ว = ฟรี)", items:[
+   {n:"🌏 Localization + LQA (มีแปลอยู่แล้ว = ฟรี)", q:0, lo:0, hi:0}
+ ]},
+ {key:"C", title:"🔁 กลุ่ม C — Live Ops Seasonal (ต่อปี · 3 ธีม)", items:[
+   {n:"🔁 Seasonal theme reskin (864 ชิ้น)", q:864, lo:6, hi:17},
+   {n:"🔁 Event extras (banner/UI/BGM × 3 ธีม)", q:3, lo:800, hi:2000}
+ ]},
+ {key:"D", title:"🚀 กลุ่ม D — After Launch (เพิ่มมินิเกม 20 เกม)", items:[
+   {n:"🎮 Mini Game — After Launch (20 เกม, เรตไทย ฿15-20K)", q:20, lo:417, hi:556}
+ ]}
+];
+function el(id){return document.getElementById(id);}
+function baht(n){return "฿"+Math.round(n).toLocaleString("en-US");}
+function usd(n){return "$"+Math.round(n).toLocaleString("en-US");}
+function mid(it){return (it.q*it.lo + it.q*it.hi)/2;}
+
+function render(){
+  var fx=parseFloat(el("fx").value)||36;
+  var mTH=parseFloat(el("mTH").value)||1, mCN=parseFloat(el("mCN").value)||1, mWE=parseFloat(el("mWE").value)||1;
+  var grand={th:0,cn:0,we:0,base:0};
+  var html="<thead><tr><th>รายการ</th><th>ฐานกลาง ($)</th><th>🇹🇭 ไทย</th><th>🇨🇳 จีน</th><th>🌍 ตะวันตก</th></tr></thead><tbody>";
+  GROUPS.forEach(function(g){
+    html+='<tr class="grouprow"><td colspan="5">'+g.title+'</td></tr>';
+    var sub={th:0,cn:0,we:0,base:0};
+    g.items.forEach(function(it){
+      var m=mid(it);
+      sub.base+=m; sub.th+=m*mTH; sub.cn+=m*mCN; sub.we+=m*mWE;
+      html+="<tr><td>"+it.n+(it.glob?' <span style="color:#f4b740">⚠️เรตสากล</span>':"")+"</td>"+
+        "<td class='base'>"+usd(m)+"</td>"+
+        "<td class='th'>"+baht(m*mTH*fx)+"</td>"+
+        "<td class='cn'>"+baht(m*mCN*fx)+"</td>"+
+        "<td class='we'>"+baht(m*mWE*fx)+"</td></tr>";
+    });
+    html+='<tr class="subrow"><td>รวม '+g.key+'</td><td class="base">'+usd(sub.base)+'</td>'+
+      '<td class="th">'+baht(sub.th*fx)+'</td><td class="cn">'+baht(sub.cn*fx)+'</td><td class="we">'+baht(sub.we*fx)+'</td></tr>';
+    grand.base+=sub.base; grand.th+=sub.th; grand.cn+=sub.cn; grand.we+=sub.we;
+  });
+  html+='<tr class="totrow"><td>รวมทั้งหมด (A+B+C+D)</td><td class="base">'+usd(grand.base)+'</td>'+
+    '<td class="th">'+baht(grand.th*fx)+'</td><td class="cn">'+baht(grand.cn*fx)+'</td><td class="we">'+baht(grand.we*fx)+'</td></tr>';
+  html+="</tbody>";
+  el("tbl").innerHTML=html;
+
+  el("cards").innerHTML=
+    card("th","🇹🇭 ไทย (freelance)",grand.th,fx,mTH)+
+    card("cn","🇨🇳 จีน (studio quality)",grand.cn,fx,mCN)+
+    card("we","🌍 ตะวันตก (อ้างอิง)",grand.we,fx,mWE);
+
+  var diffCN=grand.cn-grand.th, pctCN=Math.round((grand.cn/grand.th-1)*100);
+  el("insight").innerHTML="<b>อ่านผล:</b> จ้างจีนทั้งหมดแพงกว่าไทย ~"+baht(diffCN*fx)+" (+"+pctCN+"%) — "+
+    "แต่จีนเก่งสไตล์ Ragnarok/anime ที่สุด เหมาะดึงมาทำเฉพาะ <b>art ฮีโร่/คอสตูม</b> (ดูชีต Hybrid ในไฟล์หลัก) · "+
+    "รายการ <span style='color:#f4b740'>⚠️เรตสากล</span> (chibi/UI/costume) ยังไม่ได้ปรับเป็นเรตไทย — ปรับแล้วยอดไทยจะลงอีก ~"+baht(25000*fx)+"";
+
+  // ===== Outsource delivery timeline (per-round asset allocation) =====
+  var RDATES=["25 ก.พ.","22 มิ.ย.","25 ส.ค."], GPR=20, NR=3;
+  var allItems=[].concat(GROUPS[0].items, GROUPS[2].items);
+  function findItem(re){ return allItems.filter(function(it){return re.test(it.n);})[0]; }
+  var miniIt=GROUPS[0].items.filter(function(it){return /Mini Game/.test(it.n);})[0];
+  var miniPer=(miniIt.lo+miniIt.hi)/2;
+  // game-making assets → spread across all 3 rounds (÷3)
+  var gameAssets=[
+    {k:"🎨 UI production (÷3)",    it:findItem(/UI production/)},
+    {k:"🧪 QA Testing (÷3)",       it:findItem(/QA/)},
+    {k:"🔊 SFX (÷3)",              it:findItem(/SFX/)},
+    {k:"🎨 Chibi character (÷3)",  it:findItem(/Chibi/)}
+  ];
+  // decoration / seasonal → round 3 only (full)
+  var r3Assets=[
+    {k:"🎨 Modular asset",         it:findItem(/Modular/)},
+    {k:"💰 Costume / Cosmetic",    it:findItem(/Costume/)},
+    {k:"🔁 Seasonal theme reskin", it:findItem(/reskin/)},
+    {k:"🔁 Event extras",          it:findItem(/Event extras/)}
+  ];
+  var matrix=[{label:"🎮 มินิเกม (20/รอบ)", cells:[GPR*miniPer,GPR*miniPer,GPR*miniPer]}];
+  gameAssets.forEach(function(g){ var v=mid(g.it)/NR; matrix.push({label:g.k, cells:[v,v,v]}); });
+  r3Assets.forEach(function(g){ matrix.push({label:g.k, cells:[0,0,mid(g.it)]}); });
+  var rtot=[0,0,0];
+  matrix.forEach(function(m){ for(var j=0;j<3;j++) rtot[j]+=m.cells[j]; });
+  var rgrand=rtot[0]+rtot[1]+rtot[2];
+  // horizontal timeline bar
+  var HPHASE=["ระยะที่ 2 · พ.ย.–ก.พ.","ระยะที่ 3 · มี.ค.–มิ.ย.","ระยะที่ 4 · ส.ค."];
+  var HDOT=["g","",""], HAMT=["","","a"];
+  var htlTop='<div class="lab">', htlLine='<div class="line"><div class="track"></div><div class="dots">', htlBot='<div class="lab">';
+  for(var hi=0;hi<3;hi++){
+    htlTop+='<div class="rn">รอบ '+(hi+1)+'</div>';
+    htlLine+='<div><div class="dot '+(hi===2?'a':(hi===0?'g':''))+'"></div></div>';
+    htlBot+='<div><div class="dd">📅 '+RDATES[hi]+'</div><div class="ph">'+HPHASE[hi]+'</div>'+
+      '<div class="gm">🎮 20 มินิเกม'+(hi===2?' + ก้อนตกแต่ง/ซีซัน':' + UI + asset เกม')+'</div>'+
+      '<div class="amt'+(hi===2?' a':'')+'">'+baht(rtot[hi]*mTH*fx)+'</div></div>';
+  }
+  htlTop+='</div>'; htlLine+='</div></div>'; htlBot+='</div>';
+  el("htl").innerHTML=htlTop+htlLine+htlBot;
+  var rsub=[' · 20 เกม + UI + asset เกม',' · 20 เกม + UI + asset เกม',' · + Modular/Costume/Reskin/Event'];
+  var rcards="";
+  for(var ri=0;ri<3;ri++){
+    rcards+='<div class="ccard rd"><div class="rg">รอบ '+(ri+1)+'</div>'+
+      '<div class="dt">📅 '+RDATES[ri]+'</div>'+
+      '<div class="baht">'+baht(rtot[ri]*mTH*fx)+'</div>'+
+      '<div class="usd">'+usd(rtot[ri]*mTH)+rsub[ri]+'</div></div>';
+  }
+  el("roundCards").innerHTML=rcards;
+  var rtbl='<thead><tr><th>Asset (฿ เรตไทย)</th><th>รอบ 1 · 25 ก.พ.</th><th>รอบ 2 · 22 มิ.ย.</th><th>รอบ 3 · 25 ส.ค.</th><th>รวม</th></tr></thead><tbody>';
+  matrix.forEach(function(m){
+    var tot=m.cells[0]+m.cells[1]+m.cells[2];
+    rtbl+='<tr><td>'+m.label+'</td>';
+    for(var j=0;j<3;j++){ rtbl+='<td class="th">'+(m.cells[j]?baht(m.cells[j]*mTH*fx):'—')+'</td>'; }
+    rtbl+='<td class="base">'+baht(tot*mTH*fx)+'</td></tr>';
+  });
+  rtbl+='<tr class="totrow"><td>รวม/รอบ</td>'+
+    '<td class="th">'+baht(rtot[0]*mTH*fx)+'</td><td class="th">'+baht(rtot[1]*mTH*fx)+'</td>'+
+    '<td class="th">'+baht(rtot[2]*mTH*fx)+'</td><td class="base">'+baht(rgrand*mTH*fx)+'</td></tr>';
+  rtbl+='</tbody>'; el("roundTbl").innerHTML=rtbl;
+  el("roundNote").innerHTML="<b>การจัดสรรต่อรอบ (ตามที่กำหนด):</b> ทุกรอบ = <b>20 มินิเกม + UI production + Asset ที่ใช้ทำเกม</b> (QA / SFX / Chibi) เฉลี่ย ÷3 · "+
+    "<b>รอบ 3 (25 ส.ค.)</b> ลงก้อนตกแต่ง/ซีซันเพิ่ม: Modular asset + Costume + Seasonal reskin + Event extras (จบตอนใกล้ launch) · "+
+    "map ระยะพัฒนา: รอบ1=ระยะ2 · รอบ2=ระยะ3 · รอบ3=ระยะ4 · ฿ = เรตไทย (×1.5 ≈ จีน ตามช่องตัวคูณ) · timeline นับ 3×20 = <b>60 เกม</b> (ตารางบนคง 50 เกม — คนละมุม)";
+}
+function card(cls,rg,val,fx,m){
+  return '<div class="ccard '+cls+'"><div class="rg">'+rg+'</div>'+
+    '<div class="baht">'+baht(val*fx)+'</div>'+
+    '<div class="usd">'+usd(val)+'</div>'+
+    '<div class="x">ตัวคูณ ×'+m.toFixed(2)+'</div></div>';
+}
+["fx","mTH","mCN","mWE"].forEach(function(id){ el(id).addEventListener("input",render); });
+render();
+</script>
+</body>
+</html>
