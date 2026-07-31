@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish: กัน Google index ตอนขึ้น GitHub Pages — อย่าลบ (ไม่กระทบการเปิดดู/ทำ PDF) -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Web Games · Demographics & Spending by Gender · RO PlayZone</title>
+<style>
+:root{
+  --paper:#EAECF1; --surface:#FFFFFF; --ink:#161C28; --ink-soft:#3A4354; --muted:#6B7688;
+  --line:#E2E5EB; --line-soft:#EDEFF3;
+  --poki:#2A78D6; --poki-bg:#E9F1FB;
+  --crazy:#12A06F; --crazy-bg:#E2F4EE;
+  --y8:#DB423F; --y8-bg:#FBEAEA;
+  --gold:#C6890E; --gold-bg:#FBF1DC;
+  --male:#2A78D6; --female:#D6478F; --female-bg:#FBE7F1;
+  --accent:var(--poki);
+  --sans:-apple-system,"Segoe UI Variable","Segoe UI","Leelawadee UI","Malgun Gothic","Microsoft YaHei","PingFang SC","Hiragino Sans",system-ui,sans-serif;
+  --mono:"Cascadia Code","Cascadia Mono",Consolas,"SFMono-Regular",ui-monospace,monospace;
+  --s:1;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#080B12; --surface:#141A25; --ink:#E9ECF2; --ink-soft:#B7C0CE; --muted:#8A94A6;
+    --line:#28303F; --line-soft:#1E2532; --poki-bg:#132436; --crazy-bg:#0F2A22; --y8-bg:#33191A;
+    --gold-bg:#2C240F; --female-bg:#331523;}
+}
+:root[data-theme="dark"]{--paper:#080B12; --surface:#141A25; --ink:#E9ECF2; --ink-soft:#B7C0CE; --muted:#8A94A6;
+  --line:#28303F; --line-soft:#1E2532; --poki-bg:#132436; --crazy-bg:#0F2A22; --y8-bg:#33191A;
+  --gold-bg:#2C240F; --female-bg:#331523;}
+:root[data-theme="light"]{--paper:#EAECF1; --surface:#FFFFFF; --ink:#161C28; --ink-soft:#3A4354; --muted:#6B7688;
+  --line:#E2E5EB; --line-soft:#EDEFF3; --poki-bg:#E9F1FB; --crazy-bg:#E2F4EE; --y8-bg:#FBEAEA;
+  --gold-bg:#FBF1DC; --female-bg:#FBE7F1;}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);overflow:hidden}
+.tabnum{font-variant-numeric:tabular-nums}
+
+.controls{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:12px;padding:10px 18px}
+.controls .brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}
+.controls .spacer{flex:1}
+.langs{display:flex;gap:3px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px}
+.langs button{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--muted);background:transparent;
+  border:0;padding:6px 10px;border-radius:6px;cursor:pointer;line-height:1}
+.langs button:hover{color:var(--ink)}
+.langs button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.tbtn{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink);background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;padding:6px 11px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.tbtn:hover{border-color:var(--muted)}
+.tbtn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:70;transition:width .3s ease;width:0}
+
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+.deck{position:relative;width:1280px;height:720px;transform:scale(var(--s));transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:52px 60px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,.5)}
+.slide.active{display:flex;animation:in .34s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+.eyebrow{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 12px}
+.eyebrow .sq{width:10px;height:10px;border-radius:2px;background:var(--accent);flex:none}
+.slide h2{font-size:30px;line-height:1.12;letter-spacing:-.01em;font-weight:600;margin:0;text-wrap:balance}
+.slide .rule{width:66px;height:4px;background:var(--accent);border-radius:3px;margin:12px 0 0}
+.slidefoot{position:absolute;left:60px;right:60px;bottom:22px;display:flex;justify-content:space-between;gap:16px;
+  font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.lead{font-size:16.5px;color:var(--ink-soft);max-width:78ch;margin:14px 0 0;line-height:1.5}
+
+.title-slide{justify-content:center}
+.tick{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-bottom:28px;width:280px}
+.tick i{flex:1}
+.doclabel{font-family:var(--mono);font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.title-slide h1{font-size:50px;line-height:1.06;letter-spacing:-.02em;font-weight:600;margin:16px 0 10px;text-wrap:balance}
+.title-slide .subttl{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--ink-soft);margin:0 0 20px;letter-spacing:-.01em}
+.title-slide .dek{font-size:18px;color:var(--ink-soft);max-width:74ch;margin:0;line-height:1.55}
+.title-slide .byline{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:28px;letter-spacing:.03em}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;overflow:hidden}
+.pcard::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--accent)}
+.pcard .pname{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--accent);letter-spacing:-.01em}
+.pcard .psub{font-size:12.5px;color:var(--muted);margin-top:3px}
+
+.rank{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:7px}
+.rank li{display:grid;grid-template-columns:22px 1fr auto;gap:9px;align-items:center;font-size:15px}
+.rank .rn{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:600}
+.rank .rc{color:var(--ink)}
+.rank .rv{font-variant-numeric:tabular-nums;font-weight:600;color:var(--accent)}
+.rank li.dim{opacity:.55}
+.rank li.dim .rv{color:var(--muted);font-weight:500}
+.note{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.45;background:var(--paper);
+  border:1px solid var(--line);border-radius:9px;padding:9px 12px}
+.note b{color:var(--ink)}
+
+.gwrap{display:grid;gap:15px;margin-top:18px}
+.grow{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:center}
+.glabel{font-size:15px;font-weight:600}
+.glabel .gsub{display:block;font-size:11.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.gbar{display:flex;height:36px;border-radius:9px;overflow:hidden;border:1px solid var(--line);font-size:12.5px;font-weight:600}
+.gbar .gm{background:var(--male);color:#fff;display:flex;align-items:center;padding:0 12px;white-space:nowrap}
+.gbar .gf{background:var(--female);color:#fff;display:flex;align-items:center;justify-content:flex-end;padding:0 12px;white-space:nowrap}
+.glegend{display:flex;gap:20px;justify-content:center;margin-top:16px;font-size:13px;color:var(--ink-soft)}
+.glegend i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+.cmp{margin-top:16px;overflow:hidden;border-radius:12px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:12px 16px;vertical-align:middle;border-bottom:1px solid var(--line)}
+thead th{font-size:13.5px;font-weight:600;color:#fff;background:var(--ink);border-bottom:0}
+tbody tr:last-child td{border-bottom:0}
+tbody td:first-child{font-weight:600;background:var(--paper)}
+.sub{font-weight:400;color:var(--muted);font-size:12.5px}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px}
+.tag.m{background:var(--poki-bg);color:var(--male)}
+.tag.f{background:var(--female-bg);color:var(--female)}
+.tag.eq{background:var(--gold-bg);color:var(--gold)}
+
+.agerow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.agecard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;position:relative;overflow:hidden}
+.agecard::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--accent)}
+.agecard .an{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--accent)}
+.agecard .av{font-size:34px;font-weight:600;letter-spacing:-.02em;margin:12px 0 2px}
+.agecard .al{font-size:13px;color:var(--muted)}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.icol{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.icol .ihead{padding:13px 18px;font-size:15.5px;font-weight:600;color:#fff}
+.icol.win .ihead{background:var(--crazy)}
+.icol.warn .ihead{background:var(--y8)}
+.icol ul{list-style:none;margin:0;padding:16px 18px;display:grid;gap:11px}
+.icol li{display:grid;grid-template-columns:auto 1fr;gap:9px;font-size:14px;line-height:1.45}
+.icol li b{font-weight:600;color:var(--ink)}
+.icol li span{color:var(--muted)}
+.icol.win .mk{color:var(--crazy)} .icol.warn .mk{color:var(--y8)}
+.mk{font-weight:700}
+
+.bignum{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.bn{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;position:relative}
+.bn::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:2px;background:var(--accent)}
+.bn .bv{font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--accent);padding-left:13px;line-height:1.05}
+.bn .bl{font-size:13px;color:var(--ink);padding-left:13px;margin-top:8px;line-height:1.35;font-weight:600}
+.bn .bs{font-size:11.5px;color:var(--muted);padding-left:13px;margin-top:4px;line-height:1.35}
+.punch{margin-top:16px;font-size:15.5px;font-weight:600;color:var(--gold);text-align:center;text-wrap:balance}
+
+.concl-slide{background:#12161F;border-color:#12161F}
+.concl-slide .eyebrow{color:#9AA6B8}
+.concl-slide h2,.concl-slide .kick{color:#fff}
+.concl-slide .kick{font-size:17px;color:#AEB8C6;font-weight:400;margin:0 0 6px}
+.concl-slide .big{font-size:36px;font-weight:600;letter-spacing:-.01em;line-height:1.12;color:#fff;text-wrap:balance;margin:0}
+.concl-slide .rule{background:var(--gold);margin:20px 0}
+.concl-slide ul{list-style:none;padding:0;margin:0;display:grid;gap:13px}
+.concl-slide li{display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:16px;line-height:1.45;color:#D6DEE8}
+.concl-slide li b{color:#fff}
+.concl-slide .mk{color:var(--gold)}
+.concl-slide .next{font-family:var(--mono);font-size:12.5px;color:#8A94A6;margin-top:20px;letter-spacing:.02em}
+.concl-slide .slidefoot{color:#6B7688}
+
+.nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:14px;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:7px 10px;box-shadow:0 10px 30px -18px rgba(0,0,0,.5)}
+.nav button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);
+  font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.nav button:hover{border-color:var(--accent);color:var(--accent)}
+.nav button:disabled{opacity:.35;cursor:default;border-color:var(--line);color:var(--muted)}
+.nav .count{font-family:var(--mono);font-size:13px;color:var(--ink-soft);min-width:56px;text-align:center;letter-spacing:.05em}
+.dots{display:flex;gap:6px;margin-left:2px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:background .2s}
+.dots i.on{background:var(--accent)}
+.hint{position:fixed;bottom:64px;left:50%;transform:translateX(-50%);z-index:55;font-family:var(--mono);
+  font-size:11px;color:var(--muted);opacity:.8;transition:opacity .4s}
+
+@media print{
+  :root{--paper:#fff;--surface:#fff;--ink:#12161f;--ink-soft:#333b48;--muted:#5a6472;--line:#d5d9e0;
+    --poki-bg:#E9F1FB;--crazy-bg:#E2F4EE;--y8-bg:#FBEAEA;--gold-bg:#FBF1DC;--female-bg:#FBE7F1}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .controls,.nav,.progress,.hint{display:none!important}
+  html,body{height:auto;overflow:visible;background:#fff}
+  .stage{position:static;display:block}
+  .deck{transform:none!important;width:100%;height:auto}
+  .slide{position:static;display:flex!important;width:100%;height:190mm;margin:0;border-radius:0;border:0;
+    box-shadow:none;page-break-after:always;break-after:page;animation:none;padding:14mm 16mm}
+  .concl-slide{background:#12161F}
+  @page{size:A4 landscape;margin:0}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="controls">
+  <span class="brand">RO&nbsp;PlayZone · Market&nbsp;Intel</span>
+  <span class="spacer"></span>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="th" onclick="setLang('th')">ไทย</button>
+    <button data-lang="en" onclick="setLang('en')">EN</button>
+    <button data-lang="ko" onclick="setLang('ko')">한국어</button>
+  </div>
+  <button class="tbtn" onclick="toggleTheme()" aria-label="Theme">◑ Theme</button>
+  <button class="tbtn primary" onclick="window.print()">⤓ <span data-i18n="ui_pdf">PDF</span></button>
+</div>
+
+<div class="stage"><div class="deck" id="deck">
+
+<!-- 1 · TITLE -->
+<section class="slide title-slide active">
+  <div class="tick"><i style="background:var(--poki)"></i><i style="background:var(--crazy)"></i><i style="background:var(--y8)"></i><i style="background:var(--female)"></i></div>
+  <div class="doclabel" data-i18n="s1_label">Market Intelligence · Web Games</div>
+  <h1 data-i18n="s1_title">Who plays &amp; who pays on web games</h1>
+  <div class="subttl" data-i18n="s1_sub">Poki · CrazyGames · Y8 (Thailand)</div>
+  <p class="dek" data-i18n="s1_dek">Audience demographics of three web-game portals, then the evidence on which gender spends more in casual games.</p>
+  <div class="byline" data-i18n="s1_by">PM Workspace · RO PlayZone (GGT Game Studio) · 27 Jul 2026</div>
+</section>
+
+<!-- 2 · DATA CAVEAT -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq" style="background:var(--gold)"></span><span data-i18n="s2_eye">Read first · Data scope</span></div>
+  <h2 data-i18n="s2_h">Free data has a ceiling — treat these as direction, not exact figures</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="duo">
+      <div class="icol win"><div class="ihead" data-i18n="s2_okh">✓ Reliable (public data)</div>
+        <ul>
+          <li><span class="mk">▸</span><div data-i18n="s2_ok1"><b>Top 5 countries</b> <span>— ranked + % (Similarweb / Semrush, Jun 2026)</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s2_ok2"><b>Gender direction</b> <span>— clearly male/female skew</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s2_ok3"><b>Modal age bracket</b> <span>— the single largest group</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s2_ok4"><b>Monthly visits</b> <span>— order of magnitude</span></div></li>
+        </ul>
+      </div>
+      <div class="icol warn"><div class="ihead" data-i18n="s2_noh">✕ Not in free data</div>
+        <ul>
+          <li><span class="mk">▸</span><div data-i18n="s2_no1"><b>Countries ranked 6–10</b> <span>— bundled as Others (~52%)</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s2_no2"><b>Per-bracket age %</b> <span>— paywalled on both vendors</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s2_no3"><b>Gender/age = modeled estimate</b> <span>desktop-leaning ±2–3 pts</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s2_no4"><b>Spend-per-head by gender</b> <span>— no 2026 public data</span></div></li>
+        </ul>
+      </div>
+    </div>
+    <p class="note" data-i18n="s2_note">⚠️ Exact per-gender spend figures floating online (e.g. men $18.50 vs women $12.40) trace to content-mill sites with <b>no primary source</b> — excluded here. Only traceable research is used.</p>
+  </div>
+  <div class="slidefoot"><span>Similarweb · Semrush · Jun 2026</span><span>02</span></div>
+</section>
+
+<!-- 3 · COUNTRY RANKING -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq"></span><span data-i18n="s3_eye">Countries · ranked high → low (Top 5, Jun 2026)</span></div>
+  <h2 data-i18n="s3_h">US is #1 on both Poki &amp; CrazyGames — Thailand not in Top 5</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="grid3">
+      <div class="pcard" style="--accent:var(--poki)">
+        <div class="pname">Poki</div><div class="psub" data-i18n="s3_pp">~190M visits/mo · global spread</div>
+        <ul class="rank">
+          <li><span class="rn">1</span><span class="rc" data-i18n="c_us">🇺🇸 United States</span><span class="rv">14.9%</span></li>
+          <li><span class="rn">2</span><span class="rc" data-i18n="c_br">🇧🇷 Brazil</span><span class="rv">9.5%</span></li>
+          <li><span class="rn">3</span><span class="rc" data-i18n="c_in">🇮🇳 India</span><span class="rv">9.1%</span></li>
+          <li><span class="rn">4</span><span class="rc" data-i18n="c_vn">🇻🇳 Vietnam</span><span class="rv">8.9%</span></li>
+          <li><span class="rn">5</span><span class="rc" data-i18n="c_tr">🇹🇷 Turkey</span><span class="rv">5.5%</span></li>
+          <li class="dim"><span class="rn">·</span><span class="rc" data-i18n="c_others">Others</span><span class="rv">~52%</span></li>
+        </ul>
+      </div>
+      <div class="pcard" style="--accent:var(--crazy)">
+        <div class="pname">CrazyGames</div><div class="psub" data-i18n="s3_pc">~102M visits/mo · more US-heavy</div>
+        <ul class="rank">
+          <li><span class="rn">1</span><span class="rc" data-i18n="c_us">🇺🇸 United States</span><span class="rv">22.9%</span></li>
+          <li><span class="rn">2</span><span class="rc" data-i18n="c_in">🇮🇳 India</span><span class="rv">8.9%</span></li>
+          <li><span class="rn">3</span><span class="rc" data-i18n="c_vn">🇻🇳 Vietnam</span><span class="rv">7.7%</span></li>
+          <li><span class="rn">4</span><span class="rc" data-i18n="c_tr">🇹🇷 Turkey</span><span class="rv">4.9%</span></li>
+          <li><span class="rn">5</span><span class="rc" data-i18n="c_gb">🇬🇧 UK</span><span class="rv">3.0%</span></li>
+          <li class="dim"><span class="rn">·</span><span class="rc" data-i18n="c_others">Others</span><span class="rv">~53%</span></li>
+        </ul>
+      </div>
+      <div class="pcard" style="--accent:var(--y8)">
+        <div class="pname">th.y8.com</div><div class="psub" data-i18n="s3_py">~1.9M visits/mo · Thai subdomain</div>
+        <ul class="rank">
+          <li><span class="rn">1</span><span class="rc" data-i18n="c_th">🇹🇭 Thailand</span><span class="rv">99.9%</span></li>
+          <li><span class="rn">2</span><span class="rc" data-i18n="c_us">🇺🇸 United States</span><span class="rv">0.04%</span></li>
+          <li><span class="rn">3</span><span class="rc" data-i18n="c_nz">🇳🇿 New Zealand</span><span class="rv">0.02%</span></li>
+          <li class="dim"><span class="rn">·</span><span class="rc" data-i18n="c_rest">Rest</span><span class="rv">≈ 0%</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="note" data-i18n="s3_note">Ranks 6–10 have no free %, but names appearing just outside Top 5 (triangulated) = <b>Poland / France</b> (Poki) and <b>UK / Australia / Brazil</b> (CrazyGames).</p>
+  </div>
+  <div class="slidefoot"><span>Similarweb · Semrush · Jun 2026</span><span>03</span></div>
+</section>
+
+<!-- 4 · Y8 GLOBAL -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq" style="background:var(--y8)"></span><span data-i18n="s4_eye">A more meaningful angle · y8.com global</span></div>
+  <h2 data-i18n="s4_h">Thailand is Y8's single largest market worldwide</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="bignum">
+      <div class="bn"><div class="bv">#1</div><div class="bl" data-i18n="s4_b1l">Thailand ranks #1 on global y8.com</div><div class="bs" data-i18n="s4_b1s">23.5% of all traffic</div></div>
+      <div class="bn"><div class="bv">~1.8M</div><div class="bl" data-i18n="s4_b2l">visits/mo from Thailand</div><div class="bs" data-i18n="s4_b2s">23.5% of ~7.7M — matches th.y8.com ~1.9M</div></div>
+      <div class="bn"><div class="bv">3</div><div class="bl" data-i18n="s4_b3l">SEA countries own the top half</div><div class="bs" data-i18n="s4_b3s">TH + PH + VN ≈ 52% combined</div></div>
+    </div>
+    <div style="margin-top:20px">
+      <ul class="rank" style="max-width:560px">
+        <li><span class="rn">1</span><span class="rc" data-i18n="c_th">🇹🇭 Thailand</span><span class="rv">23.5%</span></li>
+        <li><span class="rn">2</span><span class="rc" data-i18n="c_ph">🇵🇭 Philippines</span><span class="rv">16.8%</span></li>
+        <li><span class="rn">3</span><span class="rc" data-i18n="c_vn">🇻🇳 Vietnam</span><span class="rv">12.0%</span></li>
+        <li><span class="rn">4</span><span class="rc" data-i18n="c_us">🇺🇸 United States</span><span class="rv">6.0%</span></li>
+        <li><span class="rn">5</span><span class="rc" data-i18n="c_hu">🇭🇺 Hungary</span><span class="rv">2.9%</span></li>
+        <li class="dim"><span class="rn">·</span><span class="rc" data-i18n="c_others">Others</span><span class="rv">38.8%</span></li>
+      </ul>
+    </div>
+    <p class="note" data-i18n="s4_note">The largest Thai web-game audience is <b>served by a foreign platform (Y8 / Azerion)</b>, not a Thai-owned portal — the market gap that underpins our owned-audience thesis.</p>
+  </div>
+  <div class="slidefoot"><span>Similarweb · y8.com · Jun 2026</span><span>04</span></div>
+</section>
+
+<!-- 5 · GENDER -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq"></span><span data-i18n="s5_eye">Gender · player share (modeled estimate)</span></div>
+  <h2 data-i18n="s5_h">The Thai base skews female the hardest — 63%</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="gwrap">
+      <div class="grow"><div class="glabel">Poki<span class="gsub" data-i18n="s5_g1">slightly female</span></div>
+        <div class="gbar"><div class="gm" style="width:45.8%"><span data-i18n="g_m">M</span>&nbsp;45.8%</div><div class="gf" style="width:54.2%"><span data-i18n="g_f">F</span>&nbsp;54.2%</div></div></div>
+      <div class="grow"><div class="glabel">CrazyGames<span class="gsub" data-i18n="s5_g2">male-leaning</span></div>
+        <div class="gbar"><div class="gm" style="width:52%"><span data-i18n="g_m">M</span>&nbsp;52.0%</div><div class="gf" style="width:48%"><span data-i18n="g_f">F</span>&nbsp;48.0%</div></div></div>
+      <div class="grow"><div class="glabel">th.y8.com<span class="gsub" data-i18n="s5_g3">most female-leaning</span></div>
+        <div class="gbar"><div class="gm" style="width:37.2%"><span data-i18n="g_m">M</span>&nbsp;37.2%</div><div class="gf" style="width:62.8%"><span data-i18n="g_f">F</span>&nbsp;62.8%</div></div></div>
+      <div class="grow"><div class="glabel" data-i18n="s5_g4l">y8.com global<span class="gsub" data-i18n="s5_g4">balanced</span></div>
+        <div class="gbar"><div class="gm" style="width:50.1%"><span data-i18n="g_m">M</span>&nbsp;50.1%</div><div class="gf" style="width:49.9%"><span data-i18n="g_f">F</span>&nbsp;49.9%</div></div></div>
+    </div>
+    <div class="glegend"><span><i style="background:var(--male)"></i><span data-i18n="g_male">Male</span></span><span><i style="background:var(--female)"></i><span data-i18n="g_female">Female</span></span></div>
+    <p class="note" data-i18n="s5_note">Y8 is a balanced 50/50 globally, but its <b>Thai base skews 63% female</b> → Thai web-game players are notably more female than the world average, which affects art direction &amp; genre.</p>
+  </div>
+  <div class="slidefoot"><span>Similarweb · Jun 2026 · desktop-leaning</span><span>05</span></div>
+</section>
+
+<!-- 6 · AGE -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq"></span><span data-i18n="s6_eye">Age · largest bracket only (per-bracket paywalled)</span></div>
+  <h2 data-i18n="s6_h">The Thai base is older than expected — 25–34, not teens</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="agerow">
+      <div class="agecard" style="--accent:var(--poki)"><div class="an">Poki</div><div class="av">25–34</div><div class="al" data-i18n="s6_a1">largest group · early working age</div></div>
+      <div class="agecard" style="--accent:var(--crazy)"><div class="an">CrazyGames</div><div class="av">18–24</div><div class="al" data-i18n="s6_a2">largest group · youngest of the three</div></div>
+      <div class="agecard" style="--accent:var(--y8)"><div class="an">th.y8.com</div><div class="av">25–34</div><div class="al" data-i18n="s6_a3">largest group · Thai base</div></div>
+    </div>
+    <p class="note" data-i18n="s6_note"><b>Only the largest group is public</b> — per-bracket % (18-24 / 25-34 / … / 65+) is paywalled on both Similarweb and Semrush, and the on-page chart is blurred so bar heights cannot be read · global y8.com modal = 18–24.</p>
+  </div>
+  <div class="slidefoot"><span>Similarweb · Semrush · Jun 2026</span><span>06</span></div>
+</section>
+
+<!-- 7 · SPENDING metrics -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq" style="background:var(--gold)"></span><span data-i18n="s7_eye">Who pays more · separate 3 metrics</span></div>
+  <h2 data-i18n="s7_h">Player share ≠ share of money spent</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="cmp">
+      <table>
+        <thead><tr><th data-i18n="s7_th1">Metric</th><th data-i18n="s7_th2">What it measures</th><th data-i18n="s7_th3">Who leads</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="s7_r1a">% who pay <br><span class="sub">conversion</span></td><td data-i18n="s7_r1b">breadth — how many pay at all</td><td><span class="tag m" data-i18n="s7_r1c1">Men (all genres)</span> <span class="tag f" data-i18n="s7_r1c2">Women (casual)</span></td></tr>
+          <tr><td data-i18n="s7_r2a">ARPPU <br><span class="sub">spend per paying user</span></td><td data-i18n="s7_r2b">depth — how much per payer</td><td><span class="tag eq" data-i18n="s7_r2c">Roughly equal</span></td></tr>
+          <tr><td data-i18n="s7_r3a">Total revenue</td><td data-i18n="s7_r3b">payers × ARPPU × # games</td><td><span class="tag m" data-i18n="s7_r3c">Men (all genres)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" data-i18n="s7_note">Men generate more total revenue because they <b>play more and convert more</b> (MyTracker: male ARPU ~2×, total revenue ~5.5×) — <b>not</b> because they spend more per head. Among actual payers, ARPPU is about equal.</p>
+  </div>
+  <div class="slidefoot"><span>MyTracker 2020 · Liftoff 2018 · CivicScience 2019</span><span>07</span></div>
+</section>
+
+<!-- 8 · SPENDING casual answer -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq" style="background:var(--female)"></span><span data-i18n="s8_eye">Answer by genre · casual = women lead</span></div>
+  <h2 data-i18n="s8_h">In casual / puzzle / deco games — women spend more</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="bignum">
+      <div class="bn" style="--accent:var(--female)"><div class="bv">~80%</div><div class="bl" data-i18n="s8_b1l">of those spending $5+/mo are women</div><div class="bs" data-i18n="s8_b1s">CivicScience 2019 (US) · casual</div></div>
+      <div class="bn" style="--accent:var(--female)"><div class="bv">+79%</div><div class="bl" data-i18n="s8_b2l">higher payer-conversion than men</div><div class="bs" data-i18n="s8_b2s">Liftoff 2018 · conversion rate</div></div>
+      <div class="bn" style="--accent:var(--female)"><div class="bv">3</div><div class="bl" data-i18n="s8_b3l">genres women lead: time-mgmt · match-3 · MMORPG</div><div class="bs" data-i18n="s8_b3s">MyTracker 2020</div></div>
+    </div>
+    <div class="duo" style="margin-top:18px">
+      <div class="icol win"><div class="ihead" data-i18n="s8_wh">♀ Women lead spending in</div>
+        <ul><li><span class="mk">▸</span><div data-i18n="s8_w1">match-3 · puzzle · casual · <b>simulation / deco</b> · time-management · social-casino</div></li></ul>
+      </div>
+      <div class="icol warn"><div class="ihead" data-i18n="s8_mh">♂ Men lead spending in</div>
+        <ul><li><span class="mk">▸</span><div data-i18n="s8_m1">strategy / 4X · shooters · sports · MOBA · mid-core RPG / gacha (big whales)</div></li></ul>
+      </div>
+    </div>
+    <p class="punch" data-i18n="s8_punch">Our genre (Tavern Deco / casual) + Thai base 63% female → women are the core spenders, in a frequent-small-purchase pattern, not big whales.</p>
+  </div>
+  <div class="slidefoot"><span>Liftoff · CivicScience · MyTracker · Sensor Tower</span><span>08</span></div>
+</section>
+
+<!-- 9 · IMPLICATIONS -->
+<section class="slide">
+  <div class="eyebrow"><span class="sq" style="background:var(--gold)"></span><span data-i18n="s9_eye">Implications for RO PlayZone / Tavern</span></div>
+  <h2 data-i18n="s9_h">What to design around next</h2>
+  <div class="rule"></div>
+  <div class="body">
+    <div class="duo">
+      <div class="icol win"><div class="ihead" data-i18n="s9_wh">✓ Design to the base</div>
+        <ul>
+          <li><span class="mk">▸</span><div data-i18n="s9_w1"><b>Monetize with small, frequent buys</b> <span>— cheap cosmetic / deco gacha, not expensive whale packs</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s9_w2"><b>Art direction for a female base</b> <span>— age 25–34, not teenage boys</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s9_w3"><b>Reinforce owned-audience</b> <span>— the Thai base is still captured by a foreign platform (Y8) = the gap</span></div></li>
+        </ul>
+      </div>
+      <div class="icol warn"><div class="ihead" data-i18n="s9_mh">⚠ Do not overlook</div>
+        <ul>
+          <li><span class="mk">▸</span><div data-i18n="s9_m1"><b>Web/HTML5 earns ~97–99% from ads</b> <span>not IAP → the real question is who watches ads &amp; retains</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s9_m2"><b>Female casual base retains well</b> <span>good for ad revenue → fits the star / rewarded-ads design</span></div></li>
+          <li><span class="mk">▸</span><div data-i18n="s9_m3"><b>Don't expect a male-whale core</b> <span>like strategy / gacha — a different genre profile</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slidefoot"><span>RO PlayZone · PM Workspace</span><span>09</span></div>
+</section>
+
+<!-- 10 · CONCLUSION -->
+<section class="slide concl-slide">
+  <div class="eyebrow"><span class="sq" style="background:var(--gold)"></span><span data-i18n="s10_eye">Summary &amp; sources</span></div>
+  <p class="kick" data-i18n="s10_kick">Short answer to which gender tops up more on web games:</p>
+  <div class="big" data-i18n="s10_big">Casual = women · all genres combined = men</div>
+  <div class="rule"></div>
+  <ul>
+    <li><span class="mk">▸</span><div data-i18n="s10_l1">Player base across 3 portals: US leads Poki/Crazy · <b>Thailand leads Y8 · Thai base 63% female, age 25–34</b></div></li>
+    <li><span class="mk">▸</span><div data-i18n="s10_l2">Casual / puzzle / deco → <b>women spend more</b>, frequent small purchases · but on the web the main revenue is ads, not IAP</div></li>
+  </ul>
+  <div class="next" data-i18n="s10_next">Sources: Similarweb · Semrush (Jun 2026) · MyTracker 2020 · Liftoff 2018 · CivicScience 2019 · Sensor Tower 2024 · Tenjin — gender/age are modeled estimates; per-bracket age % &amp; per-gender spend for 2026 are not publicly available.</div>
+  <div class="slidefoot"><span>RO PlayZone (GGT Game Studio)</span><span>10</span></div>
+</section>
+
+</div></div>
+
+<div class="hint" id="hint" data-i18n="ui_hint">Use ← → or click to move between slides</div>
+<div class="nav">
+  <button id="prev" onclick="go(-1)" aria-label="Previous">‹</button>
+  <span class="count tabnum" id="count">1 / 10</span>
+  <button id="next" onclick="go(1)" aria-label="Next">›</button>
+  <span class="dots" id="dots"></span>
+</div>
+
+<script>
+const L={
+th:{
+ ui_pdf:"ดาวน์โหลด PDF", ui_hint:"ใช้ปุ่ม ← → หรือคลิกเพื่อเลื่อนสไลด์",
+ c_us:"🇺🇸 สหรัฐฯ", c_br:"🇧🇷 บราซิล", c_in:"🇮🇳 อินเดีย", c_vn:"🇻🇳 เวียดนาม", c_tr:"🇹🇷 ตุรกี",
+ c_gb:"🇬🇧 อังกฤษ", c_th:"🇹🇭 ไทย", c_nz:"🇳🇿 นิวซีแลนด์", c_ph:"🇵🇭 ฟิลิปปินส์", c_hu:"🇭🇺 ฮังการี",
+ c_others:"อื่นๆ", c_rest:"ที่เหลือ", g_m:"ช", g_f:"ญ", g_male:"ชาย", g_female:"หญิง",
+ s1_label:"Market Intelligence · เว็บเกม",
+ s1_title:"ใครเล่น &amp; ใครจ่าย บนเว็บเกม",
+ s1_sub:"Poki · CrazyGames · Y8 (ไทย)",
+ s1_dek:"เจาะ demographic ผู้เล่นของ 3 พอร์ทัลเว็บเกม แล้วต่อด้วยหลักฐานว่า เพศไหนเติมเงินมากกว่า ในเกม casual — เพื่อวางทิศทาง audience และ monetization ของ RO PlayZone / Tavern",
+ s1_by:"PM Workspace · RO PlayZone (GGT Game Studio) · 27 ก.ค. 2026",
+ s2_eye:"อ่านก่อนใช้ · ขอบเขตของข้อมูล",
+ s2_h:"ข้อมูลฟรีมีเพดาน — ตัวเลขชุดนี้ใช้เป็น ทิศทาง ไม่ใช่ตัวเลขเป๊ะ",
+ s2_okh:"✓ เชื่อถือได้ (ข้อมูลเปิด)",
+ s2_ok1:"<b>ประเทศ Top 5</b> <span>— เรียงลำดับ + % (Similarweb / Semrush มิ.ย. 2026)</span>",
+ s2_ok2:"<b>ทิศทางเพศ</b> <span>— เอียงชาย/หญิง ชัดเจน</span>",
+ s2_ok3:"<b>กลุ่มอายุใหญ่สุด</b> <span>— modal bracket ของแต่ละเว็บ</span>",
+ s2_ok4:"<b>ยอด visits/เดือน</b> <span>— ระดับ order of magnitude</span>",
+ s2_noh:"✕ ไม่มีในข้อมูลฟรี",
+ s2_no1:"<b>ประเทศอันดับ 6–10</b> <span>— ถูกมัดรวมเป็น Others (~52%)</span>",
+ s2_no2:"<b>% รายช่วงอายุ</b> <span>— ติด paywall ทั้ง 2 เจ้า</span>",
+ s2_no3:"<b>เพศ/อายุ = modeled estimate</b> <span>เอียง desktop ±2–3 จุด</span>",
+ s2_no4:"<b>เงินจ่ายต่อหัวแยกเพศ</b> <span>— ไม่มีใครเปิดข้อมูลปี 2026</span>",
+ s2_note:"⚠️ ตัวเลขเปย์แยกเพศเป๊ะๆ ที่ลอยในเน็ต (เช่น ชาย $18.50 vs หญิง $12.40) สืบพบว่าเป็น <b>ตัวเลขปลอมจากเว็บ content-mill ไม่มีแหล่งอ้างอิงจริง</b> — deck นี้ตัดทิ้งทั้งหมด ใช้เฉพาะงานวิจัยที่สืบที่มาได้",
+ s3_eye:"ประเทศ · เรียงจากมากไปน้อย (Top 5, มิ.ย. 2026)",
+ s3_h:"ทั้ง Poki &amp; CrazyGames US เป็นเบอร์ 1 — ไทยไม่ติด Top 5",
+ s3_pp:"~190M visits/ด. · กระจายทั่วโลก",
+ s3_pc:"~102M visits/ด. · กระจุก US หนักกว่า",
+ s3_py:"~1.9M visits/ด. · subdomain ไทย",
+ s3_note:"อันดับ 6–10 ไม่มี % ให้ฟรี แต่ชื่อที่โผล่นอก Top 5 (triangulate) = <b>โปแลนด์ / ฝรั่งเศส</b> (Poki) และ <b>UK / ออสเตรเลีย / บราซิล</b> (CrazyGames)",
+ s4_eye:"มุมที่มีความหมายกว่า · y8.com ตัวโกลบอล",
+ s4_h:"ไทยคือตลาดใหญ่ที่สุดของ Y8 ทั้งโลก",
+ s4_b1l:"ไทยเป็นเบอร์ 1 ของ y8.com ทั้งโลก", s4_b1s:"23.5% ของทราฟฟิกทั้งหมด",
+ s4_b2l:"visits/ด. จากไทย", s4_b2s:"23.5% ของ ~7.7M — ตรงกับ th.y8.com ~1.9M",
+ s4_b3l:"ชาติ SEA ครองครึ่งบน", s4_b3s:"ไทย + ฟิลิปปินส์ + เวียดนาม รวม ~52%",
+ s4_note:"ฐานผู้เล่นเว็บเกมไทยที่ใหญ่ที่สุด <b>ถูกเสิร์ฟโดยแพลตฟอร์มต่างชาติ (Y8 / Azerion)</b> ไม่ใช่พอร์ทัลสัญชาติไทย — คือช่องว่างตลาดที่ตอก thesis owned-audience ของเรา",
+ s5_eye:"เพศ · สัดส่วนผู้เล่น (modeled estimate)",
+ s5_h:"ฐานไทยเอียง หญิง หนักสุด — 63%",
+ s5_g1:"เอียงหญิงเล็กน้อย", s5_g2:"เอียงชาย", s5_g3:"เอียงหญิงหนักสุด", s5_g4:"สมดุล", s5_g4l:"y8.com โกลบอล<span class='gsub'>สมดุล</span>",
+ s5_note:"Y8 ทั้งโลกสมดุล 50/50 แต่ <b>ฐานไทยเอียงหญิงถึง 63%</b> → ผู้เล่นเว็บเกมไทยเป็นผู้หญิงมากกว่าค่าเฉลี่ยโลกอย่างชัดเจน มีผลต่อ art direction &amp; แนวเกม",
+ s6_eye:"อายุ · กลุ่มใหญ่ที่สุด (รายช่วงติด paywall)",
+ s6_h:"ฐานไทยโตกว่าที่คิด — วัย 25–34 ไม่ใช่วัยรุ่น",
+ s6_a1:"กลุ่มใหญ่สุด · วัยทำงานตอนต้น", s6_a2:"กลุ่มใหญ่สุด · เด็กสุดใน 3 เว็บ", s6_a3:"กลุ่มใหญ่สุด · ฐานไทย",
+ s6_note:"<b>เปิดฟรีได้แค่กลุ่มที่ใหญ่ที่สุด</b> — % รายช่วง (18-24 / 25-34 / … / 65+) ติด paywall ทั้ง Similarweb และ Semrush และกราฟบนหน้าเว็บก็เบลอ อ่านความสูงแท่งไม่ได้ · y8.com โกลบอลกลุ่มใหญ่สุด = 18–24",
+ s7_eye:"ใครเติมเยอะ · ต้องแยก 3 ตัวชี้วัด",
+ s7_h:"สัดส่วนคนเล่น ≠ สัดส่วนเงินที่จ่าย",
+ s7_th1:"ตัวชี้วัด", s7_th2:"วัดอะไร", s7_th3:"ใครนำ",
+ s7_r1a:"% คนที่ยอมจ่าย <br><span class='sub'>conversion</span>", s7_r1b:"ความกว้าง — มีกี่คนยอมเปย์", s7_r1c1:"ชาย (รวมทุกแนว)", s7_r1c2:"หญิง (แนว casual)",
+ s7_r2a:"ARPPU <br><span class='sub'>จ่ายต่อหัวคนที่จ่าย</span>", s7_r2b:"ความลึก — จ่ายหัวละเท่าไหร่", s7_r2c:"พอๆ กัน",
+ s7_r3a:"รายได้รวม", s7_r3b:"payer × ARPPU × จำนวนเกม", s7_r3c:"ชาย (รวมทุกแนว)",
+ s7_note:"ผู้ชายทำรายได้รวมมากกว่าเพราะ <b>เล่นเยอะกว่า + ยอมจ่ายเป็นสัดส่วนมากกว่า</b> (MyTracker: ชาย ARPU ~2 เท่า, รายได้รวม ~5.5 เท่า) — <b>ไม่ใช่</b> เพราะจ่ายต่อหัวมากกว่า ในกลุ่มคนที่จ่ายจริง ARPPU พอๆ กัน",
+ s8_eye:"คำตอบตามแนวเกม · casual = ผู้หญิงนำ",
+ s8_h:"ในเกม casual / puzzle / deco — ผู้หญิง เติมเยอะกว่า",
+ s8_b1l:"ของคนจ่าย $5+/เดือน เป็นผู้หญิง", s8_b1s:"CivicScience 2019 (US) · แนว casual",
+ s8_b2l:"ผู้หญิงแปลงเป็นคนจ่ายสูงกว่าชาย", s8_b2s:"Liftoff 2018 · conversion rate",
+ s8_b3l:"แนวที่หญิงจ่ายนำ: time-mgmt · match-3 · MMORPG", s8_b3s:"MyTracker 2020",
+ s8_wh:"♀ ผู้หญิงนำการเปย์ในแนว", s8_w1:"match-3 · puzzle · casual · <b>simulation / deco</b> · time-management · social-casino",
+ s8_mh:"♂ ผู้ชายนำการเปย์ในแนว", s8_m1:"strategy / 4X · shooter · sports · MOBA · mid-core RPG / gacha (whale ก้อนใหญ่)",
+ s8_punch:"แนวเกมของเรา (Tavern Deco / casual) + ฐานไทยเอียงหญิง 63% → ผู้หญิงคือคนเติมหลัก แบบ จ่ายบ่อย ทีละน้อย ไม่ใช่ whale ก้อนใหญ่",
+ s9_eye:"นัยต่อ RO PlayZone / Tavern", s9_h:"สิ่งที่ต้องออกแบบต่อ",
+ s9_wh:"✓ ออกแบบให้ตรงฐาน",
+ s9_w1:"<b>Monetization = ของเล็ก ซื้อบ่อย</b> <span>— cosmetic / deco gacha ราคาย่อม ไม่ใช่ pack แพงล่อ whale</span>",
+ s9_w2:"<b>Art direction เพื่อฐานหญิง</b> <span>— วัย 25–34 ไม่ใช่วัยรุ่นชาย</span>",
+ s9_w3:"<b>ตอก owned-audience</b> <span>— ฐานไทยยังถูกต่างชาติ (Y8) กินอยู่ = ช่องว่าง</span>",
+ s9_mh:"⚠ อย่ามองข้าม",
+ s9_m1:"<b>เว็บ/HTML5 ทำเงินจากโฆษณา ~97–99%</b> <span>ไม่ใช่ IAP → คำถามจริงคือ ใครดูโฆษณา + retention ดี</span>",
+ s9_m2:"<b>ฐานหญิง casual = retention ดี</b> <span>ดีต่อ ad revenue → ตรงกับดีไซน์ดาวม่วง / rewarded ads</span>",
+ s9_m3:"<b>อย่าคาดหวัง male-whale core</b> <span>แบบเกม strategy / gacha — คนละ genre profile</span>",
+ s10_eye:"สรุป &amp; แหล่งข้อมูล",
+ s10_kick:"คำตอบสั้นๆ ของคำถาม เพศไหนเติมเยอะสุดสำหรับเว็บเกม:",
+ s10_big:"แนว casual = ผู้หญิง · รวมทุกแนว = ผู้ชาย",
+ s10_l1:"ฐานผู้เล่นเว็บเกม 3 เว็บ: US นำ Poki/Crazy · <b>ไทยนำ Y8 · ฐานไทยเอียงหญิง 63% วัย 25–34</b>",
+ s10_l2:"เกม casual/puzzle/deco → <b>ผู้หญิงเติมเยอะกว่า</b> แบบจ่ายบ่อยทีละน้อย · แต่บนเว็บรายได้หลักคือโฆษณา ไม่ใช่ IAP",
+ s10_next:"แหล่ง: Similarweb · Semrush (มิ.ย. 2026) · MyTracker 2020 · Liftoff 2018 · CivicScience 2019 · Sensor Tower 2024 · Tenjin — ตัวเลขเพศ/อายุเป็น modeled estimate; % รายช่วงอายุ &amp; เปย์แยกเพศปี 2026 = ไม่มีข้อมูลเปิด"
+},
+en:{
+ ui_pdf:"Download PDF", ui_hint:"Use ← → or click to move between slides",
+ c_us:"🇺🇸 United States", c_br:"🇧🇷 Brazil", c_in:"🇮🇳 India", c_vn:"🇻🇳 Vietnam", c_tr:"🇹🇷 Turkey",
+ c_gb:"🇬🇧 UK", c_th:"🇹🇭 Thailand", c_nz:"🇳🇿 New Zealand", c_ph:"🇵🇭 Philippines", c_hu:"🇭🇺 Hungary",
+ c_others:"Others", c_rest:"Rest", g_m:"M", g_f:"F", g_male:"Male", g_female:"Female",
+ s1_label:"Market Intelligence · Web Games",
+ s1_title:"Who plays &amp; who pays on web games",
+ s1_sub:"Poki · CrazyGames · Y8 (Thailand)",
+ s1_dek:"Audience demographics of three web-game portals, then the evidence on which gender spends more in casual games — to steer RO PlayZone / Tavern's audience and monetization.",
+ s1_by:"PM Workspace · RO PlayZone (GGT Game Studio) · 27 Jul 2026",
+ s2_eye:"Read first · Data scope",
+ s2_h:"Free data has a ceiling — treat these as direction, not exact figures",
+ s2_okh:"✓ Reliable (public data)",
+ s2_ok1:"<b>Top 5 countries</b> <span>— ranked + % (Similarweb / Semrush, Jun 2026)</span>",
+ s2_ok2:"<b>Gender direction</b> <span>— clear male/female skew</span>",
+ s2_ok3:"<b>Modal age bracket</b> <span>— the single largest group per site</span>",
+ s2_ok4:"<b>Monthly visits</b> <span>— order of magnitude</span>",
+ s2_noh:"✕ Not in free data",
+ s2_no1:"<b>Countries ranked 6–10</b> <span>— bundled as Others (~52%)</span>",
+ s2_no2:"<b>Per-bracket age %</b> <span>— paywalled on both vendors</span>",
+ s2_no3:"<b>Gender/age = modeled estimate</b> <span>desktop-leaning ±2–3 pts</span>",
+ s2_no4:"<b>Spend-per-head by gender</b> <span>— no 2026 public data</span>",
+ s2_note:"⚠️ Exact per-gender spend figures floating online (e.g. men $18.50 vs women $12.40) trace to content-mill sites with <b>no primary source</b> — excluded here. Only traceable research is used.",
+ s3_eye:"Countries · ranked high → low (Top 5, Jun 2026)",
+ s3_h:"US is #1 on both Poki &amp; CrazyGames — Thailand not in Top 5",
+ s3_pp:"~190M visits/mo · global spread",
+ s3_pc:"~102M visits/mo · more US-heavy",
+ s3_py:"~1.9M visits/mo · Thai subdomain",
+ s3_note:"Ranks 6–10 have no free %, but names just outside Top 5 (triangulated) = <b>Poland / France</b> (Poki) and <b>UK / Australia / Brazil</b> (CrazyGames).",
+ s4_eye:"A more meaningful angle · y8.com global",
+ s4_h:"Thailand is Y8's single largest market worldwide",
+ s4_b1l:"Thailand ranks #1 on global y8.com", s4_b1s:"23.5% of all traffic",
+ s4_b2l:"visits/mo from Thailand", s4_b2s:"23.5% of ~7.7M — matches th.y8.com ~1.9M",
+ s4_b3l:"SEA countries own the top half", s4_b3s:"TH + PH + VN ≈ 52% combined",
+ s4_note:"The largest Thai web-game audience is <b>served by a foreign platform (Y8 / Azerion)</b>, not a Thai-owned portal — the market gap that underpins our owned-audience thesis.",
+ s5_eye:"Gender · player share (modeled estimate)",
+ s5_h:"The Thai base skews female the hardest — 63%",
+ s5_g1:"slightly female", s5_g2:"male-leaning", s5_g3:"most female-leaning", s5_g4:"balanced", s5_g4l:"y8.com global<span class='gsub'>balanced</span>",
+ s5_note:"Y8 is a balanced 50/50 globally, but its <b>Thai base skews 63% female</b> → Thai web-game players are notably more female than the world average, affecting art direction &amp; genre.",
+ s6_eye:"Age · largest bracket only (per-bracket paywalled)",
+ s6_h:"The Thai base is older than expected — 25–34, not teens",
+ s6_a1:"largest group · early working age", s6_a2:"largest group · youngest of the three", s6_a3:"largest group · Thai base",
+ s6_note:"<b>Only the largest group is public</b> — per-bracket % (18-24 / 25-34 / … / 65+) is paywalled on both Similarweb and Semrush, and the on-page chart is blurred so bar heights cannot be read · global y8.com modal = 18–24.",
+ s7_eye:"Who pays more · separate 3 metrics",
+ s7_h:"Player share ≠ share of money spent",
+ s7_th1:"Metric", s7_th2:"What it measures", s7_th3:"Who leads",
+ s7_r1a:"% who pay <br><span class='sub'>conversion</span>", s7_r1b:"breadth — how many pay at all", s7_r1c1:"Men (all genres)", s7_r1c2:"Women (casual)",
+ s7_r2a:"ARPPU <br><span class='sub'>spend per paying user</span>", s7_r2b:"depth — how much per payer", s7_r2c:"Roughly equal",
+ s7_r3a:"Total revenue", s7_r3b:"payers × ARPPU × # games", s7_r3c:"Men (all genres)",
+ s7_note:"Men generate more total revenue because they <b>play more and convert more</b> (MyTracker: male ARPU ~2×, total revenue ~5.5×) — <b>not</b> because they spend more per head. Among actual payers, ARPPU is about equal.",
+ s8_eye:"Answer by genre · casual = women lead",
+ s8_h:"In casual / puzzle / deco games — women spend more",
+ s8_b1l:"of those spending $5+/mo are women", s8_b1s:"CivicScience 2019 (US) · casual",
+ s8_b2l:"higher payer-conversion than men", s8_b2s:"Liftoff 2018 · conversion rate",
+ s8_b3l:"genres women lead: time-mgmt · match-3 · MMORPG", s8_b3s:"MyTracker 2020",
+ s8_wh:"♀ Women lead spending in", s8_w1:"match-3 · puzzle · casual · <b>simulation / deco</b> · time-management · social-casino",
+ s8_mh:"♂ Men lead spending in", s8_m1:"strategy / 4X · shooters · sports · MOBA · mid-core RPG / gacha (big whales)",
+ s8_punch:"Our genre (Tavern Deco / casual) + Thai base 63% female → women are the core spenders, in a frequent-small-purchase pattern, not big whales.",
+ s9_eye:"Implications for RO PlayZone / Tavern", s9_h:"What to design around next",
+ s9_wh:"✓ Design to the base",
+ s9_w1:"<b>Monetize with small, frequent buys</b> <span>— cheap cosmetic / deco gacha, not expensive whale packs</span>",
+ s9_w2:"<b>Art direction for a female base</b> <span>— age 25–34, not teenage boys</span>",
+ s9_w3:"<b>Reinforce owned-audience</b> <span>— the Thai base is still captured by a foreign platform (Y8) = the gap</span>",
+ s9_mh:"⚠ Do not overlook",
+ s9_m1:"<b>Web/HTML5 earns ~97–99% from ads</b> <span>not IAP → the real question is who watches ads &amp; retains</span>",
+ s9_m2:"<b>Female casual base retains well</b> <span>good for ad revenue → fits the star / rewarded-ads design</span>",
+ s9_m3:"<b>Don't expect a male-whale core</b> <span>like strategy / gacha — a different genre profile</span>",
+ s10_eye:"Summary &amp; sources",
+ s10_kick:"Short answer to which gender tops up more on web games:",
+ s10_big:"Casual = women · all genres combined = men",
+ s10_l1:"Player base across 3 portals: US leads Poki/Crazy · <b>Thailand leads Y8 · Thai base 63% female, age 25–34</b>",
+ s10_l2:"Casual / puzzle / deco → <b>women spend more</b>, frequent small purchases · but on the web the main revenue is ads, not IAP",
+ s10_next:"Sources: Similarweb · Semrush (Jun 2026) · MyTracker 2020 · Liftoff 2018 · CivicScience 2019 · Sensor Tower 2024 · Tenjin — gender/age are modeled estimates; per-bracket age % &amp; per-gender spend for 2026 are not publicly available."
+},
+ko:{
+ ui_pdf:"PDF 다운로드", ui_hint:"← → 또는 클릭으로 슬라이드 이동",
+ c_us:"🇺🇸 미국", c_br:"🇧🇷 브라질", c_in:"🇮🇳 인도", c_vn:"🇻🇳 베트남", c_tr:"🇹🇷 튀르키예",
+ c_gb:"🇬🇧 영국", c_th:"🇹🇭 태국", c_nz:"🇳🇿 뉴질랜드", c_ph:"🇵🇭 필리핀", c_hu:"🇭🇺 헝가리",
+ c_others:"기타", c_rest:"나머지", g_m:"남", g_f:"여", g_male:"남성", g_female:"여성",
+ s1_label:"마켓 인텔리전스 · 웹게임",
+ s1_title:"웹게임, 누가 즐기고 &amp; 누가 결제하나",
+ s1_sub:"Poki · CrazyGames · Y8 (태국)",
+ s1_dek:"3개 웹게임 포털의 이용자 인구통계를 분석하고, 캐주얼 게임에서 어느 성별이 더 결제하는지 근거를 정리 — RO PlayZone / Tavern의 오디언스와 수익화 방향 설정을 위해.",
+ s1_by:"PM Workspace · RO PlayZone (GGT Game Studio) · 2026년 7월 27일",
+ s2_eye:"먼저 읽기 · 데이터 범위",
+ s2_h:"무료 데이터에는 한계가 있음 — 정확한 수치가 아닌 방향으로 사용",
+ s2_okh:"✓ 신뢰 가능 (공개 데이터)",
+ s2_ok1:"<b>상위 5개국</b> <span>— 순위 + % (Similarweb / Semrush, 2026년 6월)</span>",
+ s2_ok2:"<b>성별 방향성</b> <span>— 남성/여성 편향 명확</span>",
+ s2_ok3:"<b>최대 연령대</b> <span>— 사이트별 가장 큰 그룹</span>",
+ s2_ok4:"<b>월 방문수</b> <span>— 자릿수 규모</span>",
+ s2_noh:"✕ 무료 데이터에 없음",
+ s2_no1:"<b>6–10위 국가</b> <span>— 기타로 묶임 (~52%)</span>",
+ s2_no2:"<b>연령대별 %</b> <span>— 두 업체 모두 유료</span>",
+ s2_no3:"<b>성별/연령 = 모델링 추정치</b> <span>데스크톱 편향 ±2–3p</span>",
+ s2_no4:"<b>성별 1인당 결제액</b> <span>— 2026년 공개 데이터 없음</span>",
+ s2_note:"⚠️ 인터넷에 떠도는 정확한 성별 결제 수치(예: 남 $18.50 vs 여 $12.40)는 <b>1차 출처가 없는 콘텐츠밀 사이트</b>에서 나온 것 — 여기서는 제외. 출처 추적이 가능한 연구만 사용.",
+ s3_eye:"국가 · 많은 순 → 적은 순 (상위 5, 2026년 6월)",
+ s3_h:"Poki &amp; CrazyGames 모두 미국이 1위 — 태국은 5위권 밖",
+ s3_pp:"~190M 방문/월 · 글로벌 분산",
+ s3_pc:"~102M 방문/월 · 미국 편중 큼",
+ s3_py:"~1.9M 방문/월 · 태국 서브도메인",
+ s3_note:"6–10위는 무료 % 없음. 상위 5위 바로 밖에 나타나는 이름(교차 확인) = <b>폴란드 / 프랑스</b> (Poki), <b>영국 / 호주 / 브라질</b> (CrazyGames).",
+ s4_eye:"더 의미 있는 관점 · y8.com 글로벌",
+ s4_h:"태국은 전 세계 Y8 최대 시장",
+ s4_b1l:"글로벌 y8.com에서 태국 1위", s4_b1s:"전체 트래픽의 23.5%",
+ s4_b2l:"태국발 방문/월", s4_b2s:"~7.7M의 23.5% — th.y8.com ~1.9M과 일치",
+ s4_b3l:"SEA 3개국이 상위 절반 차지", s4_b3s:"태국 + 필리핀 + 베트남 합계 ~52%",
+ s4_note:"가장 큰 태국 웹게임 오디언스는 태국 자국 포털이 아니라 <b>외국 플랫폼(Y8 / Azerion)이 서비스</b> — 우리의 오디언스 소유 논지를 뒷받침하는 시장 공백.",
+ s5_eye:"성별 · 이용자 비율 (모델링 추정치)",
+ s5_h:"태국 기반이 가장 여성 편향 — 63%",
+ s5_g1:"약간 여성", s5_g2:"남성 편향", s5_g3:"가장 여성 편향", s5_g4:"균형", s5_g4l:"y8.com 글로벌<span class='gsub'>균형</span>",
+ s5_note:"Y8은 글로벌로는 50/50 균형이지만 <b>태국 기반은 63% 여성 편향</b> → 태국 웹게임 이용자는 세계 평균보다 뚜렷하게 여성이 많아 아트 디렉션 &amp; 장르에 영향.",
+ s6_eye:"연령 · 최대 그룹만 (연령대별 유료)",
+ s6_h:"태국 기반은 예상보다 연령대 높음 — 10대가 아닌 25–34",
+ s6_a1:"최대 그룹 · 사회초년 연령", s6_a2:"최대 그룹 · 3개 중 가장 젊음", s6_a3:"최대 그룹 · 태국 기반",
+ s6_note:"<b>최대 그룹만 공개</b> — 연령대별 %(18-24 / 25-34 / … / 65+)는 Similarweb·Semrush 모두 유료이며 페이지 차트도 흐려 막대 높이를 읽을 수 없음 · 글로벌 y8.com 최대 연령대 = 18–24.",
+ s7_eye:"누가 더 결제하나 · 3개 지표 구분",
+ s7_h:"이용자 비율 ≠ 결제 금액 비율",
+ s7_th1:"지표", s7_th2:"측정 대상", s7_th3:"우위",
+ s7_r1a:"결제 비율 <br><span class='sub'>conversion</span>", s7_r1b:"폭 — 얼마나 많이 결제하나", s7_r1c1:"남성 (전 장르)", s7_r1c2:"여성 (캐주얼)",
+ s7_r2a:"ARPPU <br><span class='sub'>결제자 1인당 결제액</span>", s7_r2b:"깊이 — 결제자당 얼마", s7_r2c:"거의 동일",
+ s7_r3a:"총 매출", s7_r3b:"결제자 × ARPPU × 게임 수", s7_r3c:"남성 (전 장르)",
+ s7_note:"남성이 총 매출이 더 큰 것은 <b>더 많이 플레이하고 더 많이 결제 전환</b>하기 때문(MyTracker: 남성 ARPU ~2배, 총 매출 ~5.5배) — 1인당 더 쓰기 때문이 <b>아님</b>. 실제 결제자끼리는 ARPPU가 거의 동일.",
+ s8_eye:"장르별 답 · 캐주얼 = 여성 우위",
+ s8_h:"캐주얼 / 퍼즐 / 데코 게임 — 여성이 더 결제",
+ s8_b1l:"월 $5+ 결제자 중 여성 비율", s8_b1s:"CivicScience 2019 (미국) · 캐주얼",
+ s8_b2l:"남성보다 높은 결제 전환율", s8_b2s:"Liftoff 2018 · conversion rate",
+ s8_b3l:"여성 우위 장르: 타임매니지먼트 · 매치3 · MMORPG", s8_b3s:"MyTracker 2020",
+ s8_wh:"♀ 여성이 결제 우위인 장르", s8_w1:"매치3 · 퍼즐 · 캐주얼 · <b>시뮬레이션 / 데코</b> · 타임매니지먼트 · 소셜카지노",
+ s8_mh:"♂ 남성이 결제 우위인 장르", s8_m1:"전략 / 4X · 슈터 · 스포츠 · MOBA · 미드코어 RPG / 가챠 (대형 고래)",
+ s8_punch:"우리 장르(Tavern Deco / 캐주얼) + 태국 기반 63% 여성 → 여성이 핵심 결제자, 대형 고래가 아닌 소액 빈번 결제 패턴.",
+ s9_eye:"RO PlayZone / Tavern 시사점", s9_h:"다음으로 설계할 것",
+ s9_wh:"✓ 기반에 맞춰 설계",
+ s9_w1:"<b>소액·빈번 구매로 수익화</b> <span>— 저가 코스메틱 / 데코 가챠, 고래용 고가 팩 아님</span>",
+ s9_w2:"<b>여성 기반을 위한 아트 디렉션</b> <span>— 10대 남성이 아닌 25–34세</span>",
+ s9_w3:"<b>오디언스 소유 강화</b> <span>— 태국 기반은 여전히 외국 플랫폼(Y8)이 점유 = 공백</span>",
+ s9_mh:"⚠ 간과 금지",
+ s9_m1:"<b>웹/HTML5는 매출의 ~97–99%가 광고</b> <span>IAP 아님 → 진짜 질문은 누가 광고를 보고 리텐션되나</span>",
+ s9_m2:"<b>여성 캐주얼 기반은 리텐션 우수</b> <span>광고 매출에 유리 → 별 / 보상형 광고 설계와 부합</span>",
+ s9_m3:"<b>남성 고래 코어 기대 금지</b> <span>전략 / 가챠와 달리 — 다른 장르 프로필</span>",
+ s10_eye:"요약 &amp; 출처",
+ s10_kick:"웹게임에서 어느 성별이 더 충전하나에 대한 짧은 답:",
+ s10_big:"캐주얼 = 여성 · 전 장르 합산 = 남성",
+ s10_l1:"3개 포털 이용자 기반: 미국이 Poki/Crazy 선두 · <b>태국이 Y8 선두 · 태국 기반 63% 여성, 25–34세</b>",
+ s10_l2:"캐주얼 / 퍼즐 / 데코 → <b>여성이 더 결제</b>, 소액 빈번 구매 · 단 웹에서는 주 매출이 IAP가 아닌 광고",
+ s10_next:"출처: Similarweb · Semrush (2026년 6월) · MyTracker 2020 · Liftoff 2018 · CivicScience 2019 · Sensor Tower 2024 · Tenjin — 성별/연령은 모델링 추정치; 2026년 연령대별 % &amp; 성별 결제액은 공개 데이터 없음"
+}
+};
+
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0, lang="th";
+const dotsBox=document.getElementById('dots');
+slides.forEach((_,i)=>{const d=document.createElement('i');d.onclick=()=>show(i);dotsBox.appendChild(d);});
+function applyLang(){
+  const dict=L[lang]||L.th;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(dict[k]!==undefined) el.innerHTML=dict[k];
+  });
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang));
+}
+function setLang(l){lang=l;applyLang();try{localStorage.setItem('rpz_dg_lang',l)}catch(e){}}
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,j)=>s.classList.toggle('active',j===cur));
+  [...dotsBox.children].forEach((d,j)=>d.classList.toggle('on',j===cur));
+  document.getElementById('count').textContent=(cur+1)+' / '+slides.length;
+  document.getElementById('prev').disabled=cur===0;
+  document.getElementById('next').disabled=cur===slides.length-1;
+  document.getElementById('prog').style.width=((cur)/(slides.length-1)*100)+'%';
+}
+function go(d){show(cur+d);}
+function toggleTheme(){
+  const r=document.documentElement;
+  const cu=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.setAttribute('data-theme',cu==='dark'?'light':'dark');
+  try{localStorage.setItem('rpz_dg_theme',r.getAttribute('data-theme'))}catch(e){}
+}
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){go(1);e.preventDefault();}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(-1);e.preventDefault();}
+  else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(slides.length-1);}
+});
+function fit(){const pad=40;const s=Math.min((innerWidth-pad)/1280,(innerHeight-pad)/720);document.documentElement.style.setProperty('--s',Math.min(s,1));}
+addEventListener('resize',fit);fit();
+(function(){
+  try{const t=localStorage.getItem('rpz_dg_theme'); if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
+  try{lang=localStorage.getItem('rpz_dg_lang')||'th'}catch(e){}
+  /* [KEEP] web-publish: ภาษาจาก URL ?lang=ko / #ko ชนะ localStorage ตอนขึ้น GitHub Pages — อย่าลบ */
+  try{var _a={th:'th',en:'en',ko:'ko',kr:'ko'};var _q=(new URLSearchParams(location.search).get('lang')||location.hash.replace('#','')||'').toLowerCase();if(_a[_q])lang=_a[_q];}catch(e){}
+  applyLang();
+})();
+setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0';},4000);
+show(0);
+</script>
+</body>
+</html>
