@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- [KEEP] web-publish: กัน Google index ตอนขึ้น GitHub Pages — อย่าลบ (ไม่กระทบการเปิดดู/ทำ PDF) -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>RO PlayZone — Business Model (Gravity Game Tech · 4 languages)</title>
+<style>
+  :root{
+    --gold:#C68A1E;--gold2:#B9822B;--navy:#16305C;--blue:#2E6CB0;--sky:#14406e;--brand:#2E8BE0;--deepblue:#1E5AA8;
+    --ink:#1B2A3F;--mut:#5B6B82;--line:#DCE6F2;--card:#FFFFFF;
+    --green:#12855E;--red:#B23A2E;--purple:#6B5B95;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  body{font-family:'Segoe UI',Tahoma,'Malgun Gothic','Microsoft YaHei','Microsoft JhengHei','Noto Sans CJK',sans-serif;color:var(--ink);background:#E7F0FB}
+  .slide{height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 6.5vw;position:relative;overflow:hidden;
+    background:
+      radial-gradient(70% 55% at 10% 6%, rgba(46,139,224,.14) 0%, transparent 55%),
+      radial-gradient(65% 60% at 94% 96%, rgba(22,48,92,.16) 0%, transparent 52%),
+      radial-gradient(55% 48% at 90% 2%, rgba(120,180,240,.12) 0%, transparent 55%),
+      radial-gradient(60% 50% at 4% 92%, rgba(70,139,224,.10) 0%, transparent 55%),
+      linear-gradient(158deg,#FBFDFF 0%,#EEF5FE 40%,#DCE9FA 74%,#CFE0F6 100%);}
+  .slide::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.55;
+    background-image:radial-gradient(rgba(30,90,168,.08) 1px, transparent 1.5px);background-size:23px 23px;
+    -webkit-mask-image:radial-gradient(130% 100% at 50% 30%,#000 55%,transparent 100%);mask-image:radial-gradient(130% 100% at 50% 30%,#000 55%,transparent 100%)}
+  .slide::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;pointer-events:none;z-index:5;
+    background:linear-gradient(90deg,#2E8BE0 0%,#1E5AA8 55%,#16305C 100%)}
+  .frame{position:absolute;inset:20px;border:1px solid rgba(46,108,176,.16);border-radius:16px;pointer-events:none;z-index:1;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 1px 4px rgba(20,48,92,.05)}
+  .orbit{position:absolute;pointer-events:none;z-index:0;opacity:.55}
+  .ggt{position:absolute;bottom:24px;left:6.5vw;z-index:4;pointer-events:none;filter:drop-shadow(0 2px 5px rgba(20,48,92,.14))}
+  .content{position:relative;z-index:2;max-width:1000px;margin:0 auto;width:100%}
+  .badge{font-size:12.5px;font-weight:800;letter-spacing:3px;color:var(--navy);text-transform:uppercase;margin-bottom:14px}
+  .kick{font-size:14px;font-weight:800;color:var(--brand);letter-spacing:1px;margin-bottom:8px}
+  h1{font-size:clamp(30px,5.2vw,60px);font-weight:800;line-height:1.08;color:var(--sky);letter-spacing:-.5px}
+  h1 .g{color:var(--brand)}
+  h2{font-size:clamp(21px,3.1vw,37px);font-weight:800;color:var(--deepblue);margin-bottom:2.2vh}
+  .sub{font-size:clamp(15px,1.7vw,21px);color:#34435a;margin-top:14px;line-height:1.5;max-width:66ch;font-weight:500}
+  .hero{font-size:clamp(44px,8vw,100px);font-weight:800;color:var(--deepblue);letter-spacing:-2px;line-height:1}
+  .hero small{font-size:.32em;color:#64748b;font-weight:700}
+  .row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:2vh}
+  .col{flex:1;min-width:250px}
+  .card,.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:0 12px 30px -10px rgba(20,48,92,.22),0 2px 6px rgba(20,48,92,.06)}
+  .stat .n{font-size:clamp(26px,3.7vw,44px);font-weight:800;color:var(--navy);letter-spacing:-1px}
+  .stat .l{font-size:14px;color:var(--mut);margin-top:6px;font-weight:600;line-height:1.4}
+  .green{color:var(--green)!important}.red{color:var(--red)!important}
+  .tag{display:inline-block;font-size:13px;font-weight:700;padding:6px 14px;border-radius:30px;background:#EAF2FB;color:var(--deepblue);border:1px solid rgba(46,108,176,.28)}
+  ul{margin-left:20px}li{margin:11px 0;font-size:clamp(15px,1.85vw,21px);line-height:1.4;color:#23324a;font-weight:500}
+  li b{color:var(--deepblue)}
+  .lgd{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:14px;font-weight:600;color:var(--ink)}
+  .lgd i{width:14px;height:14px;border-radius:3px;display:inline-block;margin-right:7px;vertical-align:-2px}
+  .note{font-size:13px;color:#6b7890;margin-top:14px;font-style:italic}
+  .pageno{position:absolute;bottom:30px;right:6.5vw;font-size:12.5px;color:#7089a8;font-weight:800;z-index:3;letter-spacing:1px}
+  .navbtn{position:fixed;top:16px;right:18px;z-index:60;background:rgba(255,255,255,.92);color:var(--deepblue);border:1px solid var(--deepblue);border-radius:9px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(20,48,92,.12)}
+  .langbar{position:fixed;top:16px;left:18px;z-index:60;display:flex;gap:5px;background:rgba(255,255,255,.92);border:1px solid rgba(30,90,168,.25);border-radius:10px;padding:4px;box-shadow:0 2px 8px rgba(20,48,92,.12)}
+  .langbar button{border:none;background:transparent;color:var(--deepblue);font-weight:700;font-size:13px;padding:5px 10px;border-radius:7px;cursor:pointer;font-family:inherit}
+  .langbar button.on{background:var(--deepblue);color:#fff}
+  .dots{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:8px}
+  .dots b{width:9px;height:9px;border-radius:50%;background:rgba(30,90,168,.35);cursor:pointer;transition:.2s}
+  .dots b.on{background:var(--deepblue);width:26px;border-radius:5px}
+  .poring{position:absolute;z-index:2}
+  svg{max-width:100%;height:auto;display:block}
+  .cmp{width:100%;border-collapse:separate;border-spacing:0;margin-top:1.8vh;font-size:clamp(12px,1.5vw,17px);border-radius:14px;overflow:hidden;box-shadow:0 14px 34px -12px rgba(20,48,92,.3),0 2px 8px rgba(20,48,92,.08);border:1px solid #D5E1F0}
+  .cmp th,.cmp td{padding:12px 16px;text-align:left;vertical-align:middle;line-height:1.4}
+  .cmp thead th{background:var(--navy);color:#fff;font-weight:800;font-size:clamp(13px,1.65vw,18px);letter-spacing:.3px}
+  .cmp thead th.ro{background:linear-gradient(180deg,#1AA372,#12855E);color:#fff;border-left:2px solid #0c6b47}
+  .cmp tbody td{border-top:1px solid #E6EEF8;color:#45566e}
+  .cmp tbody tr:nth-child(even) td{background:#F4F8FD}
+  .cmp tbody td.dim{background:#DEE9F7;color:var(--navy);font-weight:800;border-right:1px solid #CDDCEF}
+  .cmp tbody tr:nth-child(even) td.dim{background:#D6E3F4}
+  .cmp tbody td.ro{background:#E6F4EC;color:#0b5e3f;font-weight:700;border-left:2px solid #12855E}
+  .cmp tbody tr:nth-child(even) td.ro{background:#D8EEE1}
+  /* [KEEP] slide animation: fade+slide-up (stagger) + chart wipe on enter · toggled off cleanly for print/reduced-motion below */
+  /* --- entrance animation: fade + slide-up (stagger) + chart wipe --- */
+  .slide .content>*{opacity:0;transform:translateY(28px);
+    transition:opacity .6s ease,transform .7s cubic-bezier(.22,.61,.36,1);
+    transition-delay:calc(var(--d,0)*1ms)}
+  .slide.in .content>*{opacity:1;transform:none}
+  .slide .content svg{clip-path:inset(0 100% 0 0);
+    transition:clip-path 1.05s cubic-bezier(.22,.61,.36,1);transition-delay:.28s}
+  /* wipe direction variants (start state) — default = left→right */
+  .slide:not(.in) .content svg.wipe-r{clip-path:inset(0 0 0 100%)}   /* right→left */
+  .slide:not(.in) .content svg.wipe-up{clip-path:inset(100% 0 0 0)}  /* grow up from bottom */
+  .slide:not(.in) .content svg.wipe-down{clip-path:inset(0 0 100% 0)}/* top→down */
+  .slide.in .content svg{clip-path:inset(0 0 0 0)}
+  /* --- eye toggle + hide chrome (langbar / PDF / Fullscreen) --- */
+  .navbtn,.langbar{transition:opacity .3s ease,transform .3s ease}
+  .eyeBtn{right:18px;display:inline-flex;align-items:center;justify-content:center;padding:7px 9px}
+  .eyeBtn svg{width:18px;height:18px}
+  body.chrome-hidden .langbar,body.chrome-hidden .pdfbtn,body.chrome-hidden .fsbtn{opacity:0;transform:translateY(-10px);pointer-events:none}
+  @media (prefers-reduced-motion:reduce){
+    .slide .content>*,.slide .content svg{opacity:1!important;transform:none!important;clip-path:none!important;transition:none!important}}
+  @media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .navbtn,.dots,.langbar{display:none}
+    .slide .content>*,.slide .content svg{opacity:1!important;transform:none!important;clip-path:none!important}
+    .slide{page-break-after:always}}
+</style>
+</head>
+<body>
+<div class="langbar" id="langbar">
+  <button data-lang="th" class="on">ไทย</button>
+  <button data-lang="en">EN</button>
+  <button data-lang="ko">한국어</button>
+  <button data-lang="zh">中文</button>
+</div>
+<button class="navbtn pdfbtn" style="right:285px" onclick="window.print()">⤓ PDF</button>
+<button class="navbtn fsbtn" style="right:150px" onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen()}else{document.exitFullscreen()}">⛶ Fullscreen</button>
+<button class="navbtn eyeBtn" id="eyeBtn" title="ซ่อน/แสดงเมนู (กด H)" aria-label="toggle menu"></button>
+<div class="dots" id="dots"></div>
+
+<!-- 1 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="kick" data-i18n="s1kick">⚔ New Web-Game Platform Model</div>
+    <h1 data-i18n="s1h1">นี่คือ Business Model<br><span class="g">ของเว็บเกม</span></h1>
+    <p class="sub" data-i18n="s1sub">ตลาดเว็บเกมทำเงินยังไง · 2 เจ้าใหญ่ทำแบบไหน · และทำไม <b>เราทำได้มากกว่า — เพราะเราเป็น RO</b></p>
+    <div style="margin-top:4vh"><span class="tag">Poki</span> &nbsp; <span class="tag">CrazyGames</span> &nbsp; <span class="tag" style="background:rgba(217,164,65,.9);color:#4a3410;border-color:#b9822b">→ RO PlayZone</span></div>
+  </div>
+  <div class="poring" style="bottom:6vh;right:7vw" id="por1"></div>
+  <div class="pageno">1 / 12</div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s2badge">01 · ตลาด</div>
+    <h2 data-i18n="s2h2">เว็บเกมไม่ใช่ตลาดเล็ก — และยังโต</h2>
+    <div class="row">
+      <div class="col stat"><div class="n">137M</div><div class="l" data-i18n="s2l1"><b>Poki</b> visits/เดือน · 100M+ MAU</div></div>
+      <div class="col stat"><div class="n">50M+</div><div class="l" data-i18n="s2l2"><b>CrazyGames</b> monthly players 2026</div></div>
+      <div class="col stat"><div class="n">$6.02B</div><div class="l" data-i18n="s2l3"><b>HTML5/เว็บเกม</b> market 2026 → $10.42B (2035)</div></div>
+    </div>
+    <p class="sub" data-i18n="s2sub">รายได้หลัก = <b>โฆษณา</b> + แบ่งรายได้กับนักพัฒนา · เล่นบนเบราว์เซอร์ ไม่ต้องติดตั้ง = แรงเสียดทานต่ำ ฐานคนกว้าง</p>
+    <p class="note" data-i18n="s2note">ที่มา: Similarweb / Semrush / PocketGamer.biz</p>
+  </div>
+  <div class="pageno">2 / 12</div>
+</section>
+
+<!-- GROWTH (new) -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="sGbadge">01½ · เติบโต 10 ปี</div>
+    <h2 data-i18n="sGh2">โต 10 ปี — แต่ “คัด + เป็นเจ้าของคน” เท่านั้นที่รอด</h2>
+    <div class="card">
+      <svg viewBox="0 0 720 300" role="img" aria-label="10-year growth trajectory of Poki, CrazyGames and Y8" style="width:100%;max-height:36vh">
+        <line x1="52" y1="30" x2="52" y2="250" stroke="#CFE0C6" stroke-width="1.5"/>
+        <text x="50" y="20" font-size="10.5" font-weight="700" fill="#5a6b4a" data-i18n="sGunit">หน่วย: ล้าน visits/ผู้เล่น ต่อเดือน (ไม่ใช่เงิน)</text>
+        <line x1="52" y1="250" x2="648" y2="250" stroke="#9ab38a" stroke-width="1.5"/>
+        <line x1="52" y1="36" x2="648" y2="36" stroke="#CFE0C6" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="52" y1="143" x2="648" y2="143" stroke="#CFE0C6" stroke-width="1" stroke-dasharray="3 4"/>
+        <g font-size="11" fill="#5a6b4a" text-anchor="end"><text x="46" y="40">100M</text><text x="46" y="147">50M</text><text x="46" y="254">0</text></g>
+        <g font-size="11" fill="#5a6b4a" text-anchor="middle"><text x="64" y="270">2015</text><text x="178" y="270">2018</text><text x="293" y="270">2020</text><text x="407" y="270">2022</text><text x="521" y="270">2024</text><text x="636" y="270">2026</text></g>
+        <polyline points="64,243.6 178,228.6 521,175.1 636,46.7" fill="none" stroke="#12855E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="293,228.6 407,202.9 521,140.9 636,36" fill="none" stroke="#2E6CB0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="178,36 521,222.2 636,235" fill="none" stroke="#B23A2E" stroke-width="3" stroke-dasharray="7 4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="636" cy="36" r="4.5" fill="#2E6CB0"/><circle cx="636" cy="46.7" r="4.5" fill="#12855E"/><circle cx="636" cy="235" r="4.5" fill="#B23A2E"/>
+        <circle cx="64" cy="243.6" r="3" fill="#12855E"/><circle cx="293" cy="228.6" r="3" fill="#2E6CB0"/><circle cx="178" cy="36" r="3.5" fill="#B23A2E"/>
+        <g font-weight="700" font-size="11"><text x="60" y="238" text-anchor="end" fill="#0c6b47">3M</text><text x="293" y="221" text-anchor="middle" fill="#2E6CB0">10M</text><text x="178" y="28" text-anchor="middle" fill="#B23A2E">~100M</text></g>
+        <g font-weight="800" font-size="12"><text x="646" y="34" fill="#2E6CB0">Poki 100M</text><text x="646" y="52" fill="#0c6b47">Crazy 95M</text><text x="646" y="238" fill="#B23A2E">Y8 7M</text></g>
+        <g><rect x="74" y="150" width="230" height="50" rx="7" fill="#FBF6E9" stroke="#D9A441" stroke-dasharray="4 3" stroke-width="1.3"/><text x="86" y="170" font-size="11" font-weight="800" fill="#B9822B" data-i18n="sGwx">WeChat จีน — รายได้ คนละสเกล</text><text x="86" y="188" font-size="10.5" font-weight="700" fill="#5a6b4a">$7.65B → $9.72B · 500M+ MAU</text></g>
+      </svg>
+      <div class="lgd">
+        <span><i style="background:#2E6CB0"></i>Poki <b data-i18n="sGp">▲ โต ~10 เท่า</b></span>
+        <span><i style="background:#12855E"></i>CrazyGames <b data-i18n="sGc">▲ โตต่อเนื่อง</b></span>
+        <span><i style="background:#B23A2E"></i>Y8 <b class="red" data-i18n="sGy">▼ หด 93%</b></span>
+      </div>
+    </div>
+    <p class="sub" data-i18n="sGsub">ผู้ชนะโต ~10 เท่า ด้วย <b>คัดเกม + ผูกใจ dev + เป็นเจ้าของฐานคน</b> · <b>Y8 หด 93%</b> เพราะแค่รวมเกม + พึ่ง SEO → ยืนยันว่า <b>โมเดล “คัด + RO + เจ้าของคน” ของเราถูกทาง</b></p>
+    <p class="note" data-i18n="sGnote">ประมาณการจาก milestone (Similarweb / Dealroom / GamesBeat) — เทียบ “รูปทรง” การเติบโต 2015–2026</p>
+  </div>
+  <div class="pageno">3 / 12</div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s3badge">02 · 2 เจ้าใหญ่ทำเงินยังไง</div>
+    <h2 data-i18n="s3h2">Poki &amp; CrazyGames — แพลตฟอร์มล้วน แบ่งกับ dev</h2>
+    <div class="card">
+      <svg viewBox="0 0 700 210" role="img" class="wipe-r">
+        <text x="0" y="18" font-size="15" font-weight="700" fill="#22331f" data-i18n="s3svg">ส่วนแบ่งรายได้ (ตัวอย่าง)</text>
+        <text x="0" y="60" font-size="15" font-weight="700" fill="#22331f">Poki</text>
+        <rect x="130" y="43" width="285" height="28" rx="5" fill="#12855E"/><rect x="419" y="43" width="285" height="28" rx="5" fill="#a9b39a"/>
+        <text x="272" y="62" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">Dev 50%</text><text x="561" y="62" font-size="13" fill="#333" text-anchor="middle" font-weight="700">Platform 50%*</text>
+        <text x="0" y="115" font-size="15" font-weight="700" fill="#22331f">Crazy·Ads</text>
+        <rect x="130" y="98" width="342" height="28" rx="5" fill="#12855E"/><rect x="476" y="98" width="228" height="28" rx="5" fill="#a9b39a"/>
+        <text x="301" y="117" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">Dev 60%</text><text x="590" y="117" font-size="13" fill="#333" text-anchor="middle" font-weight="700">Platform 40%</text>
+        <text x="0" y="170" font-size="15" font-weight="700" fill="#22331f">Crazy·IAP</text>
+        <rect x="130" y="153" width="399" height="28" rx="5" fill="#12855E"/><rect x="533" y="153" width="171" height="28" rx="5" fill="#a9b39a"/>
+        <text x="329" y="172" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">Dev 70%</text><text x="618" y="172" font-size="13" fill="#333" text-anchor="middle" font-weight="700">Platform 30%</text>
+        <text x="130" y="203" font-size="12" fill="#5a6b4a" data-i18n="s3foot">* Poki: 100% ถ้า dev พาคนมาเอง / 50% ถ้ามาจาก Poki</text>
+      </svg>
+    </div>
+    <p class="sub" data-i18n="s3sub"><b>เขามีแค่ "ชั้นเดียว" = ค่าแพลตฟอร์ม</b> · ไม่มี IP ของตัวเอง ไม่มีฐานคนเฉพาะ ไม่มีของแลกนอกเกม</p>
+  </div>
+  <div class="pageno">4 / 12</div>
+</section>
+
+<!-- 3½ COMPARE · Poki/Crazy/ROPZ (merged) -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="cdbadge">02½ · เทียบคู่แข่ง</div>
+    <h2 data-i18n="cdh2">จุดต่าง — Poki / Crazy / RO PlayZone</h2>
+    <table class="cmp">
+      <colgroup><col style="width:20%"><col style="width:23%"><col style="width:23%"><col style="width:34%"></colgroup>
+      <thead><tr><th></th><th>Poki</th><th>Crazy Games</th><th class="ro">RO PlayZone</th></tr></thead>
+      <tbody>
+        <tr><td class="dim" data-i18n="cp_d4">IP / ความคุ้นเคย</td><td data-i18n="cp_p4">ไม่มี IP</td><td data-i18n="cp_c4">ไม่มี IP</td><td class="ro" data-i18n="cp_o4">IP RO</td></tr>
+        <tr><td class="dim" data-i18n="cp_d1">เล่นแล้วได้อะไร</td><td data-i18n="cp_p1">ไม่ได้อะไรกลับ</td><td data-i18n="cp_c1">ไม่ได้อะไรกลับ</td><td class="ro" data-i18n="cp_o1">สะสม Poring Coin ทุกการเล่น → แลกของจริง/คูปองนอกเกม</td></tr>
+        <tr><td class="dim" data-i18n="cp_d3">เหตุผลกลับมาเล่น</td><td data-i18n="cp_p3">เล่นจบก็จบ</td><td data-i18n="cp_c3">เล่นจบก็จบ</td><td class="ro" data-i18n="cp_o3">มีเกมหลัก + แลกของรางวัล</td></tr>
+        <tr><td class="dim" data-i18n="cp_d6">การค้นเจอเกม</td><td data-i18n="cp_p6">~1,500 เกม · ไม่มี favorite native</td><td data-i18n="cp_c6">~4,500 เกม · เกมเยอะ หาของใหม่ยาก</td><td class="ro" data-i18n="cp_o6">คัดแล้ว 50 + Favorite + personalized</td></tr>
+        <tr><td class="dim" data-i18n="cd_d2">Asset / เครื่องมือ</td><td data-i18n="cd_p2">ไม่แจก (ทำเอง)</td><td data-i18n="cd_c2">ไม่แจก (ทำเอง)</td><td class="ro" data-i18n="cd_o2">Asset Pack + Build Kit</td></tr>
+        <tr><td class="dim" data-i18n="cd_d1">ผูกขาด</td><td data-i18n="cd_p1">web-exclusive 7 ปี</td><td data-i18n="cd_c1">—</td><td class="ro" data-i18n="cd_o1">ไม่ผูกขาด</td></tr>
+      </tbody>
+    </table>
+    <p class="note" data-i18n="cdnote">ตรงไปตรงมา: Poki/Crazy = scale พิสูจน์แล้ว · ROPZ = ยังใหม่/cold-start · จุดแข็งเรา = ช่องว่างที่เขาทิ้ง ไม่ใช่ scale</p>
+  </div>
+  <div class="pageno">5 / 12</div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s4badge">03 · จุดต่างของเรา</div>
+    <h2 data-i18n="s4h2">เราเก็บได้ 3 ชั้น เพราะเราเป็น RO</h2>
+    <div class="row">
+      <div class="col card">
+        <div class="kick" style="color:#8a7f5f" data-i18n="s4ka">เจ้าใหญ่ (Poki/Crazy)</div>
+        <svg viewBox="0 0 300 200" role="img" class="wipe-up">
+          <rect x="20" y="145" width="260" height="45" rx="7" fill="#2E6CB0"/><text x="150" y="173" font-size="15" fill="#fff" text-anchor="middle" font-weight="800">Platform Fee</text>
+          <text x="150" y="125" font-size="14" fill="#5a6b4a" text-anchor="middle" data-i18n="s4a1">= 1 ชั้น</text>
+        </svg>
+      </div>
+      <div class="col card">
+        <div class="kick">RO PlayZone</div>
+        <svg viewBox="0 0 300 200" role="img" class="wipe-up">
+          <rect x="20" y="145" width="260" height="45" rx="7" fill="#2E6CB0"/><text x="150" y="173" font-size="15" fill="#fff" text-anchor="middle" font-weight="800">Platform Fee</text>
+          <rect x="20" y="94" width="260" height="45" rx="7" fill="#6B5B95"/><text x="150" y="122" font-size="15" fill="#fff" text-anchor="middle" font-weight="800">+ IP Royalty (RO)</text>
+          <rect x="20" y="43" width="260" height="45" rx="7" fill="#12855E"/><text x="150" y="71" font-size="14" fill="#fff" text-anchor="middle" font-weight="800">+ Coupon / Ecosystem</text>
+          <text x="150" y="26" font-size="14" fill="#B9822B" text-anchor="middle" font-weight="700" data-i18n="s4b3">= 3 ชั้น</text>
+        </svg>
+      </div>
+    </div>
+    <p class="sub" data-i18n="s4sub"><b>IP Royalty</b> — เก็บเพิ่มเมื่อเกมใช้ RO (Poki ไม่มี IP) · <b>Coupon</b> — ดึงคนนอกวงเกม · <b>Ecosystem</b> — ป้อนเข้าเกม RO อื่น</p>
+  </div>
+  <div class="pageno">6 / 12</div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s5badge">04 · เรตแบ่งรายได้</div>
+    <h2 data-i18n="s5h2">เรตขึ้นกับ "ใครพาคนมา" — ยิ่งเราหาคน เราเก็บมากขึ้น</h2>
+    <div class="card">
+      <svg viewBox="0 0 720 250" role="img">
+        <text x="0" y="43" font-size="15" font-weight="800" fill="#1B2A3F">Ads</text>
+        <text x="0" y="59" font-size="11" font-weight="700" fill="#2E6CB0" data-i18n="s5_ropzby">ROPZ พามา</text>
+        <rect x="150" y="28" width="275" height="28" rx="5" fill="#12855E"/><rect x="425" y="28" width="275" height="28" rx="5" fill="#2E6CB0"/>
+        <text x="287" y="47" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">Dev 50%</text><text x="562" y="47" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">ROPZ 50%</text>
+        <text x="0" y="103" font-size="15" font-weight="800" fill="#1B2A3F">IAP</text>
+        <text x="0" y="119" font-size="11" font-weight="700" fill="#2E6CB0" data-i18n="s5_ropzby">ROPZ พามา</text>
+        <rect x="150" y="88" width="330" height="28" rx="5" fill="#12855E"/><rect x="480" y="88" width="192.5" height="28" rx="5" fill="#2E6CB0"/><rect x="672.5" y="88" width="27.5" height="28" rx="5" fill="#a9b39a"/>
+        <text x="315" y="107" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">Dev 60%</text><text x="576" y="107" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">ROPZ 35%</text>
+        <text x="0" y="163" font-size="15" font-weight="800" fill="#1B2A3F">Ads</text>
+        <text x="0" y="179" font-size="11" font-weight="700" fill="#12855E" data-i18n="s5_devby">Dev พามา</text>
+        <rect x="150" y="148" width="467.5" height="28" rx="5" fill="#12855E"/><rect x="617.5" y="148" width="82.5" height="28" rx="5" fill="#2E6CB0"/>
+        <text x="383" y="167" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">Dev 85%</text><text x="658" y="167" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">15%</text>
+        <text x="0" y="223" font-size="15" font-weight="800" fill="#1B2A3F">IAP</text>
+        <text x="0" y="239" font-size="11" font-weight="700" fill="#12855E" data-i18n="s5_devby">Dev พามา</text>
+        <rect x="150" y="208" width="412.5" height="28" rx="5" fill="#12855E"/><rect x="562.5" y="208" width="110" height="28" rx="5" fill="#2E6CB0"/><rect x="672.5" y="208" width="27.5" height="28" rx="5" fill="#a9b39a"/>
+        <text x="356" y="227" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">Dev 75%</text><text x="617" y="227" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">ROPZ 20%</text>
+      </svg>
+      <div class="lgd"><span><i style="background:#12855E"></i><span data-i18n="s5lg1">ส่วนพาร์ตเนอร์ (dev)</span></span><span><i style="background:#2E6CB0"></i><span data-i18n="s5lg2">ส่วนเรา (ROPZ)</span></span><span><i style="background:#a9b39a"></i><span data-i18n="s5lg3">payment gateway ~5%</span></span></div>
+    </div>
+    <p class="note" data-i18n="s5note">ROPZ พามา = default (~90% ช่วงแรก) เราเก็บเยอะ · Dev พามา = ให้ dev เยอะเพื่อจูงใจ (ไม่มีต้นทุนดึงผู้ใช้ · CAC=0) · เกม RO ยังมี IP royalty (T0-T4) ซ้อนอีกชั้น</p>
+  </div>
+  <div class="pageno">7 / 12</div>
+</section>
+
+<!-- 6½ ATTRIBUTION (game-scoped) -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="sAbadge">04½ · Attribution</div>
+    <h2 data-i18n="sAh2">แต่ละเกมนับแยก — dev ได้เรตเฉพาะเกมที่ตัวเองพามา</h2>
+    <div class="row">
+      <div class="col card"><p data-i18n="sAc1">🔗 <b>Ref ผูกเกม</b> — 1 ลิงก์ = 1 เกม · dev มี 5 เกม = 5 ลิงก์ (เซ็น HMAC กันปลอม)</p></div>
+      <div class="col card"><p data-i18n="sAc2">🎯 <b>First-touch ต่อเกม</b> — นับแหล่งที่มาแบบ user × game ไม่ใช่ต่อ account</p></div>
+      <div class="col card"><p data-i18n="sAc3">✅ <b>ไม่ leak ข้ามเกม</b> — dev ได้เรตเฉพาะเกมที่พามา · เล่นเกมอื่น/ROPZ = คิดแยก</p></div>
+    </div>
+    <p class="sub" data-i18n="sAsub"><b>Game-scoped</b> = ยุติธรรม จ่ายเฉพาะที่ทำจริง รองรับหลายเกมพร้อมกัน · ผ่าน fraud gate → จ่ายเฉพาะ quality user (net-30/60)</p>
+    <p class="note" data-i18n="sAnote">ที่มา: ROPZ Attribution Rev-Share Spec v0.2 (game-scoped)</p>
+  </div>
+  <div class="pageno">8 / 12</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s6badge">05 · ข้อได้เปรียบของเรา</div>
+    <h2 data-i18n="s6h2">⚔ 3 อย่างที่ Poki ลอกไม่ได้</h2>
+    <ul>
+      <li data-i18n="s6li1">👑 <b>RO IP</b> — เก็บ royalty เพิ่มได้ + ดึงแฟน RO เข้ามาถูก (Poki ไม่มี IP ให้เก็บ)</li>
+      <li data-i18n="s6li2">🎟️ <b>คูปอง B2B</b> — ดึง "คนไม่เล่นเกม" ด้วยส่วนลดของจริง (partner จ่ายค่าดึงคนให้ → ต้นทุนดึงผู้ใช้ของเรา (CAC) ≈ 0)</li>
+      <li data-i18n="s6li3">🔁 <b>Owned ecosystem</b> — เป็นเจ้าของคน → ป้อนเข้าเกม RO อื่นซ้ำได้ (Poki = เช่าคนครั้งเดียว)</li>
+    </ul>
+    <p class="sub" style="margin-top:2vh" data-i18n="s6sub"><b>RO PlayZone = แพลตฟอร์ม + IP + ฐานคน ที่คู่แข่งลอกไม่ได้</b> (moat = กำแพงกันคู่แข่งที่ลอกไม่ได้)</p>
+    <p class="note" data-i18n="s7note">รายละเอียดเต็มในไฟล์ RO_PlayZone_Partner_PnL_v0.1_TH_260709.xlsx (TH) · _KR_260713.xlsx (เกาหลี)</p>
+  </div>
+  <div class="pageno">9 / 12</div>
+</section>
+
+<!-- 5½ CAPITAL EFFICIENCY (new) -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="sKbadge">05½ · เราลงทุนยังไง</div>
+    <h2 data-i18n="sKh2">ก่อน → หลัง — หยุดจ่ายอะไร แล้วได้ moat อะไรมา</h2>
+    <div class="row">
+      <div class="col card">
+        <div class="kick" style="color:#B23A2E" data-i18n="sKk1">โมเดลเดิม — Cost ที่เราแบกเอง</div>
+        <ul style="margin-top:6px">
+          <li data-i18n="sKa1">💸 จ้าง outsource 50 มินิเกม = <b>เงินก้อนจ่ายล่วงหน้า</b></li>
+          <li data-i18n="sKa2">🎮 สร้าง Main Game เต็มรูป = <b>คน + เวลาหลายเดือน</b></li>
+          <li data-i18n="sKa3">⚠️ แบกเสี่ยง build เอง + <b>คอขวดทีม 12 คนที่ Game Design</b></li>
+        </ul>
+      </div>
+      <div class="col card">
+        <div class="kick" style="color:#12855E" data-i18n="sKk2">โมเดลใหม่ — ไม่เสีย + ได้ moat</div>
+        <ul style="margin-top:6px">
+          <li data-i18n="sKb1">✅ <b>ไม่จ่าย outsource</b> — partner ลงเกม revshare (ต้นทุนสร้าง ≈ 0)</li>
+          <li data-i18n="sKb2">✅ Main Game หด <b>casual ทำเอง</b> (base จาก prototype) ถูก+เร็ว · dev แบกเสี่ยง</li>
+          <li data-i18n="sKb3">🏆 ได้ <b>Portal + attribution + audience RO/SEA</b> (Poki ไม่มี) + ขยายไม่จำกัด</li>
+          <li data-i18n="sKb4">🔧 ทำโมเดลนี้ = ปรับ Main Game ให้ระบบน้อยลง → เอาแรงไปทำระบบใน Portal</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:2vh;border-top:1px solid rgba(30,90,168,.25);padding-top:1.6vh" data-i18n="sKbridge">เริ่มเล็กก่อน — ใช้บริษัทในเครือ + Main Game ดึง partner เข้ามา → เห็นผลจริงค่อยลงทุนเต็ม · <b>หัวใจคือ ฐานคน ไม่ใช่เงินที่ทุ่มสร้างเกม</b></p>
+  </div>
+  <div class="pageno">10 / 12</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s7badge">06 · ผลลัพธ์ (จำลอง)</div>
+    <div class="row" style="align-items:center">
+      <div class="col">
+        <div class="kick" data-i18n="s7kick">รายได้/ปี · พอร์ต 51 เกม (50 มินิ + Main Game 1)</div>
+        <div class="hero" data-i18n="s7hero">฿55<small>M</small></div>
+        <p class="sub" data-i18n="s7sub">50 มินิเกม ~฿35M + Main Game ~฿20M ≈ gross ฿55M/ปี · illustrative</p>
+      </div>
+      <div class="col">
+        <div class="stat" style="margin-bottom:12px"><div class="n" data-i18n="s7n1">~฿35M</div><div class="l" data-i18n="s7l1">50 มินิเกม (ads+IAP)</div></div>
+        <div class="stat"><div class="n" data-i18n="s7n2">~฿20M</div><div class="l" data-i18n="s7l2">Main Game 1 (เกมธง)</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">11 / 12</div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="frame"></div>
+  <div class="content">
+    <div class="badge" data-i18n="s8badge">Takeaway</div>
+    <h2 data-i18n="s8h2">⚔ สรุป</h2>
+    <ul>
+      <li data-i18n="s8li1">ตลาดเว็บเกมใหญ่+โต · เจ้าใหญ่ทำเงินจาก <b>ค่าแพลตฟอร์มชั้นเดียว</b></li>
+      <li data-i18n="s8li2"><b>เราทำได้มากกว่า เพราะเป็น RO</b> → เก็บ 3 ชั้น (Platform + IP Royalty + Coupon/Ecosystem)</li>
+      <li data-i18n="s8li3">เรตแบ่งตาม <b>ใครพาคนมา</b> — เราหาคนเองได้เยอะ · เกม RO ได้ royalty เพิ่ม (T0-T4)</li>
+      <li data-i18n="s8li4">ผล: <b>฿45.65M/ปี</b> · ต้นทุนดึงผู้ใช้ (CAC) ≈ 0 · กำแพงกันคู่แข่ง (moat) ที่ลอกไม่ได้ — <b>validate ด้วย pilot ก่อน scale</b></li>
+    </ul>
+    <p class="sub" data-i18n="s8close" style="margin-top:2.4vh;border-top:1px solid rgba(30,90,168,.25);padding-top:1.8vh">จากข้อมูลที่เราหามา — เว็บเกมไม่ได้พัฒนาเกมเอง แต่เปิดแพลตฟอร์มให้ผู้พัฒนา (ทั้งบริษัทและบุคคล) สร้างเกมและหารายได้ด้วยตัวเอง = <b>Win-Win ทั้ง 2 ฝ่าย</b></p>
+  </div>
+  <div class="poring" style="bottom:5.5vh;right:7vw" id="por8"></div>
+  <div class="pageno">12 / 12</div>
+</section>
+
+<script>
+  window.GGT=function(h){return '<svg style="height:'+h+'px;width:auto;display:block" viewBox="0 0 232 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gravity Game Tech"><circle cx="30" cy="30" r="20" fill="none" stroke="#D7E6F7" stroke-width="5.5"/><path d="M40 12.68 A20 20 0 1 1 11.2 23.2" fill="none" stroke="#2E8BE0" stroke-width="5.5" stroke-linecap="round"/><path d="M11.2 23.2 A20 20 0 0 1 40 12.68" fill="none" stroke="#16305C" stroke-width="5.5" stroke-linecap="round"/><circle cx="40" cy="12.68" r="4.6" fill="#16305C"/><text x="70" y="33" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="800" letter-spacing="0.4" fill="#16305C">GRAVITY</text><text x="71" y="49" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" font-weight="700" letter-spacing="5.2" fill="#2E8BE0">GAME TECH</text></svg>';};
+  window.ORBIT='<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto"><circle cx="200" cy="200" r="188" fill="none" stroke="#BFD6F1" stroke-width="1.5"/><circle cx="200" cy="200" r="150" fill="none" stroke="#CFE0F5" stroke-width="2.5"/><circle cx="200" cy="200" r="108" fill="none" stroke="#D9E7F8" stroke-width="2" stroke-dasharray="2 10"/><circle cx="200" cy="200" r="66" fill="none" stroke="#E2ECFA" stroke-width="1.5"/><circle cx="388" cy="200" r="9" fill="#A9C8EE"/><circle cx="200" cy="50" r="6" fill="#BFD6F1"/><circle cx="92" cy="200" r="5" fill="#CFE0F5"/><circle cx="266" cy="330" r="4" fill="#D9E7F8"/></svg>';
+
+  const I18N={
+    th:{sGbadge:"01½ · เติบโต 10 ปี",sGh2:"โต 10 ปี — แต่ “คัด + เป็นเจ้าของคน” เท่านั้นที่รอด",sGp:"▲ โต ~10 เท่า",sGc:"▲ โตต่อเนื่อง",sGy:"▼ หด 93%",sGsub:'ผู้ชนะโต ~10 เท่า ด้วย <b>คัดเกม + ผูกใจ dev + เป็นเจ้าของฐานคน</b> · <b>Y8 หด 93%</b> เพราะแค่รวมเกม + พึ่ง SEO → ยืนยันว่า <b>โมเดล “คัด + RO + เจ้าของคน” ของเราถูกทาง</b>',sGnote:"ประมาณการจาก milestone (Similarweb / Dealroom / GamesBeat) — เทียบ “รูปทรง” การเติบโต 2015–2026",sGwx:"WeChat จีน — รายได้ คนละสเกล",sGunit:"หน่วย: ล้าน visits/ผู้เล่น ต่อเดือน (ไม่ใช่เงิน)",
+      s1kick:"⚔ New Web-Game Platform Model",s1h1:'นี่คือ Business Model<br><span class="g">ของเว็บเกม</span>',s1sub:'ตลาดเว็บเกมทำเงินยังไง · 2 เจ้าใหญ่ทำแบบไหน · และทำไม <b>เราทำได้มากกว่า — เพราะเราเป็น RO</b>',
+      s2badge:"01 · ตลาด",s2h2:"เว็บเกมไม่ใช่ตลาดเล็ก — และยังโต",s2l1:"<b>Poki</b> visits/เดือน · 100M+ MAU · 625M players ปี 2025",s2l2:"<b>CrazyGames</b> monthly players 2026 · ↑ จาก 35M",s2l3:"<b>HTML5/เว็บเกม</b> market 2026 · โต → $10.42B (2035)",s2sub:'รายได้หลัก = <b>โฆษณา</b> + แบ่งรายได้กับนักพัฒนา · เล่นบนเบราว์เซอร์ ไม่ต้องติดตั้ง = แรงเสียดทานต่ำ ฐานคนกว้าง',s2note:"ที่มา: Similarweb (เม.ย. 2026) · Poki State of Web Gaming 2026 · Business Research Insights",
+      s3badge:"02 · 2 เจ้าใหญ่ทำเงินยังไง",s3h2:"Poki & CrazyGames — แพลตฟอร์มล้วน แบ่งกับ dev",s3svg:"ส่วนแบ่งรายได้ (ตัวอย่าง)",s3foot:"* Poki: 100% ถ้า dev พาคนมาเอง / 50% ถ้ามาจาก Poki",s3sub:'<b>เขามีแค่ "ชั้นเดียว" = ค่าแพลตฟอร์ม</b> · ไม่มี IP ของตัวเอง ไม่มีฐานคนเฉพาะ ไม่มีของแลกนอกเกม',
+      s4badge:"03 · จุดต่างของเรา",s4h2:"เราเก็บได้ 3 ชั้น เพราะเราเป็น RO",s4ka:"เจ้าใหญ่ (Poki/Crazy)",s4a1:"= 1 ชั้น",s4b3:"= 3 ชั้น",s4sub:'<b>IP Royalty</b> — เก็บเพิ่มเมื่อเกมใช้ RO (Poki ไม่มี IP) · <b>Coupon</b> — ดึงคนนอกวงเกม · <b>Ecosystem</b> — ป้อนเข้าเกม RO อื่น',
+      s5badge:"04 · เรตแบ่งรายได้",s5h2:'เรตขึ้นกับ "ใครพาคนมา" — ยิ่งเราหาคน เราเก็บมากขึ้น',s5p1:"พาร์ตเนอร์ 65%",s5_ropzby:"ROPZ พามา",s5_devby:"Dev พามา",s5lg1:"ส่วนพาร์ตเนอร์ (dev)",s5lg2:"ส่วนเรา (ROPZ)",s5lg3:"payment gateway ~5%",s5note:"ROPZ พามา = default (~90% ช่วงแรก) เราเก็บเยอะ · Dev พามา = ให้ dev เยอะเพื่อจูงใจ (ไม่มีต้นทุนดึงผู้ใช้ · CAC=0) · เกม RO ยังมี IP royalty (T0-T4) ซ้อนอีกชั้น",
+      s6badge:"05 · ข้อได้เปรียบของเรา",s6h2:"⚔ 3 อย่างที่ Poki ลอกไม่ได้",s6li1:'👑 <b>RO IP</b> — เก็บ royalty เพิ่มได้ + ดึงแฟน RO เข้ามาถูก (Poki ไม่มี IP ให้เก็บ)',s6li2:'🎟️ <b>คูปอง B2B</b> — ดึง "คนไม่เล่นเกม" ด้วยส่วนลดของจริง (partner จ่ายค่าดึงคนให้ → ต้นทุนดึงผู้ใช้ของเรา (CAC) ≈ 0)',s6li3:'🔁 <b>Owned ecosystem</b> — เป็นเจ้าของคน → ป้อนเข้าเกม RO อื่นซ้ำได้ (Poki = เช่าคนครั้งเดียว)',s6sub:'<b>RO PlayZone = แพลตฟอร์ม + IP + ฐานคน ที่คู่แข่งลอกไม่ได้</b> (moat = กำแพงกันคู่แข่งที่ลอกไม่ได้)',
+      s7badge:"06 · ผลลัพธ์ (จำลอง)",s7kick:"รายได้/ปี · พอร์ต 51 เกม (50 มินิ + Main Game 1)",s7sub:'Ads+IAP รวม ≈ <b>gross ฿55M/ปี</b> (ก่อนแบ่ง dev) · 50 มินิเกม ~฿35M + Main Game ~฿20M · illustrative',s7l1:'50 มินิเกม (ads+IAP · ~50–67k plays/เกม/เดือน อ้างอิง CrazyGames)',s7l2:"Main Game 1 (เกมธง · สอดคล้อง flagship T4 ใน Partner PnL)",s7note:"รายละเอียดเต็มในไฟล์ RO_PlayZone_Partner_PnL_v0.1_TH_260709.xlsx (TH) · _KR_260713.xlsx (เกาหลี)",s7hero:"฿55<small>M</small>",s7n1:"~฿35M",s7n2:"~฿20M",
+      s8badge:"Takeaway",s8h2:"⚔ สรุป",s8li1:"ตลาดเว็บเกมใหญ่+โต · เจ้าใหญ่ทำเงินจาก <b>ค่าแพลตฟอร์มชั้นเดียว</b>",s8li2:"<b>เราทำได้มากกว่า เพราะเป็น RO</b> → เก็บ 3 ชั้น (Platform + IP Royalty + Coupon/Ecosystem)",s8li3:"เรตแบ่งตาม <b>ใครพาคนมา</b> — เราหาคนเองได้เยอะ · เกม RO ได้ royalty เพิ่ม (T0-T4)",s8li4:"ผล: <b>฿45.65M/ปี</b> · ต้นทุนดึงผู้ใช้ (CAC) ≈ 0 · กำแพงกันคู่แข่ง (moat) ที่ลอกไม่ได้ — <b>validate ด้วย pilot ก่อน scale</b>",s8close:"จากข้อมูลที่เราหามา — เว็บเกมไม่ได้พัฒนาเกมเอง แต่เปิดแพลตฟอร์มให้ผู้พัฒนา (ทั้งบริษัทและบุคคล) สร้างเกมและหารายได้ด้วยตัวเอง = <b>Win-Win ทั้ง 2 ฝ่าย</b>",sAbadge:"04½ · Attribution",sAh2:"แต่ละเกมนับแยก — dev ได้เรตเฉพาะเกมที่ตัวเองพามา",sAc1:"🔗 <b>Ref ผูกเกม</b> — 1 ลิงก์ = 1 เกม · dev มี 5 เกม = 5 ลิงก์ (เซ็น HMAC กันปลอม)",sAc2:"🎯 <b>First-touch ต่อเกม</b> — นับแหล่งที่มาแบบ user × game ไม่ใช่ต่อ account",sAc3:"✅ <b>ไม่ leak ข้ามเกม</b> — dev ได้เรตเฉพาะเกมที่พามา · เล่นเกมอื่น/ROPZ = คิดแยก",sAsub:"<b>Game-scoped</b> = ยุติธรรม จ่ายเฉพาะที่ทำจริง รองรับหลายเกมพร้อมกัน · ผ่าน fraud gate → จ่ายเฉพาะ quality user (net-30/60)",sAnote:"ที่มา: ROPZ Attribution Rev-Share Spec v0.2 (game-scoped)",cdbadge:"02½ · เทียบคู่แข่ง",cdh2:"จุดต่าง — Poki / Crazy / RO PlayZone",cd_d1:"ผูกขาด",cd_p1:"web-exclusive 7 ปี",cd_c1:"—",cd_o1:"ไม่ผูกขาด",cd_d2:"Asset / เครื่องมือ",cd_p2:"ไม่แจก (ทำเอง)",cd_c2:"ไม่แจก (ทำเอง)",cd_o2:"Asset Pack + Build Kit",cd_d3:"การรับเกมเข้า",cd_p3:"คัดเข้ม (วันละ 1 เกม)",cd_c3:"เปิดกว่า",cd_o3:"มีแพทเทินการพัฒนาเกม",cd_d4:"ความโปร่งใสเรต",cd_p4:"ทึบ · ปรับได้ฝ่ายเดียว",cd_c4:"ads ไม่เปิด public",cd_o4:"ล็อกตามสัญญา + attribution",cd_d5:"ใครเป็นเจ้าของคนเล่น",cd_p5:"พึ่ง algorithm · เข้าไม่ถึงผู้เล่นตัวเอง",cd_c5:"เหมือนกัน",cd_o5:"dev พาคนเองได้ + มีฐานคน RO ช่วยดึง",cdnote:"ตรงไปตรงมา: Poki/Crazy = scale พิสูจน์แล้ว · ROPZ = ยังใหม่/cold-start · จุดแข็งเรา = ช่องว่างที่เขาทิ้ง ไม่ใช่ scale",cpbadge:"02¾ · เทียบฝั่งผู้เล่น",cph2:"มุมผู้เล่น — Poki / Crazy / RO PlayZone",cp_d1:"เล่นแล้วได้อะไร",cp_p1:"ไม่ได้อะไรกลับ",cp_c1:"ไม่ได้อะไรกลับ",cp_o1:"สะสม Poring Coin ทุกการเล่น → แลกของจริง/คูปองนอกเกม",cp_d2:"ของจริง / รางวัล",cp_p2:"แค่ของในเกม",cp_c2:"แค่ของในเกม",cp_o2:"คูปองส่วนลด + MD ของจริง",cp_d3:"เหตุผลกลับมาเล่น",cp_p3:"เล่นจบก็จบ",cp_c3:"เล่นจบก็จบ",cp_o3:"มีเกมหลัก + แลกของรางวัล",cp_d4:"IP / ความคุ้นเคย",cp_p4:"ไม่มี IP",cp_c4:"ไม่มี IP",cp_o4:"IP RO",cp_d5:"ตลาด / ภาษา",cp_p5:"ฝั่งตะวันตก",cp_c5:"ฝั่งตะวันตก",cp_o5:"TH/TW native",cp_d6:"การค้นเจอเกม",cp_p6:"~1,500 เกม · ไม่มี favorite native",cp_c6:"~4,500 เกม · เกมเยอะ หาของใหม่ยาก",cp_o6:"คัดแล้ว 50 + Favorite + personalized",cpnote:"แหล่ง: Competitor Benchmark (ก.ค. 2026) · Poki ~1,500 / Crazy ~4,500 เกม · Poki ไม่มี favorite native (มีแต่ extension)",sPbadge:"02½ · จุดเจ็บของโมเดลเขา",sPh2:"Poki/Crazy เก่งจริง — แต่โมเดลเขาเปิดช่องให้เรา",sPk1:"สำหรับ DEV",sPp1a:"😓 ต้องทำ asset/กราฟิกเอง · เรตแบ่งทึบ ปรับได้ฝ่ายเดียว",sPp1b:"✅ <b>Asset Pack + Build Kit</b> ให้ · <b>เรตล็อก + attribution รายเกม</b>",sPk2:"รายได้แพลตฟอร์ม",sPp2a:"😓 เก็บได้ชั้นเดียว (ค่าแพลตฟอร์ม) · ยืมคนมาครั้งเดียวแล้วจบ",sPp2b:"✅ <b>3 ชั้น</b> (Fee + IP + Coupon) · <b>เป็นเจ้าของคน</b> ป้อนซ้ำ RO อื่น",sPk3:"ผู้เล่น / ตลาด",sPp3a:"😓 ผู้เล่นได้แค่ของในเกม · โฟกัสฝั่งตะวันตก",sPp3b:"✅ <b>คูปองแลกของจริง</b> · <b>TH/TW native</b> + IP RO ที่คนแถบนี้รู้จัก",sPnote:"ตรงไปตรงมา: Poki/Crazy = scale พิสูจน์แล้ว, ROPZ = ยังใหม่/cold-start · จุดแข็งเรา = “ช่องว่าง” ที่เขาทิ้งไว้ ไม่ใช่ scale → จึง seed + pilot ก่อน scale",sKbadge:"05½ · เราลงทุนยังไง",sKh2:"ก่อน → หลัง — หยุดจ่ายอะไร แล้วได้ moat อะไรมา",sKk1:"โมเดลเดิม — Cost ที่เราแบกเอง",sKa1:"💸 จ้าง outsource 50 มินิเกม = <b>เงินก้อนจ่ายล่วงหน้า</b>",sKa2:"🎮 สร้าง Main Game เต็มรูป = <b>คน + เวลาหลายเดือน</b>",sKa3:"⚠️ แบกเสี่ยง build เอง + <b>คอขวดทีม 12 คนที่ Game Design</b>",sKk2:"โมเดลใหม่ — ไม่เสีย + ได้ moat",sKb1:"✅ <b>ไม่จ่าย outsource</b> — partner ลงเกม revshare (ต้นทุนสร้าง ≈ 0)",sKb2:"✅ Main Game หด <b>casual ทำเอง</b> (base จาก prototype) ถูก+เร็ว · dev แบกเสี่ยง",sKb3:"🏆 ได้ <b>Portal + attribution + audience RO/SEA</b> (Poki ไม่มี) + ขยายไม่จำกัด",sKb4:"🔧 ทำโมเดลนี้ = ปรับ Main Game ให้ระบบน้อยลง → เอาแรงไปทำระบบใน Portal",sKbridge:"เริ่มเล็กก่อน — ใช้บริษัทในเครือ + Main Game ดึง partner เข้ามา → เห็นผลจริงค่อยลงทุนเต็ม · <b>หัวใจคือ ฐานคน ไม่ใช่เงินที่ทุ่มสร้างเกม</b>"},
+    en:{sGbadge:"01½ · 10-year growth",sGh2:'Growing for 10 years — but only “curate + own the audience” survives',sGp:"▲ ~10× growth",sGc:"▲ steady growth",sGy:"▼ −93%",sGsub:'Winners grew ~10× via <b>curation + dev loyalty + owning the audience</b> · <b>Y8 shrank 93%</b> by just aggregating + SEO → proof our <b>“curate + RO + own the audience” model is right</b>',sGnote:"Milestone estimates (Similarweb / Dealroom / GamesBeat) — shape of growth 2015–2026",sGwx:"WeChat China — revenue, other scale",sGunit:"Unit: million visits/players per month (not money)",
+      s1kick:"⚔ New Web-Game Platform Model",s1h1:'The Web-Game<br><span class="g">Business Model</span>',s1sub:'How web games make money · what the 2 giants do · and why <b>we can do more — because we are RO</b>',
+      s2badge:"01 · Market",s2h2:"Web games are not a small market — and still growing",s2l1:"<b>Poki</b> visits/mo · 100M+ MAU · 625M players in 2025",s2l2:"<b>CrazyGames</b> monthly players 2026 · up from 35M",s2l3:"<b>HTML5/browser games</b> market 2026 · → $10.42B by 2035",s2sub:'Main revenue = <b>ads</b> + rev-share with developers · plays in browser, no install = low friction, broad reach',s2note:"Source: Similarweb (Apr 2026) · Poki State of Web Gaming 2026 · Business Research Insights",
+      s3badge:"02 · How the 2 giants monetize",s3h2:"Poki & CrazyGames — pure platforms, share with devs",s3svg:"Revenue share (example)",s3foot:"* Poki: 100% if dev brings users / 50% if via Poki",s3sub:'<b>They have only "one layer" = platform fee</b> · no own IP, no owned audience, no off-game rewards',
+      s4badge:"03 · Our difference",s4h2:"We collect 3 layers — because we are RO",s4ka:"The giants (Poki/Crazy)",s4a1:"= 1 layer",s4b3:"= 3 layers",s4sub:'<b>IP Royalty</b> — extra when a game uses RO (Poki has no IP) · <b>Coupon</b> — pull non-gamers · <b>Ecosystem</b> — feed into other RO games',
+      s5badge:"04 · Rev-share rates",s5h2:"Rate depends on who brings the user — the more we acquire, the more we keep",s5p1:"Partner 65%",s5_ropzby:"ROPZ-brought",s5_devby:"Dev-brought",s5lg1:"Partner (dev) share",s5lg2:"Our share (ROPZ)",s5lg3:"payment gateway ~5%",s5note:"ROPZ-brought = default (~90% early), we keep more · Dev-brought = give dev more to incentivize (no user-acquisition cost · CAC=0) · RO games also stack IP royalty (T0-T4)",
+      s6badge:"05 · Our advantage",s6h2:"⚔ 3 things Poki cannot copy",s6li1:'👑 <b>RO IP</b> — extra royalty + cheap RO-fan acquisition (Poki has no IP)',s6li2:'🎟️ <b>B2B coupons</b> — pull "non-gamers" with real discounts (partner pays acquisition → our cost to acquire a user (CAC) ≈ 0)',s6li3:'🔁 <b>Owned ecosystem</b> — own the users → re-funnel into other RO games (Poki = rent once)',s6sub:'<b>RO PlayZone = platform + IP + audience that rivals cannot copy</b> (moat = a competitive edge rivals cannot copy)',
+      s7badge:"06 · Result (simulated)",s7kick:"Revenue/yr · 51-game portfolio (50 mini + 1 Main Game)",s7sub:'Ads+IAP ≈ <b>gross $1.6M/yr</b> (before dev split) · 50 mini ~$1.0M + Main Game ~$0.6M · illustrative',s7l1:'50 mini-games (ads+IAP · ~50–67k plays/game/mo, ref CrazyGames)',s7l2:"Main Game 1 (flagship — mirrors the T4 flagship in Partner PnL)",s7note:"Full detail in RO_PlayZone_Partner_PnL_v0.1_TH_260709.xlsx (TH) · _KR_260713.xlsx (Korean)",s7hero:"$1.6<small>M</small>",s7n1:"~$1.0M",s7n2:"~$0.6M",
+      s8badge:"Takeaway",s8h2:"⚔ Summary",s8li1:"Web-game market is big & growing · giants earn from <b>a single platform layer</b>",s8li2:"<b>We do more because we are RO</b> → 3 layers (Platform + IP Royalty + Coupon/Ecosystem)",s8li3:"Rates by <b>who brings the user</b> — we keep more when we acquire · RO games add royalty (T0-T4)",s8li4:"Result: <b>฿45.65M/yr</b> · user-acquisition cost (CAC) ≈ 0 · an uncopyable moat (competitive edge) — <b>validate via pilot before scaling</b>",s8close:"From our findings — web-game platforms don’t build games themselves; they open a platform for developers (companies and individuals) to create games and earn on their own = <b>a win-win for both sides</b>",sAbadge:"04½ · Attribution",sAh2:"Each game counts separately — a dev earns the rate only on the game it brought",sAc1:"🔗 <b>Game-bound ref</b> — 1 link = 1 game · 5 games = 5 links (HMAC-signed, unforgeable)",sAc2:"🎯 <b>First-touch per game</b> — source is bound per user × game, not per account",sAc3:"✅ <b>No cross-game leakage</b> — dev earns only on the game it drove · other games/ROPZ counted separately",sAsub:"<b>Game-scoped</b> = fair, pays only for what's actually driven, supports many games at once · pass the fraud gate → pay only quality users (net-30/60)",sAnote:"Source: ROPZ Attribution Rev-Share Spec v0.2 (game-scoped)",cdbadge:"02½ · vs competitors",cdh2:"How we differ — Poki / Crazy / RO PlayZone",cd_d1:"Exclusivity",cd_p1:"web-exclusive 7 yrs",cd_c1:"—",cd_o1:"non-exclusive",cd_d2:"Assets / tools",cd_p2:"none (DIY)",cd_c2:"none (DIY)",cd_o2:"Asset Pack + Build Kit",cd_d3:"Onboarding",cd_p3:"tightly curated (1 game/day)",cd_c3:"more open",cd_o3:"standard game-dev pattern",cd_d4:"Rate transparency",cd_p4:"opaque · changeable",cd_c4:"ads not public",cd_o4:"contract-locked + attribution",cd_d5:"Who owns the players",cd_p5:"algorithm-gated · no access to own players",cd_c5:"same",cd_o5:"devs bring their own players + we have an RO audience",cdnote:"Honest: Poki/Crazy = proven scale · ROPZ = new/cold-start · our edge is the gap they left, not scale",cpbadge:"02¾ · Player comparison",cph2:"Player view — Poki / Crazy / RO PlayZone",cp_d1:"What you get for playing",cp_p1:"nothing back",cp_c1:"nothing back",cp_o1:"earn Poring Coins every play → redeem real/out-of-game rewards",cp_d2:"Real goods / rewards",cp_p2:"in-game only",cp_c2:"in-game only",cp_o2:"discount coupons + real MD",cp_d3:"Reason to return",cp_p3:"play and done",cp_c3:"play and done",cp_o3:"a Main Game + reward redemption",cp_d4:"IP / familiarity",cp_p4:"no IP",cp_c4:"no IP",cp_o4:"RO IP",cp_d5:"Market / language",cp_p5:"Western-focused",cp_c5:"Western-focused",cp_o5:"TH/TW native",cp_d6:"Finding games",cp_p6:"~1,500 games · no native favorites",cp_c6:"~4,500 games · hard to find new ones",cp_o6:"50 curated + Favorite + personalized",cpnote:"Source: Competitor Benchmark (Jul 2026) · Poki ~1,500 / Crazy ~4,500 games · Poki has no native favorites (extension only)",sPbadge:"02½ · Their model’s pain",sPh2:"Poki/Crazy are strong — but their model leaves gaps for us",sPk1:"For the DEV",sPp1a:"😓 Must build their own assets/art · opaque rate, changeable one-sidedly",sPp1b:"✅ <b>Asset Pack + Build Kit</b> provided · <b>locked rate + per-game attribution</b>",sPk2:"Platform revenue",sPp2a:"😓 One layer only (platform fee) · rents the user once, then done",sPp2b:"✅ <b>3 layers</b> (Fee + IP + Coupon) · <b>own the audience</b>, re-funnel to other RO games",sPk3:"Player / market",sPp3a:"😓 Players only get in-game items · Western-focused",sPp3b:"✅ <b>Coupons for real goods</b> · <b>TH/TW native</b> + RO IP the region knows",sPnote:"Honest: Poki/Crazy = proven scale, ROPZ = new/cold-start · our edge is the “gap” they left, not scale → so we seed + pilot before scaling",sKbadge:"05½ · How we invest",sKh2:"Before → after — what we stop paying, and the moat we gain",sKk1:"Old model — cost we carry",sKa1:"💸 Outsource 50 mini-games = <b>big cash up front</b>",sKa2:"🎮 Build a full Main Game = <b>people + months of time</b>",sKa3:"⚠️ We carry build risk + <b>a 12-person team bottlenecked at Game Design</b>",sKk2:"New model — no spend + a moat",sKb1:"✅ <b>No outsourcing spend</b> — partners bring games on rev-share (build cost ≈ 0)",sKb2:"✅ Main Game shrinks to <b>a casual we build ourselves</b> (from the prototype) cheap + fast · devs carry the risk",sKb3:"🏆 We gain <b>Portal + attribution + RO/SEA audience</b> (Poki has none) + unlimited scale",sKb4:"🔧 This model = trim Main Game's systems → put effort into Portal systems",sKbridge:"Start small — seed with affiliated studios + Main Game to pull partners in → prove it, then invest fully · <b>the real moat is the audience, not money poured into games</b>"},
+    ko:{sGbadge:"01½ · 10년 성장",sGh2:'10년째 성장 — 그러나 “선별 + 유저 소유”만이 살아남는다',sGp:"▲ 약 10배 성장",sGc:"▲ 꾸준한 성장",sGy:"▼ −93%",sGsub:'승자는 <b>선별 + 개발사 충성 + 유저층 소유</b>로 약 10배 성장 · <b>Y8은 93% 축소</b>(단순 취합 + SEO 의존) → <b>“선별 + RO + 유저 소유” 모델이 옳다는 증거</b>',sGnote:"마일스톤 추정 (Similarweb / Dealroom / GamesBeat) — 2015–2026 성장 형태",sGwx:"WeChat 중국 — 매출·다른 스케일",sGunit:"단위: 월 방문/플레이어 (백만, 금액 아님)",
+      s1kick:"⚔ 새로운 웹게임 플랫폼 모델",s1h1:'웹게임<br><span class="g">비즈니스 모델</span>',s1sub:'웹게임은 어떻게 돈을 버나 · 2대 강자는 어떻게 하나 · 그리고 왜 <b>우리는 더 잘할 수 있나 — 우리는 RO이기 때문</b>',
+      s2badge:"01 · 시장",s2h2:"웹게임은 작은 시장이 아니다 — 게다가 성장 중",s2l1:"<b>Poki</b> 월 방문 · 100M+ MAU · 2025년 6.25억 플레이어",s2l2:"<b>CrazyGames</b> 월 플레이어 2026 · 35M에서 증가",s2l3:"<b>HTML5/브라우저 게임</b> 시장 2026 · → 2035년 $10.42B",s2sub:'주 수익 = <b>광고</b> + 개발사와 수익 배분 · 브라우저에서 바로 플레이(설치 불필요) = 낮은 진입장벽, 넓은 유저층',s2note:"출처: Similarweb (2026.4) · Poki State of Web Gaming 2026 · Business Research Insights",
+      s3badge:"02 · 2대 강자의 수익 방식",s3h2:"Poki & CrazyGames — 순수 플랫폼, 개발사와 분배",s3svg:"수익 배분 (예시)",s3foot:"* Poki: dev가 유저를 데려오면 100% / Poki 경유 시 50%",s3sub:'<b>그들은 "한 계층"만 = 플랫폼 수수료</b> · 자체 IP 없음, 전용 유저층 없음, 게임 밖 보상 없음',
+      s4badge:"03 · 우리의 차별점",s4h2:"우리는 3개 계층을 확보 — 우리는 RO이기 때문",s4ka:"강자들 (Poki/Crazy)",s4a1:"= 1개 계층",s4b3:"= 3개 계층",s4sub:'<b>IP 로열티</b> — 게임이 RO를 쓰면 추가 수취(Poki는 IP 없음) · <b>쿠폰</b> — 비게이머 유입 · <b>에코시스템</b> — 다른 RO 게임으로 연결',
+      s5badge:"04 · 수익 배분 요율",s5h2:"요율은 '누가 데려왔나'에 따라 — 우리가 데려올수록 더 가져간다",s5p1:"파트너 65%",s5_ropzby:"ROPZ 유입",s5_devby:"Dev 유입",s5lg1:"파트너(dev) 몫",s5lg2:"우리 몫 (ROPZ)",s5lg3:"결제 게이트웨이 ~5%",s5note:"ROPZ 유입 = 기본값(초기 ~90%), 우리가 더 가져감 · Dev 유입 = 유인 위해 dev에 더(유저 획득 비용 0 · CAC=0) · RO 게임은 IP 로열티(T0-T4) 추가 중첩",
+      s6badge:"05 · 우리의 강점",s6h2:"⚔ Poki가 못 베끼는 3가지",s6li1:'👑 <b>RO IP</b> — 추가 로열티 + RO 팬 저비용 유입 (Poki는 IP 없음)',s6li2:'🎟️ <b>B2B 쿠폰</b> — 실제 할인으로 "비게이머" 유입 (파트너가 획득 비용 부담 → 우리 유저 획득 비용(CAC) ≈ 0)',s6li3:'🔁 <b>자체 에코시스템</b> — 유저를 보유 → 다른 RO 게임으로 반복 유입 (Poki = 1회성 임대)',s6sub:'<b>RO PlayZone = 경쟁사가 못 베끼는 플랫폼 + IP + 유저층</b> (해자 = 복제 불가능한 경쟁 진입장벽)',
+      s7badge:"06 · 결과 (시뮬레이션)",s7kick:"연매출 · 51개 게임 (미니 50 + Main Game 1)",s7sub:'Ads+IAP ≈ <b>gross ₩2.1B/년</b> (dev 배분 전) · 미니 50개 ~₩1.35B + Main Game ~₩0.75B · illustrative',s7l1:'미니게임 50개 (ads+IAP · 게임당 월 ~50–67k plays, CrazyGames 기준)',s7l2:"Main Game 1 (플래그십 — Partner PnL T4 플래그십과 동일 논리)",s7note:"상세는 RO_PlayZone_Partner_PnL_v0.1_TH_260709.xlsx (TH) · _KR_260713.xlsx (한국어)",s7hero:"₩2.1<small>B</small>",s7n1:"~₩1.35B",s7n2:"~₩0.75B",
+      s8badge:"핵심 요약",s8h2:"⚔ 요약",s8li1:"웹게임 시장은 크고 성장 중 · 강자는 <b>단일 플랫폼 계층</b>으로 수익",s8li2:"<b>우리는 RO라서 더 한다</b> → 3계층 (Platform + IP Royalty + Coupon/Ecosystem)",s8li3:"<b>누가 데려왔나</b>로 요율 결정 — 직접 데려오면 더 가져감 · RO 게임은 로열티 추가(T0-T4)",s8li4:"결과: <b>฿45.65M/년</b> · 유저 획득 비용(CAC) ≈ 0 · 복제 불가 해자(경쟁 진입장벽) — <b>스케일 전 파일럿으로 검증</b>",s8close:"우리 조사 결과 — 웹게임은 게임을 직접 만들지 않고, 개발자(기업·개인)가 스스로 게임을 만들어 수익을 내도록 플랫폼을 연다 = <b>양측 모두 윈윈</b>",sAbadge:"04½ · Attribution",sAh2:"게임별로 따로 집계 — dev는 자신이 데려온 게임에만 요율 적용",sAc1:"🔗 <b>게임 결속 ref</b> — 링크 1개 = 게임 1개 · 5게임 = 5링크 (HMAC 서명, 위조 불가)",sAc2:"🎯 <b>게임별 First-touch</b> — 출처를 user × game 단위로 바인딩 (계정 단위 아님)",sAc3:"✅ <b>게임 간 누수 없음</b> — dev는 데려온 게임에만 요율 · 다른 게임/ROPZ은 별도 집계",sAsub:"<b>Game-scoped</b> = 공정, 실제 기여분만 지급, 다게임 동시 지원 · fraud gate 통과 → 퀄리티 유저만 지급 (net-30/60)",sAnote:"출처: ROPZ Attribution Rev-Share Spec v0.2 (game-scoped)",cdbadge:"02½ · 경쟁사 비교",cdh2:"차별점 — Poki / Crazy / RO PlayZone",cd_d1:"독점",cd_p1:"웹 독점 7년",cd_c1:"—",cd_o1:"비독점",cd_d2:"에셋 / 툴",cd_p2:"없음 (직접)",cd_c2:"없음 (직접)",cd_o2:"Asset Pack + Build Kit",cd_d3:"입점",cd_p3:"엄격 선별 (하루 1개)",cd_c3:"더 개방적",cd_o3:"게임 개발 패턴 제공",cd_d4:"요율 투명성",cd_p4:"불투명 · 변경 가능",cd_c4:"광고 요율 비공개",cd_o4:"계약 고정 + 어트리뷰션",cd_d5:"플레이어는 누구 소유",cd_p5:"알고리즘 의존 · 자기 유저 접근 불가",cd_c5:"동일",cd_o5:"개발사가 직접 유저 유입 + RO 유저층 보유",cdnote:"솔직히: Poki/Crazy = 검증된 스케일 · ROPZ = 신규/콜드스타트 · 우리의 강점은 그들이 남긴 빈틈이지 스케일이 아니다",cpbadge:"02¾ · 플레이어 비교",cph2:"플레이어 관점 — Poki / Crazy / RO PlayZone",cp_d1:"플레이 보상",cp_p1:"돌아오는 것 없음",cp_c1:"돌아오는 것 없음",cp_o1:"플레이마다 Poring Coin 적립 → 게임 밖 실물 보상 교환",cp_d2:"실물 / 보상",cp_p2:"게임 내만",cp_c2:"게임 내만",cp_o2:"할인 쿠폰 + 실물 MD",cp_d3:"돌아올 이유",cp_p3:"하고 끝",cp_c3:"하고 끝",cp_o3:"Main Game + 보상 교환",cp_d4:"IP / 친숙도",cp_p4:"IP 없음",cp_c4:"IP 없음",cp_o4:"RO IP",cp_d5:"시장 / 언어",cp_p5:"서구 중심",cp_c5:"서구 중심",cp_o5:"TH/TW 네이티브",cp_d6:"게임 찾기",cp_p6:"~1,500개 · 네이티브 즐겨찾기 없음",cp_c6:"~4,500개 · 새 게임 찾기 어려움",cp_o6:"엄선 50 + 즐겨찾기 + 개인화",cpnote:"출처: Competitor Benchmark (2026.7) · Poki ~1,500 / Crazy ~4,500개 · Poki는 네이티브 즐겨찾기 없음 (확장 프로그램만)",sPbadge:"02½ · 그들 모델의 약점",sPh2:"Poki/Crazy는 강하다 — 그러나 그 모델은 우리에게 빈틈을 남긴다",sPk1:"개발사 입장",sPp1a:"😓 에셋/아트를 직접 제작 · 요율 불투명, 일방적 변경 가능",sPp1b:"✅ <b>Asset Pack + Build Kit</b> 제공 · <b>요율 고정 + 게임별 어트리뷰션</b>",sPk2:"플랫폼 수익",sPp2a:"😓 단일 계층(플랫폼 수수료) · 유저를 1회성으로 빌려 씀",sPp2b:"✅ <b>3계층</b>(Fee + IP + Coupon) · <b>유저 소유</b>, 다른 RO 게임으로 재유입",sPk3:"플레이어 / 시장",sPp3a:"😓 플레이어는 게임 내 아이템만 · 서구 중심",sPp3b:"✅ <b>실물 교환 쿠폰</b> · <b>TH/TW 네이티브</b> + 이 지역이 아는 RO IP",sPnote:"솔직히: Poki/Crazy = 검증된 스케일, ROPZ = 신규/콜드스타트 · 우리의 강점은 그들이 남긴 “빈틈”이지 스케일이 아니다 → 그래서 스케일 전 seed + pilot",sKbadge:"05½ · 우리는 어떻게 투자하나",sKh2:"전 → 후 — 무엇을 그만 쓰고, 어떤 해자를 얻나",sKk1:"기존 모델 — 우리가 지는 비용",sKa1:"💸 미니게임 50개 아웃소싱 = <b>선지급 목돈</b>",sKa2:"🎮 풀스펙 Main Game 제작 = <b>인력 + 수개월</b>",sKa3:"⚠️ 빌드 리스크 부담 + <b>12인 팀이 Game Design에서 병목</b>",sKk2:"신규 모델 — 지출 없이 해자 확보",sKb1:"✅ <b>아웃소싱 지출 0</b> — 파트너가 게임 등록, 수익 배분 (제작비 ≈ 0)",sKb2:"✅ Main Game은 <b>직접 만드는 캐주얼</b>로 축소(프로토타입 기반) 저렴+신속 · 리스크는 파트너가 부담",sKb3:"🏆 <b>Portal + 어트리뷰션 + RO/SEA 유저층</b> 확보(Poki엔 없음) + 무제한 확장",sKb4:"🔧 이 모델 = Main Game 시스템 축소 → Portal 시스템에 인력 투입",sKbridge:"작게 시작 — 계열사 + Main Game으로 파트너를 유치 → 성과 확인 후 전면 투자 · <b>핵심은 유저층이지, 게임에 쏟은 돈이 아니다</b>"},
+    zh:{sGbadge:"01½ · 十年增长",sGh2:'增长十年 —— 但只有“甄选 + 拥有用户”才能存活',sGp:"▲ 约增长10倍",sGc:"▲ 持续增长",sGy:"▼ −93%",sGsub:'赢家凭借<b>甄选 + 开发者粘性 + 拥有用户</b>增长约10倍 · <b>Y8萎缩93%</b>（仅聚合 + 依赖SEO）→ 证明我们<b>“甄选 + RO + 拥有用户”模式正确</b>',sGnote:"里程碑估算 (Similarweb / Dealroom / GamesBeat) — 2015–2026 增长形态",sGwx:"微信中国 — 营收·不同量级",sGunit:"单位: 每月访问/玩家 (百万, 非金额)",
+      s1kick:"⚔ 全新网页游戏平台模式",s1h1:'网页游戏的<br><span class="g">商业模式</span>',s1sub:'网页游戏如何赚钱 · 两大巨头怎么做 · 以及为何 <b>我们能做得更多 — 因为我们是 RO</b>',
+      s2badge:"01 · 市场",s2h2:"网页游戏并非小市场 — 而且仍在增长",s2l1:"<b>Poki</b> 每月访问 · 100M+ MAU · 2025年6.25亿玩家",s2l2:"<b>CrazyGames</b> 月活跃玩家 2026 · 由35M增长",s2l3:"<b>HTML5/网页游戏</b> 市场 2026 · → 2035年 $10.42B",s2sub:'主要收入 = <b>广告</b> + 与开发者分成 · 浏览器即玩、无需安装 = 低门槛、广覆盖',s2note:"来源: Similarweb (2026年4月) · Poki State of Web Gaming 2026 · Business Research Insights",
+      s3badge:"02 · 两大巨头如何变现",s3h2:"Poki 与 CrazyGames — 纯平台，与开发者分成",s3svg:"收入分成（示例）",s3foot:"* Poki：开发者自带用户100% / 经Poki引流50%",s3sub:'<b>他们只有"一层" = 平台抽成</b> · 没有自有IP、没有专属用户、没有游戏外奖励',
+      s4badge:"03 · 我们的不同",s4h2:"我们能收3层 — 因为我们是 RO",s4ka:"巨头 (Poki/Crazy)",s4a1:"= 1层",s4b3:"= 3层",s4sub:'<b>IP版税</b> — 游戏使用RO时额外收取（Poki无IP） · <b>优惠券</b> — 吸引非玩家 · <b>生态</b> — 导入其他RO游戏',
+      s5badge:"04 · 分成费率",s5h2:"分成取决于'谁带来用户'——我们越是自己获取，留成越多",s5p1:"合作方 65%",s5_ropzby:"ROPZ 带来",s5_devby:"Dev 带来",s5lg1:"合作方(dev)份额",s5lg2:"我方份额 (ROPZ)",s5lg3:"支付网关 ~5%",s5note:"ROPZ 带来 = 默认（初期~90%），我方留成更多 · Dev 带来 = 给 dev 更多以激励（无获客成本 · CAC=0）· RO 游戏另叠加 IP 版税（T0-T4）",
+      s6badge:"05 · 我们的优势",s6h2:"⚔ Poki 无法复制的3件事",s6li1:'👑 <b>RO IP</b> — 额外版税 + 低成本吸引RO粉丝（Poki无IP）',s6li2:'🎟️ <b>B2B优惠券</b> — 用真实折扣吸引"非玩家"（合作方承担获客 → 我方获客成本(CAC) ≈ 0）',s6li3:'🔁 <b>自有生态</b> — 拥有用户 → 反复导入其他RO游戏（Poki = 一次性租用）',s6sub:'<b>RO PlayZone = 对手无法复制的 平台 + IP + 用户</b>（护城河 = 对手无法复制的竞争壁垒）',
+      s7badge:"06 · 结果（模拟）",s7kick:"年收入 · 51 款游戏（50 迷你 + Main Game 1）",s7sub:'Ads+IAP ≈ <b>gross ¥11.3M/年</b>（dev 分成前）· 50 迷你 ~¥7.2M + Main Game ~¥4.1M · illustrative',s7l1:'50 款迷你游戏（ads+IAP · 每游戏每月 ~50–67k plays，参考 CrazyGames）',s7l2:"Main Game 1（旗舰 —— 同 Partner PnL T4 旗舰逻辑）",s7note:"详情见 RO_PlayZone_Partner_PnL_v0.1_TH_260709.xlsx (TH) · _KR_260713.xlsx (韩语)",s7hero:"¥11.3<small>M</small>",s7n1:"~¥7.2M",s7n2:"~¥4.1M",
+      s8badge:"要点总结",s8h2:"⚔ 总结",s8li1:"网页游戏市场大且增长 · 巨头靠<b>单一平台层</b>赚钱",s8li2:"<b>我们是RO所以能做更多</b> → 3层（Platform + IP Royalty + Coupon/生态）",s8li3:"按<b>谁带来用户</b>定分成 — 自己获取留成更多 · RO 游戏加版税（T0-T4）",s8li4:"结果：<b>฿45.65M/年</b> · 获客成本(CAC) ≈ 0 · 不可复制护城河（竞争壁垒）— <b>扩张前用试点验证</b>",s8close:"根据我们的研究 — 网页游戏平台并不自建游戏，而是开放平台让开发者（公司与个人）自行开发并获利 = <b>双方共赢</b>",sAbadge:"04½ · Attribution",sAh2:"每个游戏单独计算 — dev 仅对自己带来的那个游戏拿分成",sAc1:"🔗 <b>绑定游戏的 ref</b> — 1 链接 = 1 游戏 · 5 游戏 = 5 链接（HMAC 签名，不可伪造）",sAc2:"🎯 <b>按游戏 First-touch</b> — 来源按 user × game 绑定（非按账号）",sAc3:"✅ <b>不跨游戏外溢</b> — dev 仅对带来的游戏拿分成 · 其他游戏/ROPZ 单独计算",sAsub:"<b>Game-scoped</b> = 公平、只为实际带来的付费、支持多游戏并行 · 通过 fraud gate → 仅对优质用户结算（net-30/60）",sAnote:"来源: ROPZ Attribution Rev-Share Spec v0.2 (game-scoped)",cdbadge:"02½ · 对比竞品",cdh2:"差异 — Poki / Crazy / RO PlayZone",cd_d1:"独家",cd_p1:"网页独家 7 年",cd_c1:"—",cd_o1:"非独家",cd_d2:"素材 / 工具",cd_p2:"不提供（自制）",cd_c2:"不提供（自制）",cd_o2:"Asset Pack + Build Kit",cd_d3:"入驻",cd_p3:"严格甄选（每天 1 款）",cd_c3:"较开放",cd_o3:"提供游戏开发范式",cd_d4:"费率透明度",cd_p4:"不透明 · 可单方更改",cd_c4:"广告费率不公开",cd_o4:"合同锁定 + 归因",cd_d5:"谁拥有玩家",cd_p5:"依赖算法 · 无法触达自己的用户",cd_c5:"相同",cd_o5:"开发者自带用户 + 我们有 RO 用户群",cdnote:"坦率说：Poki/Crazy = 已验证规模 · ROPZ = 全新/冷启动 · 我们的优势是他们留下的空隙，而非规模",cpbadge:"02¾ · 玩家对比",cph2:"玩家视角 — Poki / Crazy / RO PlayZone",cp_d1:"玩了有什么回报",cp_p1:"没有回报",cp_c1:"没有回报",cp_o1:"每次游玩积累 Poring Coin → 兑换游戏外实物奖励",cp_d2:"实物 / 奖励",cp_p2:"仅游戏内",cp_c2:"仅游戏内",cp_o2:"折扣券 + 实物 MD",cp_d3:"回归理由",cp_p3:"玩完就完",cp_c3:"玩完就完",cp_o3:"有主游戏 + 兑换奖励",cp_d4:"IP / 熟悉度",cp_p4:"无 IP",cp_c4:"无 IP",cp_o4:"RO IP",cp_d5:"市场 / 语言",cp_p5:"偏重西方",cp_c5:"偏重西方",cp_o5:"TH/TW 本地化",cp_d6:"找游戏",cp_p6:"~1,500 款 · 无原生收藏",cp_c6:"~4,500 款 · 难找到新游戏",cp_o6:"精选 50 + 收藏 + 个性化",cpnote:"来源: Competitor Benchmark (2026年7月) · Poki ~1,500 / Crazy ~4,500 款 · Poki 无原生收藏（仅扩展程序）",sPbadge:"02½ · 他们模式的痛点",sPh2:"Poki/Crazy 确实强 — 但其模式给我们留了空间",sPk1:"对开发者",sPp1a:"😓 需自制素材/美术 · 分成不透明、可单方面更改",sPp1b:"✅ 提供 <b>Asset Pack + Build Kit</b> · <b>费率锁定 + 按游戏归因</b>",sPk2:"平台收入",sPp2a:"😓 仅一层（平台抽成）· 一次性租用用户即止",sPp2b:"✅ <b>三层</b>（Fee + IP + Coupon）· <b>拥有用户</b>，反复导入其他 RO 游戏",sPk3:"玩家 / 市场",sPp3a:"😓 玩家只得游戏内物品 · 偏重西方",sPp3b:"✅ <b>可兑换实物的优惠券</b> · <b>TH/TW 本地化</b> + 本地熟悉的 RO IP",sPnote:"坦率说：Poki/Crazy = 已验证的规模，ROPZ = 全新/冷启动 · 我们的优势是他们留下的“空隙”，而非规模 → 故先 seed + pilot 再扩张",sKbadge:"05½ · 我们如何投入",sKh2:"之前 → 之后 — 停付什么，换来什么护城河",sKk1:"旧模式 — 我们自扛的成本",sKa1:"💸 外包 50 款迷你游戏 = <b>预付大笔现金</b>",sKa2:"🎮 做一款完整 Main Game = <b>人力 + 数月时间</b>",sKa3:"⚠️ 自担开发风险 + <b>12 人团队卡在 Game Design</b>",sKk2:"新模式 — 不花钱且得护城河",sKb1:"✅ <b>不付外包费</b> — 合作方上架游戏走分成（开发成本 ≈ 0）",sKb2:"✅ Main Game 缩为<b>自研休闲</b>（基于原型）省钱+快 · 风险由开发者承担",sKb3:"🏆 获得 <b>Portal + 归因 + RO/SEA 用户</b>（Poki 没有）+ 无限扩张",sKb4:"🔧 采用此模式 = 精简 Main Game 系统 → 把精力投入 Portal 系统",sKbridge:"先小步走 — 以关联公司 + Main Game 吸引合作方 → 见效后再全力投入 · <b>核心是用户，而非砸进游戏的钱</b>"}
+  };
+  function setLang(l){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const v=I18N[l]&&I18N[l][el.dataset.i18n]; if(v==null)return;
+      if(el.namespaceURI&&el.namespaceURI.indexOf('svg')>-1)el.textContent=v; else el.innerHTML=v;
+    });
+    document.documentElement.lang=l;
+    document.querySelectorAll('#langbar button').forEach(b=>b.classList.toggle('on',b.dataset.lang===l));
+  }
+  document.querySelectorAll('#langbar button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+  setLang('th');
+  /* [KEEP] web-publish: เลือกภาษาจาก URL ?lang=ko / #ko ตอนขึ้น GitHub Pages — อย่าลบ (ต้องอยู่หลัง setLang('th')) */
+  (function(){
+    var alias={th:'th',en:'en',ko:'ko',kr:'ko',zh:'zh',cn:'zh',zh_cn:'zh'};
+    var q=(new URLSearchParams(location.search).get('lang')||location.hash.replace('#','')||'').toLowerCase();
+    var l=alias[q];
+    if(l) setLang(l);
+  })();
+
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    const o=document.createElement('div');o.className='orbit';
+    o.style.width='clamp(360px,46vw,620px)';o.style.top='-16vh';o.style.right='-10vw';
+    o.innerHTML=window.ORBIT;s.appendChild(o);
+    const o2=document.createElement('div');o2.className='orbit';
+    o2.style.width='clamp(220px,28vw,380px)';o2.style.bottom='-14vh';o2.style.left='-8vw';o2.style.opacity='.42';
+    o2.innerHTML=window.ORBIT;s.appendChild(o2);
+  });
+  var _p1=document.getElementById('por1'); if(_p1)_p1.remove();
+  var _p8=document.getElementById('por8'); if(_p8)_p8.remove();
+  const slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots');
+  slides.forEach((s,i)=>{const b=document.createElement('b');if(!i)b.className='on';b.onclick=()=>s.scrollIntoView();dots.appendChild(b);});
+  const dd=[...dots.children];let idx=0;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){idx=slides.indexOf(e.target);dd.forEach((d,i)=>d.className=i===idx?'on':'');}}),{threshold:.6});slides.forEach(s=>io.observe(s));
+
+  /* entrance animation: stagger delay per element + reveal when slide is in view */
+  slides.forEach(s=>[...s.querySelectorAll(':scope > .content > *')].forEach((k,i)=>k.style.setProperty('--d',70+i*95)));
+  const inIO=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('in',e.isIntersecting&&e.intersectionRatio>=.55)),{threshold:[0,.55,1]});
+  slides.forEach(s=>inIO.observe(s));
+
+  /* eye toggle: hide/show langbar + PDF + Fullscreen */
+  const EYE_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+  const EYE_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20C5 20 1 12 1 12a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+  const eyeBtn=document.getElementById('eyeBtn');eyeBtn.innerHTML=EYE_ON;
+  function toggleChrome(){const hidden=document.body.classList.toggle('chrome-hidden');eyeBtn.innerHTML=hidden?EYE_OFF:EYE_ON;}
+  eyeBtn.onclick=toggleChrome;
+
+  addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();if(idx<slides.length-1)slides[idx+1].scrollIntoView();}if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();if(idx>0)slides[idx-1].scrollIntoView();}if((e.key==='h'||e.key==='H')&&!e.metaKey&&!e.ctrlKey&&!e.altKey){toggleChrome();}});
+</script>
+</body>
+</html>
