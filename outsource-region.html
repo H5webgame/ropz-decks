@@ -9,8 +9,15 @@
 <style>
   :root{--bg:#0f1320;--card:#171c2e;--card2:#1d2438;--line:#2a3250;--ink:#e7ebf5;--muted:#9aa6c4;--soft:#c3cbe2;--accent:#6c8cff;--green:#2ecc8f;--amber:#f4b740;--chip:#222a44;--blue:#7fa6ff}
   *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#0c101b,#0f1320 240px);color:var(--ink);font-family:"Segoe UI","Leelawadee UI",Tahoma,system-ui,sans-serif;line-height:1.5;font-size:15px}
-  .wrap{max-width:1080px;margin:0 auto;padding:24px 20px 70px}
+  body{margin:0;background:linear-gradient(180deg,#0c101b,#0f1320 240px);color:var(--ink);font-family:"Segoe UI","Leelawadee UI","Malgun Gothic","Microsoft YaHei","Noto Sans SC",Tahoma,system-ui,sans-serif;line-height:1.5;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:6px 20px 70px}
+  .langbar{position:sticky;top:0;z-index:20;display:flex;gap:7px;justify-content:flex-end;
+    padding:10px 0 12px;background:linear-gradient(180deg,#0c101b 70%,transparent);flex-wrap:wrap}
+  .lbl{margin-right:auto;align-self:center;color:var(--muted);font-size:12.5px;letter-spacing:.5px}
+  .langbtn{background:var(--chip);border:1px solid var(--line);color:var(--soft);cursor:pointer;
+    padding:6px 14px;border-radius:999px;font-size:13px;font-family:inherit;transition:.15s}
+  .langbtn:hover{border-color:var(--accent)}
+  .langbtn.on{background:linear-gradient(135deg,#6c8cff,#8a6cff);color:#fff;border-color:transparent;font-weight:700}
   header.head{background:linear-gradient(135deg,#1a2140,#241b46);border:1px solid var(--line);border-radius:16px;padding:20px 24px;position:relative;overflow:hidden}
   header.head::after{content:"🌏";position:absolute;right:18px;top:4px;font-size:78px;opacity:.10}
   header.head h1{margin:0 0 4px;font-size:22px}
@@ -68,171 +75,417 @@
 </head>
 <body>
 <div class="wrap">
+  <div class="langbar" id="langbar"><span class="lbl">LANGUAGE</span></div>
+
   <header class="head">
-    <h1>🌏 เปรียบเทียบราคา Outsource ตามภูมิภาค</h1>
-    <div class="sub">Tavern Heroes · ฐาน = เรตไทย freelance จริง · ปรับช่องสีฟ้าได้ · 19 มิ.ย. 2026</div>
+    <h1 id="h-title"></h1>
+    <div class="sub" id="h-sub"></div>
   </header>
 
   <div class="controls">
-    <div><label>อัตราแลกเปลี่ยน (฿/$) </label><input id="fx" type="number" value="36"></div>
-    <div><label>🇹🇭 ไทย ×</label><input id="mTH" type="number" step="0.05" value="1.0"></div>
-    <div><label>🇨🇳 จีน ×</label><input id="mCN" type="number" step="0.05" value="1.5"></div>
-    <div><label>🌍 ตะวันตก ×</label><input id="mWE" type="number" step="0.05" value="3.5"></div>
-    <div class="hint">💡 จีน 1.5 = ค่าพรีเมียมคุณภาพ studio (สไตล์ Ragnarok/anime) ไม่ใช่ "จีนแพงกว่า" · ตะวันตก 3.5 = เทียบ baseline ไทย freelance</div>
+    <div><label id="l-fx"></label><input id="fx" type="number" value="36"></div>
+    <div><label id="l-mth"></label><input id="mTH" type="number" step="0.05" value="1.0"></div>
+    <div><label id="l-mcn"></label><input id="mCN" type="number" step="0.05" value="1.5"></div>
+    <div><label id="l-mwe"></label><input id="mWE" type="number" step="0.05" value="3.5"></div>
+    <div class="hint" id="l-hint"></div>
   </div>
 
   <div class="cards" id="cards"></div>
 
-  <h2 class="sec">📦 เทียบรายรายการ (ยอดกลาง · ฿)</h2>
+  <h2 class="sec" id="sec-tbl"></h2>
   <table id="tbl"></table>
 
   <div class="note" id="insight"></div>
 
-  <h2 class="sec">🗓️ ไทม์ไลน์ส่งมอบ Outsource — 3 รอบ (อ้างอิง Timeline พัฒนา 14 เดือน)</h2>
+  <h2 class="sec" id="sec-tl"></h2>
   <div class="htl" id="htl"></div>
   <div class="cards" id="roundCards"></div>
   <table id="roundTbl"></table>
   <div class="note" id="roundNote"></div>
 
-  <footer>RO Universal (ROU) · GGT Game Studio · Region Price Comparison · ประมาณการ</footer>
+  <footer id="foot"></footer>
 </div>
 
 <script>
 "use strict";
+
+/* ================= ตัวเลข — ไม่ผูกกับภาษา ================= */
 var GROUPS=[
- {key:"A", title:"🏗️ กลุ่ม A — สร้างเกมถึง Launch (ครั้งเดียว)", items:[
-   {n:"🧪 QA Testing", q:800, lo:15, hi:25},
-   {n:"🔊 BGM (ใช้ OST Ragnarok = ฟรี)", q:0, lo:0, hi:0},
-   {n:"🔊 SFX (200 เสียง = 5×40 เกม)", q:200, lo:15, hi:40},
-   {n:"🎮 Mini Game (30 เกม ก่อน launch, เรตไทย ฿15-20K)", q:30, lo:417, hi:556},
-   {n:"🎨 Chibi character / variation (15)", q:15, lo:300, hi:800, glob:true},
-   {n:"🎨 Modular asset (288 ชิ้น, เรตไทย ฿600-2K)", q:288, lo:17, hi:56},
-   {n:"🎨 UI production (เหมา)", q:1, lo:5000, hi:15000, glob:true},
-   {n:"💰 Costume / Cosmetic (50)", q:50, lo:150, hi:400, glob:true}
+ {key:"A", items:[
+   {id:"qa",      q:800, lo:15,   hi:25},
+   {id:"bgm",     q:0,   lo:0,    hi:0},
+   {id:"sfx",     q:200, lo:15,   hi:40},
+   {id:"mini",    q:30,  lo:417,  hi:556},
+   {id:"chibi",   q:15,  lo:300,  hi:800,   glob:true},
+   {id:"prop",    q:288, lo:17,   hi:56},
+   {id:"ui",      q:1,   lo:5000, hi:15000, glob:true},
+   {id:"costume", q:50,  lo:150,  hi:400,   glob:true}
  ]},
- {key:"B", title:"🌏 กลุ่ม B — Localization (มีแปลอยู่แล้ว = ฟรี)", items:[
-   {n:"🌏 Localization + LQA (มีแปลอยู่แล้ว = ฟรี)", q:0, lo:0, hi:0}
+ {key:"B", items:[
+   {id:"locdone", q:0, lo:0, hi:0}
  ]},
- {key:"C", title:"🔁 กลุ่ม C — Live Ops Seasonal (ต่อปี · 3 ธีม)", items:[
-   {n:"🔁 Seasonal theme reskin (864 ชิ้น)", q:864, lo:6, hi:17},
-   {n:"🔁 Event extras (banner/UI/BGM × 3 ธีม)", q:3, lo:800, hi:2000}
+ {key:"C", items:[
+   {id:"reskin", q:864, lo:6,   hi:17},
+   {id:"evext",  q:3,   lo:800, hi:2000}
  ]},
- {key:"D", title:"🚀 กลุ่ม D — After Launch (เพิ่มมินิเกม 20 เกม)", items:[
-   {n:"🎮 Mini Game — After Launch (20 เกม, เรตไทย ฿15-20K)", q:20, lo:417, hi:556}
+ {key:"D", items:[
+   {id:"mini2", q:20, lo:417, hi:556}
  ]}
 ];
+
+var LANGS=[{c:"th",l:"ไทย"},{c:"en",l:"English"},{c:"ko",l:"한국어"},{c:"zh",l:"中文"}];
+
+/* ================= ข้อความ 4 ภาษา ================= */
+var T={
+
+th:{ htmlLang:"th",
+  title:"เปรียบเทียบราคา Outsource ตามภูมิภาค — Tavern Heroes",
+  h1:"🌏 เปรียบเทียบราคา Outsource ตามภูมิภาค",
+  sub:"Tavern Heroes · ฐาน = เรตไทย freelance จริง · ปรับช่องสีฟ้าได้ · 19 มิ.ย. 2026",
+  fx:"อัตราแลกเปลี่ยน (฿/$) ", mTH:"🇹🇭 ไทย ×", mCN:"🇨🇳 จีน ×", mWE:"🌍 ตะวันตก ×",
+  hint:"💡 จีน 1.5 = ค่าพรีเมียมคุณภาพ studio (สไตล์ Ragnarok/anime) ไม่ใช่ \"จีนแพงกว่า\" · ตะวันตก 3.5 = เทียบ baseline ไทย freelance",
+  secTbl:"📦 เทียบรายรายการ (ยอดกลาง · ฿)",
+  cols:["รายการ","ฐานกลาง ($)","🇹🇭 ไทย","🇨🇳 จีน","🌍 ตะวันตก"],
+  globTag:"⚠️เรตสากล",
+  subtotal:"รวม ", grand:"รวมทั้งหมด (A+B+C+D)",
+  regions:["🇹🇭 ไทย (freelance)","🇨🇳 จีน (studio quality)","🌍 ตะวันตก (อ้างอิง)"],
+  mult:"ตัวคูณ ×",
+  groups:{
+    A:"🏗️ กลุ่ม A — สร้างเกมถึง Launch (ครั้งเดียว)",
+    B:"🌏 กลุ่ม B — Localization (มีแปลอยู่แล้ว = ฟรี)",
+    C:"🔁 กลุ่ม C — Live Ops Seasonal (ต่อปี · 3 ธีม)",
+    D:"🚀 กลุ่ม D — After Launch (เพิ่มมินิเกม 20 เกม)"
+  },
+  items:{
+    qa:"🧪 QA Testing",
+    bgm:"🔊 BGM (ใช้ OST Ragnarok = ฟรี)",
+    sfx:"🔊 SFX (200 เสียง = 5×40 เกม)",
+    mini:"🎮 Mini Game (30 เกม ก่อน launch, เรตไทย ฿15-20K)",
+    chibi:"🎨 Chibi character / variation (15)",
+    prop:"🎨 Modular asset (288 ชิ้น, เรตไทย ฿600-2K)",
+    ui:"🎨 UI production (เหมา)",
+    costume:"💰 Costume / Cosmetic (50)",
+    locdone:"🌏 Localization + LQA (มีแปลอยู่แล้ว = ฟรี)",
+    reskin:"🔁 Seasonal theme reskin (864 ชิ้น)",
+    evext:"🔁 Event extras (banner/UI/BGM × 3 ธีม)",
+    mini2:"🎮 Mini Game — After Launch (20 เกม, เรตไทย ฿15-20K)"
+  },
+  insight:"<b>อ่านผล:</b> จ้างจีนทั้งหมดแพงกว่าไทย ~{diff} (+{pct}%) — แต่จีนเก่งสไตล์ Ragnarok/anime ที่สุด เหมาะดึงมาทำเฉพาะ <b>art ฮีโร่/คอสตูม</b> (ดูชีต Hybrid ในไฟล์หลัก) · รายการ <span style='color:#f4b740'>⚠️เรตสากล</span> (chibi/UI/costume) ยังไม่ได้ปรับเป็นเรตไทย — ปรับแล้วยอดไทยจะลงอีก ~{adj}",
+  secTL:"🗓️ ไทม์ไลน์ส่งมอบ Outsource — 3 รอบ (อ้างอิง Timeline พัฒนา 14 เดือน)",
+  dates:["25 ก.พ.","22 มิ.ย.","25 ส.ค."],
+  phases:["ระยะที่ 2 · พ.ย.–ก.พ.","ระยะที่ 3 · มี.ค.–มิ.ย.","ระยะที่ 4 · ส.ค."],
+  round:"รอบ ",
+  gm:["🎮 20 มินิเกม + UI + asset เกม","🎮 20 มินิเกม + UI + asset เกม","🎮 20 มินิเกม + ก้อนตกแต่ง/ซีซัน"],
+  rsub:[" · 20 เกม + UI + asset เกม"," · 20 เกม + UI + asset เกม"," · + Modular/Costume/Reskin/Event"],
+  mxMini:"🎮 มินิเกม (20/รอบ)",
+  mx:{ui:"🎨 UI production (÷3)",qa:"🧪 QA Testing (÷3)",sfx:"🔊 SFX (÷3)",chibi:"🎨 Chibi character (÷3)",
+      prop:"🎨 Modular asset",costume:"💰 Costume / Cosmetic",reskin:"🔁 Seasonal theme reskin",evext:"🔁 Event extras"},
+  rtCol0:"Asset (฿ เรตไทย)", rtTot:"รวม", rtPer:"รวม/รอบ",
+  roundNote:"<b>การจัดสรรต่อรอบ (ตามที่กำหนด):</b> ทุกรอบ = <b>20 มินิเกม + UI production + Asset ที่ใช้ทำเกม</b> (QA / SFX / Chibi) เฉลี่ย ÷3 · <b>รอบ 3 ({d3})</b> ลงก้อนตกแต่ง/ซีซันเพิ่ม: Modular asset + Costume + Seasonal reskin + Event extras (จบตอนใกล้ launch) · map ระยะพัฒนา: รอบ1=ระยะ2 · รอบ2=ระยะ3 · รอบ3=ระยะ4 · ฿ = เรตไทย (×1.5 ≈ จีน ตามช่องตัวคูณ) · timeline นับ 3×20 = <b>60 เกม</b> (ตารางบนคง 50 เกม — คนละมุม)",
+  foot:"RO Universal (ROU) · GGT Game Studio · Region Price Comparison · ประมาณการ"
+},
+
+en:{ htmlLang:"en",
+  title:"Outsourcing Cost by Region — Tavern Heroes",
+  h1:"🌏 Outsourcing Cost Comparison by Region",
+  sub:"Tavern Heroes · Baseline = real Thai freelance rates · Blue fields are editable · 19 Jun 2026",
+  fx:"Exchange rate (฿/$) ", mTH:"🇹🇭 Thailand ×", mCN:"🇨🇳 China ×", mWE:"🌍 Western ×",
+  hint:"💡 China 1.5 = premium for studio-grade quality (Ragnarok/anime style), not \"China is more expensive\" · Western 3.5 = relative to the Thai freelance baseline",
+  secTbl:"📦 Line-by-line comparison (mid estimate · ฿)",
+  cols:["Item","Base mid ($)","🇹🇭 Thailand","🇨🇳 China","🌍 Western"],
+  globTag:"⚠️global rate",
+  subtotal:"Subtotal ", grand:"Grand total (A+B+C+D)",
+  regions:["🇹🇭 Thailand (freelance)","🇨🇳 China (studio quality)","🌍 Western (reference)"],
+  mult:"Multiplier ×",
+  groups:{
+    A:"🏗️ Group A — Build to launch (one-time)",
+    B:"🌏 Group B — Localization (already translated = free)",
+    C:"🔁 Group C — Live Ops seasonal (per year · 3 themes)",
+    D:"🚀 Group D — After launch (+20 mini games)"
+  },
+  items:{
+    qa:"🧪 QA testing",
+    bgm:"🔊 BGM (reuse Ragnarok OST = free)",
+    sfx:"🔊 SFX (200 sounds = 5×40 games)",
+    mini:"🎮 Mini game (30 games pre-launch, TH rate ฿15–20K)",
+    chibi:"🎨 Chibi character / variation (15)",
+    prop:"🎨 Modular asset (288 pcs, TH rate ฿600–2K)",
+    ui:"🎨 UI production (lump sum)",
+    costume:"💰 Costume / cosmetic (50)",
+    locdone:"🌏 Localization + LQA (already translated = free)",
+    reskin:"🔁 Seasonal theme reskin (864 pcs)",
+    evext:"🔁 Event extras (banner/UI/BGM × 3 themes)",
+    mini2:"🎮 Mini game — after launch (20 games, TH rate ฿15–20K)"
+  },
+  insight:"<b>How to read it:</b> Outsourcing everything to China costs ~{diff} (+{pct}%) more than Thailand — but China is strongest at the Ragnarok/anime style, so bring them in only for <b>hero art / costumes</b> (see the Hybrid sheet in the master file) · Items tagged <span style='color:#f4b740'>⚠️global rate</span> (chibi/UI/costume) have not been re-based to Thai rates yet — once adjusted the Thai total drops another ~{adj}",
+  secTL:"🗓️ Outsource delivery timeline — 3 rounds (aligned to the 14-month dev timeline)",
+  dates:["25 Feb","22 Jun","25 Aug"],
+  phases:["Phase 2 · Nov–Feb","Phase 3 · Mar–Jun","Phase 4 · Aug"],
+  round:"Round ",
+  gm:["🎮 20 mini games + UI + game assets","🎮 20 mini games + UI + game assets","🎮 20 mini games + decor/seasonal batch"],
+  rsub:[" · 20 games + UI + game assets"," · 20 games + UI + game assets"," · + Modular/Costume/Reskin/Event"],
+  mxMini:"🎮 Mini games (20/round)",
+  mx:{ui:"🎨 UI production (÷3)",qa:"🧪 QA testing (÷3)",sfx:"🔊 SFX (÷3)",chibi:"🎨 Chibi character (÷3)",
+      prop:"🎨 Modular asset",costume:"💰 Costume / cosmetic",reskin:"🔁 Seasonal theme reskin",evext:"🔁 Event extras"},
+  rtCol0:"Asset (฿ at Thai rate)", rtTot:"Total", rtPer:"Total / round",
+  roundNote:"<b>Per-round allocation (as specified):</b> every round = <b>20 mini games + UI production + game-making assets</b> (QA / SFX / Chibi) split evenly ÷3 · <b>Round 3 ({d3})</b> adds the decor/seasonal batch: Modular asset + Costume + Seasonal reskin + Event extras (landing close to launch) · Dev-phase mapping: R1=Phase 2 · R2=Phase 3 · R3=Phase 4 · ฿ = Thai rate (×1.5 ≈ China, per the multiplier field) · The timeline counts 3×20 = <b>60 games</b> (the table above stays at 50 — a different view)",
+  foot:"RO Universal (ROU) · GGT Game Studio · Region Price Comparison · Estimate"
+},
+
+ko:{ htmlLang:"ko",
+  title:"지역별 외주 비용 비교 — Tavern Heroes",
+  h1:"🌏 지역별 외주 단가 비교",
+  sub:"Tavern Heroes · 기준 = 실제 태국 프리랜서 단가 · 파란색 칸 수정 가능 · 2026년 6월 19일",
+  fx:"환율 (฿/$) ", mTH:"🇹🇭 태국 ×", mCN:"🇨🇳 중국 ×", mWE:"🌍 서구권 ×",
+  hint:"💡 중국 1.5 = 스튜디오급 퀄리티(라그나로크/애니 스타일) 프리미엄이며 \"중국이 더 비싸다\"는 뜻이 아닙니다 · 서구권 3.5 = 태국 프리랜서 기준 대비",
+  secTbl:"📦 항목별 비교 (중간값 · ฿)",
+  cols:["항목","기준 중간값 ($)","🇹🇭 태국","🇨🇳 중국","🌍 서구권"],
+  globTag:"⚠️글로벌 단가",
+  subtotal:"소계 ", grand:"총합계 (A+B+C+D)",
+  regions:["🇹🇭 태국 (프리랜서)","🇨🇳 중국 (스튜디오 퀄리티)","🌍 서구권 (참고)"],
+  mult:"배수 ×",
+  groups:{
+    A:"🏗️ 그룹 A — 론칭까지 개발 (일회성)",
+    B:"🌏 그룹 B — 현지화 (기존 번역 있음 = 무료)",
+    C:"🔁 그룹 C — 라이브 운영 시즌 (연간 · 3 테마)",
+    D:"🚀 그룹 D — 론칭 후 (미니게임 20종 추가)"
+  },
+  items:{
+    qa:"🧪 QA 테스트",
+    bgm:"🔊 BGM (라그나로크 OST 활용 = 무료)",
+    sfx:"🔊 SFX (200개 = 5×40 게임)",
+    mini:"🎮 미니게임 (론칭 전 30종, 태국 단가 ฿15–20K)",
+    chibi:"🎨 치비 캐릭터 / 배리에이션 (15)",
+    prop:"🎨 모듈러 애셋 (288개, 태국 단가 ฿600–2K)",
+    ui:"🎨 UI 제작 (일괄)",
+    costume:"💰 코스튬 / 코스메틱 (50)",
+    locdone:"🌏 현지화 + LQA (기존 번역 있음 = 무료)",
+    reskin:"🔁 시즌 테마 리스킨 (864개)",
+    evext:"🔁 이벤트 부가물 (배너/UI/BGM × 3 테마)",
+    mini2:"🎮 미니게임 — 론칭 후 (20종, 태국 단가 ฿15–20K)"
+  },
+  insight:"<b>결과 해석:</b> 전량 중국 외주는 태국 대비 약 {diff} (+{pct}%) 더 비쌉니다 — 다만 라그나로크/애니 스타일은 중국이 가장 강하므로 <b>히어로 아트 / 코스튬</b>에만 활용하는 것을 권장합니다 (마스터 파일의 Hybrid 시트 참고) · <span style='color:#f4b740'>⚠️글로벌 단가</span> 항목(치비/UI/코스튬)은 아직 태국 단가로 환산되지 않았습니다 — 조정 시 태국 합계가 약 {adj} 더 내려갑니다",
+  secTL:"🗓️ 외주 납품 타임라인 — 3회차 (14개월 개발 타임라인 기준)",
+  dates:["2월 25일","6월 22일","8월 25일"],
+  phases:["2단계 · 11월–2월","3단계 · 3월–6월","4단계 · 8월"],
+  round:"회차 ",
+  gm:["🎮 미니게임 20종 + UI + 게임 애셋","🎮 미니게임 20종 + UI + 게임 애셋","🎮 미니게임 20종 + 장식/시즌 물량"],
+  rsub:[" · 20종 + UI + 게임 애셋"," · 20종 + UI + 게임 애셋"," · + 모듈러/코스튬/리스킨/이벤트"],
+  mxMini:"🎮 미니게임 (회차당 20종)",
+  mx:{ui:"🎨 UI 제작 (÷3)",qa:"🧪 QA 테스트 (÷3)",sfx:"🔊 SFX (÷3)",chibi:"🎨 치비 캐릭터 (÷3)",
+      prop:"🎨 모듈러 애셋",costume:"💰 코스튬 / 코스메틱",reskin:"🔁 시즌 테마 리스킨",evext:"🔁 이벤트 부가물"},
+  rtCol0:"애셋 (฿ 태국 단가)", rtTot:"합계", rtPer:"회차 합계",
+  roundNote:"<b>회차별 배분 (지정된 기준):</b> 매 회차 = <b>미니게임 20종 + UI 제작 + 게임 제작용 애셋</b> (QA / SFX / 치비) 을 ÷3 으로 균등 배분 · <b>3회차 ({d3})</b> 에 장식/시즌 물량 추가: 모듈러 애셋 + 코스튬 + 시즌 리스킨 + 이벤트 부가물 (론칭 직전 마무리) · 개발 단계 매핑: 1회차=2단계 · 2회차=3단계 · 3회차=4단계 · ฿ = 태국 단가 (배수 칸 기준 ×1.5 ≈ 중국) · 타임라인은 3×20 = <b>60종</b> 기준 (위 표는 50종 유지 — 서로 다른 관점)",
+  foot:"RO Universal (ROU) · GGT Game Studio · Region Price Comparison · 추정치"
+},
+
+zh:{ htmlLang:"zh",
+  title:"各地区外包成本对比 — Tavern Heroes",
+  h1:"🌏 各地区外包单价对比",
+  sub:"Tavern Heroes · 基准 = 泰国自由职业者实际单价 · 蓝色输入框可修改 · 2026年6月19日",
+  fx:"汇率 (฿/$) ", mTH:"🇹🇭 泰国 ×", mCN:"🇨🇳 中国 ×", mWE:"🌍 欧美 ×",
+  hint:"💡 中国 1.5 = 工作室级品质（仙境传说／日系动漫风格）的溢价，并非「中国更贵」· 欧美 3.5 = 相对泰国自由职业者基准",
+  secTbl:"📦 逐项对比（中间值 · ฿）",
+  cols:["项目","基准中间值 ($)","🇹🇭 泰国","🇨🇳 中国","🌍 欧美"],
+  globTag:"⚠️国际单价",
+  subtotal:"小计 ", grand:"总计 (A+B+C+D)",
+  regions:["🇹🇭 泰国（自由职业者）","🇨🇳 中国（工作室品质）","🌍 欧美（参考）"],
+  mult:"倍数 ×",
+  groups:{
+    A:"🏗️ A 组 — 开发至上线（一次性）",
+    B:"🌏 B 组 — 本地化（已有翻译 = 免费）",
+    C:"🔁 C 组 — 长线运营季节性（每年 · 3 个主题）",
+    D:"🚀 D 组 — 上线后（新增 20 款小游戏）"
+  },
+  items:{
+    qa:"🧪 QA 测试",
+    bgm:"🔊 BGM（沿用仙境传说 OST = 免费）",
+    sfx:"🔊 音效（200 个 = 5×40 款游戏）",
+    mini:"🎮 小游戏（上线前 30 款，泰国单价 ฿15–20K）",
+    chibi:"🎨 Q 版角色 / 变体（15）",
+    prop:"🎨 模块化素材（288 件，泰国单价 ฿600–2K）",
+    ui:"🎨 UI 制作（打包价）",
+    costume:"💰 时装 / 外观（50）",
+    locdone:"🌏 本地化 + LQA（已有翻译 = 免费）",
+    reskin:"🔁 季节主题换皮（864 件）",
+    evext:"🔁 活动附加物料（横幅/UI/BGM × 3 个主题）",
+    mini2:"🎮 小游戏 — 上线后（20 款，泰国单价 ฿15–20K）"
+  },
+  insight:"<b>结果解读：</b>全部外包给中国比泰国贵约 {diff}（+{pct}%）—— 但中国最擅长仙境传说／日系动漫风格，建议只用于 <b>英雄美术 / 时装</b>（见主文件的 Hybrid 表）· 标记 <span style='color:#f4b740'>⚠️国际单价</span> 的项目（Q 版／UI／时装）尚未换算为泰国单价 —— 调整后泰国总额还会再降约 {adj}",
+  secTL:"🗓️ 外包交付时间线 — 3 个批次（对齐 14 个月开发时间线）",
+  dates:["2月25日","6月22日","8月25日"],
+  phases:["第 2 阶段 · 11月–2月","第 3 阶段 · 3月–6月","第 4 阶段 · 8月"],
+  round:"第 ",
+  roundSuffix:" 批",
+  gm:["🎮 20 款小游戏 + UI + 游戏素材","🎮 20 款小游戏 + UI + 游戏素材","🎮 20 款小游戏 + 装饰/季节物料"],
+  rsub:[" · 20 款 + UI + 游戏素材"," · 20 款 + UI + 游戏素材"," · + 模块化/时装/换皮/活动"],
+  mxMini:"🎮 小游戏（每批 20 款）",
+  mx:{ui:"🎨 UI 制作（÷3）",qa:"🧪 QA 测试（÷3）",sfx:"🔊 音效（÷3）",chibi:"🎨 Q 版角色（÷3）",
+      prop:"🎨 模块化素材",costume:"💰 时装 / 外观",reskin:"🔁 季节主题换皮",evext:"🔁 活动附加物料"},
+  rtCol0:"素材（฿ 泰国单价）", rtTot:"合计", rtPer:"每批合计",
+  roundNote:"<b>各批次分配（按指定方案）：</b>每批 = <b>20 款小游戏 + UI 制作 + 做游戏用的素材</b>（QA / 音效 / Q 版）平均 ÷3 · <b>第 3 批（{d3}）</b>追加装饰/季节物料：模块化素材 + 时装 + 季节换皮 + 活动附加物料（临近上线完成）· 开发阶段对应：第1批=第2阶段 · 第2批=第3阶段 · 第3批=第4阶段 · ฿ = 泰国单价（按倍数框 ×1.5 ≈ 中国）· 时间线按 3×20 = <b>60 款</b> 计（上方表格仍为 50 款 —— 两种不同视角）",
+  foot:"RO Universal (ROU) · GGT Game Studio · Region Price Comparison · 估算"
+}
+
+};
+
+/* ================= helper ================= */
 function el(id){return document.getElementById(id);}
 function baht(n){return "฿"+Math.round(n).toLocaleString("en-US");}
 function usd(n){return "$"+Math.round(n).toLocaleString("en-US");}
 function mid(it){return (it.q*it.lo + it.q*it.hi)/2;}
+function roundLabel(d,i){ return d.round+(i+1)+(d.roundSuffix||""); }
 
+var cur="th";
+
+/* ================= render ================= */
 function render(){
+  var d=T[cur];
   var fx=parseFloat(el("fx").value)||36;
   var mTH=parseFloat(el("mTH").value)||1, mCN=parseFloat(el("mCN").value)||1, mWE=parseFloat(el("mWE").value)||1;
+
+  /* --- static labels --- */
+  document.documentElement.lang=d.htmlLang;
+  document.title=d.title;
+  el("h-title").textContent=d.h1;
+  el("h-sub").textContent=d.sub;
+  el("l-fx").textContent=d.fx;
+  el("l-mth").textContent=d.mTH;
+  el("l-mcn").textContent=d.mCN;
+  el("l-mwe").textContent=d.mWE;
+  el("l-hint").textContent=d.hint;
+  el("sec-tbl").textContent=d.secTbl;
+  el("sec-tl").textContent=d.secTL;
+  el("foot").textContent=d.foot;
+  Array.prototype.forEach.call(document.querySelectorAll(".langbtn"),function(b){
+    b.className="langbtn"+(b.getAttribute("data-l")===cur?" on":"");
+  });
+
+  /* --- main table --- */
   var grand={th:0,cn:0,we:0,base:0};
-  var html="<thead><tr><th>รายการ</th><th>ฐานกลาง ($)</th><th>🇹🇭 ไทย</th><th>🇨🇳 จีน</th><th>🌍 ตะวันตก</th></tr></thead><tbody>";
+  var html="<thead><tr>";
+  d.cols.forEach(function(c){ html+="<th>"+c+"</th>"; });
+  html+="</tr></thead><tbody>";
   GROUPS.forEach(function(g){
-    html+='<tr class="grouprow"><td colspan="5">'+g.title+'</td></tr>';
+    html+='<tr class="grouprow"><td colspan="5">'+d.groups[g.key]+'</td></tr>';
     var sub={th:0,cn:0,we:0,base:0};
     g.items.forEach(function(it){
       var m=mid(it);
       sub.base+=m; sub.th+=m*mTH; sub.cn+=m*mCN; sub.we+=m*mWE;
-      html+="<tr><td>"+it.n+(it.glob?' <span style="color:#f4b740">⚠️เรตสากล</span>':"")+"</td>"+
+      html+="<tr><td>"+d.items[it.id]+(it.glob?' <span style="color:#f4b740">'+d.globTag+'</span>':"")+"</td>"+
         "<td class='base'>"+usd(m)+"</td>"+
         "<td class='th'>"+baht(m*mTH*fx)+"</td>"+
         "<td class='cn'>"+baht(m*mCN*fx)+"</td>"+
         "<td class='we'>"+baht(m*mWE*fx)+"</td></tr>";
     });
-    html+='<tr class="subrow"><td>รวม '+g.key+'</td><td class="base">'+usd(sub.base)+'</td>'+
+    html+='<tr class="subrow"><td>'+d.subtotal+g.key+'</td><td class="base">'+usd(sub.base)+'</td>'+
       '<td class="th">'+baht(sub.th*fx)+'</td><td class="cn">'+baht(sub.cn*fx)+'</td><td class="we">'+baht(sub.we*fx)+'</td></tr>';
     grand.base+=sub.base; grand.th+=sub.th; grand.cn+=sub.cn; grand.we+=sub.we;
   });
-  html+='<tr class="totrow"><td>รวมทั้งหมด (A+B+C+D)</td><td class="base">'+usd(grand.base)+'</td>'+
+  html+='<tr class="totrow"><td>'+d.grand+'</td><td class="base">'+usd(grand.base)+'</td>'+
     '<td class="th">'+baht(grand.th*fx)+'</td><td class="cn">'+baht(grand.cn*fx)+'</td><td class="we">'+baht(grand.we*fx)+'</td></tr>';
   html+="</tbody>";
   el("tbl").innerHTML=html;
 
+  /* --- region cards --- */
   el("cards").innerHTML=
-    card("th","🇹🇭 ไทย (freelance)",grand.th,fx,mTH)+
-    card("cn","🇨🇳 จีน (studio quality)",grand.cn,fx,mCN)+
-    card("we","🌍 ตะวันตก (อ้างอิง)",grand.we,fx,mWE);
+    card("th",d.regions[0],grand.th,fx,mTH,d)+
+    card("cn",d.regions[1],grand.cn,fx,mCN,d)+
+    card("we",d.regions[2],grand.we,fx,mWE,d);
 
+  /* --- insight --- */
   var diffCN=grand.cn-grand.th, pctCN=Math.round((grand.cn/grand.th-1)*100);
-  el("insight").innerHTML="<b>อ่านผล:</b> จ้างจีนทั้งหมดแพงกว่าไทย ~"+baht(diffCN*fx)+" (+"+pctCN+"%) — "+
-    "แต่จีนเก่งสไตล์ Ragnarok/anime ที่สุด เหมาะดึงมาทำเฉพาะ <b>art ฮีโร่/คอสตูม</b> (ดูชีต Hybrid ในไฟล์หลัก) · "+
-    "รายการ <span style='color:#f4b740'>⚠️เรตสากล</span> (chibi/UI/costume) ยังไม่ได้ปรับเป็นเรตไทย — ปรับแล้วยอดไทยจะลงอีก ~"+baht(25000*fx)+"";
+  el("insight").innerHTML=d.insight
+    .replace("{diff}",baht(diffCN*fx)).replace("{pct}",pctCN).replace("{adj}",baht(25000*fx));
 
-  // ===== Outsource delivery timeline (per-round asset allocation) =====
-  var RDATES=["25 ก.พ.","22 มิ.ย.","25 ส.ค."], GPR=20, NR=3;
-  var allItems=[].concat(GROUPS[0].items, GROUPS[2].items);
-  function findItem(re){ return allItems.filter(function(it){return re.test(it.n);})[0]; }
-  var miniIt=GROUPS[0].items.filter(function(it){return /Mini Game/.test(it.n);})[0];
+  /* ===== Outsource delivery timeline (per-round asset allocation) ===== */
+  var GPR=20, NR=3;
+  function byId(id){
+    for(var i=0;i<GROUPS.length;i++){
+      for(var j=0;j<GROUPS[i].items.length;j++){ if(GROUPS[i].items[j].id===id) return GROUPS[i].items[j]; }
+    }
+    return null;
+  }
+  var miniIt=byId("mini");
   var miniPer=(miniIt.lo+miniIt.hi)/2;
-  // game-making assets → spread across all 3 rounds (÷3)
-  var gameAssets=[
-    {k:"🎨 UI production (÷3)",    it:findItem(/UI production/)},
-    {k:"🧪 QA Testing (÷3)",       it:findItem(/QA/)},
-    {k:"🔊 SFX (÷3)",              it:findItem(/SFX/)},
-    {k:"🎨 Chibi character (÷3)",  it:findItem(/Chibi/)}
-  ];
-  // decoration / seasonal → round 3 only (full)
-  var r3Assets=[
-    {k:"🎨 Modular asset",         it:findItem(/Modular/)},
-    {k:"💰 Costume / Cosmetic",    it:findItem(/Costume/)},
-    {k:"🔁 Seasonal theme reskin", it:findItem(/reskin/)},
-    {k:"🔁 Event extras",          it:findItem(/Event extras/)}
-  ];
-  var matrix=[{label:"🎮 มินิเกม (20/รอบ)", cells:[GPR*miniPer,GPR*miniPer,GPR*miniPer]}];
-  gameAssets.forEach(function(g){ var v=mid(g.it)/NR; matrix.push({label:g.k, cells:[v,v,v]}); });
-  r3Assets.forEach(function(g){ matrix.push({label:g.k, cells:[0,0,mid(g.it)]}); });
+  /* game-making assets → spread across all 3 rounds (÷3) */
+  var gameAssets=["ui","qa","sfx","chibi"];
+  /* decoration / seasonal → round 3 only (full) */
+  var r3Assets=["prop","costume","reskin","evext"];
+
+  var matrix=[{label:d.mxMini, cells:[GPR*miniPer,GPR*miniPer,GPR*miniPer]}];
+  gameAssets.forEach(function(id){ var v=mid(byId(id))/NR; matrix.push({label:d.mx[id], cells:[v,v,v]}); });
+  r3Assets.forEach(function(id){ matrix.push({label:d.mx[id], cells:[0,0,mid(byId(id))]}); });
   var rtot=[0,0,0];
   matrix.forEach(function(m){ for(var j=0;j<3;j++) rtot[j]+=m.cells[j]; });
   var rgrand=rtot[0]+rtot[1]+rtot[2];
-  // horizontal timeline bar
-  var HPHASE=["ระยะที่ 2 · พ.ย.–ก.พ.","ระยะที่ 3 · มี.ค.–มิ.ย.","ระยะที่ 4 · ส.ค."];
-  var HDOT=["g","",""], HAMT=["","","a"];
+
+  /* horizontal timeline bar */
   var htlTop='<div class="lab">', htlLine='<div class="line"><div class="track"></div><div class="dots">', htlBot='<div class="lab">';
   for(var hi=0;hi<3;hi++){
-    htlTop+='<div class="rn">รอบ '+(hi+1)+'</div>';
+    htlTop+='<div class="rn">'+roundLabel(d,hi)+'</div>';
     htlLine+='<div><div class="dot '+(hi===2?'a':(hi===0?'g':''))+'"></div></div>';
-    htlBot+='<div><div class="dd">📅 '+RDATES[hi]+'</div><div class="ph">'+HPHASE[hi]+'</div>'+
-      '<div class="gm">🎮 20 มินิเกม'+(hi===2?' + ก้อนตกแต่ง/ซีซัน':' + UI + asset เกม')+'</div>'+
+    htlBot+='<div><div class="dd">📅 '+d.dates[hi]+'</div><div class="ph">'+d.phases[hi]+'</div>'+
+      '<div class="gm">'+d.gm[hi]+'</div>'+
       '<div class="amt'+(hi===2?' a':'')+'">'+baht(rtot[hi]*mTH*fx)+'</div></div>';
   }
   htlTop+='</div>'; htlLine+='</div></div>'; htlBot+='</div>';
   el("htl").innerHTML=htlTop+htlLine+htlBot;
-  var rsub=[' · 20 เกม + UI + asset เกม',' · 20 เกม + UI + asset เกม',' · + Modular/Costume/Reskin/Event'];
+
   var rcards="";
   for(var ri=0;ri<3;ri++){
-    rcards+='<div class="ccard rd"><div class="rg">รอบ '+(ri+1)+'</div>'+
-      '<div class="dt">📅 '+RDATES[ri]+'</div>'+
+    rcards+='<div class="ccard rd"><div class="rg">'+roundLabel(d,ri)+'</div>'+
+      '<div class="dt">📅 '+d.dates[ri]+'</div>'+
       '<div class="baht">'+baht(rtot[ri]*mTH*fx)+'</div>'+
-      '<div class="usd">'+usd(rtot[ri]*mTH)+rsub[ri]+'</div></div>';
+      '<div class="usd">'+usd(rtot[ri]*mTH)+d.rsub[ri]+'</div></div>';
   }
   el("roundCards").innerHTML=rcards;
-  var rtbl='<thead><tr><th>Asset (฿ เรตไทย)</th><th>รอบ 1 · 25 ก.พ.</th><th>รอบ 2 · 22 มิ.ย.</th><th>รอบ 3 · 25 ส.ค.</th><th>รวม</th></tr></thead><tbody>';
+
+  var rtbl='<thead><tr><th>'+d.rtCol0+'</th>';
+  for(var ci=0;ci<3;ci++){ rtbl+='<th>'+roundLabel(d,ci)+' · '+d.dates[ci]+'</th>'; }
+  rtbl+='<th>'+d.rtTot+'</th></tr></thead><tbody>';
   matrix.forEach(function(m){
     var tot=m.cells[0]+m.cells[1]+m.cells[2];
     rtbl+='<tr><td>'+m.label+'</td>';
     for(var j=0;j<3;j++){ rtbl+='<td class="th">'+(m.cells[j]?baht(m.cells[j]*mTH*fx):'—')+'</td>'; }
     rtbl+='<td class="base">'+baht(tot*mTH*fx)+'</td></tr>';
   });
-  rtbl+='<tr class="totrow"><td>รวม/รอบ</td>'+
+  rtbl+='<tr class="totrow"><td>'+d.rtPer+'</td>'+
     '<td class="th">'+baht(rtot[0]*mTH*fx)+'</td><td class="th">'+baht(rtot[1]*mTH*fx)+'</td>'+
     '<td class="th">'+baht(rtot[2]*mTH*fx)+'</td><td class="base">'+baht(rgrand*mTH*fx)+'</td></tr>';
   rtbl+='</tbody>'; el("roundTbl").innerHTML=rtbl;
-  el("roundNote").innerHTML="<b>การจัดสรรต่อรอบ (ตามที่กำหนด):</b> ทุกรอบ = <b>20 มินิเกม + UI production + Asset ที่ใช้ทำเกม</b> (QA / SFX / Chibi) เฉลี่ย ÷3 · "+
-    "<b>รอบ 3 (25 ส.ค.)</b> ลงก้อนตกแต่ง/ซีซันเพิ่ม: Modular asset + Costume + Seasonal reskin + Event extras (จบตอนใกล้ launch) · "+
-    "map ระยะพัฒนา: รอบ1=ระยะ2 · รอบ2=ระยะ3 · รอบ3=ระยะ4 · ฿ = เรตไทย (×1.5 ≈ จีน ตามช่องตัวคูณ) · timeline นับ 3×20 = <b>60 เกม</b> (ตารางบนคง 50 เกม — คนละมุม)";
+
+  el("roundNote").innerHTML=d.roundNote.replace("{d3}",d.dates[2]);
 }
-function card(cls,rg,val,fx,m){
+
+function card(cls,rg,val,fx,m,d){
   return '<div class="ccard '+cls+'"><div class="rg">'+rg+'</div>'+
     '<div class="baht">'+baht(val*fx)+'</div>'+
     '<div class="usd">'+usd(val)+'</div>'+
-    '<div class="x">ตัวคูณ ×'+m.toFixed(2)+'</div></div>';
+    '<div class="x">'+d.mult+m.toFixed(2)+'</div></div>';
 }
+
+function setLang(c){
+  cur=c;
+  try{ localStorage.setItem("ropz_region_lang",c); }catch(e){}
+  render();
+}
+
+/* ================= init ================= */
 ["fx","mTH","mCN","mWE"].forEach(function(id){ el(id).addEventListener("input",render); });
-render();
+(function(){
+  var bar=el("langbar");
+  LANGS.forEach(function(L){
+    var b=document.createElement("button");
+    b.className="langbtn"; b.setAttribute("data-l",L.c); b.textContent=L.l;
+    b.onclick=function(){ setLang(L.c); };
+    bar.appendChild(b);
+  });
+  var saved="th";
+  try{ var s=localStorage.getItem("ropz_region_lang"); if(s&&T[s]) saved=s; }catch(e){}
+  cur=saved;
+  render();
+})();
 </script>
 </body>
 </html>
