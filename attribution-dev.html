@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish: กัน Google index ตอนขึ้น GitHub Pages — อย่าลบ (ไม่กระทบการเปิดดู/ทำ PDF) -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>RO PlayZone — Attribution SDK Spec (Dev)</title>
+<style>
+:root{
+  --paper:#F4F5F7;--surface:#fff;--ink:#18202E;--soft:#3C4658;--muted:#6E7889;
+  --line:#E3E6EC;--ropz:#2A78D6;--ropz-bg:#EAF2FC;--dev:#12A06F;--dev-bg:#E4F5EE;
+  --gold:#C6890E;--gold-bg:#FBF2DC;--red:#D5453F;
+  --sans:-apple-system,"Segoe UI","Leelawadee UI","Malgun Gothic","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"Cascadia Code",Consolas,ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root{--paper:#0E121B;--surface:#161C28;--ink:#E9ECF2;--soft:#B7C0CE;--muted:#8A94A6;--line:#28303F;--ropz-bg:#132436;--dev-bg:#0F2A22;--gold-bg:#2C240F;}}
+:root[data-theme="dark"]{--paper:#0E121B;--surface:#161C28;--ink:#E9ECF2;--soft:#B7C0CE;--muted:#8A94A6;--line:#28303F;--ropz-bg:#132436;--dev-bg:#0F2A22;--gold-bg:#2C240F;}
+:root[data-theme="light"]{--paper:#F4F5F7;--surface:#fff;--ink:#18202E;--soft:#3C4658;--muted:#6E7889;--line:#E3E6EC;--ropz-bg:#EAF2FC;--dev-bg:#E4F5EE;--gold-bg:#FBF2DC;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 80px}
+.tabnum{font-variant-numeric:tabular-nums}
+.bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 20px;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .b{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.bar .sp{flex:1}
+.langs{display:flex;gap:3px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px}
+.langs button{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--muted);background:transparent;border:0;padding:6px 10px;border-radius:6px;cursor:pointer;line-height:1}
+.langs button:hover{color:var(--ink)}
+.langs button[aria-pressed="true"]{background:var(--dev);color:#fff}
+.btn{font-family:var(--sans);font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 13px;cursor:pointer}
+.btn.pri{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+header.mast{padding:40px 0 22px;border-bottom:2px solid var(--ink)}
+.tick{display:flex;height:5px;width:190px;border-radius:3px;overflow:hidden;margin-bottom:20px}
+.tick i{flex:1}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--dev);font-weight:600}
+h1{font-size:32px;font-weight:600;letter-spacing:-.02em;margin:10px 0 6px;line-height:1.1}
+.dek{color:var(--soft);font-size:15.5px;margin:0;max-width:64ch}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:16px}
+section{padding:32px 0;border-bottom:1px solid var(--line)}
+.ey{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 14px}
+.ey .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:var(--gold-bg);color:var(--gold);font-weight:700;font-size:12px}
+h2{font-size:23px;font-weight:600;letter-spacing:-.01em;margin:0 0 4px}
+.lead{color:var(--soft);margin:2px 0 18px;max-width:66ch}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.card.ropz{border-top:4px solid var(--ropz)}
+.card.dev{border-top:4px solid var(--dev)}
+.card h3{margin:0 0 10px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+.dot.r{background:var(--ropz)}.dot.g{background:var(--dev)}
+.rate{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;gap:10px}
+.rate:last-child{border-bottom:0}
+.rate .us-r{color:var(--ropz);font-weight:700}.rate .us-g{color:var(--dev);font-weight:700}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px}
+.pill.r{background:var(--ropz-bg);color:var(--ropz)}.pill.g{background:var(--dev-bg);color:var(--dev)}
+.layers{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.layer{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;font-size:14.5px}
+.layer .t{font-weight:600}.layer .d{color:var(--muted);font-size:13px}
+.l1{background:var(--ropz-bg)}.l2{background:#F3EEF9}.l3{background:var(--dev-bg)}
+@media (prefers-color-scheme:dark){.l2{background:#231C33}}
+:root[data-theme="dark"] .l2{background:#231C33}
+:root[data-theme="light"] .l2{background:#F3EEF9}
+.srcgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.srccol h4{margin:0 0 10px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.srccol ol{margin:0;padding-left:20px;display:grid;gap:7px}
+.srccol li{font-size:14px;line-height:1.45}
+.srccol li span{color:var(--muted);font-size:13px}
+.flow{display:flex;flex-direction:column;gap:0;margin-top:6px}
+.fnode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-size:14px}
+.fnode.q{border-color:var(--gold);background:var(--gold-bg)}
+.fnode b{font-weight:600}
+.fbranch{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0}
+.fyes,.fno{border-radius:10px;padding:12px 16px;font-size:14px}
+.fyes{background:var(--dev-bg);border:1px solid var(--dev)}
+.fno{background:var(--ropz-bg);border:1px solid var(--ropz)}
+.farrow{text-align:center;color:var(--muted);font-size:18px;line-height:1;margin:2px 0}
+pre{background:#0f1622;color:#d7e0ec;border-radius:12px;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.55;margin:14px 0 0}
+pre .c{color:#7f8ea3}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14px;margin-top:8px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--surface);font-weight:600;font-size:13px;color:var(--soft)}
+table.round{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.punch{font-size:16px;font-weight:600;color:var(--gold);margin-top:16px;text-wrap:balance}
+ul.chk{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:9px}
+ul.chk li{padding-left:26px;position:relative;font-size:14px;color:var(--soft)}
+ul.chk li::before{content:"\2610";position:absolute;left:0;color:var(--muted)}
+@media (max-width:680px){.two,.srcgrid,.fbranch{grid-template-columns:1fr}}
+@media print{:root{--paper:#fff;--surface:#fff}.bar{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid}@page{size:A4;margin:14mm}.wrap{max-width:none;padding:0}pre{white-space:pre-wrap}}
+/* ---- deck theme (match ROPZ_BusinessModel_Deck_RO) ---- */
+html{background:#E7F0FB}
+:root{--gold:#1E5AA8;--gold-bg:#E9F1FB}
+:root[data-theme="light"]{--gold:#1E5AA8;--gold-bg:#E9F1FB}
+html[data-theme="light"]{background:#E7F0FB}
+@media(prefers-color-scheme:dark){html{background:#080C14}:root{--gold:#5B9BE0;--gold-bg:#13243B}}
+:root[data-theme="dark"]{--gold:#5B9BE0;--gold-bg:#13243B}
+body{background:transparent}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(70% 48% at 8% 3%,rgba(46,139,224,.13) 0%,transparent 55%),radial-gradient(58% 44% at 96% 8%,rgba(120,180,240,.11) 0%,transparent 55%),radial-gradient(64% 52% at 95% 98%,rgba(22,48,92,.11) 0%,transparent 52%),radial-gradient(58% 48% at 3% 96%,rgba(70,139,224,.09) 0%,transparent 55%),linear-gradient(158deg,#FBFDFF 0%,#EEF5FE 45%,#DFEBFA 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(30,90,168,.07) 1px,transparent 1.5px);background-size:24px 24px;-webkit-mask-image:radial-gradient(130% 100% at 50% 18%,#000 48%,transparent 100%);mask-image:radial-gradient(130% 100% at 50% 18%,#000 48%,transparent 100%)}
+@media(prefers-color-scheme:dark){body::before{background:radial-gradient(70% 48% at 8% 3%,rgba(46,139,224,.16) 0%,transparent 55%),radial-gradient(64% 52% at 95% 98%,rgba(46,139,224,.10) 0%,transparent 52%),linear-gradient(158deg,#0B1220 0%,#0C1526 55%,#0A1120 100%)}body::after{opacity:.35;background-image:radial-gradient(rgba(120,170,230,.10) 1px,transparent 1.5px)}}
+:root[data-theme="dark"] body::before{background:radial-gradient(70% 48% at 8% 3%,rgba(46,139,224,.16) 0%,transparent 55%),radial-gradient(64% 52% at 95% 98%,rgba(46,139,224,.10) 0%,transparent 52%),linear-gradient(158deg,#0B1220 0%,#0C1526 55%,#0A1120 100%)}
+:root[data-theme="dark"] body::after{opacity:.35;background-image:radial-gradient(rgba(120,170,230,.10) 1px,transparent 1.5px)}
+:root[data-theme="light"] body::before{background:radial-gradient(70% 48% at 8% 3%,rgba(46,139,224,.13) 0%,transparent 55%),radial-gradient(58% 44% at 96% 8%,rgba(120,180,240,.11) 0%,transparent 55%),radial-gradient(64% 52% at 95% 98%,rgba(22,48,92,.11) 0%,transparent 52%),radial-gradient(58% 48% at 3% 96%,rgba(70,139,224,.09) 0%,transparent 55%),linear-gradient(158deg,#FBFDFF 0%,#EEF5FE 45%,#DFEBFA 100%)}
+:root[data-theme="light"] body::after{opacity:.5;background-image:radial-gradient(rgba(30,90,168,.07) 1px,transparent 1.5px)}
+.card,.kpibox,table.round{box-shadow:0 12px 28px -12px rgba(20,48,92,.20),0 2px 6px rgba(20,48,92,.05)}
+h1{color:#16305C}
+@media(prefers-color-scheme:dark){h1{color:#DCE9FB}}
+:root[data-theme="dark"] h1{color:#DCE9FB}
+:root[data-theme="light"] h1{color:#16305C}
+@media print{body::before,body::after{display:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="b">RO PlayZone · Dev Spec</span><span class="sp"></span>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="th" onclick="setLang('th')">ไทย</button>
+    <button data-lang="en" onclick="setLang('en')">EN</button>
+    <button data-lang="ko" onclick="setLang('ko')">한국어</button>
+    <button data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <button class="btn" onclick="tg()">◑ <span data-i18n="ui_theme">ธีม</span></button>
+  <button class="btn pri" onclick="window.print()">⤓ <span data-i18n="ui_pdf">ดาวน์โหลด PDF</span></button>
+</div>
+<div class="wrap">
+<header class="mast">
+  <div class="tick"><i style="background:var(--dev)"></i><i style="background:var(--ropz)"></i><i style="background:var(--gold)"></i></div>
+  <div class="kick" data-i18n="h_k_dev">For Dev Team · Attribution SDK</div>
+  <h1 data-i18n="h_t_dev">Attribution — สเปกสำหรับ Dev</h1>
+  <p class="dek" data-i18n="h_d_dev">11 source types + flow + pseudocode + quality-user (fraud gate) + revenue split</p>
+  <div class="meta" data-i18n="h_meta">RO PlayZone (GGT) · v0.2 · 14 ก.ค. 2026 · ต่อยอดจาก Partner Rev-Share Model v0.1</div>
+</header>
+
+<section>
+  <div class="ey"><span class="n">1</span><span data-i18n="s1_ey">เรตที่ล็อกแล้ว</span></div>
+  <h2 data-i18n="s1_h">เรตขึ้นกับ "ใครหาคนมา"</h2>
+  <div class="two">
+    <div class="card ropz">
+      <h3><span class="dot r"></span><span data-i18n="ropz_t">🔵 ROPZ พามา</span> <span class="pill r" data-i18n="ropz_pill">default</span></h3>
+      <div class="rate"><span>Ads</span><span><span data-i18n="dev_word">dev</span> 50% · <span class="us-r">ROPZ 50%</span></span></div>
+      <div class="rate"><span>IAP</span><span><span data-i18n="dev_word">dev</span> 60% · <span class="us-r">ROPZ 35%</span></span></div>
+    </div>
+    <div class="card dev">
+      <h3><span class="dot g"></span><span data-i18n="dev_t">🟢 Dev พามา</span> <span class="pill g" data-i18n="dev_pill">verified</span></h3>
+      <div class="rate"><span>Ads</span><span><span data-i18n="dev_word">dev</span> 85% · <span class="us-g">ROPZ 15%</span></span></div>
+      <div class="rate"><span>IAP</span><span><span data-i18n="dev_word">dev</span> 75% · <span class="us-g">ROPZ 20%</span></span></div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin:12px 0 0" data-i18n="s1_foot">* IAP หัก payment gateway ~5% ก่อน (เว็บ ไม่มี store tax 30%) · Benchmark: CrazyGames ads ~50–80% (not public) · IAP 70/30 · Poki 50–100%</p>
+  <div class="note" style="margin-top:14px;border-left:3px solid var(--gold,#1E5AA8)" data-i18n="elig_b">เงื่อนไขขึ้นลิสต์ + รับส่วนแบ่งรายได้: เกมต้องผ่าน Submission Gate + เกณฑ์ Build Spec</div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">2</span><span data-i18n="s2_ey">ฟังก์ชันคนพามา · 11 แบบ</span></div>
+  <h2 data-i18n="s2_h">ช่องทางที่นับ "ใครพามา"</h2>
+  <p class="lead" data-i18n="s2_lead">7 แบบ = ROPZ พามา · 4 แบบ = Dev พามา (ต้องมี ref + ผ่าน fraud gate)</p>
+  <div class="srcgrid">
+    <div class="srccol">
+      <h4><span class="dot r"></span><span data-i18n="srcR_h">🔵 ROPZ พามา (7)</span></h4>
+      <ol>
+        <li data-i18n="src1">Portal Direct <span>— เข้าตรง/bookmark</span></li>
+        <li data-i18n="src2">Portal Discovery <span>— หมวด/ค้นหา/แนะนำ</span></li>
+        <li data-i18n="src3">Cross-promo <span>— เด้งจากเกมอื่น</span></li>
+        <li data-i18n="src4">Coupon Campaign <span>— ลิงก์คูปอง/B2B</span></li>
+        <li data-i18n="src5">RO Funnel <span>— จากเกม RO/GNJOY</span></li>
+        <li data-i18n="src6">ROPZ Organic/SEO <span>— Google → พอร์ทัล</span></li>
+        <li data-i18n="src7">ROPZ Paid UA <span>— โฆษณา ROPZ ยิงเอง</span></li>
+      </ol>
+    </div>
+    <div class="srccol">
+      <h4><span class="dot g"></span><span data-i18n="srcD_h">🟢 Dev พามา (4)</span></h4>
+      <ol start="8">
+        <li data-i18n="src8">Dev Embed <span>— iframe บนเว็บ dev + ref</span></li>
+        <li data-i18n="src9">Dev Social <span>— โซเชียล/YT/ชุมชน dev + ref</span></li>
+        <li data-i18n="src10">Dev Existing Base <span>— ฐานเดิม dev + ref</span></li>
+        <li data-i18n="src11">Dev Paid UA <span>— dev ยิงโฆษณาเอง + ref</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">3</span><span data-i18n="s3_ey">ตรรกะการจัดกลุ่ม</span></div>
+  <h2 data-i18n="s3_h">เช็คยังไง (Attribution Flow)</h2>
+  <div class="flow">
+    <div class="fnode" data-i18n="fn1"><b>User เข้าเล่นเกม</b> — บันทึก referrer + ref + campaign ฝั่ง server</div>
+    <div class="farrow">↓</div>
+    <div class="fnode q" data-i18n="fnq"><b>มี <code>?ref=partnerID</code> ที่ verify แล้ว?</b> (server-side, ยังไม่หมด window)</div>
+    <div class="fbranch">
+      <div class="fyes" data-i18n="fyes"><b>✓ ใช่ → Dev พามา</b><br>เรต 85/15 · 75/20<br><span style="font-size:12.5px;color:var(--muted)">แต่ยัง PENDING จนกว่าจะผ่าน fraud gate</span></div>
+      <div class="fno" data-i18n="fno"><b>✕ ไม่ → ROPZ พามา</b><br>เรต 50/50 · 60/35<br><span style="font-size:12.5px;color:var(--muted)">= default (dev ต้องพิสูจน์เอง)</span></div>
+    </div>
+    <div class="farrow">↓</div>
+    <div class="fnode" data-i18n="fnft"><b>First-touch: ผูกแหล่งที่มากับ account (per-user)</b> — ไม่ทับภายใน window 30–90 วัน → user คนนี้ผูกตลอด lifetime ข้ามทุกเกม</div>
+    <div class="farrow">↓</div>
+    <div class="fnode" data-i18n="fnfraud"><b>Fraud gate (เฉพาะ Dev):</b> นับเฉพาะ quality user (เล่น ≥ X นาที/retained) · anomaly → hold · right-to-audit · จ่าย net-30/60</div>
+  </div>
+  <pre><span class="c">// server-side — game-scoped attribution (per user × game)</span>
+function attribute(session, user, gameId) {
+  let source;
+  if (session.ref && isValidPartnerRef(session.ref, gameId)) <span class="c">// ref signed for THIS game</span>
+      source = mapDevChannel(session.ref);              <span class="c">// #8-11</span>
+  else if (session.campaignId || isInternal(session.referrer))
+      source = mapRopzChannel(session);                 <span class="c">// #1-5</span>
+  else
+      source = "ROPZ_ORGANIC";                          <span class="c">// #6 default</span>
+
+  const key = user.id + ":" + gameId;                   <span class="c">// first-touch PER GAME</span>
+  if (!attribution[key]) {
+      attribution[key] = { source,
+        status: isDev(source) ? "PENDING" : "CONFIRMED" };
+  }
+  return attribution[key];        <span class="c">// dev-rate applies to THIS game only</span>
+}
+<span class="c">// 5 games live → partner mints 5 signed links (partnerID + gameId + channel)</span></pre>
+  <p style="font-weight:600;margin:22px 0 6px" data-i18n="qg_h">Quality User (Fraud Gate) — Dev-brought ต้องผ่านถึงจะ CONFIRMED (ภายใน 7 วัน)</p>
+  <div class="two">
+    <div class="card"><h3 data-i18n="qgA_h">ชั้น A — VALID (ไม่ผ่าน = ทิ้ง)</h3>
+      <p style="font-size:14px;color:var(--soft);margin:0" data-i18n="qgA_b">ผ่าน bot check · IP ไม่ใช่ datacenter/proxy · device fingerprint ไม่ซ้ำ</p></div>
+    <div class="card"><h3 data-i18n="qgB_h">ชั้น B — QUALITY (ผ่าน ≥1)</h3>
+      <p style="font-size:14px;color:var(--soft);margin:0" data-i18n="qgB_b">เล่น ≥3 นาที (24ชม.แรก) · หรือ ≥2 sessions · หรือถึง milestone · หรือ D1 retention · หรือเป็น payer (auto)</p></div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin:12px 0 0" data-i18n="qg_note">State: PENDING → CONFIRMED (จ่ายเรต dev) / EXPIRED (ตกเป็น ROPZ) · velocity cap + right-to-audit · threshold = v1 default, pilot calibrate</p>
+</section>
+
+<section>
+  <div class="ey"><span class="n">4</span><span data-i18n="s4_ey">2 สถานการณ์ (อธิบายผู้บริหาร)</span></div>
+  <h2 data-i18n="s4_h">เงื่อนไข 2 สถานการณ์</h2>
+  <div class="two">
+    <div class="card ropz">
+      <h3><span class="dot r"></span><span data-i18n="scA_t">A · ROPZ พามา</span></h3>
+      <table><tbody>
+        <tr><td style="color:var(--muted);border:0;padding:6px 0" data-i18n="sc_cond">เงื่อนไข</td><td style="border:0;padding:6px 0" data-i18n="scA_cond">default (ไม่ต้องมี ref)</td></tr>
+        <tr><td style="color:var(--muted);border:0;padding:6px 0" data-i18n="sc_rate">เรต</td><td style="border:0;padding:6px 0">ads 50/50 · IAP 60/35</td></tr>
+        <tr><td style="color:var(--muted);border:0;padding:6px 0" data-i18n="sc_cac">CAC</td><td style="border:0;padding:6px 0" data-i18n="scA_cac">ROPZ (≈0 coupon barter)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card dev">
+      <h3><span class="dot g"></span><span data-i18n="scB_t">B · Dev พามา</span></h3>
+      <table><tbody>
+        <tr><td style="color:var(--muted);border:0;padding:6px 0" data-i18n="sc_cond">เงื่อนไข</td><td style="border:0;padding:6px 0" data-i18n="scB_cond">ref verified + ผ่าน fraud gate</td></tr>
+        <tr><td style="color:var(--muted);border:0;padding:6px 0" data-i18n="sc_rate">เรต</td><td style="border:0;padding:6px 0">ads 85/15 · IAP 75/20</td></tr>
+        <tr><td style="color:var(--muted);border:0;padding:6px 0" data-i18n="sc_cac">CAC</td><td style="border:0;padding:6px 0" data-i18n="scB_cac">Dev (฿0)</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">5</span><span data-i18n="adm_ey">Partner Portal (Admin Tool)</span></div>
+  <h2 data-i18n="adm_h">Partner สร้าง ref เอง + เช็ค Dashboard</h2>
+  <p class="lead" data-i18n="adm_lead">self-serve · ปลอดภัยเพราะ sig เซ็นฝั่ง server + fraud gate คุมปลายทาง</p>
+  <div class="two">
+    <div class="card ropz"><h3 data-i18n="adm_role_h">🔑 Partner Role — สร้างลิงก์เอง</h3>
+      <p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6" data-i18n="adm_role_b">login Partner Portal → เลือกเกม (เฉพาะ approved) + channel → กด "สร้างลิงก์" → <b>server มินต์ + เซ็น HMAC sig</b> (partner ไม่มี secret → ปลอมไม่ได้)</p></div>
+    <div class="card dev"><h3 data-i18n="adm_dash_h">📊 Dashboard — เช็คได้ real-time</h3>
+      <p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6" data-i18n="adm_dash_b">ต่อลิงก์/channel: clicks · <b>quality-pass %</b> · confirmed users · revenue · payout status</p></div>
+  </div>
+  <div class="note" data-i18n="adm_safe"><b>ปลอดภัย:</b> สร้างลิงก์ไม่จำกัดก็ได้เงินเฉพาะ quality user (gate คุมปลายทาง) · guardrails: เกม approved เท่านั้น · rate-limit · admin revoke</div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">6</span><span data-i18n="sec_ey">ความปลอดภัย &amp; Anti-Fraud</span></div>
+  <h2 data-i18n="sec_h">ความปลอดภัย 2 ชั้น (Defense-in-Depth)</h2>
+  <p class="lead" data-i18n="sec_lead">Edge กันทราฟฟิกร้ายก่อนถึงระบบ · App คัดคุณภาพ + คุมการจ่ายเงิน — 2 ชั้นทำงานซ้อนกัน</p>
+  <div class="two">
+    <div class="card"><h3 data-i18n="secA_h">🌐 ชั้น Edge — Cloudflare</h3>
+      <p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6" data-i18n="secA_b"><b>WAF</b> (Web Application Firewall) · <b>DDoS protection</b> (L3/4 + L7) · <b>Bot Management</b> — แยกคนจริงจาก automation/headless · <b>Rate-limit</b> การสร้างลิงก์ + API endpoint</p></div>
+    <div class="card"><h3 data-i18n="secB_h">🛡️ ชั้น App — Attribution &amp; Payout</h3>
+      <p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6" data-i18n="secB_b"><b>Server-side attribution</b> (client ปลอมไม่ได้) + <b>HMAC-signed ref</b> · <b>Fraud gate</b> (quality user §3) · <b>3rd-party ad-verification</b> คัด IVT · payout <b>hold net-30/60</b> + reactive clawback + right-to-audit</p></div>
+  </div>
+  <p style="font-weight:600;margin:22px 0 6px" data-i18n="secv_h">Ad-verification partners (3rd-party · คัด IVT ก่อนนับ ad revenue)</p>
+  <table class="round"><thead><tr><th data-i18n="secv_c0">Vendor</th><th data-i18n="secv_c1">บทบาท</th></tr></thead>
+  <tbody>
+    <tr><td>Pixalate</td><td data-i18n="secv_r1">IVT/fraud detection · MRC-accredited</td></tr>
+    <tr><td>IAS <span style="color:var(--muted)">(Integral Ad Science)</span></td><td data-i18n="secv_r2">viewability + brand safety + IVT</td></tr>
+    <tr><td>HUMAN <span style="color:var(--muted)">(ex-White Ops)</span></td><td data-i18n="secv_r3">bot detection (Satori engine) · MRC IVT</td></tr>
+  </tbody></table>
+  <p style="font-size:13px;color:var(--muted);margin:12px 0 0" data-i18n="sec_foot">ad-verify = มาตรฐานอุตสาหกรรมโฆษณา (ต่อ 1 เจ้าก็เริ่มได้) · เลือกจริงตอนดีล ad-network · 2 ชั้น + fraud gate = กันครบสาย traffic ร้าย → user ปลอม → จ่ายเงินผิด</p>
+</section>
+
+<section>
+  <div class="ey"><span class="n">7</span><span>เกมคุณอยู่ tier ไหน (A/B/C)</span></div>
+  <h2>3 ระดับการเชื่อมเกมเข้าพอร์ทัล</h2>
+  <table class="round"><thead><tr><th>Tier</th><th>ทำอะไร</th><th>ได้อะไร</th></tr></thead>
+  <tbody>
+    <tr><td><b>A · Mini Game</b></td><td>Unity WebGL ฝังพอร์ทัล เล่นในเบราว์เซอร์</td><td>rev-share (ads/IAP)</td></tr>
+    <tr><td><b>B · Mini Game + Quest</b></td><td>+ ตั้ง Quest เอง + ไอเทมในเกมแลกด้วยPoring Coin</td><td>rev-share + เครื่องมือดึง engagement</td></tr>
+    <tr><td><b>C · Full game (API)</b></td><td>เกม PC/มือถือเชื่อม API · Poring Coinแลกไอเทมในเกมคุณ</td><td>"Partner Name Game" + ดึงคนเข้าเกมจริง</td></tr>
+  </tbody></table>
+  <div class="note">เลือก tier ตอน onboard (ระบุใน <code>manifest.tier</code>) · ต่างกันที่ economy ที่ผูก ไม่ใช่เรตแบ่งรายได้ (เรตดูข้อ 1)</div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">8</span><span>สกุลเงินที่ต้องรู้</span></div>
+  <h2>STAR / GEM / Ticket — dev ได้อะไร</h2>
+  <table class="round"><thead><tr><th>สกุล</th><th>คือ</th></tr></thead>
+  <tbody>
+    <tr><td>⭐ <b>STAR (Poring Coin)</b></td><td>แจกฟรีจากเล่น/เควส · ผู้เล่นสะสมแลก coupon/MD/ไอเทม · = liability ฝั่งเรา</td></tr>
+    <tr><td>💎 <b>GEM = Diamond</b></td><td>เติมเงินจริง (paid) · = รายได้</td></tr>
+    <tr><td>🎟️ <b>Ticket</b></td><td>ตั๋วเข้าเล่น (debit ตอน <code>session/start</code>)</td></tr>
+  </tbody></table>
+  <div class="note"><b>สำคัญ:</b> dev ได้ <b>rev-share เป็นเงิน</b> (ไม่ใช่ gem) · <b>ไม่มีอะไรถอนเป็นเงินสด</b> · เควส (Tier B) จ่าย STAR ให้ <b>ผู้เล่น</b> ไม่ใช่ dev</div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">9</span><span>Quest Scope (เฉพาะ Tier B)</span></div>
+  <h2>ตั้งเควสเองได้ในกรอบนี้</h2>
+  <p class="lead">เควสจ่าย <b>Poring Coin (STAR) ให้ผู้เล่น</b> · auto-approve ถ้าอยู่ใน scope + สุ่ม audit</p>
+  <table class="round"><thead><tr><th>หัวข้อ</th><th>ข้อกำหนด</th></tr></thead>
+  <tbody>
+    <tr><td>Objective</td><td>whitelist: ผ่านด่าน X · คะแนนถึง X · เล่นครบ N ครั้ง · คะแนนสะสม (server verify ผ่าน <code>finish</code>/<code>progress</code>)</td></tr>
+    <tr><td>รางวัล</td><td><b>STAR เท่านั้น</b> — ห้ามแตะ GEM / Ticket / เงิน</td></tr>
+    <tr><td>เพดาน</td><td>รวมดาวที่แจก/คน/วัน ≤ <code>dailyStarCap</code> (กันดาวเฟ้อ)</td></tr>
+    <tr><td>จำนวน</td><td>≤ 3 Daily + 3 Weekly ต่อเกม</td></tr>
+  </tbody></table>
+  <div class="note">เควส = เครื่องมือดึง engagement → session เยอะขึ้น → rev-share มากขึ้น (dev ไม่ได้ payout พิเศษจากเควส)</div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">10</span><span>Payout &amp; Tax (จ่ายเงิน + ภาษี)</span></div>
+  <h2>จ่ายยังไง + ภาษีใครจ่าย</h2>
+  <table class="round"><thead><tr><th>หัวข้อ</th><th>รายละเอียด</th></tr></thead>
+  <tbody>
+    <tr><td>วิธีจ่าย</td><td>wire / PayPal / ACH ผ่าน payment processor (Tipalti-style)</td></tr>
+    <tr><td>ขั้นต่ำ</td><td>≈ ฿3,500 / $100 / €100 (ไม่ถึง = ทบเดือนหน้า)</td></tr>
+    <tr><td>รอบจ่าย</td><td>NET-30/60 หลัง CONFIRM · เลือกสกุลเงินได้</td></tr>
+    <tr><td>Onboarding</td><td>กรอกฟอร์มภาษีเอง (wizard ตามประเทศ) · <b>ไม่แยก track บุคคล/บริษัท</b></td></tr>
+  </tbody></table>
+  <div class="two">
+    <div class="card"><h3>ใครจ่ายภาษีเงินได้</h3><p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6">dev จ่ายเอง (พาร์ตเนอร์อิสระ) · <b>GGT ไม่จ่ายแทน</b></p></div>
+    <div class="card"><h3>หัก ณ ที่จ่าย (WHT)</h3><p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6">GGT อาจหัก % นำส่ง (<b>ไม่ใช่จ่ายแทน</b>) + ออกหนังสือรับรอง · dev เครดิตคืน</p></div>
+  </div>
+  <div class="note">⚖️ classification (บริการ vs royalty) / dev ต่างชาติ + DTA / VAT = รอทีมกฎหมาย GGT ฟันธง · ตัวอย่างฟอร์ม: <code>PM Workspace/ROPZ_Partner_Payout_Setup_Mockup</code></div>
+</section>
+
+<section style="border-bottom:0">
+  <div class="ey"><span class="n">11</span><span>Attribution Tagging ต่อเกม</span></div>
+  <h2>รายได้เข้าเจ้าถูกยังไง</h2>
+  <p class="lead">แต่ละเกมมี <b>gameId + ownerPartnerId</b> ลงทะเบียนใน registry (server = source of truth · ไม่เชื่อ client)</p>
+  <div class="two">
+    <div class="card"><h3>🔗 Game-scoped</h3><p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6">1 ลิงก์ ref = 1 เกม (เซ็น HMAC) · dev มี 5 เกม = 5 ลิงก์ · first-touch ต่อ user×game (ไม่ leak ข้ามเกม)</p></div>
+    <div class="card"><h3>💰 Routing</h3><p style="font-size:14px;color:var(--soft);margin:0;line-height:1.6">revenue event พก gameId → server resolve ownerPartnerId → จ่ายเจ้าถูก · เรต = tier/ipTier + attribution (ใครพา user)</p></div>
+  </div>
+  <div class="note">📎 อ้างอิงเพิ่ม: SDK <code>/game/v1</code> = rou-studio.gnjoy.in.th/sandbox/docs.html · Build/Gate = <code>ROPZ_Build_Check_Master_260716.md</code> · Asset Pack + Build Kit (ช่วย dev สาย coding) = <code>ROPZ_Asset_Pack_Provenance_Spec_260716.md</code></div>
+</section>
+
+
+<section>
+  <div class="ey"><span class="n">12</span><span data-i18n="ax_ey">สรุปรวม · 4 แกน</span></div>
+  <h2 data-i18n="ax_h">อะไรบ้างที่กำหนดส่วนแบ่ง — และแกนไหนไม่เกี่ยว</h2>
+  <p class="lead" data-i18n="ax_lead">คำว่า "Tier" ถูกใช้ 3 ความหมายในโปรเจกต์นี้ ตารางนี้แยกให้ชัดว่าแกนไหนขยับเงิน แกนไหนแค่จัดประเภท</p>
+  <table class="round"><thead><tr>
+    <th data-i18n="ax_c1">แกน</th><th data-i18n="ax_c2">ตอบคำถามอะไร</th>
+    <th data-i18n="ax_c3">ค่าที่เป็นไปได้</th><th data-i18n="ax_c4">กระทบส่วนแบ่งยังไง</th>
+  </tr></thead><tbody>
+    <tr><td><b data-i18n="ax_1n">① Attribution — ใครพาผู้เล่นมา</b></td><td data-i18n="ax_1q">ผู้เล่นคนนี้เข้ามาจากช่องทางของใคร</td><td data-i18n="ax_1v">ROPZ พามา (default) · Dev พามา (verified + ผ่าน fraud gate)</td><td data-i18n="ax_1e">✅ ขยับ <b>Platform Fee</b> โดยตรง — ads 50/50 → 85/15 · IAP 60/35 → 75/20</td></tr>
+    <tr><td><b data-i18n="ax_2n">② Asset Provenance — ใครลงแรงทำอาร์ต</b></td><td data-i18n="ax_2q">เกมนี้สร้างบน Base Asset Pack ของเรากี่ %</td><td data-i18n="ax_2v">&lt; 20% · 20–60% · &gt; 60% (ถ่วงน้ำหนักรายชิ้น)</td><td data-i18n="ax_2e">✅ ปรับ <b>Platform Fee</b> เพิ่ม +0 / +~5 / +~10 จุด <i>(v0.1 รอเคาะ)</i></td></tr>
+    <tr><td><b data-i18n="ax_3n">③ Tier A/B/C — เชื่อมเกมแบบไหน</b></td><td data-i18n="ax_3q">ฝังพอร์ทัล / +Quest / Full game ผ่าน API</td><td data-i18n="ax_3v">A · B · C (ระบุใน <code>manifest.tier</code>)</td><td data-i18n="ax_3e">❌ <b>ไม่ขยับเรต</b> — ต่างกันที่ economy ที่ผูกและเครื่องมือที่ได้</td></tr>
+    <tr><td><b data-i18n="ax_4n">④ T0–T4 — ใช้ IP RO ลึกแค่ไหน</b></td><td data-i18n="ax_4q">เกมใช้ทรัพย์สินทางปัญญา RO ระดับไหน</td><td data-i18n="ax_4v">T0 – T4 (เฉพาะเกมที่ใช้ IP RO)</td><td data-i18n="ax_4e">✅ แต่เป็น <b>ชั้นแยก</b> (IP Royalty) ซ้อนบน — ไม่ใช่ Platform Fee</td></tr>
+  </tbody></table>
+  <h3 data-i18n="ax_lh">แล้วแกนไหนแตะรายได้ชั้นไหน</h3>
+  <ul>
+    <li data-i18n="ax_l1"><b>ชั้น 1 · Platform Fee</b> — ขยับด้วย ① Attribution และ ② Asset Provenance</li>
+    <li data-i18n="ax_l2"><b>ชั้น 2 · IP Royalty</b> — ขยับด้วย ④ T0–T4 เฉพาะเกมที่ใช้ IP RO</li>
+    <li data-i18n="ax_l3"><b>ชั้น 3 · Coupon / Ecosystem</b> — ROPZ ล้วน ไม่มีแกนไหนมาขยับ</li>
+  </ul>
+  <div class="note" data-i18n="ax_note">⚠️ <b>จุดที่สับสนบ่อย:</b> ③ Tier A/B/C · ④ T0–T4 · ② coverage เป็นคนละแกนกันหมด — มีแค่ ① กับ ② ที่ขยับ Platform Fee · ④ อยู่คนละชั้น · ③ ไม่ขยับเงินเลย</div>
+</section>
+
+<section>
+  <div class="ey"><span class="n">13</span><span data-i18n="ap_ey">แกน ② · Asset Provenance</span></div>
+  <h2 data-i18n="ap_h">Base Asset Pack + วิธีตรวจว่า build ใช้ของเรา</h2>
+  <p class="lead" data-i18n="ap_lead">คลัง asset พร้อมใช้ <b>ฟรี</b> ให้ dev/outsource หยิบไปทำเกมได้อิสระ — ลดต้นทุนและเวลา พร้อมคุมคุณภาพ/ขนาดตั้งแต่ต้นทาง</p>
+
+  <h3 data-i18n="ap_ph">ในแพ็กมีอะไร — เป้า 20–30 ชุดต่อประเภท</h3>
+  <ul>
+    <li data-i18n="ap_p1">🎨 <b>Texture / ตัวละคร</b> — sprite set · recolor-ready · pivot/footprint iso · atlas-friendly</li>
+    <li data-i18n="ap_p2">🎵 <b>BGM</b> — เพลงพื้นหลังแบบ loop</li>
+    <li data-i18n="ap_p3">🔊 <b>SFX</b> — เสียง action / UI</li>
+    <li data-i18n="ap_p4">✨ <b>VFX</b> — ปรับเบาสำหรับเว็บ (particle ต่ำ · texture เล็ก · ไม่กิน fps/memory)</li>
+  </ul>
+  <div class="note" data-i18n="ap_web">ทุกชิ้น <b>web-optimized มาแล้ว</b> — texture crunch ≤1024 · audio Vorbis (เพลง 96–128kbps · SFX mono 22kHz) · VFX budget-capped → dev ใช้แล้วผ่าน size/quality gate เกือบชัวร์</div>
+
+  <h3 data-i18n="ap_ch">Coverage → ส่วนแบ่ง</h3>
+  <table class="round"><thead><tr>
+    <th data-i18n="ap_c1">Coverage</th><th data-i18n="ap_c2">ความหมาย</th><th data-i18n="ap_c3">ส่วนของ ROPZ</th>
+  </tr></thead><tbody>
+    <tr><td><b data-i18n="ap_r1a">&lt; 20%</b></td><td data-i18n="ap_r1b">dev ทำอาร์ตเองเป็นหลัก</td><td data-i18n="ap_r1c">baseline (dev เก็บมากสุด)</td></tr>
+    <tr><td><b data-i18n="ap_r2a">20–60%</b></td><td data-i18n="ap_r2b">ผสม</td><td data-i18n="ap_r2c">+~5 จุด</td></tr>
+    <tr><td><b data-i18n="ap_r3a">&gt; 60%</b></td><td data-i18n="ap_r3b">เกมสร้างบน asset เรา = เราร่วมผลิต</td><td data-i18n="ap_r3c">+~10 จุด</td></tr>
+  </tbody></table>
+  <div class="note" data-i18n="ap_frame"><b>Framing ที่ล็อกแล้ว — contribution-based ไม่ใช่บทลงโทษ:</b> rev-share สะท้อนว่าใครลงแรงผลิต · เราออก asset ให้ = เราร่วมผลิต = แบ่งเรามากขึ้นนิด · dev เอาอาร์ตตัวเองมา = เก็บมากขึ้น · <b>dev เลือกเองได้</b>ว่าจะใช้แค่ไหน และ delta ตั้งใจให้โมเดสต์ เพื่อไม่ให้คนเลี่ยงใช้ pack</div>
+
+  <h3 data-i18n="ap_vh">ตรวจยังไงว่า build ใช้ asset ของเราจริง — 3 ชั้น</h3>
+  <p data-i18n="ap_prob"><b>ปัญหา:</b> dev บีบ texture (crunch) หรือแปลง audio (Vorbis) → byte เปลี่ยน → เทียบ hash ตรง ๆ ใช้ไม่ได้</p>
+  <ul>
+    <li data-i18n="ap_v1"><b>A · Build-time manifest (หลัก)</b> — BuildProcessor สแกน project ตอน build ว่าอ้าง asset จาก pack (ดู GUID/path) → เขียน <code>ropz_assets.json</code> (assetId + coverage%) <b>เซ็น HMAC</b> ฝังใน build · ครอบคลุมทุกชนิดรวม VFX/prefab/particle</li>
+    <li data-i18n="ap_v2"><b>B · Server fingerprint (ตัวตรวจ)</b> — ตอน gate แตก texture/audio จาก <code>.data</code> แล้วทำ <b>perceptual hash</b> (pHash ภาพ / audio fingerprint) เทียบ registry — ทนการบีบ/แปลงไฟล์ · ยืนยันว่า manifest ไม่โกหก</li>
+    <li data-i18n="ap_v3"><b>C · Registry</b> — เก็บ <code>{assetId, GUID, pHash/audioFP, type, weight}</code> = single source of truth</li>
+  </ul>
+  <div class="note" data-i18n="ap_fraud"><b>กันโกง:</b> manifest signed = ยกบาร์ · fingerprint = guard จริง · อ้าง manifest แต่ fingerprint ไม่ตรง → flag/reject · เจอทีหลัง = reactive audit + clawback (หลักการเดียวกับ attribution) · <b>VFX</b> ตรวจย้อนหลังยาก → พึ่งชั้น A เป็นหลัก</div>
+  <div class="note" data-i18n="ap_open">⚠️ ตัวเลข % จริงยัง<b>เป็น placeholder</b> — รอเคาะเชิงธุรกิจ · modifier นี้อยู่บน Platform Fee เท่านั้น ไม่ยุ่ง T0–T4 (IP) และ L0–L2 (ต้นทุนของรางวัล)</div>
+  <p style="font-size:13px;color:var(--muted);margin:10px 0 0" data-i18n="ap_src">ที่มา: <code>MD Doc/ROPZ_Asset_Pack_Provenance_Spec_TH_260716.md</code> · ต่อยอด Base Kit C5 (Asset spec Tier 1)</p>
+</section>
+
+</div>
+<script>
+const I18N={
+th:{ax_ey:"สรุปรวม · 4 แกน",ax_h:"อะไรบ้างที่กำหนดส่วนแบ่ง — และแกนไหนไม่เกี่ยว",ax_lead:"คำว่า \"Tier\" ถูกใช้ 3 ความหมายในโปรเจกต์นี้ ตารางนี้แยกให้ชัดว่าแกนไหนขยับเงิน แกนไหนแค่จัดประเภท",ax_c1:"แกน",ax_c2:"ตอบคำถามอะไร",ax_c3:"ค่าที่เป็นไปได้",ax_c4:"กระทบส่วนแบ่งยังไง",ax_1n:"① Attribution — ใครพาผู้เล่นมา",ax_1q:"ผู้เล่นคนนี้เข้ามาจากช่องทางของใคร",ax_1v:"ROPZ พามา (default) · Dev พามา (verified + ผ่าน fraud gate)",ax_1e:"✅ ขยับ <b>Platform Fee</b> โดยตรง — ads 50/50 → 85/15 · IAP 60/35 → 75/20",ax_2n:"② Asset Provenance — ใครลงแรงทำอาร์ต",ax_2q:"เกมนี้สร้างบน Base Asset Pack ของเรากี่ %",ax_2v:"&lt; 20% · 20–60% · &gt; 60% (ถ่วงน้ำหนักรายชิ้น)",ax_2e:"✅ ปรับ <b>Platform Fee</b> เพิ่ม +0 / +~5 / +~10 จุด <i>(v0.1 รอเคาะ)</i>",ax_3n:"③ Tier A/B/C — เชื่อมเกมแบบไหน",ax_3q:"ฝังพอร์ทัล / +Quest / Full game ผ่าน API",ax_3v:"A · B · C (ระบุใน <code>manifest.tier</code>)",ax_3e:"❌ <b>ไม่ขยับเรต</b> — ต่างกันที่ economy ที่ผูกและเครื่องมือที่ได้",ax_4n:"④ T0–T4 — ใช้ IP RO ลึกแค่ไหน",ax_4q:"เกมใช้ทรัพย์สินทางปัญญา RO ระดับไหน",ax_4v:"T0 – T4 (เฉพาะเกมที่ใช้ IP RO)",ax_4e:"✅ แต่เป็น <b>ชั้นแยก</b> (IP Royalty) ซ้อนบน — ไม่ใช่ Platform Fee",ax_lh:"แล้วแกนไหนแตะรายได้ชั้นไหน",ax_l1:"<b>ชั้น 1 · Platform Fee</b> — ขยับด้วย ① Attribution และ ② Asset Provenance",ax_l2:"<b>ชั้น 2 · IP Royalty</b> — ขยับด้วย ④ T0–T4 เฉพาะเกมที่ใช้ IP RO",ax_l3:"<b>ชั้น 3 · Coupon / Ecosystem</b> — ROPZ ล้วน ไม่มีแกนไหนมาขยับ",ax_note:"⚠️ <b>จุดที่สับสนบ่อย:</b> ③ Tier A/B/C · ④ T0–T4 · ② coverage เป็นคนละแกนกันหมด — มีแค่ ① กับ ② ที่ขยับ Platform Fee · ④ อยู่คนละชั้น · ③ ไม่ขยับเงินเลย",ap_ey:"แกน ② · Asset Provenance",ap_h:"Base Asset Pack + วิธีตรวจว่า build ใช้ของเรา",ap_lead:"คลัง asset พร้อมใช้ <b>ฟรี</b> ให้ dev/outsource หยิบไปทำเกมได้อิสระ — ลดต้นทุนและเวลา พร้อมคุมคุณภาพ/ขนาดตั้งแต่ต้นทาง",ap_ph:"ในแพ็กมีอะไร — เป้า 20–30 ชุดต่อประเภท",ap_p1:"🎨 <b>Texture / ตัวละคร</b> — sprite set · recolor-ready · pivot/footprint iso · atlas-friendly",ap_p2:"🎵 <b>BGM</b> — เพลงพื้นหลังแบบ loop",ap_p3:"🔊 <b>SFX</b> — เสียง action / UI",ap_p4:"✨ <b>VFX</b> — ปรับเบาสำหรับเว็บ (particle ต่ำ · texture เล็ก · ไม่กิน fps/memory)",ap_web:"ทุกชิ้น <b>web-optimized มาแล้ว</b> — texture crunch ≤1024 · audio Vorbis (เพลง 96–128kbps · SFX mono 22kHz) · VFX budget-capped → dev ใช้แล้วผ่าน size/quality gate เกือบชัวร์",ap_ch:"Coverage → ส่วนแบ่ง",ap_c1:"Coverage",ap_c2:"ความหมาย",ap_c3:"ส่วนของ ROPZ",ap_r1a:"&lt; 20%",ap_r1b:"dev ทำอาร์ตเองเป็นหลัก",ap_r1c:"baseline (dev เก็บมากสุด)",ap_r2a:"20–60%",ap_r2b:"ผสม",ap_r2c:"+~5 จุด",ap_r3a:"&gt; 60%",ap_r3b:"เกมสร้างบน asset เรา = เราร่วมผลิต",ap_r3c:"+~10 จุด",ap_frame:"<b>Framing ที่ล็อกแล้ว — contribution-based ไม่ใช่บทลงโทษ:</b> rev-share สะท้อนว่าใครลงแรงผลิต · เราออก asset ให้ = เราร่วมผลิต = แบ่งเรามากขึ้นนิด · dev เอาอาร์ตตัวเองมา = เก็บมากขึ้น · <b>dev เลือกเองได้</b>ว่าจะใช้แค่ไหน และ delta ตั้งใจให้โมเดสต์ เพื่อไม่ให้คนเลี่ยงใช้ pack",ap_vh:"ตรวจยังไงว่า build ใช้ asset ของเราจริง — 3 ชั้น",ap_prob:"<b>ปัญหา:</b> dev บีบ texture (crunch) หรือแปลง audio (Vorbis) → byte เปลี่ยน → เทียบ hash ตรง ๆ ใช้ไม่ได้",ap_v1:"<b>A · Build-time manifest (หลัก)</b> — BuildProcessor สแกน project ตอน build ว่าอ้าง asset จาก pack (ดู GUID/path) → เขียน <code>ropz_assets.json</code> (assetId + coverage%) <b>เซ็น HMAC</b> ฝังใน build · ครอบคลุมทุกชนิดรวม VFX/prefab/particle",ap_v2:"<b>B · Server fingerprint (ตัวตรวจ)</b> — ตอน gate แตก texture/audio จาก <code>.data</code> แล้วทำ <b>perceptual hash</b> (pHash ภาพ / audio fingerprint) เทียบ registry — ทนการบีบ/แปลงไฟล์ · ยืนยันว่า manifest ไม่โกหก",ap_v3:"<b>C · Registry</b> — เก็บ <code>{assetId, GUID, pHash/audioFP, type, weight}</code> = single source of truth",ap_fraud:"<b>กันโกง:</b> manifest signed = ยกบาร์ · fingerprint = guard จริง · อ้าง manifest แต่ fingerprint ไม่ตรง → flag/reject · เจอทีหลัง = reactive audit + clawback (หลักการเดียวกับ attribution) · <b>VFX</b> ตรวจย้อนหลังยาก → พึ่งชั้น A เป็นหลัก",ap_open:"⚠️ ตัวเลข % จริงยัง<b>เป็น placeholder</b> — รอเคาะเชิงธุรกิจ · modifier นี้อยู่บน Platform Fee เท่านั้น ไม่ยุ่ง T0–T4 (IP) และ L0–L2 (ต้นทุนของรางวัล)",ap_src:"ที่มา: <code>MD Doc/ROPZ_Asset_Pack_Provenance_Spec_TH_260716.md</code> · ต่อยอด Base Kit C5 (Asset spec Tier 1)",ui_pdf:"ดาวน์โหลด PDF",ui_theme:"ธีม",
+ h_meta:"RO PlayZone (GGT) · v0.2 · 14 ก.ค. 2026 · ต่อยอดจาก Partner Rev-Share Model v0.1",
+ h_k_exec:"สรุปผู้บริหาร · โมเดลแบ่งรายได้",h_t_exec:"แบ่งรายได้ยังไง แล้วเราได้เท่าไหร่",h_d_exec:"ใครหาคนมา = ได้เรตต่างกัน · 2 สถานการณ์ + ตัวเลข P&L (ตัดรายละเอียดเทคนิคออก)",
+ h_k_dev:"สำหรับ Dev Team · Attribution SDK",h_t_dev:"Attribution — สเปกสำหรับ Dev",h_d_dev:"11 source types + flow + pseudocode + quality-user (fraud gate) + revenue split",
+ s1_ey:"เรตที่ล็อกแล้ว",s1_h:'เรตขึ้นกับ "ใครหาคนมา"',s1_lead:"ยิ่งเราเป็นคนหาคนให้ (portal/คูปอง) เราเก็บมากขึ้น · ถ้า dev หามาเอง เราให้ dev เยอะเพื่อจูงใจ",
+ ropz_t:"🔵 ROPZ พามา",ropz_pill:"default",dev_t:"🟢 Dev พามา",dev_pill:"verified",dev_word:"dev",
+ ropz_note:"เข้าผ่านพอร์ทัล/คูปอง/RO funnel · CAC = ROPZ (≈0 ผ่าน coupon barter)",dev_note:"เข้าผ่านช่องทาง dev + ref link · CAC = Dev (฿0) · = upside ฟรี",
+ s1_foot:"* IAP หัก payment gateway ~5% ก่อน (เว็บ ไม่มี store tax 30%) · Benchmark: CrazyGames ads ~50–80% (not public) · IAP 70/30 · Poki 50–100%",
+ layers_h:"รายได้ ROPZ มี 3 ชั้น (attribution คุมแค่ชั้นที่ 1)",l1t:"1. Platform Fee",l1d:"— ตาม attribution (ตารางบน)",l2t:"2. IP Royalty",l2d:"— ตาม T0-T4 เฉพาะเกม RO (ซ้อนบน · คนละแกน)",l3t:"3. Coupon / Ecosystem",l3d:"— ของ ROPZ ล้วน ไม่แบ่ง dev",
+ s2_ey:"ฟังก์ชันคนพามา · 11 แบบ",s2_h:'ช่องทางที่นับ "ใครพามา"',s2_lead:"7 แบบ = ROPZ พามา · 4 แบบ = Dev พามา (ต้องมี ref + ผ่าน fraud gate)",srcR_h:"🔵 ROPZ พามา (7)",srcD_h:"🟢 Dev พามา (4)",
+ src1:"Portal Direct <span>— เข้าตรง/bookmark</span>",src2:"Portal Discovery <span>— หมวด/ค้นหา/แนะนำ</span>",src3:"Cross-promo <span>— เด้งจากเกมอื่น</span>",src4:"Coupon Campaign <span>— ลิงก์คูปอง/B2B</span>",src5:"RO Funnel <span>— จากเกม RO/GNJOY</span>",src6:"ROPZ Organic/SEO <span>— Google → พอร์ทัล</span>",src7:"ROPZ Paid UA <span>— โฆษณา ROPZ ยิงเอง</span>",src8:"Dev Embed <span>— iframe บนเว็บ dev + ref</span>",src9:"Dev Social <span>— โซเชียล/YT/ชุมชน dev + ref</span>",src10:"Dev Existing Base <span>— ฐานเดิม dev + ref</span>",src11:"Dev Paid UA <span>— dev ยิงโฆษณาเอง + ref</span>",
+ s3_ey:"ตรรกะการจัดกลุ่ม",s3_h:"เช็คยังไง (Attribution Flow)",fn1:"<b>User เข้าเล่นเกม</b> — บันทึก referrer + ref + campaign ฝั่ง server",fnq:'<b>มี <code>?ref=partnerID&amp;g=gameID</code> ที่ verify แล้ว?</b> (server-side, ยังไม่หมด window) · 1 ลิงก์ = 1 เกม (มี 5 เกม = 5 ลิงก์)',fyes:'<b>✓ ใช่ → Dev พามา</b><br>เรต 85/15 · 75/20<br><span style="font-size:12.5px;color:var(--muted)">แต่ยัง PENDING จนกว่าจะผ่าน fraud gate</span>',fno:'<b>✕ ไม่ → ROPZ พามา</b><br>เรต 50/50 · 60/35<br><span style="font-size:12.5px;color:var(--muted)">= default (dev ต้องพิสูจน์เอง)</span>',fnft:"<b>First-touch แบบ per-(user × game)</b> — ผูกแหล่งที่มาต่อเกม (ไม่ใช่ต่อ account) → <b>dev ได้เรตเฉพาะเกมที่ตัวเองพามา</b> · user เล่นเกม dev อื่น/เกม ROPZ = attribution แยกของเกมนั้น (ไม่ leak) · window 30–90 วัน",fnfraud:"<b>Fraud gate (เฉพาะ Dev):</b> นับเฉพาะ quality user (เล่น ≥ X นาที/retained) · anomaly → hold · right-to-audit · จ่าย net-30/60",
+ qg_h:"Quality User (Fraud Gate) — Dev-brought ต้องผ่านถึงจะ CONFIRMED (ภายใน 7 วัน)",qgA_h:"ชั้น A — VALID (ไม่ผ่าน = ทิ้ง)",qgA_b:"ผ่าน bot check · IP ไม่ใช่ datacenter/proxy · device fingerprint ไม่ซ้ำ",qgB_h:"ชั้น B — QUALITY (ผ่าน ≥1)",qgB_b:"เล่น <b>≥60–90 วิ + behavioral</b> (floor กัน bounce) · หรือ ≥2 sessions · หรือถึง milestone · หรือ <b>D1 retention (แข็งสุด)</b> · หรือ payer (auto)",qg_note:"State: PENDING → CONFIRMED (จ่ายเรต dev) / EXPIRED (ตกเป็น ROPZ) · velocity cap + right-to-audit + <b>reactive clawback 60–90 วัน</b> · เลข = v1 tune ใน pilot · อ้างอิง: ไม่มีเจ้าไหนเปิดเลข (Poki first-input, CrazyGames เกมดี 10น./D1 10–15%, GD recalc 90วัน)",adm_ey:"Partner Portal (Admin Tool)",adm_h:"Partner สร้าง ref เอง + เช็ค Dashboard",adm_lead:"self-serve · ปลอดภัยเพราะ sig เซ็นฝั่ง server + fraud gate คุมปลายทาง",adm_role_h:"🔑 Partner Role — สร้างลิงก์เอง",adm_role_b:'login Partner Portal → เลือกเกม (เฉพาะ approved) + channel → กด "สร้างลิงก์" → <b>server มินต์ + เซ็น HMAC sig</b> (partner ไม่มี secret → ปลอมไม่ได้)',adm_dash_h:"📊 Dashboard — เช็คได้ real-time",adm_dash_b:"ต่อลิงก์/channel: clicks · <b>quality-pass %</b> · confirmed users · revenue · payout status",adm_safe:"<b>ปลอดภัย:</b> สร้างลิงก์ไม่จำกัดก็ได้เงินเฉพาะ quality user (gate คุมปลายทาง) · guardrails: เกม approved เท่านั้น · rate-limit · admin revoke",
+ s4_ey:"2 สถานการณ์ (อธิบายผู้บริหาร)",s4_h:"เงื่อนไข 2 สถานการณ์",scA_t:"A · ROPZ พามา",scB_t:"B · Dev พามา",sc_cond:"เงื่อนไข",sc_rate:"เรต",sc_cac:"CAC",sc_share:"สัดส่วน",scA_cond:"default (ไม่ต้องมี ref)",scA_cac:"ROPZ (≈0 coupon barter)",scA_share:"<b>~90% ของ traffic</b>",scB_cond:"ref verified + ผ่าน fraud gate",scB_cac:"Dev (฿0)",scB_share:"เพิ่มเมื่อ platform โต",scA_note:"dev ยอมเพราะได้ traffic ฟรี = เงินรวมมากกว่าอยู่คนเดียว",scB_note:"ROPZ ยอมให้เยอะเพราะ traffic นี้ฟรี + incremental (CAC=0)",s4_punch:"แก่น: เราได้มากกว่าต่อหัวเมื่อหาคนเอง (คุ้มลงทุน coupon) และคนที่ dev หามา = upside ฟรี — ทั้งคู่ดันรายได้เราขึ้น",
+ s5_ey:"P&L เทียบ 2 สถานการณ์",s5_h:"ROPZ ได้เท่าไหร่ (illustrative)",s5_lead:"สมมติฐาน/user/ปี: ad ฿60 + IAP ฿40 + coupon/eco/royalty ฿25 (gross) · ops ฿15 · CAC ฿5/฿0",t1_h0:"ROPZ ได้ / หัว / ปี",row_ads:"Ads (ส่วน ROPZ)",row_iap:"IAP (ส่วน ROPZ)",row_coupon:"Coupon/Ecosystem/Royalty",row_opscac:"− ops − CAC",row_net:"<b>= net / user / ปี</b>",s5_mix1:"มุมที่ 1 — ฐานเท่ากัน 1,000,000 MAU (ผลของ mix)",t2_h0:"Mix",t2_h1:"คิดจาก",t2_h2:"ROPZ net/ปี",mix_a:"90 / 10 (ช่วงแรก)",s5_mix1_note:"→ ฐานเท่ากัน <b>ROPZ-brought ทำเงินให้เรามากกว่า/หัว</b> = คุ้มลงทุน portal + coupon",s5_mix2:"มุมที่ 2 — Dev-brought = volume ฟรี (CAC=0, บวกเพิ่ม)",kpiA_l:"A · ช่วงแรก (900k ROPZ + 100k Dev)",kpiB_l:"B · โตเต็มที่ (900k ROPZ + 900k Dev)",s5_mix2_note:"→ ROPZ หาคนได้เท่าเดิม · dev หามาบวกเพิ่ม แม้ % ต่ำแต่ CAC=0 → ดัน net <b>+46%</b>",s5_warn:'<b>⚠️ คำเตือน:</b> ตัวเลข illustrative — "คุ้ม" ขึ้นกับ 2 ตัวแปรที่ยัง unproven = <b>ARPU จริง + coupon layer เวิร์ค</b> → pilot ต้อง validate ก่อน scale',
+ s6_ey:"ค้าง / ทำต่อ",td1:"ยืนยันสมมติฐาน ARPU (ads ฿60 / IAP ฿40 / coupon ฿25) — pilot วัดจริง",td2:"เขียน attribution logic เข้า SDK spec (ส่ง dev team)",td3:'นิยาม "quality user" (กี่นาที / retention ระดับไหน) สำหรับ fraud gate',td4:"ผูกเรต attribution เข้าไฟล์ Excel Partner P&L (ชีต Attribution)",td5:"window ref กี่วัน (30 / 60 / 90) — legal + fairness",td6:"เลือก ad-verification vendor (Pixalate / IAS / HUMAN) + Cloudflare plan (WAF/Bot Mgmt) — ตอนดีล ad-network + infra",
+ sec_ey:"ความปลอดภัย & Anti-Fraud",sec_h:"ความปลอดภัย 2 ชั้น (Defense-in-Depth)",sec_lead:"Edge กันทราฟฟิกร้ายก่อนถึงระบบ · App คัดคุณภาพ + คุมการจ่ายเงิน — 2 ชั้นทำงานซ้อนกัน",secA_h:"🌐 ชั้น Edge — Cloudflare",secA_b:"<b>WAF</b> (Web Application Firewall) · <b>DDoS protection</b> (L3/4 + L7) · <b>Bot Management</b> — แยกคนจริงจาก automation/headless · <b>Rate-limit</b> การสร้างลิงก์ + API endpoint",secB_h:"🛡️ ชั้น App — Attribution & Payout",secB_b:"<b>Server-side attribution</b> (client ปลอมไม่ได้) + <b>HMAC-signed ref</b> · <b>Fraud gate</b> (quality user §3) · <b>3rd-party ad-verification</b> คัด IVT · payout <b>hold net-30/60</b> + reactive clawback + right-to-audit",secv_h:"Ad-verification partners (3rd-party · คัด IVT ก่อนนับ ad revenue)",secv_c0:"Vendor",secv_c1:"บทบาท",secv_r1:"IVT/fraud detection · MRC-accredited",secv_r2:"viewability + brand safety + IVT",secv_r3:"bot detection (Satori engine) · MRC IVT",sec_foot:"ad-verify = มาตรฐานอุตสาหกรรมโฆษณา (ต่อ 1 เจ้าก็เริ่มได้) · เลือกจริงตอนดีล ad-network · 2 ชั้น + fraud gate = กันครบสาย traffic ร้าย → user ปลอม → จ่ายเงินผิด",elig_b:"<b>เงื่อนไขขึ้นลิสต์ + รับส่วนแบ่งรายได้:</b> เกมต้องผ่าน Submission Gate + เกณฑ์ Build Spec — build ≤ 25MB (Brotli) · Release build · ผ่าน quality/fraud gate · จอ/perf ตามสเปก · ดูรายละเอียด: ROPZ Game Build Spec"},
+en:{ax_ey:"Overview · 4 axes",ax_h:"What actually moves the split — and what doesn't",ax_lead:"\"Tier\" is used with three different meanings in this project. This table separates the axes that move money from the ones that only classify.",ax_c1:"Axis",ax_c2:"Answers what",ax_c3:"Possible values",ax_c4:"Effect on the split",ax_1n:"① Attribution — who brought the player",ax_1q:"Which channel did this player arrive through",ax_1v:"ROPZ-brought (default) · Dev-brought (verified + fraud gate passed)",ax_1e:"✅ Moves <b>Platform Fee</b> directly — ads 50/50 → 85/15 · IAP 60/35 → 75/20",ax_2n:"② Asset Provenance — who produced the art",ax_2q:"What share of this game is built on our Base Asset Pack",ax_2v:"&lt; 20% · 20–60% · &gt; 60% (weighted per asset)",ax_2e:"✅ Adjusts <b>Platform Fee</b> by +0 / +~5 / +~10 points <i>(v0.1, pending)</i>",ax_3n:"③ Tier A/B/C — how the game integrates",ax_3q:"Embedded in portal / +Quest / full game via API",ax_3v:"A · B · C (declared in <code>manifest.tier</code>)",ax_3e:"❌ <b>Does not change the rate</b> — it changes which economy hooks and tools you get",ax_4n:"④ T0–T4 — how deeply RO IP is used",ax_4q:"What level of Ragnarok IP the game uses",ax_4v:"T0 – T4 (RO-IP games only)",ax_4e:"✅ But it is a <b>separate layer</b> (IP Royalty) stacked on top — not Platform Fee",ax_lh:"Which axis touches which revenue layer",ax_l1:"<b>Layer 1 · Platform Fee</b> — moved by ① Attribution and ② Asset Provenance",ax_l2:"<b>Layer 2 · IP Royalty</b> — moved by ④ T0–T4, RO-IP games only",ax_l3:"<b>Layer 3 · Coupon / Ecosystem</b> — ROPZ only, no axis touches it",ax_note:"⚠️ <b>Common confusion:</b> ③ Tier A/B/C, ④ T0–T4 and ② coverage are three different axes — only ① and ② move Platform Fee · ④ sits on a different layer · ③ moves no money at all",ap_ey:"Axis ② · Asset Provenance",ap_h:"Base Asset Pack + how we verify a build uses it",ap_lead:"A ready-to-use, <b>free</b> asset library for devs and outsource teams — cuts cost and time while controlling quality and build size at the source",ap_ph:"What's in the pack — target 20–30 sets per type",ap_p1:"🎨 <b>Texture / characters</b> — sprite sets · recolor-ready · iso pivot/footprint · atlas-friendly",ap_p2:"🎵 <b>BGM</b> — looping background music",ap_p3:"🔊 <b>SFX</b> — action / UI sounds",ap_p4:"✨ <b>VFX</b> — tuned down for web (low particle count · small textures · light on fps/memory)",ap_web:"Everything is <b>web-optimized already</b> — texture crunch ≤1024 · audio Vorbis (music 96–128kbps · SFX mono 22kHz) · VFX budget-capped → builds using the pack clear the size/quality gate almost automatically",ap_ch:"Coverage → split",ap_c1:"Coverage",ap_c2:"Meaning",ap_c3:"ROPZ share",ap_r1a:"&lt; 20%",ap_r1b:"dev made most of the art",ap_r1c:"baseline (dev keeps the most)",ap_r2a:"20–60%",ap_r2b:"mixed",ap_r2c:"+~5 points",ap_r3a:"&gt; 60%",ap_r3b:"game built on our assets = we co-produced it",ap_r3c:"+~10 points",ap_frame:"<b>Locked framing — contribution-based, not a penalty:</b> the split reflects who did the production work · we supply the assets = we co-produced = we keep slightly more · dev brings their own art = they keep more · <b>the dev chooses</b> how much of the pack to use, and the delta is deliberately modest so nobody avoids the pack",ap_vh:"How we verify a build really uses our assets — 3 layers",ap_prob:"<b>The problem:</b> devs crunch textures or re-encode audio to Vorbis → bytes change → a plain hash comparison won't work",ap_v1:"<b>A · Build-time manifest (primary)</b> — the BuildProcessor scans the project at build time for references to pack assets (by GUID/path) → writes <code>ropz_assets.json</code> (assetId + coverage%), <b>HMAC-signed</b> and embedded in the build · covers everything including VFX/prefabs/particles",ap_v2:"<b>B · Server fingerprint (the check)</b> — at gate time we extract textures/audio from <code>.data</code> and compute a <b>perceptual hash</b> (image pHash / audio fingerprint) against the registry — survives compression · confirms the manifest isn't lying",ap_v3:"<b>C · Registry</b> — stores <code>{assetId, GUID, pHash/audioFP, type, weight}</code> = single source of truth",ap_fraud:"<b>Anti-fraud:</b> a signed manifest raises the bar · the fingerprint is the real guard · manifest claims that the fingerprint contradicts → flag/reject · found later = reactive audit + clawback (same principle as attribution) · <b>VFX</b> is hard to fingerprint after the fact → layer A carries it",ap_open:"⚠️ The actual percentages are still <b>placeholders</b> — pending a commercial decision · this modifier applies to Platform Fee only; it does not touch T0–T4 (IP) or L0–L2 (reward cost)",ap_src:"Source: <code>MD Doc/ROPZ_Asset_Pack_Provenance_Spec_TH_260716.md</code> · builds on Base Kit C5 (Asset spec Tier 1)",ui_pdf:"Download PDF",ui_theme:"Theme",
+ h_meta:"RO PlayZone (GGT) · v0.2 · 14 Jul 2026 · builds on Partner Rev-Share Model v0.1",
+ h_k_exec:"Executive Summary · Rev-Share",h_t_exec:"How revenue is split, and what we earn",h_d_exec:"Who acquires the user changes the rate · 2 scenarios + P&L (technical details omitted)",
+ h_k_dev:"For Dev Team · Attribution SDK",h_t_dev:"Attribution — spec for Dev",h_d_dev:"11 source types + flow + pseudocode + quality-user (fraud gate) + revenue split",
+ s1_ey:"Locked rates",s1_h:'Rate depends on "who acquires the user"',s1_lead:"The more WE bring the user (portal/coupons), the more we keep · if the dev brings them, we give the dev more to incentivize.",
+ ropz_t:"🔵 ROPZ-brought",ropz_pill:"default",dev_t:"🟢 Dev-brought",dev_pill:"verified",dev_word:"dev",
+ ropz_note:"Arrives via portal/coupon/RO funnel · CAC = ROPZ (≈0 via coupon barter)",dev_note:"Arrives via dev channel + ref link · CAC = Dev ($0) · = free upside",
+ s1_foot:"* IAP nets ~5% payment gateway first (web has no 30% store tax) · Benchmark: CrazyGames ads ~50–80% (not public) · IAP 70/30 · Poki 50–100%",
+ layers_h:"ROPZ revenue has 3 layers (attribution controls only layer 1)",l1t:"1. Platform Fee",l1d:"— by attribution (table above)",l2t:"2. IP Royalty",l2d:"— by T0-T4, RO games only (stacked · separate axis)",l3t:"3. Coupon / Ecosystem",l3d:"— ROPZ-only, not shared with dev",
+ s2_ey:"Attribution function · 11 types",s2_h:'Channels that determine "who brought them"',s2_lead:"7 types = ROPZ-brought · 4 types = Dev-brought (need ref + pass fraud gate)",srcR_h:"🔵 ROPZ-brought (7)",srcD_h:"🟢 Dev-brought (4)",
+ src1:"Portal Direct <span>— direct/bookmark</span>",src2:"Portal Discovery <span>— category/search/recommended</span>",src3:"Cross-promo <span>— from another game</span>",src4:"Coupon Campaign <span>— coupon link/B2B</span>",src5:"RO Funnel <span>— from RO games/GNJOY</span>",src6:"ROPZ Organic/SEO <span>— Google → portal</span>",src7:"ROPZ Paid UA <span>— ROPZ's own ads</span>",src8:"Dev Embed <span>— iframe on dev site + ref</span>",src9:"Dev Social <span>— dev social/YT/community + ref</span>",src10:"Dev Existing Base <span>— dev's own base + ref</span>",src11:"Dev Paid UA <span>— dev's own ads + ref</span>",
+ s3_ey:"Classification logic",s3_h:"How we check (Attribution Flow)",fn1:"<b>User opens the game</b> — server logs referrer + ref + campaign",fnq:'<b>Has a verified <code>?ref=partnerID&amp;g=gameID</code>?</b> (server-side, within window) · 1 link = 1 game (5 games = 5 links)',fyes:'<b>✓ Yes → Dev-brought</b><br>rate 85/15 · 75/20<br><span style="font-size:12.5px;color:var(--muted)">but PENDING until it passes the fraud gate</span>',fno:'<b>✕ No → ROPZ-brought</b><br>rate 50/50 · 60/35<br><span style="font-size:12.5px;color:var(--muted)">= default (dev must prove it)</span>',fnft:"<b>First-touch per-(user × game)</b> — source is bound per game, not per account → <b>dev earns the rate only on the game it drove</b> · if the user plays another dev's game / a ROPZ game, that game is attributed separately (no leakage) · 30–90 day window",fnfraud:"<b>Fraud gate (Dev only):</b> count only quality users (played ≥ X min / retained) · anomaly → hold · right-to-audit · pay net-30/60",
+ qg_h:"Quality User (Fraud Gate) — a Dev-brought user must pass to be CONFIRMED (within 7 days)",qgA_h:"Layer A — VALID (fail = discard)",qgA_b:"Passes bot check · IP not datacenter/proxy · device fingerprint not duplicate",qgB_h:"Layer B — QUALITY (pass ≥1)",qgB_b:"Played <b>≥60–90s + behavioral</b> (bounce floor) · or ≥2 sessions · or hit a milestone · or <b>D1 retention (strongest)</b> · or is a payer (auto)",qg_note:"State: PENDING → CONFIRMED (pay dev rate) / EXPIRED (falls back to ROPZ) · velocity cap + right-to-audit + <b>reactive clawback 60–90 days</b> · numbers = v1, tuned in pilot · ref: no platform publishes exact numbers (Poki first-input, CrazyGames good-game 10min/D1 10–15%, GD recalc 90 days)",adm_ey:"Partner Portal (Admin Tool)",adm_h:"Partners generate their own ref + check a Dashboard",adm_lead:"self-serve · safe because the sig is server-signed + the fraud gate guards the payout",adm_role_h:"🔑 Partner Role — generate links",adm_role_b:'log in to Partner Portal → pick game (approved only) + channel → click "Create link" → <b>server mints + signs an HMAC sig</b> (partner has no secret → can\'t forge)',adm_dash_h:"📊 Dashboard — check in real time",adm_dash_b:"per link/channel: clicks · <b>quality-pass %</b> · confirmed users · revenue · payout status",adm_safe:"<b>Safe:</b> unlimited links still only earn on quality users (gate guards the end) · guardrails: approved games only · rate-limit · admin can revoke",
+ s4_ey:"2 scenarios (to explain to execs)",s4_h:"Conditions for the 2 scenarios",scA_t:"A · ROPZ-brought",scB_t:"B · Dev-brought",sc_cond:"Condition",sc_rate:"Rate",sc_cac:"CAC",sc_share:"Share",scA_cond:"default (no ref needed)",scA_cac:"ROPZ (≈0 coupon barter)",scA_share:"<b>~90% of traffic</b>",scB_cond:"ref verified + pass fraud gate",scB_cac:"Dev ($0)",scB_share:"grows as the platform scales",scA_note:"dev accepts it because free traffic = more total money than going it alone",scB_note:"ROPZ gives more because this traffic is free + incremental (CAC=0)",s4_punch:"Core: we earn more per user when we acquire them (justifies coupon spend), and users the dev brings = free upside — the two aren't in conflict; both lift our revenue.",
+ s5_ey:"P&L across the 2 scenarios",s5_h:"What ROPZ earns (illustrative)",s5_lead:"Assumptions/user/yr: ad $1.71 + IAP $1.14 + coupon/eco/royalty $0.71 (gross) · ops $0.43 · CAC $0.14/$0",t1_h0:"ROPZ earns / user / yr",row_ads:"Ads (ROPZ share)",row_iap:"IAP (ROPZ share)",row_coupon:"Coupon/Ecosystem/Royalty",row_opscac:"− ops − CAC",row_net:"<b>= net / user / yr</b>",s5_mix1:"View 1 — same base of 1,000,000 MAU (effect of mix)",t2_h0:"Mix",t2_h1:"Computed from",t2_h2:"ROPZ net/yr",mix_a:"90 / 10 (early)",s5_mix1_note:"→ same base: <b>ROPZ-brought earns us more per user</b> = worth investing in portal + coupons",s5_mix2:"View 2 — Dev-brought = free volume (CAC=0, additive)",kpiA_l:"A · early (900k ROPZ + 100k Dev)",kpiB_l:"B · mature (900k ROPZ + 900k Dev)",s5_mix2_note:"→ ROPZ brings the same base · dev adds on top; even at a low % but CAC=0 → lifts net <b>+46%</b>",s5_warn:'<b>⚠️ Caveat:</b> figures are illustrative — "worth it" hinges on 2 still-unproven variables = <b>real ARPU + the coupon layer working</b> → pilot must validate before scaling',
+ s6_ey:"Open / next",td1:"Confirm ARPU assumptions (ads $1.71 / IAP $1.14 / coupon $0.71) — pilot measures for real",td2:"Write the attribution logic into the SDK spec (hand to dev team)",td3:'Define "quality user" (how many minutes / what retention) for the fraud gate',td4:"Wire attribution rates into the Partner P&L Excel (Attribution sheet)",td5:"Ref window length (30 / 60 / 90 days) — legal + fairness",td6:"Pick an ad-verification vendor (Pixalate / IAS / HUMAN) + Cloudflare plan (WAF/Bot Mgmt) — during the ad-network + infra deals",
+ sec_ey:"Security & Anti-Fraud",sec_h:"Two-Layer Security (Defense-in-Depth)",sec_lead:"Edge blocks bad traffic before it reaches the system · App filters for quality + guards payouts — the two layers stack",secA_h:"🌐 Edge layer — Cloudflare",secA_b:"<b>WAF</b> (Web Application Firewall) · <b>DDoS protection</b> (L3/4 + L7) · <b>Bot Management</b> — separates real users from automation/headless · <b>Rate-limit</b> on link generation + API endpoints",secB_h:"🛡️ App layer — Attribution & Payout",secB_b:"<b>Server-side attribution</b> (client can't spoof) + <b>HMAC-signed ref</b> · <b>Fraud gate</b> (quality user §3) · <b>3rd-party ad-verification</b> filters IVT · payout <b>hold net-30/60</b> + reactive clawback + right-to-audit",secv_h:"Ad-verification partners (3rd-party · filter IVT before counting ad revenue)",secv_c0:"Vendor",secv_c1:"Role",secv_r1:"IVT/fraud detection · MRC-accredited",secv_r2:"viewability + brand safety + IVT",secv_r3:"bot detection (Satori engine) · MRC IVT",sec_foot:"ad-verify = industry standard for advertising (one vendor is enough to start) · pick when negotiating the ad-network deal · the 2 layers + fraud gate cover the chain: bad traffic → fake users → wrong payouts",elig_b:"<b>Eligibility for listing + rev-share:</b> a game must pass the Submission Gate + Build Spec — build ≤ 25MB (Brotli) · Release build · pass the quality/fraud gate · display/perf per spec · see: ROPZ Game Build Spec"},
+ko:{ax_ey:"총정리 · 4개 축",ax_h:"배분율을 실제로 움직이는 것 — 그리고 움직이지 않는 것",ax_lead:"이 프로젝트에서 \"Tier\"는 세 가지 의미로 쓰입니다. 이 표는 돈을 움직이는 축과 분류만 하는 축을 구분합니다.",ax_c1:"축",ax_c2:"무엇을 답하는가",ax_c3:"가능한 값",ax_c4:"배분율에 미치는 영향",ax_1n:"① 어트리뷰션 — 누가 유저를 데려왔는가",ax_1q:"이 유저가 누구의 채널로 유입되었는가",ax_1v:"ROPZ 유입(기본) · Dev 유입(verified + fraud gate 통과)",ax_1e:"✅ <b>플랫폼 수수료</b>를 직접 이동 — 광고 50/50 → 85/15 · IAP 60/35 → 75/20",ax_2n:"② 애셋 출처 — 누가 아트를 만들었는가",ax_2q:"이 게임이 우리 Base Asset Pack을 몇 % 사용했는가",ax_2v:"&lt; 20% · 20–60% · &gt; 60% (항목별 가중치 적용)",ax_2e:"✅ <b>플랫폼 수수료</b>를 +0 / +~5 / +~10 포인트 조정 <i>(v0.1, 확정 대기)</i>",ax_3n:"③ Tier A/B/C — 게임 연동 방식",ax_3q:"포털 임베드 / +퀘스트 / API 연동 풀게임",ax_3v:"A · B · C (<code>manifest.tier</code>에 명시)",ax_3e:"❌ <b>요율은 바뀌지 않음</b> — 연결되는 경제 시스템과 제공 도구가 달라질 뿐",ax_4n:"④ T0–T4 — RO IP 활용 심도",ax_4q:"게임이 라그나로크 IP를 어느 수준으로 쓰는가",ax_4v:"T0 – T4 (RO IP 사용 게임만)",ax_4e:"✅ 다만 위에 얹히는 <b>별도 계층</b>(IP 로열티) — 플랫폼 수수료가 아님",ax_lh:"어떤 축이 어떤 수익 계층에 작용하는가",ax_l1:"<b>계층 1 · 플랫폼 수수료</b> — ① 어트리뷰션, ② 애셋 출처가 조정",ax_l2:"<b>계층 2 · IP 로열티</b> — ④ T0–T4가 조정, RO IP 게임만",ax_l3:"<b>계층 3 · 쿠폰 / 에코시스템</b> — ROPZ 전용, 어떤 축도 관여하지 않음",ax_note:"⚠️ <b>자주 헷갈리는 부분:</b> ③ Tier A/B/C, ④ T0–T4, ② coverage는 서로 완전히 다른 축입니다 — 플랫폼 수수료를 움직이는 것은 ①과 ②뿐 · ④는 다른 계층 · ③은 금액을 전혀 바꾸지 않음",ap_ey:"축 ② · 애셋 출처",ap_h:"Base Asset Pack + 빌드가 실제로 사용했는지 검증하는 방법",ap_lead:"개발사·외주가 자유롭게 가져다 쓸 수 있는 <b>무료</b> 애셋 라이브러리 — 비용과 시간을 줄이면서 품질과 빌드 용량을 원천에서 관리",ap_ph:"팩 구성 — 유형별 20–30 세트 목표",ap_p1:"🎨 <b>텍스처 / 캐릭터</b> — 스프라이트 세트 · 리컬러 대응 · iso pivot/footprint · 아틀라스 친화",ap_p2:"🎵 <b>BGM</b> — 루프 배경음악",ap_p3:"🔊 <b>SFX</b> — 액션 / UI 사운드",ap_p4:"✨ <b>VFX</b> — 웹용으로 경량화 (파티클 수 낮춤 · 텍스처 축소 · fps/메모리 부담 최소)",ap_web:"모든 항목이 <b>이미 웹 최적화됨</b> — 텍스처 crunch ≤1024 · 오디오 Vorbis (음악 96–128kbps · SFX 모노 22kHz) · VFX 예산 상한 → 팩을 쓰면 용량/품질 게이트를 거의 자동으로 통과",ap_ch:"Coverage → 배분",ap_c1:"Coverage",ap_c2:"의미",ap_c3:"ROPZ 몫",ap_r1a:"&lt; 20%",ap_r1b:"개발사가 아트를 대부분 자체 제작",ap_r1c:"기준값 (개발사가 가장 많이 가져감)",ap_r2a:"20–60%",ap_r2b:"혼합",ap_r2c:"+~5 포인트",ap_r3a:"&gt; 60%",ap_r3b:"우리 애셋 위에 만든 게임 = 공동 제작",ap_r3c:"+~10 포인트",ap_frame:"<b>확정된 프레이밍 — 제재가 아니라 기여도 기반:</b> 배분은 누가 제작에 힘을 들였는지를 반영합니다 · 우리가 애셋을 제공 = 공동 제작 = 우리 몫이 조금 늘어남 · 개발사가 자체 아트를 가져오면 더 많이 가져감 · <b>사용 정도는 개발사가 선택</b>하며, 팩을 회피하지 않도록 격차는 의도적으로 작게 설정",ap_vh:"빌드가 실제로 우리 애셋을 쓰는지 검증 — 3계층",ap_prob:"<b>문제:</b> 개발사가 텍스처를 crunch 하거나 오디오를 Vorbis로 재인코딩 → 바이트가 달라짐 → 단순 해시 비교는 무용지물",ap_v1:"<b>A · 빌드 타임 매니페스트 (주력)</b> — BuildProcessor가 빌드 시점에 프로젝트에서 팩 애셋 참조(GUID/path)를 스캔 → <code>ropz_assets.json</code>(assetId + coverage%) 생성 후 <b>HMAC 서명</b>하여 빌드에 삽입 · VFX/프리팹/파티클 포함 전 유형 커버",ap_v2:"<b>B · 서버 핑거프린트 (검증)</b> — 게이트 단계에서 <code>.data</code>로부터 텍스처·오디오를 추출해 <b>퍼셉추얼 해시</b>(이미지 pHash / 오디오 지문)를 레지스트리와 대조 — 압축·변환에도 견딤 · 매니페스트의 진위 확인",ap_v3:"<b>C · 레지스트리</b> — <code>{assetId, GUID, pHash/audioFP, type, weight}</code> 보관 = single source of truth",ap_fraud:"<b>부정 방지:</b> 서명된 매니페스트가 진입 장벽 · 핑거프린트가 실제 방어선 · 매니페스트 주장과 핑거프린트 불일치 → flag/reject · 사후 적발 시 reactive audit + clawback (어트리뷰션과 동일 원칙) · <b>VFX</b>는 사후 지문 추출이 어려워 A계층에 의존",ap_open:"⚠️ 실제 % 수치는 아직 <b>플레이스홀더</b> — 사업적 확정 대기 · 이 modifier는 플랫폼 수수료에만 적용되며 T0–T4(IP)와 L0–L2(보상 원가)에는 관여하지 않음",ap_src:"출처: <code>MD Doc/ROPZ_Asset_Pack_Provenance_Spec_TH_260716.md</code> · Base Kit C5 (Asset spec Tier 1) 기반",ui_pdf:"PDF 다운로드",ui_theme:"테마",
+ h_meta:"RO PlayZone (GGT) · v0.2 · 2026.7.14 · Partner Rev-Share Model v0.1 확장",
+ h_k_exec:"경영진 요약 · 수익 배분",h_t_exec:"수익을 어떻게 나누고 우리는 얼마 버나",h_d_exec:"누가 유저를 데려오나에 따라 요율이 달라짐 · 2 시나리오 + P&L (기술 세부 생략)",
+ h_k_dev:"개발팀용 · Attribution SDK",h_t_dev:"Attribution — 개발 스펙",h_d_dev:"11개 소스 유형 + 플로우 + 의사코드 + 퀄리티 유저(fraud gate) + 수익 분배",
+ s1_ey:"확정 요율",s1_h:'요율은 "누가 유저를 데려왔나"에 따라 달라진다',s1_lead:"우리가 유저를 데려올수록(포털/쿠폰) 우리 몫↑ · 개발사가 직접 데려오면 유인을 위해 개발사에 더 많이 준다.",
+ ropz_t:"🔵 ROPZ 유입",ropz_pill:"기본값",dev_t:"🟢 Dev 유입",dev_pill:"검증됨",dev_word:"dev",
+ ropz_note:"포털/쿠폰/RO 퍼널로 유입 · CAC = ROPZ (쿠폰 바터로 ≈0)",dev_note:"dev 채널 + ref 링크로 유입 · CAC = Dev (₩0) · = 공짜 업사이드",
+ s1_foot:"* IAP는 결제 게이트웨이 ~5% 선차감(웹은 스토어 수수료 30% 없음) · 벤치마크: CrazyGames 광고 ~50–80% (not public) · IAP 70/30 · Poki 50–100%",
+ layers_h:"ROPZ 수익은 3계층 (어트리뷰션은 계층 1만 조정)",l1t:"1. 플랫폼 수수료",l1d:"— 어트리뷰션 기준 (위 표)",l2t:"2. IP 로열티",l2d:"— T0-T4 기준, RO 게임만 (별도 축으로 중첩)",l3t:"3. 쿠폰 / 에코시스템",l3d:"— ROPZ 전용, 개발사와 분배 안 함",
+ s2_ey:"어트리뷰션 함수 · 11종",s2_h:'"누가 데려왔나"를 판정하는 채널',s2_lead:"7종 = ROPZ 유입 · 4종 = Dev 유입 (ref 필요 + fraud gate 통과)",srcR_h:"🔵 ROPZ 유입 (7)",srcD_h:"🟢 Dev 유입 (4)",
+ src1:"Portal Direct <span>— 직접/북마크</span>",src2:"Portal Discovery <span>— 카테고리/검색/추천</span>",src3:"Cross-promo <span>— 다른 게임에서 유입</span>",src4:"Coupon Campaign <span>— 쿠폰 링크/B2B</span>",src5:"RO Funnel <span>— RO 게임/GNJOY에서</span>",src6:"ROPZ Organic/SEO <span>— 구글 → 포털</span>",src7:"ROPZ Paid UA <span>— ROPZ 자체 광고</span>",src8:"Dev Embed <span>— dev 사이트 iframe + ref</span>",src9:"Dev Social <span>— dev 소셜/YT/커뮤니티 + ref</span>",src10:"Dev Existing Base <span>— dev 기존 유저 + ref</span>",src11:"Dev Paid UA <span>— dev 자체 광고 + ref</span>",
+ s3_ey:"분류 로직",s3_h:"어떻게 확인하나 (Attribution Flow)",fn1:"<b>유저가 게임 실행</b> — 서버가 referrer + ref + campaign 기록",fnq:'<b>검증된 <code>?ref=partnerID&amp;g=gameID</code>가 있나?</b> (서버사이드, window 이내) · 링크 1개 = 게임 1개 (5게임 = 5링크)',fyes:'<b>✓ 예 → Dev 유입</b><br>요율 85/15 · 75/20<br><span style="font-size:12.5px;color:var(--muted)">단, fraud gate 통과 전까지 PENDING</span>',fno:'<b>✕ 아니오 → ROPZ 유입</b><br>요율 50/50 · 60/35<br><span style="font-size:12.5px;color:var(--muted)">= 기본값 (dev가 직접 증명해야)</span>',fnft:"<b>First-touch를 게임별(user × game)로</b> — 출처를 계정이 아니라 게임 단위로 바인딩 → <b>dev는 자신이 데려온 게임에만 요율 적용</b> · 유저가 다른 dev 게임/ROPZ 게임을 하면 그 게임은 별도 어트리뷰션(누수 없음) · 30~90일 window",fnfraud:"<b>Fraud gate (Dev 전용):</b> 퀄리티 유저만 카운트(≥ X분 플레이/리텐션) · 이상치 → 보류 · right-to-audit · net-30/60 지급",
+ qg_h:"퀄리티 유저 (Fraud Gate) — Dev 유입은 통과해야 CONFIRMED (7일 이내)",qgA_h:"레이어 A — VALID (실패 = 폐기)",qgA_b:"봇 체크 통과 · IP가 데이터센터/프록시 아님 · 기기 지문 중복 아님",qgB_h:"레이어 B — QUALITY (≥1 충족)",qgB_b:"<b>≥60–90초 + behavioral</b>(바운스 방지) · 또는 ≥2세션 · 또는 마일스톤 도달 · 또는 <b>D1 리텐션(가장 강력)</b> · 또는 결제자(자동)",qg_note:"상태: PENDING → CONFIRMED(dev 요율 지급) / EXPIRED(ROPZ로 회귀) · velocity cap + right-to-audit + <b>reactive clawback 60–90일</b> · 수치 = v1, 파일럿 보정 · 참고: 공개 수치 없음(Poki first-input, CrazyGames 우수게임 10분/D1 10–15%, GD 90일 recalc)",adm_ey:"파트너 포털 (Admin Tool)",adm_h:"파트너가 직접 ref 생성 + 대시보드 확인",adm_lead:"셀프서브 · sig는 서버 서명 + fraud gate가 지급을 보호하므로 안전",adm_role_h:"🔑 파트너 역할 — 링크 생성",adm_role_b:'파트너 포털 로그인 → 게임(승인된 것만) + 채널 선택 → "링크 생성" 클릭 → <b>서버가 HMAC sig 발급·서명</b>(파트너는 secret 없음 → 위조 불가)',adm_dash_h:"📊 대시보드 — 실시간 확인",adm_dash_b:"링크/채널별: 클릭 · <b>quality-pass %</b> · confirmed 유저 · 매출 · 지급 상태",adm_safe:"<b>안전:</b> 링크 무제한 생성해도 quality 유저에게만 지급(게이트가 끝을 보호) · 가드레일: 승인 게임만 · rate-limit · admin 취소 가능",
+ s4_ey:"2가지 시나리오 (경영진 설명)",s4_h:"2가지 시나리오 조건",scA_t:"A · ROPZ 유입",scB_t:"B · Dev 유입",sc_cond:"조건",sc_rate:"요율",sc_cac:"CAC",sc_share:"비중",scA_cond:"기본값 (ref 불필요)",scA_cac:"ROPZ (쿠폰 바터 ≈0)",scA_share:"<b>~트래픽의 90%</b>",scB_cond:"ref 검증 + fraud gate 통과",scB_cac:"Dev (₩0)",scB_share:"플랫폼 성장 시 증가",scA_note:"공짜 트래픽 = 혼자 하는 것보다 총수익↑ 이라 dev가 수용",scB_note:"이 트래픽은 공짜 + 증분(CAC=0)이라 ROPZ가 더 많이 양보",s4_punch:"핵심: 우리가 직접 데려온 유저는 인당 수익↑(쿠폰 투자 정당화), 개발사가 데려온 유저는 공짜 업사이드 — 상충하지 않고 둘 다 수익을 끌어올린다.",
+ s5_ey:"2가지 시나리오 P&L",s5_h:"ROPZ가 얼마 버나 (illustrative)",s5_lead:"가정/유저/년: 광고 ₩2,314 + IAP ₩1,543 + 쿠폰/에코/로열티 ₩964 (gross) · ops ₩579 · CAC ₩193/₩0",t1_h0:"ROPZ 수익 / 인 / 년",row_ads:"광고 (ROPZ 몫)",row_iap:"IAP (ROPZ 몫)",row_coupon:"쿠폰/에코시스템/로열티",row_opscac:"− ops − CAC",row_net:"<b>= 순이익 / 인 / 년</b>",s5_mix1:"관점 1 — 동일 기반 1,000,000 MAU (mix 효과)",t2_h0:"Mix",t2_h1:"계산식",t2_h2:"ROPZ 순이익/년",mix_a:"90 / 10 (초기)",s5_mix1_note:"→ 동일 기반: <b>ROPZ 유입이 인당 더 많이 벌어줌</b> = 포털+쿠폰 투자 가치 있음",s5_mix2:"관점 2 — Dev 유입 = 공짜 볼륨 (CAC=0, 증분)",kpiA_l:"A · 초기 (900k ROPZ + 100k Dev)",kpiB_l:"B · 성숙 (900k ROPZ + 900k Dev)",s5_mix2_note:"→ ROPZ 기반은 동일 · dev가 위에 추가; % 낮아도 CAC=0 → 순이익 <b>+46%</b>",s5_warn:'<b>⚠️ 주의:</b> 수치는 예시 — "가치 있음"은 아직 미검증 2변수에 달림 = <b>실제 ARPU + 쿠폰 레이어 작동</b> → 스케일 전 파일럿 검증 필수',
+ s6_ey:"미결 / 다음",td1:"ARPU 가정 확정 (광고 ₩2,314 / IAP ₩1,543 / 쿠폰 ₩964) — 파일럿 실측",td2:"어트리뷰션 로직을 SDK 스펙에 작성 (개발팀 전달)",td3:'fraud gate용 "퀄리티 유저" 정의 (몇 분 / 어떤 리텐션)',td4:"어트리뷰션 요율을 Partner P&L 엑셀에 연동 (Attribution 시트)",td5:"ref window 기간 (30 / 60 / 90일) — 법무 + 공정성",td6:"ad-verification 벤더(Pixalate / IAS / HUMAN) + Cloudflare 플랜(WAF/Bot Mgmt) 선정 — ad-network + 인프라 딜 시",
+ sec_ey:"보안 & Anti-Fraud",sec_h:"2계층 보안 (Defense-in-Depth)",sec_lead:"Edge가 악성 트래픽을 시스템 도달 전 차단 · App이 품질 선별 + 지급 보호 — 두 계층이 중첩",secA_h:"🌐 Edge 계층 — Cloudflare",secA_b:"<b>WAF</b>(웹 방화벽) · <b>DDoS 방어</b>(L3/4 + L7) · <b>Bot Management</b> — 실사용자와 automation/headless 구분 · 링크 생성 + API에 <b>Rate-limit</b>",secB_h:"🛡️ App 계층 — Attribution & Payout",secB_b:"<b>서버사이드 어트리뷰션</b>(client 위조 불가) + <b>HMAC 서명 ref</b> · <b>Fraud gate</b>(퀄리티 유저 §3) · <b>3rd-party ad-verification</b>으로 IVT 선별 · 지급 <b>hold net-30/60</b> + reactive clawback + right-to-audit",secv_h:"Ad-verification 파트너 (3rd-party · ad 매출 집계 전 IVT 선별)",secv_c0:"Vendor",secv_c1:"역할",secv_r1:"IVT/fraud 탐지 · MRC 인증",secv_r2:"viewability + brand safety + IVT",secv_r3:"봇 탐지 (Satori 엔진) · MRC IVT",sec_foot:"ad-verify = 광고 업계 표준(우선 1개 벤더로 시작 가능) · ad-network 딜 시 선택 · 2계층 + fraud gate = 악성 트래픽 → 가짜 유저 → 잘못된 지급까지 커버",elig_b:"<b>리스팅 + 수익 배분 자격:</b> 게임은 Submission Gate + Build Spec 통과 필수 — build ≤ 25MB (Brotli) · Release 빌드 · quality/fraud gate 통과 · 화면/성능 스펙 준수 · 참고: ROPZ Game Build Spec"},
+zh:{ax_ey:"总览 · 4 个维度",ax_h:"到底什么会改变分成 — 以及什么不会",ax_lead:"本项目里「Tier」被用于三种不同含义。下表区分哪些维度会动钱，哪些只是分类。",ax_c1:"维度",ax_c2:"回答什么问题",ax_c3:"可能的取值",ax_c4:"对分成的影响",ax_1n:"① 归因 — 谁带来了玩家",ax_1q:"这名玩家从谁的渠道进来",ax_1v:"ROPZ 带来（默认）· Dev 带来（verified + 通过 fraud gate）",ax_1e:"✅ 直接改变<b>平台抽成</b> — 广告 50/50 → 85/15 · IAP 60/35 → 75/20",ax_2n:"② 素材来源 — 谁做的美术",ax_2q:"这款游戏有多少比例建立在我们的 Base Asset Pack 上",ax_2v:"&lt; 20% · 20–60% · &gt; 60%（按件加权）",ax_2e:"✅ 将<b>平台抽成</b>上调 +0 / +~5 / +~10 个点 <i>(v0.1，待定)</i>",ax_3n:"③ Tier A/B/C — 游戏如何接入",ax_3q:"嵌入门户 / +任务 / 通过 API 接入完整游戏",ax_3v:"A · B · C（在 <code>manifest.tier</code> 中声明）",ax_3e:"❌ <b>不改变费率</b> — 区别在于绑定的经济系统与可用工具",ax_4n:"④ T0–T4 — RO IP 使用深度",ax_4q:"游戏使用仙境传说 IP 到什么程度",ax_4v:"T0 – T4（仅限使用 RO IP 的游戏）",ax_4e:"✅ 但它是叠加在上层的<b>独立层级</b>（IP 版税）— 不是平台抽成",ax_lh:"哪个维度作用于哪一层收入",ax_l1:"<b>第 1 层 · 平台抽成</b> — 由 ① 归因 与 ② 素材来源 调整",ax_l2:"<b>第 2 层 · IP 版税</b> — 由 ④ T0–T4 调整，仅限 RO IP 游戏",ax_l3:"<b>第 3 层 · 优惠券 / 生态</b> — ROPZ 独享，任何维度都不影响",ax_note:"⚠️ <b>最容易混淆的地方：</b>③ Tier A/B/C、④ T0–T4、② coverage 是三个完全不同的维度 — 只有 ① 和 ② 会动平台抽成 · ④ 在另一层 · ③ 完全不影响金额",ap_ey:"维度 ② · 素材来源",ap_h:"Base Asset Pack + 如何验证构建确实用了我们的素材",ap_lead:"面向开发者与外包团队的<b>免费</b>即用素材库 — 降低成本与时间，同时从源头控制品质与包体大小",ap_ph:"素材包内容 — 每类目标 20–30 套",ap_p1:"🎨 <b>贴图 / 角色</b> — sprite 套组 · 支持换色 · 等距 pivot/footprint · 适配图集",ap_p2:"🎵 <b>BGM</b> — 可循环背景音乐",ap_p3:"🔊 <b>音效</b> — 动作 / UI 音效",ap_p4:"✨ <b>特效</b> — 针对网页减负（粒子数低 · 贴图小 · 不吃 fps/内存）",ap_web:"所有素材<b>已完成网页优化</b> — 贴图 crunch ≤1024 · 音频 Vorbis（音乐 96–128kbps · 音效单声道 22kHz）· 特效设有预算上限 → 使用素材包的构建几乎必定通过体积/品质检查",ap_ch:"Coverage → 分成",ap_c1:"Coverage",ap_c2:"含义",ap_c3:"ROPZ 份额",ap_r1a:"&lt; 20%",ap_r1b:"美术主要由开发者自制",ap_r1c:"基准值（开发者拿得最多）",ap_r2a:"20–60%",ap_r2b:"混合",ap_r2c:"+~5 个点",ap_r3a:"&gt; 60%",ap_r3b:"游戏建立在我们的素材上 = 我们共同参与制作",ap_r3c:"+~10 个点",ap_frame:"<b>已确定的定位 — 基于贡献，不是惩罚：</b>分成反映的是谁投入了制作 · 我们提供素材 = 共同参与制作 = 我们多分一点 · 开发者自带美术则拿得更多 · <b>用多少由开发者自行决定</b>，且差额刻意设得温和，避免有人为此绕开素材包",ap_vh:"如何验证构建确实使用了我们的素材 — 三层",ap_prob:"<b>问题：</b>开发者会 crunch 贴图或把音频转成 Vorbis → 字节改变 → 直接比对 hash 行不通",ap_v1:"<b>A · 构建期清单（主力）</b> — BuildProcessor 在构建时扫描工程对素材包的引用（依据 GUID/path）→ 生成 <code>ropz_assets.json</code>（assetId + coverage%），<b>HMAC 签名</b>后嵌入构建 · 覆盖包括特效/预制体/粒子在内的全部类型",ap_v2:"<b>B · 服务端指纹（校验）</b> — 在检查阶段从 <code>.data</code> 提取贴图与音频，计算<b>感知哈希</b>（图像 pHash / 音频指纹）与注册表比对 — 可抵抗压缩与转码 · 验证清单未撒谎",ap_v3:"<b>C · 注册表</b> — 保存 <code>{assetId, GUID, pHash/audioFP, type, weight}</code> = 唯一可信源",ap_fraud:"<b>防作弊：</b>签名清单抬高门槛 · 指纹才是真正的防线 · 清单声称与指纹不符 → 标记/驳回 · 事后发现则 reactive audit + clawback（与归因同一原则）· <b>特效</b>事后难以取指纹 → 主要依赖 A 层",ap_open:"⚠️ 实际百分比仍为<b>占位值</b> — 待商务确定 · 该 modifier 只作用于平台抽成，不涉及 T0–T4（IP）与 L0–L2（奖励成本）",ap_src:"来源：<code>MD Doc/ROPZ_Asset_Pack_Provenance_Spec_TH_260716.md</code> · 基于 Base Kit C5 (Asset spec Tier 1)",ui_pdf:"下载 PDF",ui_theme:"主题",
+ h_meta:"RO PlayZone (GGT) · v0.2 · 2026.7.14 · 基于 Partner Rev-Share Model v0.1",
+ h_k_exec:"管理层摘要 · 收益分成",h_t_exec:"收益如何分成，我们能赚多少",h_d_exec:"谁获取用户决定分成 · 两种情景 + P&L（省略技术细节）",
+ h_k_dev:"开发团队 · Attribution SDK",h_t_dev:"Attribution —— 开发规格",h_d_dev:"11 种来源类型 + 流程 + 伪代码 + 优质用户（fraud gate）+ 分成",
+ s1_ey:"锁定的分成",s1_h:'分成取决于"谁获取了用户"',s1_lead:"我们越是自己带来用户（门户/优惠券），我们留成越多 · 若开发者自带用户，我们给开发者更多以激励。",
+ ropz_t:"🔵 ROPZ 带来",ropz_pill:"默认",dev_t:"🟢 Dev 带来",dev_pill:"已验证",dev_word:"dev",
+ ropz_note:"经门户/优惠券/RO 漏斗进入 · CAC = ROPZ（经优惠券置换 ≈0）",dev_note:"经 dev 渠道 + ref 链接进入 · CAC = Dev (¥0) · = 免费增益",
+ s1_foot:"* IAP 先扣支付网关 ~5%（网页无 30% 商店抽成）· 基准：CrazyGames 广告 ~50–80% (not public) · IAP 70/30 · Poki 50–100%",
+ layers_h:"ROPZ 收入分 3 层（归因只调节第 1 层）",l1t:"1. 平台抽成",l1d:"— 按归因（上表）",l2t:"2. IP 版税",l2d:"— 按 T0-T4，仅 RO 游戏（叠加 · 独立维度）",l3t:"3. 优惠券 / 生态",l3d:"— ROPZ 独享，不与 dev 分",
+ s2_ey:"归因函数 · 11 种",s2_h:'判定"谁带来"的渠道',s2_lead:"7 种 = ROPZ 带来 · 4 种 = Dev 带来（需 ref + 通过 fraud gate）",srcR_h:"🔵 ROPZ 带来 (7)",srcD_h:"🟢 Dev 带来 (4)",
+ src1:"Portal Direct <span>— 直接/书签</span>",src2:"Portal Discovery <span>— 分类/搜索/推荐</span>",src3:"Cross-promo <span>— 从其他游戏跳转</span>",src4:"Coupon Campaign <span>— 优惠券链接/B2B</span>",src5:"RO Funnel <span>— 来自 RO 游戏/GNJOY</span>",src6:"ROPZ Organic/SEO <span>— 谷歌 → 门户</span>",src7:"ROPZ Paid UA <span>— ROPZ 自投广告</span>",src8:"Dev Embed <span>— dev 网站 iframe + ref</span>",src9:"Dev Social <span>— dev 社交/YT/社区 + ref</span>",src10:"Dev Existing Base <span>— dev 既有用户 + ref</span>",src11:"Dev Paid UA <span>— dev 自投广告 + ref</span>",
+ s3_ey:"分类逻辑",s3_h:"如何判定（Attribution Flow）",fn1:"<b>用户打开游戏</b> — 服务端记录 referrer + ref + campaign",fnq:'<b>是否有已验证的 <code>?ref=partnerID&amp;g=gameID</code>？</b>（服务端，window 内）· 1 链接 = 1 游戏（5 游戏 = 5 链接）',fyes:'<b>✓ 是 → Dev 带来</b><br>分成 85/15 · 75/20<br><span style="font-size:12.5px;color:var(--muted)">但在通过 fraud gate 前为 PENDING</span>',fno:'<b>✕ 否 → ROPZ 带来</b><br>分成 50/50 · 60/35<br><span style="font-size:12.5px;color:var(--muted)">= 默认（dev 须自证）</span>',fnft:"<b>First-touch 按游戏（user × game）</b> — 来源按每个游戏绑定而非按账号 → <b>dev 仅对自己带来的那个游戏拿分成</b> · 用户玩其他 dev 的游戏/ROPZ 游戏时，该游戏单独归因（不外溢）· 30~90 天 window",fnfraud:"<b>Fraud gate（仅 Dev）：</b>只计优质用户（游玩 ≥ X 分钟/留存）· 异常 → 挂起 · right-to-audit · net-30/60 结算",
+ qg_h:"优质用户（Fraud Gate）— Dev 带来须通过才 CONFIRMED（7 天内）",qgA_h:"层 A — VALID（不过 = 丢弃）",qgA_b:"通过机器人检测 · IP 非数据中心/代理 · 设备指纹不重复",qgB_h:"层 B — QUALITY（满足 ≥1）",qgB_b:"游玩 <b>≥60–90 秒 + behavioral</b>（防跳出）· 或 ≥2 会话 · 或达成里程碑 · 或 <b>D1 留存（最强）</b> · 或付费用户（自动）",qg_note:"状态：PENDING → CONFIRMED（付 dev 分成）/ EXPIRED（回落为 ROPZ）· velocity cap + right-to-audit + <b>reactive clawback 60–90 天</b> · 数值 = v1，试点校准 · 参考：无平台公开数值（Poki first-input，CrazyGames 优质游戏 10分钟/D1 10–15%，GD 90 天 recalc）",adm_ey:"合作方门户 (Admin Tool)",adm_h:"合作方自行生成 ref + 查看仪表盘",adm_lead:"自助 · 因 sig 由服务端签名 + fraud gate 守护结算而安全",adm_role_h:"🔑 合作方角色 — 生成链接",adm_role_b:'登录合作方门户 → 选择游戏（仅限已批准）+ 渠道 → 点击"创建链接" → <b>服务端铸造并签名 HMAC sig</b>（合作方无 secret → 无法伪造）',adm_dash_h:"📊 仪表盘 — 实时查看",adm_dash_b:"按链接/渠道：点击 · <b>quality-pass %</b> · confirmed 用户 · 营收 · 结算状态",adm_safe:"<b>安全：</b>无限生成链接也只对优质用户结算（gate 守护末端）· 护栏：仅已批准游戏 · rate-limit · admin 可撤销",
+ s4_ey:"两种情景（向管理层说明）",s4_h:"两种情景的条件",scA_t:"A · ROPZ 带来",scB_t:"B · Dev 带来",sc_cond:"条件",sc_rate:"分成",sc_cac:"CAC",sc_share:"占比",scA_cond:"默认（无需 ref）",scA_cac:"ROPZ（优惠券置换 ≈0）",scA_share:"<b>~流量的 90%</b>",scB_cond:"ref 已验证 + 通过 fraud gate",scB_cac:"Dev (¥0)",scB_share:"随平台增长而上升",scA_note:"免费流量 = 总收入高于单干，故 dev 接受",scB_note:"该流量免费 + 增量（CAC=0），故 ROPZ 让利更多",s4_punch:"核心：自己获取的用户人均更赚（值得投优惠券），开发者带来的用户是免费增益 —— 两者不冲突，都拉高我方收入。",
+ s5_ey:"两种情景 P&L",s5_h:"ROPZ 能赚多少（illustrative）",s5_lead:"假设/用户/年：广告 ¥12.34 + IAP ¥8.23 + 优惠券/生态/版税 ¥5.14（gross）· ops ¥3.09 · CAC ¥1.03/¥0",t1_h0:"ROPZ 收益 / 人 / 年",row_ads:"广告（ROPZ 份额）",row_iap:"IAP（ROPZ 份额）",row_coupon:"优惠券/生态/版税",row_opscac:"− ops − CAC",row_net:"<b>= 净利 / 人 / 年</b>",s5_mix1:"视角 1 — 同一基数 1,000,000 MAU（mix 的影响）",t2_h0:"Mix",t2_h1:"计算式",t2_h2:"ROPZ 净利/年",mix_a:"90 / 10（初期）",s5_mix1_note:"→ 同一基数：<b>ROPZ 带来的人均更赚</b> = 值得投门户+优惠券",s5_mix2:"视角 2 — Dev 带来 = 免费增量（CAC=0，叠加）",kpiA_l:"A · 初期（900k ROPZ + 100k Dev）",kpiB_l:"B · 成熟（900k ROPZ + 900k Dev）",s5_mix2_note:"→ ROPZ 基数不变 · dev 叠加其上；即便 % 低但 CAC=0 → 净利 <b>+46%</b>",s5_warn:'<b>⚠️ 提醒：</b>数字为示意 —— "是否划算"取决于两个尚未验证的变量 = <b>真实 ARPU + 优惠券层生效</b> → 扩张前须用试点验证',
+ s6_ey:"待办 / 下一步",td1:"确认 ARPU 假设（广告 ¥12.34 / IAP ¥8.23 / 优惠券 ¥5.14）— 试点实测",td2:"将归因逻辑写入 SDK 规格（交付开发团队）",td3:'定义 fraud gate 的"优质用户"（几分钟 / 何种留存）',td4:"将归因分成接入 Partner P&L Excel（Attribution 表）",td5:"ref window 时长（30 / 60 / 90 天）— 法务 + 公平性",td6:"选定 ad-verification 供应商（Pixalate / IAS / HUMAN）+ Cloudflare 方案（WAF/Bot Mgmt）—— 在 ad-network + 基础设施签约时",
+ sec_ey:"安全 & 反作弊",sec_h:"两层安全（纵深防御）",sec_lead:"Edge 在流量到达系统前拦截恶意流量 · App 筛选质量 + 守护结算 —— 两层叠加",secA_h:"🌐 Edge 层 — Cloudflare",secA_b:"<b>WAF</b>（Web 应用防火墙）· <b>DDoS 防护</b>（L3/4 + L7）· <b>Bot Management</b> —— 区分真实用户与 automation/headless · 对链接生成 + API <b>Rate-limit</b>",secB_h:"🛡️ App 层 — Attribution & Payout",secB_b:"<b>服务端归因</b>（client 无法伪造）+ <b>HMAC 签名 ref</b> · <b>Fraud gate</b>（优质用户 §3）· <b>第三方 ad-verification</b> 筛除 IVT · 结算 <b>hold net-30/60</b> + reactive clawback + right-to-audit",secv_h:"Ad-verification 合作方（第三方 · 计入广告营收前筛除 IVT）",secv_c0:"Vendor",secv_c1:"职责",secv_r1:"IVT/欺诈检测 · MRC 认证",secv_r2:"可见性 + 品牌安全 + IVT",secv_r3:"机器人检测（Satori 引擎）· MRC IVT",sec_foot:"ad-verify = 广告行业标准（先接 1 家即可起步）· 在谈 ad-network 时选定 · 两层 + fraud gate = 覆盖恶意流量 → 假用户 → 错误结算全链条",elig_b:"<b>上架 + 分成资格:</b> 游戏须通过 Submission Gate + Build Spec —— build ≤ 25MB (Brotli) · Release 构建 · 通过 quality/fraud gate · 画面/性能达标 · 详见: ROPZ Game Build Spec"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const v=I18N[l]&&I18N[l][el.dataset.i18n];if(v==null)return;el.innerHTML=v;});
+  document.documentElement.lang=l;
+  document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));
+  try{localStorage.setItem('rpz_attr_lang',l)}catch(e){}
+}
+function tg(){const r=document.documentElement;const c=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',c==='dark'?'light':'dark');try{localStorage.setItem('rpz_attr_theme',r.getAttribute('data-theme'))}catch(e){}}
+(function(){try{const t=localStorage.getItem('rpz_attr_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
+ let l='th';try{l=localStorage.getItem('rpz_attr_lang')||'th'}catch(e){} /* [KEEP] web-publish: ภาษาจาก URL ?lang= ชนะ localStorage — อย่าลบ */ try{var _a={th:'th',en:'en',ko:'ko',kr:'ko',zh:'zh',cn:'zh'};var _q=(new URLSearchParams(location.search).get('lang')||location.hash.replace('#','')||'').toLowerCase();if(_a[_q])l=_a[_q];}catch(e){} setLang(l);})();
+</script>
+</body>
+</html>

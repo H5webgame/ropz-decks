@@ -483,6 +483,10 @@ function setLang(c){
   });
   var saved="th";
   try{ var s=localStorage.getItem("ropz_region_lang"); if(s&&T[s]) saved=s; }catch(e){}
+  /* [KEEP] web-publish: ภาษาจาก URL ?lang= ชนะ localStorage (ให้ตรงกับหน้า hub) — อย่าลบ */
+  try{ var A={th:"th",en:"en",ko:"ko",kr:"ko",zh:"zh",cn:"zh"};
+    var q=(new URLSearchParams(location.search).get("lang")||location.hash.replace("#","")||"").toLowerCase();
+    if(A[q]&&T[A[q]]) saved=A[q]; }catch(e){}
   cur=saved;
   render();
 })();
