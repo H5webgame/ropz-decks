@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish: กัน Google index — อย่าลบ -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>RO PlayZone — ร่างสัญญานักพัฒนา (Developer Agreement)</title>
+<style>
+  :root{
+    --bg:#f4f6fb;--paper:#ffffff;--ink:#1c2536;--mut:#5a6a83;--line:#e0e6f0;
+    --brand:#1E5AA8;--gold:#C68A1E;--warn-bg:#fff7e6;--warn-line:#e6b422;--warn-ink:#7a5500;
+    --ph-bg:#fdeccf;--ph-ink:#8a5a00;--code:#eef2f9;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0c1220;--paper:#121a2b;--ink:#e6ecf7;--mut:#9fb0cc;--line:#26324a;
+      --brand:#5a9cf0;--gold:#d9a637;--warn-bg:#2a2310;--warn-line:#8a6d1a;--warn-ink:#e6c765;
+      --ph-bg:#3a2c12;--ph-ink:#f0c777;--code:#1b2438;}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,'Leelawadee UI','Noto Sans Thai',sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:15.5px;padding:0 0 80px}
+  .sheet{max-width:820px;margin:24px auto;background:var(--paper);border:1px solid var(--line);
+    border-radius:14px;padding:clamp(24px,5vw,52px);box-shadow:0 8px 30px rgba(20,40,80,.08)}
+  .top{border-bottom:3px solid var(--brand);padding-bottom:16px;margin-bottom:8px}
+  .kick{color:var(--brand);font-weight:800;letter-spacing:.06em;font-size:12.5px;text-transform:uppercase}
+  h1{font-size:clamp(21px,3.6vw,28px);font-weight:800;margin:6px 0 4px;line-height:1.25}
+  .meta{color:var(--mut);font-size:13px}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);
+    border-radius:10px;padding:14px 16px;margin:20px 0;font-size:13.5px;line-height:1.6}
+  .warn b{color:var(--warn-ink)}
+  h2{font-size:17.5px;font-weight:800;color:var(--brand);margin:30px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+  h3{font-size:15px;font-weight:800;margin:18px 0 6px}
+  p{margin:8px 0}
+  ul,ol{margin:8px 0 8px 22px}
+  li{margin:4px 0}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.8px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:var(--code);font-weight:700;color:var(--mut)}
+  .ph{background:var(--ph-bg);color:var(--ph-ink);border-radius:4px;padding:0 5px;font-weight:700;font-size:.92em;white-space:nowrap}
+  code{background:var(--code);border-radius:4px;padding:1px 6px;font-size:.9em;font-family:'Cascadia Code',Consolas,monospace}
+  .sign{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+  .sign .box{border:1px solid var(--line);border-radius:10px;padding:16px}
+  .sign .box .lbl{color:var(--mut);font-size:12.5px}
+  .sign .line{border-bottom:1px solid var(--ink);height:26px;margin:14px 0 4px}
+  hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+  .anx{background:var(--code);border-radius:10px;padding:2px 16px 12px;margin-top:10px}
+  footer{max-width:820px;margin:16px auto 0;color:var(--mut);font-size:12px;text-align:center;padding:0 24px}
+  @media print{body{background:#fff}.sheet{box-shadow:none;border:none;border-radius:0;max-width:100%}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="top">
+    <div class="kick">RO PlayZone · เอกสารภายใน</div>
+    <h1>สัญญา/ข้อตกลงนักพัฒนา (Developer Agreement)</h1>
+    <div class="meta">ร่างตั้งต้น v0.1 · 4 ส.ค. 2026 · ภาษาไทย</div>
+  </div>
+
+  <div class="warn">
+    ⚠️ <b>เอกสารนี้เป็นร่างตั้งต้นสำหรับใช้ภายใน ไม่ใช่เอกสารทางกฎหมายที่ใช้ได้ทันที</b> — จัดทำเป็นตัวอย่าง ต้องให้ <b>ฝ่ายกฎหมาย Gravity</b> ตรวจและปรับก่อนนำไปใช้จริงทุกครั้ง โดยเฉพาะข้อทรัพย์สินทางปัญญา ความรับผิด ภาษี และกฎหมายที่บังคับใช้ · ช่อง <span class="ph">[___]</span> = ต้องเติมข้อมูล · เรต/เงื่อนไขดึงจาก Attribution Rev-Share Spec และ Base Kit Checklist
+  </div>
+
+  <p><b>โมเดลสัญญานี้ = Partner Developer</b> (นักพัฒนาเผยแพร่เกมบนแพลตฟอร์มแล้วแบ่งรายได้ — นักพัฒนายังเป็นเจ้าของเกม) · ถ้าเป็นงานจ้างทำ (Outsource / work-for-hire) ดู <b>ภาคผนวก จ.</b></p>
+
+  <h2>ข้อ 1 — คู่สัญญา</h2>
+  <p>สัญญานี้ทำขึ้นระหว่าง:</p>
+  <ol>
+    <li><b><span class="ph">[บริษัท กราวิตี้ เกม เทค จำกัด / นิติบุคคลผู้ดำเนินการ RO PlayZone]</span></b> สำนักงานตั้งอยู่ที่ <span class="ph">[___]</span> ("<b>ผู้ให้บริการแพลตฟอร์ม</b>" หรือ "<b>ROPZ</b>")</li>
+    <li><b><span class="ph">[ชื่อนักพัฒนา / บริษัท]</span></b> เลขทะเบียน <span class="ph">[___]</span> ที่อยู่ <span class="ph">[___]</span> ("<b>นักพัฒนา</b>")</li>
+  </ol>
+  <p>รวมเรียกว่า "คู่สัญญา" — ทำ ณ วันที่ <span class="ph">[___]</span></p>
+
+  <h2>ข้อ 2 — คำนิยาม</h2>
+  <table>
+    <tr><th>คำ</th><th>ความหมาย</th></tr>
+    <tr><td><b>แพลตฟอร์ม</b></td><td>เว็บพอร์ทัล RO PlayZone (ropz) และระบบที่เกี่ยวข้อง</td></tr>
+    <tr><td><b>เกม</b></td><td>ซอฟต์แวร์เกมที่นักพัฒนาส่งเผยแพร่บนแพลตฟอร์มตามสัญญานี้</td></tr>
+    <tr><td><b>Base Kit</b></td><td>ชุดเครื่องมือ/เทมเพลต/SDK ที่ ROPZ ส่งมอบให้นักพัฒนา (ภาคผนวก ข.)</td></tr>
+    <tr><td><b>SDK / <code>/game/v1</code></b></td><td>ไลบรารีเชื่อมต่อแพลตฟอร์ม (init → start → finish → reward)</td></tr>
+    <tr><td><b>Submission Gate</b></td><td>ระบบตรวจงานอัตโนมัติก่อนอนุมัติขึ้นแพลตฟอร์ม</td></tr>
+    <tr><td><b>Attribution</b></td><td>กลไกระบุ "ใครพาผู้เล่นเข้ามา" ที่ใช้กำหนดสัดส่วนแบ่งรายได้</td></tr>
+    <tr><td><b><code>ref</code> / Partner ID</b></td><td>รหัสอ้างอิงที่ ROPZ ออกให้นักพัฒนาเพื่อแนบกับลิงก์ชวนผู้เล่น</td></tr>
+    <tr><td><b>Quality User</b></td><td>ผู้เล่นที่ผ่านเกณฑ์คุณภาพ (เล่น ≥ <span class="ph">[X]</span> นาที หรือคงอยู่ถึง D1+) — ไม่ใช่ click ดิบ</td></tr>
+    <tr><td><b>Tier-2 Import</b></td><td>เกมที่นักพัฒนามีอยู่เดิม/นำเข้าจากที่อื่น (ไม่ได้สร้างใหม่บน Base Kit)</td></tr>
+    <tr><td><b>RO IP</b></td><td>ทรัพย์สินทางปัญญาของ Ragnarok Online / Gravity (ตัวละคร ชื่อ งานศิลป์ เครื่องหมายการค้า)</td></tr>
+  </table>
+
+  <h2>ข้อ 3 — ขอบเขตความร่วมมือ</h2>
+  <p>3.1 นักพัฒนาจะพัฒนา/ส่งเกมเพื่อเผยแพร่บนแพลตฟอร์ม ตามมาตรฐานในข้อ 4 และรายละเอียดต่อเกมใน <b>ใบสั่งงาน (SOW)</b> แต่ละฉบับ (ภาคผนวก ง.)</p>
+  <p>3.2 ROPZ ให้สิทธิ์นักพัฒนาใช้ Base Kit และ SDK เพื่อวัตถุประสงค์ตามสัญญานี้เท่านั้น (สิทธิ์ใช้แบบไม่ผูกขาด เพิกถอนได้ ห้ามโอนต่อ)</p>
+  <p>3.3 ROPZ มีดุลยพินิจในการจัดวาง/จัดหมวด/หมุนเวียน/นำเกมออกจากพอร์ทัล (rotation, featuring, takedown) ตามเงื่อนไขในสัญญา</p>
+  <p>3.4 สัญญานี้ <b>ไม่ผูกขาด</b> เว้นแต่ระบุไว้เป็นอย่างอื่นใน SOW — <span class="ph">[เลือก: ผูกขาด / ไม่ผูกขาด ต่อเกม]</span></p>
+
+  <h2>ข้อ 4 — มาตรฐานทางเทคนิคและการส่งงาน</h2>
+  <p>นักพัฒนาต้องส่งเกมที่ผ่านเกณฑ์ Submission Gate ทั้งหมด (ภาคผนวก ข.):</p>
+  <p>4.1 <b>ขนาดบิลด์</b> — first-load ≤ 25 MB (บีบแล้ว), wasm ≤ 10 MB, data ≤ 15 MB · เปิด Brotli · เป็น Release build</p>
+  <p>4.2 <b>SDK &amp; Loop</b> — เรียก <code>/game/v1</code> เวอร์ชันปัจจุบันตามลำดับ init → start → finish → reward โดยฝั่งเซิร์ฟเวอร์เป็นผู้ตัดสิน (server-authoritative)</p>
+  <p>4.3 <b>Anti-cheat (บังคับ)</b> — ใช้ nonce / clientHash, ยืนยันผล reward แบบ server-to-server (HMAC), และ <b>ห้ามแจก/คำนวณเงินหรือรางวัลฝั่ง client โดยเด็ดขาด</b></p>
+  <p>4.4 <b>การแสดงผล</b> — เต็ม container 100%, orientation ตรง, ไม่ทับแถบผู้เล่น, รองรับทั้ง touch และ mouse</p>
+  <p>4.5 <b>Metadata</b> — แนบ manifest ครบ: game id, title, category, tags, thumbnail ตามสเปก, และ <b>partner/ref id สำหรับ attribution</b></p>
+  <p>4.6 <b>Telemetry</b> — ส่ง event มาตรฐาน (session start/end, level clear ฯลฯ) เข้าระบบวัดผลของ ROPZ</p>
+  <p>4.7 <b>การอัปเดต</b> — ส่งเวอร์ชันใหม่ผ่าน flow ที่กำหนด รองรับ rollback · ROPZ ระงับเวอร์ชันที่ไม่ผ่านเกณฑ์ได้</p>
+
+  <h2>ข้อ 5 — ทรัพย์สินทางปัญญา (IP)</h2>
+  <p>5.1 <b>เกมของนักพัฒนา</b> — นักพัฒนายังคงเป็นเจ้าของ IP ในเกมที่ตนสร้าง โดยให้สิทธิ์ ROPZ เผยแพร่/ทำซ้ำ/แสดง/โปรโมตบนแพลตฟอร์มตลอดอายุสัญญา (ไม่ผูกขาด ทั่วโลก เพื่อการดำเนินแพลตฟอร์ม)</p>
+  <p>5.2 <b>RO IP</b> — ใช้ได้เมื่อมีข้อตกลงสิทธิ์ (T0–T4 royalty ข้อ 6.3) เป็นลายลักษณ์อักษรเท่านั้น ห้ามใช้ตัวละคร/ชื่อ/งานศิลป์ RO นอกขอบเขต</p>
+  <p>5.3 <b>นโยบายงานศิลป์ AI</b> — งานที่เป็น <b>ตัวละคร/IP ของ RO ต้องวาดโดยมนุษย์</b> ส่วนที่ AI ช่วยได้ต้องอยู่ในโซนที่อนุญาตและผ่านเกณฑ์คุณภาพภาพ</p>
+  <p>5.4 <b>Tier-2 Import (สำคัญ)</b> — นักพัฒนา <b>รับรองว่ามีสิทธิ์/ไลเซนส์ครบถ้วน</b> และต้อง <b>ถอด SDK / โฆษณา / โค้ดของบุคคลที่สาม (เช่น Poki, CrazyGames) ออกทั้งหมด</b> ก่อนส่ง — ROPZ ตรวจและปฏิเสธได้หากพบส่วนตกค้าง</p>
+  <p>5.5 นักพัฒนารับรองว่าเกมไม่ละเมิด IP ของผู้ใด และจะชดใช้ ROPZ หากมีการเรียกร้อง (ข้อ 11)</p>
+
+  <h2>ข้อ 6 — รายได้และการแบ่งรายได้</h2>
+  <p><b>หลักการ:</b> สัดส่วนขึ้นกับ <b>"ใครพาผู้เล่นเข้ามา" (attribution)</b> — ค่าเริ่มต้นถือว่า ROPZ พามา นักพัฒนาต้องพิสูจน์ (มี <code>ref</code> verified) จึงได้เรตสูง</p>
+  <h3>6.1 เรตแบ่งรายได้ (dev / ROPZ)</h3>
+  <table>
+    <tr><th>ช่องรายได้</th><th>ROPZ พามา</th><th>Dev พามา (verified)</th></tr>
+    <tr><td><b>โฆษณา (Ads)</b></td><td>50 / 50</td><td><b>85 / 15</b></td></tr>
+    <tr><td><b>ซื้อในเกม (IAP)</b> *</td><td>60 / 35</td><td><b>75 / 20</b></td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--mut)">* IAP หัก payment gateway ~5% จาก gross ก่อนแบ่ง</p>
+  <p>6.2 <b>ชั้นรายได้ของ ROPZ ล้วน</b> — รายได้จากคูปอง / ecosystem ของ ROPZ ไม่นำมาแบ่งกับนักพัฒนา</p>
+  <p>6.3 <b>IP Royalty (เฉพาะเกมที่ใช้ RO IP)</b> — คิดเพิ่มซ้อนบนตาม tier <span class="ph">[T0–T4: เติมเรตตามโมเดล partner rev-share]</span> — เป็นคนละแกนกับ attribution</p>
+  <p>6.4 เรตปรับได้โดยแจ้งล่วงหน้า <span class="ph">[30/60]</span> วันเป็นลายลักษณ์อักษร มีผลกับรายได้ที่เกิดหลังวันมีผลเท่านั้น</p>
+
+  <h2>ข้อ 7 — Attribution และการป้องกันการทุจริต</h2>
+  <p>7.1 <b>First-touch ต่อผู้เล่น</b> — เมื่อผู้เล่นถูกระบุแหล่งที่มาครั้งแรก จะผูกกับบัญชีนั้นตลอด (ไม่นับใหม่รายเซสชัน)</p>
+  <p>7.2 <b>Ref window</b> — ลิงก์ <code>ref</code> มีอายุ <span class="ph">[30 / 60 / 90]</span> วัน หลังจากนั้นถือเป็น organic (ของ ROPZ)</p>
+  <p>7.3 <b>Fraud gate</b> — รายได้ dev-brought อยู่สถานะ PENDING จนกว่าจะผ่านเกณฑ์: นับเฉพาะ Quality User · ตรวจจับความผิดปกติ (spike/bot) → ระงับตรวจสอบ · ระบบฝั่งเซิร์ฟเวอร์ ROPZ ชี้ขาด แก้ค่า attribution ไม่ได้</p>
+  <p>7.4 การทุจริต (traffic ปลอม, incentivized เกินกำหนด, bot, self-click) เป็นเหตุให้ <b>ริบรายได้ส่วนนั้นและอาจเลิกสัญญา</b> (ข้อ 14)</p>
+
+  <h2>ข้อ 8 — การชำระเงิน</h2>
+  <p>8.1 ROPZ ชำระส่วนแบ่งแบบ <b>net-30 / 60</b> หลังรายได้ผ่านการ validate (ไม่จ่ายเรียลไทม์)</p>
+  <p>8.2 <b>Reconciliation รายเดือน</b> — ออกรายงานสรุปรายได้/ยอดหัก/ยอดจ่ายทุกเดือน</p>
+  <p>8.3 <b>ยอดขั้นต่ำในการจ่าย</b> = <span class="ph">[___]</span> (ต่ำกว่านี้ยกยอดไปงวดถัดไป)</p>
+  <p>8.4 <b>สกุลเงิน</b> = <span class="ph">[THB / USD]</span> · ภาษี — แต่ละฝ่ายรับผิดชอบภาษีของตน รวมภาษีหัก ณ ที่จ่ายตามกฎหมายไทย <span class="ph">[WHT ___%]</span></p>
+  <p>8.5 นักพัฒนาออกเอกสาร/ใบแจ้งหนี้ตามที่ ROPZ ร้องขอเพื่อการจ่ายเงิน</p>
+
+  <h2>ข้อ 9 — สิทธิ์ตรวจสอบ (Right-to-Audit)</h2>
+  <p>9.1 ROPZ (หรือผู้ตรวจสอบที่แต่งตั้ง) มีสิทธิ์ตรวจบันทึก/ข้อมูล traffic, attribution, และรายได้ของนักพัฒนา โดยแจ้งล่วงหน้าตามสมควร</p>
+  <p>9.2 นักพัฒนาเก็บบันทึกที่เกี่ยวข้องไม่น้อยกว่า <span class="ph">[24]</span> เดือน</p>
+  <p>9.3 หากพบเรียกเก็บเกินจริงจากการทุจริต ≥ <span class="ph">[___%]</span> นักพัฒนารับผิดชอบค่าตรวจสอบและคืนส่วนต่าง</p>
+
+  <h2>ข้อ 10 — เนื้อหาและการกำกับดูแล</h2>
+  <p>10.1 เกมต้องผ่านเกณฑ์เนื้อหา/เรตติ้งสำหรับพอร์ทัลสาธารณะ · ROPZ ปฏิเสธ/นำออกเนื้อหาที่ไม่เหมาะสมได้</p>
+  <p>10.2 <b>ห้ามเด็ดขาด</b> — เนื้อหาผิดกฎหมาย การพนัน กลไก <b>แลก/ถอนเป็นเงินสดจริง (cash-out)</b> หรือสิ่งที่อาจเข้าข่ายการพนันตามกฎหมายไทย (รางวัลต้องอยู่ในระบบ/แจกทางเดียวเท่านั้น)</p>
+  <p>10.3 ROPZ takedown ทันทีได้หากเกมสร้างความเสี่ยงทางกฎหมาย/ความปลอดภัย/ชื่อเสียง</p>
+
+  <h2>ข้อ 11 — คำรับรอง การรับประกัน และการชดใช้</h2>
+  <p>11.1 นักพัฒนารับรองว่า: (ก) มีสิทธิ์ในเกมและองค์ประกอบทั้งหมด (ข) ไม่ละเมิด IP/กฎหมาย (ค) ไม่มีมัลแวร์/โค้ดอันตราย/SDK บุคคลที่สามที่ไม่ได้รับอนุญาต</p>
+  <p>11.2 <b>Defect Warranty</b> — แก้ข้อบกพร่องในงานที่ส่งมอบภายใน <span class="ph">[___]</span> วันโดยไม่คิดค่าใช้จ่ายเพิ่ม</p>
+  <p>11.3 <b>การชดใช้</b> — นักพัฒนาชดใช้ ROPZ ต่อความเสียหาย/การเรียกร้องจากการละเมิดคำรับรอง</p>
+  <p>11.4 <b>จำกัดความรับผิด</b> — <span class="ph">[กำหนดเพดาน เช่น เท่ากับรายได้ที่จ่ายใน 12 เดือนก่อนหน้า — ฝ่ายกฎหมายเคาะ]</span></p>
+
+  <h2>ข้อ 12 — การรักษาความลับ</h2>
+  <p>12.1 คู่สัญญารักษาความลับข้อมูลของอีกฝ่าย (Base Kit, สเปก, ตัวเลขธุรกิจ, ข้อมูลผู้เล่น) ใช้เพื่อวัตถุประสงค์ตามสัญญาเท่านั้น · มีผลต่อไป <span class="ph">[3]</span> ปีหลังสิ้นสุดสัญญา</p>
+  <p>12.2 Base Kit, SDK และเอกสารประกอบเป็นความลับทางการค้าของ ROPZ ห้ามเผยแพร่/ทำวิศวกรรมย้อนกลับ/ใช้กับแพลตฟอร์มคู่แข่ง</p>
+
+  <h2>ข้อ 13 — ข้อมูลส่วนบุคคล (PDPA)</h2>
+  <p>13.1 คู่สัญญาปฏิบัติตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) · นักพัฒนาห้ามเก็บ/ส่งออกข้อมูลผู้เล่นนอกเหนือจากที่ SDK/แพลตฟอร์มกำหนด และห้ามใส่ tracker บุคคลที่สามโดยไม่ได้รับอนุญาต</p>
+
+  <h2>ข้อ 14 — ระยะเวลาและการเลิกสัญญา</h2>
+  <p>14.1 สัญญามีผล <span class="ph">[___]</span> และต่ออายุอัตโนมัติปีต่อปี เว้นแต่แจ้งยกเลิกล่วงหน้า <span class="ph">[30/60]</span> วัน</p>
+  <p>14.2 ROPZ เลิกสัญญา/นำเกมออกทันทีได้หากนักพัฒนา: ทุจริต attribution, ละเมิด IP/กฎหมาย, ผิดสัญญาร้ายแรงและไม่แก้ไขใน <span class="ph">[15]</span> วันหลังได้รับแจ้ง</p>
+  <p>14.3 <b>ผลของการเลิกสัญญา</b> — นำเกมออก · รายได้ที่ validate แล้วก่อนเลิกยังจ่ายตามปกติ · หน้าที่รักษาความลับและการชดใช้ยังคงอยู่</p>
+
+  <h2>ข้อ 15 — เบ็ดเตล็ด</h2>
+  <p>15.1 <b>กฎหมายที่ใช้บังคับ</b> = กฎหมายไทย · ข้อพิพาทระงับที่ <span class="ph">[ศาล/อนุญาโตตุลาการ ___]</span></p>
+  <p>15.2 การแก้ไขสัญญาต้องทำเป็นลายลักษณ์อักษรลงนามทั้งสองฝ่าย</p>
+  <p>15.3 นักพัฒนาโอนสิทธิ์/หน้าที่ให้ผู้อื่นไม่ได้หากไม่ได้รับความยินยอมจาก ROPZ</p>
+  <p>15.4 เหตุสุดวิสัย (force majeure) เป็นข้อยกเว้นความรับผิดตามสมควร</p>
+
+  <h2>ลงนาม</h2>
+  <div class="sign">
+    <div class="box"><div class="lbl">ROPZ / ผู้ให้บริการแพลตฟอร์ม</div><div class="line"></div><div class="lbl">ชื่อ: <span class="ph">[___]</span> · ตำแหน่ง: <span class="ph">[___]</span> · วันที่: <span class="ph">[___]</span></div></div>
+    <div class="box"><div class="lbl">นักพัฒนา</div><div class="line"></div><div class="lbl">ชื่อ: <span class="ph">[___]</span> · ตำแหน่ง: <span class="ph">[___]</span> · วันที่: <span class="ph">[___]</span></div></div>
+  </div>
+
+  <hr>
+  <h2 style="border:none">ภาคผนวก</h2>
+  <div class="anx">
+    <h3>ก. ตารางเรตแบ่งรายได้</h3>
+    <p style="font-size:13.5px">ดูข้อ 6.1 · อ้างอิงเต็ม: <code>ROPZ_Attribution_RevShare_Spec_260714.md</code></p>
+    <h3>ข. เกณฑ์ Base Kit / Submission Gate</h3>
+    <p style="font-size:13.5px">เกณฑ์ผ่านทั้งหมด (A 14 · B 13 · C 11 = 38 รายการ) — <code>ROPZ_BaseKit_Completeness_Checklist_260716.md</code></p>
+    <h3>ค. Attribution Source Types (11 แบบ)</h3>
+    <p style="font-size:13.5px">7 ROPZ-brought (#1–7) · 4 Dev-brought (#8–11 ต้องมี <code>ref</code> verified)</p>
+    <h3>ง. เทมเพลตใบสั่งงานต่อเกม (SOW)</h3>
+    <table>
+      <tr><th>หัวข้อ</th><th>ค่า</th></tr>
+      <tr><td>ชื่อเกม / game id</td><td><span class="ph">[___]</span></td></tr>
+      <tr><td>ขอบเขต / ฟีเจอร์</td><td><span class="ph">[___]</span></td></tr>
+      <tr><td>ใช้ RO IP? / Tier</td><td><span class="ph">[ไม่ใช้ / T___]</span></td></tr>
+      <tr><td>ผูกขาด?</td><td><span class="ph">[ไม่ / ใช่]</span></td></tr>
+      <tr><td>กำหนดส่ง / milestone</td><td><span class="ph">[___]</span></td></tr>
+      <tr><td>เกณฑ์ตรวจรับ</td><td>ผ่าน Submission Gate + Playability Gate</td></tr>
+      <tr><td>เรตแบ่งรายได้ (ถ้าต่างจากมาตรฐาน)</td><td><span class="ph">[___]</span></td></tr>
+    </table>
+    <h3>จ. ตัวเลือกแบบงานจ้างทำ (Outsource / Work-for-Hire)</h3>
+    <p style="font-size:13.5px">หาก ROPZ <b>จ่ายเงินจ้าง</b>ให้สร้างและต้องการเป็นเจ้าของผลงาน:</p>
+    <ul style="font-size:13.5px">
+      <li><b>ข้อ 5 (IP):</b> เปลี่ยนเป็น "ผลงานทั้งหมดเป็นกรรมสิทธิ์ของ ROPZ แบบ work-for-hire นักพัฒนาโอนสิทธิ์เมื่อรับชำระครบ"</li>
+      <li><b>ข้อ 6 &amp; 8:</b> เปลี่ยนจากแบ่งรายได้ → ค่าจ้างตาม milestone (จ่ายตาม Acceptance Gate) · ตัด attribution/rev-share (ข้อ 6–7, 9)</li>
+      <li>คงข้อ 4 (เทคนิค), 5.4 (ห้าม SDK บุคคลที่สาม), 10 (เนื้อหา), 11 (รับประกัน), 12 (ลับ) ไว้</li>
+    </ul>
+  </div>
+
+  <hr>
+  <h3>สิ่งที่ต้องเคาะก่อนใช้จริง (ส่งฝ่ายกฎหมาย + Bass)</h3>
+  <ul>
+    <li>เพดานความรับผิด (ข้อ 11.4) และเงื่อนไขการชดใช้</li>
+    <li>Ref window กี่วัน (30/60/90) — legal + fairness</li>
+    <li>นิยาม "Quality User" ให้ชัด (กี่นาที / retention ระดับไหน)</li>
+    <li>เรต T0–T4 royalty (ข้อ 6.3)</li>
+    <li>WHT / โครงสร้างภาษีข้ามพรมแดน (ถ้า dev ต่างชาติ)</li>
+    <li>เลือกศาล/อนุญาโตตุลาการ และภาษาสัญญาฉบับผูกพัน (ไทย/อังกฤษ)</li>
+    <li>ตรวจข้อ cash-out (10.2) กับที่ปรึกษากฎหมายเรื่องการพนัน</li>
+  </ul>
+</div>
+<footer>RO PlayZone · ร่างภายใน ไม่ใช่คำแนะนำทางกฎหมาย · ต้องผ่านฝ่ายกฎหมายก่อนใช้จริง</footer>
+
+<script>
+  /* ไฮไลต์ช่อง [___] อัตโนมัติ (เผื่อพลาดตรงไหน) — ข้าม element ที่ทำไว้แล้ว/code */
+  (function(){
+    var rx=/\[[^\[\]]{0,60}\]/;
+    function walk(node){
+      for(var i=node.childNodes.length-1;i>=0;i--){
+        var c=node.childNodes[i];
+        if(c.nodeType===3){
+          if(rx.test(c.nodeValue)){
+            var parts=c.nodeValue.split(/(\[[^\[\]]{0,60}\])/);
+            var frag=document.createDocumentFragment();
+            parts.forEach(function(p){
+              if(/^\[[^\[\]]{0,60}\]$/.test(p)){var s=document.createElement('span');s.className='ph';s.textContent=p;frag.appendChild(s);}
+              else if(p) frag.appendChild(document.createTextNode(p));
+            });
+            c.parentNode.replaceChild(frag,c);
+          }
+        } else if(c.nodeType===1 && !c.classList.contains('ph') && c.tagName!=='CODE' && c.tagName!=='SCRIPT' && c.tagName!=='STYLE'){
+          walk(c);
+        }
+      }
+    }
+    walk(document.querySelector('.sheet'));
+  })();
+</script>
+</body>
+</html>
