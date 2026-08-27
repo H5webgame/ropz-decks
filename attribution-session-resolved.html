@@ -1,0 +1,179 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>ROPZ — Attribution ฉบับตัดสินตอนเข้าเล่น</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+  --sans:"IBM Plex Sans Thai","Noto Sans Thai","Segoe UI",Arial,sans-serif;
+  --fig:"Bookman Old Style",Bookman,Georgia,"Noto Serif Thai",serif;
+  --pg:#C6CFDD; --sheet:#EDF1F7; --ink:#16202C; --soft:#39424F; --muted:#5C6878;
+  --line:#D3DBE6; --line2:#B9C4D2;
+  --navy:#264472; --navy2:#33538A;
+  --dev:#0A6647; --devbg:#E4F3ED; --rz:#17509C; --rzbg:#E8F0FC;
+  --gone:#9C2A22; --gonebg:#FBEDEB; --warn:#8A5A05; --warnbg:#FBF2E0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--ink);font-family:var(--sans);
+     font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.win{max-width:940px;margin:28px auto;background:var(--pg);border:1px solid #7C8A9E;
+     box-shadow:inset 1px 1px 0 #F2F5FA, inset -1px -1px 0 #A2AEBF, 0 2px 14px rgba(20,35,60,.16)}
+.bar{background:linear-gradient(180deg,#4A6FA5 0%,var(--navy2) 48%,var(--navy) 100%);
+     border-bottom:1px solid #1B3054;box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
+     color:#E7EEF9;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:13px 20px}
+.bar .nm{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.bar .ttl{font-size:14px;color:#C6D8F0}
+.bar .dt{margin-left:auto;font-family:var(--fig);font-size:14px;color:#AEC6E4}
+.sheet{background:var(--sheet);box-shadow:inset 1px 1px 0 #fff;padding:34px 40px 44px}
+h1{font-size:25px;line-height:1.35;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--muted);margin:0 0 30px;font-size:15px}
+h2{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--rz);
+   margin:38px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line2);font-weight:700}
+h2:first-of-type{margin-top:0}
+p{margin:0 0 13px;max-width:74ch}
+b{font-weight:600}
+.big{background:#fff;border:1px solid var(--line2);border-left:4px solid var(--rz);
+     padding:18px 22px;margin:0 0 22px}
+.big .was,.big .now{display:flex;gap:13px;align-items:baseline}
+.big .was{padding-bottom:11px;margin-bottom:11px;border-bottom:1px dashed var(--line2)}
+.big .tagw{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+     flex:0 0 4.6em;padding-top:3px}
+.big .was .tagw{color:var(--gone)} .big .now .tagw{color:var(--dev)}
+.big .was p,.big .now p{margin:0}
+.big .was p{color:var(--muted)}
+.big .now p{font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:14px;margin:0 0 8px}
+.card{background:#fff;border:1px solid var(--line2);padding:15px 17px}
+.card h3{margin:0 0 6px;font-size:15px}
+.card p{margin:0;font-size:14px;color:var(--soft);line-height:1.6}
+table{border-collapse:collapse;width:100%;margin:0 0 14px;font-size:14.5px;background:#fff}
+th,td{border:1px solid var(--line2);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:#DCE3EC;font-weight:700;font-size:13px;letter-spacing:.03em}
+td.n{font-family:var(--fig);font-size:17px;white-space:nowrap}
+.pill{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 9px;border-radius:2px;
+      white-space:nowrap}
+.p-dev{background:var(--devbg);color:var(--dev);border:1px solid #B6DFCC}
+.p-rz{background:var(--rzbg);color:var(--rz);border:1px solid #BBD4F3}
+.p-gone{background:var(--gonebg);color:var(--gone);border:1px solid #F0C7C2}
+ol,ul{margin:0 0 14px;padding-left:1.3em;max-width:74ch}
+li{margin-bottom:7px}
+.rule{background:#fff;border:1px solid var(--line2);padding:16px 20px;margin:0 0 14px}
+.rule ol{margin:0;padding-left:1.25em}
+.rule li{margin-bottom:9px}
+.rule li:last-child{margin-bottom:0}
+.note{background:var(--warnbg);border:1px solid #E6D2A6;border-left:4px solid var(--warn);
+      padding:14px 18px;margin:0 0 14px;font-size:14.5px}
+.note b{color:var(--warn)}
+.foot{margin-top:34px;padding-top:14px;border-top:1px solid var(--line2);
+      font-size:13px;color:var(--muted)}
+.foot a{color:var(--rz)}
+@media(max-width:700px){.sheet{padding:24px 18px 32px}h1{font-size:21px}
+  table{font-size:13.5px}th,td{padding:7px 8px}}
+</style>
+
+<div class="win">
+<div class="bar"><span class="nm">RO PlayZone</span>
+  <span class="ttl">มติ · โมเดล Attribution</span><span class="dt">27 ส.ค. 2026</span></div>
+<div class="sheet">
+
+<h1>เลิกจำว่าใครพาผู้เล่นมา — ตัดสินใหม่ทุกครั้งที่เข้าเล่น</h1>
+<p class="sub">มติเปลี่ยนวิธีคิดส่วนแบ่งพาร์ตเนอร์ ให้ตรงกับที่ทั้งตลาดเว็บเกมใช้กันอยู่</p>
+
+<h2>เปลี่ยนอะไร</h2>
+<div class="big">
+  <div class="was"><span class="tagw">เดิม</span>
+    <p>จำไว้ว่าผู้เล่นคนนี้ dev เป็นคนพามา แล้วจ่ายเรตสูงให้ dev ทุกครั้งที่เขากลับมาเล่นเกมนั้น <b>ต่อไปอีก 12 เดือน</b></p></div>
+  <div class="now"><span class="tagw">ใหม่</span>
+    <p>ดูทุกครั้งที่เข้าเล่นว่า <b>ครั้งนี้มาจากช่องทางใคร</b> — ช่องทางนั้นได้เรตสูงของครั้งนี้ จบในตัว ไม่ต้องจำ</p></div>
+</div>
+
+<h2>ทำไม</h2>
+<div class="cards">
+  <div class="card"><h3>ตลาดทำแบบนี้หมด</h3>
+    <p>ไม่มีเว็บเกมเจ้าไหนเก็บบัญชี “ใครหาคนนี้มา” พาร์ตเนอร์ที่เคยอยู่กับ Poki หรือ GameDistribution จะเข้าใจทันทีโดยไม่ต้องอธิบาย</p></div>
+  <div class="card"><h3>ย้อนกลับได้ไม่เท่ากัน</h3>
+    <p>ให้น้อยแล้วเพิ่มทีหลัง พาร์ตเนอร์ดีใจ · ให้มากแล้วหดทีหลัง พังความสัมพันธ์ถาวร ถ้าจะเสี่ยง ต้องเสี่ยงข้างที่ถอยได้</p></div>
+  <div class="card"><h3>ทีมไม่ว่าง</h3>
+    <p>โปรแกรมพาร์ตเนอร์สร้างปี 2027 เปิดปี 2028 แต่ของที่ต้องเสร็จคือ SDK 25 ก.ย. · พอร์ทัลเฟส 1 วันที่ 1 ต.ค. · Festa 7 พ.ย.</p></div>
+</div>
+
+<h2>ตลาดคิดจากอะไร (ค้นยืนยัน 27 ส.ค. 2026)</h2>
+<table>
+<tr><th>เจ้า</th><th>หน่วยที่ใช้คิด</th><th style="width:9em">จำว่าใครพามา</th></tr>
+<tr><td><b>Poki</b></td><td>การเข้ามาเล่นเกมนั้น <b>ครั้งนั้น</b> — เอกสารเขียนว่า “when they come to your game directly … is yours”</td><td><span class="pill p-gone">ไม่จำ</span></td></tr>
+<tr><td>CrazyGames</td><td>ad impression ที่เสิร์ฟในเกมนั้น ไม่แยกที่มาเลย</td><td><span class="pill p-gone">ไม่จำ</span></td></tr>
+<tr><td>GameDistribution</td><td>33% ของ Net Revenue จากโฆษณาในเกมนั้น</td><td><span class="pill p-gone">ไม่จำ</span></td></tr>
+<tr><td>Y8</td><td>ช่องโฆษณาในเกมนั้น แบ่ง 50/50</td><td><span class="pill p-gone">ไม่จำ</span></td></tr>
+<tr><td>WeChat Mini Games</td><td>ต่อเกม แบ่งชั้นตาม DAU ของเกมนั้น</td><td><span class="pill p-gone">ไม่จำ</span></td></tr>
+</table>
+<p>Poki เป็นเจ้าเดียวที่แยกตามที่มาของคน และคำที่เขาใช้คือ <b>“come to your game”</b> — ตัดสินตอนเข้ามาเล่น ไม่ใช่จำว่าใครหามาแต่แรก คนเดิมสลับฝั่งได้ทุกวัน</p>
+
+<h2>กติกาใหม่ทั้งหมด</h2>
+<p>สั้นแค่นี้จริง ๆ และความสั้นคือจุดขาย:</p>
+<div class="rule"><ol>
+  <li><b>ลิงก์ของพาร์ตเนอร์ผูกกับเกม</b> — <code>?ref=partnerID&amp;g=gameID&amp;c=channel</code> เซ็น HMAC รวมทั้งก้อน</li>
+  <li><b>ทุกครั้งที่เข้าเล่น ระบบดูว่ามาจากไหน</b> แล้วตัดสินเรตของครั้งนั้นทันที</li>
+  <li><b>lookback 7 วัน</b> — คลิกลิงก์วันนี้ เปิดเล่นภายใน 7 วัน ยังนับให้พาร์ตเนอร์ (มาตรฐานเดียวกับ AppsFlyer/Meta)</li>
+  <li><b>ผูกกับเกม ไม่ข้ามเกม</b> — ลิงก์เกม A ไม่ให้เครดิตตอนผู้เล่นไปเล่นเกม B</li>
+</ol></div>
+
+<h2>เดินเรื่องจริง — ผู้เล่นคนเดียว เกมเดียว</h2>
+<p>สมมติ <b>ก้อง</b> เล่นเกม <b>Tower Rush</b> ของ <b>Studio X</b></p>
+<table>
+<tr><th style="width:7.5em">วัน</th><th>เข้ามาทางไหน</th><th style="width:8.5em">โมเดลใหม่</th><th style="width:8.5em">โมเดลเดิม</th></tr>
+<tr><td>จ. 1 ก.ย.</td><td>คลิกลิงก์จากเพจ Studio X</td>
+    <td><span class="pill p-dev">dev 75%</span></td><td><span class="pill p-dev">dev 75%</span></td></tr>
+<tr><td>อ. 2 ก.ย.</td><td>พิมพ์ ropz เข้าเอง เจอเกมที่หน้าแรก</td>
+    <td><span class="pill p-rz">dev 50%</span></td><td><span class="pill p-dev">dev 75%</span></td></tr>
+<tr><td>พ. 3 ก.ย.</td><td>เห็นโพสต์ Studio X คลิกเข้ามาอีก</td>
+    <td><span class="pill p-dev">dev 75%</span></td><td><span class="pill p-dev">dev 75%</span></td></tr>
+<tr><td>ศ. 5 ก.ย.</td><td>เปิดลิงก์ที่คลิกค้างไว้ตั้งแต่วันจันทร์ (ยังไม่เกิน 7 วัน)</td>
+    <td><span class="pill p-dev">dev 75%</span></td><td><span class="pill p-dev">dev 75%</span></td></tr>
+<tr><td>ก.ย. ปีหน้า</td><td>กลับมาเล่นเองผ่านหน้าแรก ROPZ</td>
+    <td><span class="pill p-rz">dev 50%</span></td><td><span class="pill p-rz">dev 50%</span><br><span style="font-size:12px;color:#5C6878">(พ้น 12 เดือนแล้ว)</span></td></tr>
+</table>
+<p><b>ต่างกันจุดเดียวคือวันอังคาร</b> — วันที่ผู้เล่นกลับมาเอง ไม่ได้มาจากช่องทางใคร โมเดลเดิมยังจ่าย 75% เพราะจำได้ว่า Studio X เป็นคนหามา โมเดลใหม่จ่าย 50% เพราะครั้งนี้ ROPZ เป็นคนพามาเจอเกม</p>
+
+<h2>อะไรหายไป</h2>
+<table>
+<tr><th>ของเดิม</th><th>ทำไมไม่ต้องมีแล้ว</th></tr>
+<tr><td>ตาราง attribution ต่อ (ผู้เล่น × เกม)</td><td>ไม่ต้องจำอะไรข้ามครั้ง จึงไม่มีอะไรให้เก็บ</td></tr>
+<tr><td>นาฬิกา 12 เดือน + ต่ออายุ</td><td>เรตตัดสินรายครั้ง ไม่มีอายุให้หมด</td></tr>
+<tr><td>state machine PENDING → CONFIRMED / EXPIRED / REJECTED</td><td>มีไว้กันคนปลอมยอดเข้าบัญชีถาวร พอไม่มีบัญชีก็ไม่มีอะไรให้ปลอม</td></tr>
+<tr><td>ด่านคุณภาพ 7 วัน (2 ชั้น A/B)</td><td>เหลือแค่กันบอตระดับ ad-fraud ปกติ ซึ่งเครือข่ายโฆษณาทำให้อยู่แล้ว</td></tr>
+<tr><td>clawback 60–90 วัน</td><td>ไม่เคยจ่ายล่วงหน้าบนความจำ จึงไม่มีอะไรต้องเรียกคืน</td></tr>
+<tr><td>guest → register merge, mixed-touch, true-up ย้อนหลัง</td><td>เคสพวกนี้เกิดจากการพยายามผูกคนกับความจำ</td></tr>
+</table>
+<p>นาฬิกาเหลือ <b>เรือนเดียว</b> จาก 5 เรือน · ลดงานหลังบ้านและลดพื้นที่ PDPA ที่ต้องดูแล เพราะไม่ต้องเก็บว่าใครถูกใครชวนมา</p>
+
+<h2>แลกอะไรไป — ข้อเสียที่ต้องยอมรับ</h2>
+<div class="note"><b>พาร์ตเนอร์ได้น้อยลงจริงในกรณีเดียว</b> — ผู้เล่นที่เขาอุตส่าห์ดึงมา ถ้าเดือนหน้ากลับมาเองทางหน้าแรก ROPZ พาร์ตเนอร์จะไม่ได้เรตสูงของครั้งนั้น จุดขาย “พาชุมชนมาสิ แล้วกินยาว” อ่อนลง<br><br>
+แลกกับการที่พาร์ตเนอร์เข้าใจโมเดลทันทีเพราะเหมือนที่เขาเจอมาแล้ว และเราเติมความจำให้เป็นดีลพิเศษรายเจ้าได้เสมอถ้าวันหนึ่งอยากดึงพาร์ตเนอร์ใหญ่</div>
+
+<h2>เรตยังเท่าเดิม</h2>
+<p>มตินี้เปลี่ยน <b>วิธีตัดสินว่าใครได้เรตไหน</b> อย่างเดียว ตัวเลขไม่ได้แตะ — dev-brought ยัง 75/25 · ROPZ-brought ยัง 50/50 · ชั้น royalty T0–T4 (0/3/8/15/25%) และชั้นคูปองยังเหมือนเดิมทั้งหมด</p>
+
+<h2>ต้องตามแก้ที่ไหนบ้าง</h2>
+<ol>
+  <li><b>ROPZ_Attribution_RevShare_Spec / Dev / Exec / Explainer</b> — ตัดหัวข้อนาฬิกา 5 เรือน ด่านคุณภาพ และ clawback ออก เหลือ lookback 7 วัน</li>
+  <li><b>ROPZ_DevBrought_Deck_v2</b> — สไลด์ “นาฬิกา 5 เรือน” และ “ด่านคุณภาพ” ตกไปทั้งสองหน้า · ข้อความ k10 (“คิดแยกเป็นรายผู้เล่น”) และ k20 (“75% อยู่ได้ 12 เดือน”) ต้องเขียนใหม่ ทั้ง 4 ภาษา</li>
+  <li><b>ไฟล์บน GitHub Pages</b> — 4 ไฟล์ในชุด attribution ต้องอัปตาม</li>
+  <li><b>P&amp;L</b> — ทิศทางคือส่วนแบ่งไหลกลับมาหา ROPZ มากขึ้น ตัวเลขน่าจะดีขึ้น รันรอบหน้าพอ ไม่ใช่ตัวขวางมติ</li>
+</ol>
+
+<h2>ยังไม่เคาะ</h2>
+<ul>
+  <li><b>lookback 7 วัน</b> เป็นข้อเสนอตามมาตรฐาน AppsFlyer/Meta — ยังปรับได้ก่อนเขียนลงสัญญา</li>
+  <li><b>ลิงก์ฝังเว็บ dev</b> — ถ้าเกมถูกฝังบนเว็บ Studio X เอง ทุกครั้งที่เล่นบนนั้นถือเป็น dev-brought อัตโนมัติหรือไม่ (Poki ตอบว่าใช่) ควรเคาะพร้อมกัน</li>
+</ul>
+
+<div class="foot">
+  RO PlayZone · GGT Game Studio · เอกสารภายใน ห้ามเผยแพร่ · 27 ส.ค. 2026<br>
+  แหล่งอ้างอิงที่ยืนยันวันนี้ —
+  <a href="https://developers.poki.com/guide/revenue-deal-types">Poki revenue deal types</a> ·
+  <a href="https://static.gamedistribution.com/terms/developer.html">GameDistribution developer agreement</a> ·
+  <a href="https://docs.crazygames.com/faq/">CrazyGames docs</a>
+</div>
+
+</div>
+</div>
