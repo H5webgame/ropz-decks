@@ -54,6 +54,7 @@
   .langs{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
   .langs span{font-size:11px;font-weight:700;color:var(--deepblue);background:rgba(46,139,224,.12);
     padding:3px 8px;border-radius:6px}
+  .langs span.lock{color:#8a5a05;background:rgba(217,152,20,.16)}
   .go{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--blue);font-size:14px;margin-top:4px}
   footer{text-align:center;color:var(--mut);font-size:12.5px;margin-top:40px;padding:0 22px;line-height:1.6}
 </style>
@@ -146,11 +147,11 @@
         <div class="langs"><span>TH</span><span>EN</span><span>KO</span><span>ZH</span></div>
         <div class="go" data-i18n="open"></div>
       </a>
-      <a class="card" data-href="unity-playbook.html">
+      <a class="card" data-href="unity-playbook-gvc.html">
         <div class="no">D5</div>
         <h3 data-i18n="c12t"></h3>
         <p data-i18n="c12d"></p>
-        <div class="langs"><span>EN</span><span>TH</span><span>KO</span><span>ZH</span></div>
+        <div class="langs"><span>EN</span><span>TH</span><span>KO</span><span>ZH</span><span class="lock" data-i18n="lockbadge"></span></div>
         <div class="go" data-i18n="open"></div>
       </a>
       <a class="card" data-href="developer-agreement.html">
@@ -179,7 +180,8 @@
       c11t:'Engineering Integration Guide',
       c11d:'What to add to your game, split by Unity side and backend side, with the reason each piece exists and what breaks without it — for partner engineering teams.',
       c12t:'WebGameStarter — Unity Playbook',
-      c12d:'Four Unity plugin manuals merged into one task-ordered guide: 11 steps from understanding the architecture to the pre-ship checklist, with priority tags P0-P3, collapsible navigation and every code sample intact.',
+      c12d:'Four Unity plugin manuals merged into one task-ordered guide: 11 steps from understanding the architecture to the pre-ship checklist, with priority tags P0-P3 and collapsible navigation. Encrypted — ask your contact for the passphrase.',
+      lockbadge:'Passphrase',
       h1:'RO PlayZone <span class="accent">Document Hub</span>',
       sub:'All project documents in one place. Pick a language above, then open any document.',
       c1t:'Web-Game Business Model',
@@ -210,7 +212,8 @@
       c11t:'คู่มือต่อระบบสำหรับทีมพัฒนา',
       c11d:'สิ่งที่ต้องเพิ่มในเกม แยกฝั่ง Unity และฝั่ง Backend พร้อมเหตุผลว่าทำไมต้องมีและถ้าไม่ทำจะเกิดอะไร — สำหรับทีมพัฒนาของพาร์ตเนอร์',
       c12t:'WebGameStarter — คู่มือ Unity ฉบับรวม',
-      c12d:'รวมคู่มือ plugin ฝั่ง Unity 4 เล่มเป็นเล่มเดียว เรียงตามลำดับงานจริง 11 ขั้น ตั้งแต่ทำความเข้าใจสถาปัตยกรรมจนถึงเช็กลิสต์ก่อนส่ง build พร้อมป้ายความสำคัญ P0-P3 สารบัญพับได้ และตัวอย่างโค้ดครบทุกบล็อก',
+      c12d:'รวมคู่มือ plugin ฝั่ง Unity 4 เล่มเป็นเล่มเดียว เรียงตามลำดับงานจริง 11 ขั้น ตั้งแต่ทำความเข้าใจสถาปัตยกรรมจนถึงเช็กลิสต์ก่อนส่ง build พร้อมป้ายความสำคัญ P0-P3 และสารบัญพับได้ · เข้ารหัสไว้ ขอรหัสผ่านจากผู้ติดต่อของคุณ',
+      lockbadge:'ต้องใส่รหัส',
       h1:'RO PlayZone <span class="accent">ศูนย์รวมเอกสาร</span>',
       sub:'รวมเอกสารโปรเจกต์ไว้ที่เดียว เลือกภาษาด้านบน แล้วกดเปิดเอกสารที่ต้องการได้เลย',
       c1t:'โมเดลธุรกิจเว็บเกม',
@@ -241,7 +244,8 @@
       c11t:'개발 연동 가이드',
       c11d:'게임에 무엇을 추가해야 하는지 Unity 쪽과 백엔드 쪽으로 나누어 정리하고, 각 항목이 필요한 이유와 없을 때 무엇이 깨지는지 설명합니다 — 파트너 개발팀용.',
       c12t:'WebGameStarter — Unity 통합 플레이북',
-      c12d:'Unity 플러그인 매뉴얼 4종을 하나로 합쳐 실제 작업 순서대로 정리했습니다. 아키텍처 이해부터 빌드 제출 전 체크리스트까지 11단계, 우선순위 태그 P0-P3, 접히는 목차, 코드 예제는 원본 그대로.',
+      c12d:'Unity 플러그인 매뉴얼 4종을 하나로 합쳐 실제 작업 순서대로 정리했습니다. 아키텍처 이해부터 빌드 제출 전 체크리스트까지 11단계, 우선순위 태그 P0-P3, 접히는 목차 · 암호화되어 있으니 담당자에게 암호를 요청하십시오.',
+      lockbadge:'암호 필요',
       h1:'RO PlayZone <span class="accent">문서 허브</span>',
       sub:'프로젝트 문서를 한곳에 모았습니다. 위에서 언어를 선택한 뒤 문서를 열어보세요.',
       c1t:'웹게임 비즈니스 모델',
@@ -272,7 +276,8 @@
       c11t:'开发接入指南',
       c11d:'需要在游戏里补上什么，按 Unity 端与后端分开列出，并说明每一项为什么必要、不做会怎样 — 面向合作方开发团队。',
       c12t:'WebGameStarter — Unity 接入手册',
-      c12d:'把四份 Unity 插件手册并成一本，按真实作业顺序编排：从读懂架构到提交构建前的检查清单共 11 步，附 P0-P3 优先级标签、可折叠目录，代码示例全部保持原样。',
+      c12d:'把四份 Unity 插件手册并成一本，按真实作业顺序编排：从读懂架构到提交构建前的检查清单共 11 步，附 P0-P3 优先级标签与可折叠目录 · 已加密，请向对接人索取密码。',
+      lockbadge:'需要密码',
       h1:'RO PlayZone <span class="accent">文档中心</span>',
       sub:'所有项目文档集中于此。请先在上方选择语言，再打开所需文档。',
       c1t:'网页游戏商业模式',
