@@ -1,939 +1,132 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><!-- [KEEP] web-publish: กัน Google index — อย่าลบ --><meta name="robots" content="noindex, nofollow, noarchive, nosnippet"><style>:root{color-scheme:dark}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#120E18;color:#F2ECF5}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style><title>RO MINIGAME Stage Kit</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
-</head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish: กัน Google index ตอนขึ้น GitHub Pages — อย่าลบ -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>RO MINIGAME Stage Kit</title>
 <style>
-/* PROTOTYPE — throwaway. ตอบคำถามเดียว: หน้าจอของงานควรเป็นแบบไหน
-   ไม่ต่อ API ไม่มี persistence รีเฟรชแล้วกลับค่าเริ่มต้น */
 :root{
-  --ink:#F2ECF5; --ink-dim:#B4A8C0; --ink-faint:#7C7089;
-  --ground:#120E18; --panel:#1B1522; --panel-2:#241C2E; --line:#33283F;
-  --poring:#FF7BA8; --poring-deep:#C94C79;
-  --cyan:#5BE1E6; --gold:#FFC861; --lime:#8BE86B; --warn:#FF9F5B; --bad:#FF6B6B;
-  --r:14px;
+  --bg:#0E1116; --card:#161A22; --line:#262C38; --ink:#E6E9EF; --muted:#8B93A3;
+  --accent:#22B8CF; --bad:#F87171;
 }
-*{box-sizing:border-box}
-body{
-  margin:0; background:var(--ground); color:var(--ink);
-  font-family:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
-  font-size:15px; line-height:1.55;
+@media (prefers-color-scheme: light){
+  :root{ --bg:#F6F7F9; --card:#FFFFFF; --line:#E2E5EA; --ink:#1A1D23;
+         --muted:#5A6270; --accent:#0E7490; --bad:#B91C1C; }
 }
-h1,h2,h3,.display{font-family:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;font-weight:700;text-wrap:balance;margin:0}
-.num{font-variant-numeric:tabular-nums}
-button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
-:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-/* ---------- shell (ไม่ใช่ส่วนของดีไซน์ที่ตรวจ) ---------- */
-.shell{position:sticky;top:0;z-index:50;background:#0C0910;border-bottom:1px solid var(--line)}
-.shell-in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.brand{display:flex;align-items:baseline;gap:9px}
-.brand b{font-family:"Chakra Petch";font-size:17px;letter-spacing:.02em}
-.brand span{font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase}
-.surfaces{display:flex;gap:4px;margin-left:auto;background:var(--panel);padding:4px;border-radius:11px}
-.surfaces button{padding:7px 15px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--ink-dim)}
-.surfaces button[aria-selected="true"]{background:var(--poring);color:#1B0A12;font-weight:600}
-.stage{max-width:1180px;margin:0 auto;padding:24px 20px 120px}
-.note{font-size:12.5px;color:var(--ink-faint);border-left:2px solid var(--line);padding-left:11px;margin:0 0 20px}
-
-/* ---------- ฝั่ง 1: เครื่องบนเวที ---------- */
-.kiosk-wrap{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:22px;align-items:start}
-@media (max-width:860px){.kiosk-wrap{grid-template-columns:1fr}}
-.device{
-  background:#0A070E;border:1px solid var(--line);border-radius:20px;padding:14px;
-  box-shadow:0 24px 60px -30px #000;
-}
-.screen{
-  background:linear-gradient(180deg,#1C1426,#140F1C);border-radius:12px;
-  min-height:520px;display:flex;flex-direction:column;position:relative;overflow:hidden;
-}
-.screen > [data-step]{flex:1;display:flex;flex-direction:column;min-height:0}
-.scr-pad{padding:34px 30px;flex:1;display:flex;flex-direction:column}
-.center{align-items:center;justify-content:center;text-align:center;gap:18px}
-.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
-.big{font-size:34px;line-height:1.15}
-.lock-badge{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#2A1B24;border:1px solid var(--poring-deep);font-size:26px}
-.keyfield{display:flex;gap:8px;justify-content:center;margin-top:4px}
-.keyfield input{
-  font-family:"Chakra Petch";font-size:22px;letter-spacing:.3em;text-align:center;width:230px;
-  background:#0F0B14;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px
-}
-.btn{background:var(--poring);color:#1B0A12;font-weight:600;padding:13px 26px;border-radius:11px;font-size:15px}
-.btn:hover{background:#FF94B8}
-.btn-ghost{border:1px solid var(--line);color:var(--ink-dim);padding:12px 22px;border-radius:11px}
-.btn-lg{font-size:19px;padding:17px 40px;border-radius:14px}
-.attract-ring{width:120px;height:120px;border-radius:50%;border:2px dashed var(--poring-deep);display:grid;place-items:center;font-size:44px;animation:pulse 2.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.05);opacity:1}}
-/* โหมดทีมงาน vs โหมดผู้เล่น — คนละคนอ่านคนละจอ ต้องแยกออกตั้งแต่ยังไม่อ่านตัวหนังสือ */
-.mode-bar{display:flex;align-items:center;gap:9px;padding:9px 18px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-.mode-staff{background:#10222A;color:var(--cyan);border-bottom:1px solid #1D3D48}
-.mode-player{background:#2B1420;color:var(--poring);border-bottom:1px solid #47212F}
-.mode-hold{background:#241B0F;color:var(--warn);border-bottom:1px solid #5C4028}
-.hold-badge{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#241B0F;border:1px solid #5C4028;font-size:26px;color:var(--warn)}
-.mode-bar .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-.mode-bar .right{margin-left:auto;letter-spacing:0;text-transform:none;color:var(--ink-faint);font-weight:400}
-.staff-screen{background:linear-gradient(180deg,#111A20,#0D1419)}
-.queue{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px}
-.queue div{background:#16232B;border:1px solid #1D3D48;border-radius:11px;padding:12px;text-align:center}
-.queue b{display:block;font-family:"Chakra Petch";font-size:24px;color:var(--cyan)}
-.queue span{font-size:11.5px;color:var(--ink-faint)}
-.btn-staff{background:var(--cyan);color:#06222A;font-weight:600;padding:13px 26px;border-radius:11px;font-size:15px}
-.btn-staff:hover{background:#7BEBEF}
-.handoff{display:flex;align-items:center;gap:10px;background:#2B1420;border:1px solid #47212F;border-radius:11px;padding:11px 15px;font-size:13px;color:var(--poring);max-width:400px}
-.played{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.played div{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-radius:11px;font-size:14px;border:1px solid}
-.played .done{background:#16232B;border-color:#1D3D48}
-.played .done b{color:var(--cyan);font-family:"Chakra Petch"}
-.played .todo{background:var(--panel-2);border-color:var(--line);color:var(--ink-faint)}
-.choice{display:grid;gap:10px}
-.choice button{text-align:left;padding:15px 18px;border-radius:13px;border:1px solid}
-.choice b{display:block;font-family:"Chakra Petch";font-size:17px;margin-bottom:3px}
-.choice span{font-size:12.5px;line-height:1.45;display:block}
-.choice-main{background:var(--cyan);color:#06222A;border-color:var(--cyan)}
-.choice-main span{color:#0A3540}
-.choice-main:hover{background:#7BEBEF}
-.choice-alt{background:transparent;border-color:var(--line);color:var(--ink)}
-.choice-alt span{color:var(--ink-faint)}
-.choice-alt:hover{border-color:var(--poring)}
-.nick-input{
-  font-family:"Chakra Petch";font-size:26px;text-align:center;width:100%;max-width:340px;
-  background:#0F0B14;border:1px solid var(--line);border-bottom:2px solid var(--poring);
-  color:var(--ink);border-radius:10px;padding:14px
-}
-.hint{font-size:12.5px;color:var(--ink-faint)}
-.nick-input.bad{border-color:var(--bad);border-bottom-color:var(--bad)}
-.nick-ok,.nick-bad{font-size:13px;font-weight:500}
-.nick-ok{color:var(--lime)}
-.nick-bad{color:var(--bad)}
-.suggest{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-faint);flex-wrap:wrap;justify-content:center}
-.btn:disabled{background:#3A2C46;color:var(--ink-faint);cursor:not-allowed}
-.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin-top:6px}
-@media (max-width:520px){.game-grid{grid-template-columns:1fr}}
-.game-card{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;text-align:left}
-.game-card:hover{border-color:var(--poring)}
-.game-art{height:104px;display:grid;place-items:center;font-size:38px}
-.g1{background:linear-gradient(145deg,#3A1E32,#5A2942)}
-.g2{background:linear-gradient(145deg,#1E2E3A,#27455A)}
-.game-meta{padding:11px 13px}
-.game-meta b{font-family:"Chakra Petch";font-size:16px;display:block}
-.game-meta span{font-size:12px;color:var(--ink-faint)}
-.playing{background:#0A070E;flex:1;display:grid;place-items:center;position:relative}
-.play-hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:14px 18px;font-size:13px;color:var(--ink-dim)}
-.play-score{font-family:"Chakra Petch";font-size:40px;color:var(--cyan)}
-.result-score{font-family:"Chakra Petch";font-size:64px;line-height:1;color:var(--gold)}
-.rank-line{display:flex;align-items:center;gap:10px;justify-content:center;font-size:15px;color:var(--ink-dim)}
-.rank-pill{background:var(--gold);color:#2A1B00;font-weight:700;padding:3px 12px;border-radius:99px;font-family:"Chakra Petch"}
-.mini-board{width:100%;max-width:360px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.mini-board div{display:flex;justify-content:space-between;padding:8px 13px;font-size:13.5px;border-bottom:1px solid var(--line)}
-.mini-board div:last-child{border:0}
-.mini-board .me{background:#2B1A24;color:var(--ink)}
-.steps{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
-.steps h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
-.steps button{display:block;width:100%;text-align:left;padding:9px 12px;border-radius:9px;font-size:13.5px;color:var(--ink-dim);margin-bottom:3px}
-.steps button[aria-current="true"]{background:var(--panel-2);color:var(--ink);box-shadow:inset 2px 0 0 var(--poring)}
-.steps small{display:block;color:var(--ink-faint);font-size:11.5px}
-
-/* ---------- ฝั่ง 2: จอบอร์ด ---------- */
-.view-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.axis{display:flex;gap:3px;background:var(--panel);border:1px solid var(--line);padding:4px;border-radius:11px}
-.axis button{padding:8px 16px;border-radius:8px;font-size:13.5px;color:var(--ink-dim)}
-.axis button[aria-pressed="true"]{background:var(--cyan);color:#06222A;font-weight:600}
-.axis.pink button[aria-pressed="true"]{background:var(--poring);color:#1B0A12}
-.rule{background:#16232B;border:1px solid #1D3D48;border-radius:10px;padding:9px 14px;font-size:12.5px;color:var(--ink-dim);margin-bottom:16px}
-.rule b{color:var(--cyan);font-family:"Chakra Petch"}
-.pts{display:inline-flex;gap:5px;font-size:11.5px;color:var(--ink-faint);margin-left:10px}
-.pts span{background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;white-space:nowrap}
-.lb-row.wide{grid-template-columns:56px 1fr auto auto;gap:14px}
-.lb-row .breakdown{display:flex;gap:6px;font-size:11.5px;color:var(--ink-faint)}
-.lb-row .breakdown b{color:var(--ink-dim);font-family:"Chakra Petch"}
-.solo{color:var(--warn);font-size:11.5px;border:1px solid #5C4028;background:#241B0F;border-radius:6px;padding:1px 7px}
-.rule.warnbox{background:#241B0F;border-color:#5C4028;color:var(--ink-dim)}
-.rule.warnbox b{color:var(--warn)}
-.lb-row.flagged{border-color:#5C4028;background:linear-gradient(90deg,#241B0F,#1B1522)}
-.lb-row.flagged .sc{color:var(--warn)}
-.tv{background:#08060B;border:1px solid var(--line);border-radius:16px;padding:30px 34px;min-height:560px;display:flex;flex-direction:column}
-.tv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}
-.tv-title{font-size:32px}
-.round-chip{background:var(--panel-2);border:1px solid var(--line);border-radius:99px;padding:6px 15px;font-size:13px;color:var(--ink-dim)}
-.round-chip b{color:var(--cyan);font-family:"Chakra Petch"}
-/* A */
-.lb{display:flex;flex-direction:column;gap:7px;flex:1}
-.lb-row{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
-.lb-row .pos{font-family:"Chakra Petch";font-size:24px;color:var(--ink-faint);text-align:center}
-.lb-row .who{font-size:19px;font-weight:500}
-.lb-row .sc{font-family:"Chakra Petch";font-size:26px;color:var(--cyan)}
-.lb-row.top1{background:linear-gradient(90deg,#3A2410,#1B1522);border-color:var(--gold)}
-.lb-row.top1 .pos,.lb-row.top1 .sc{color:var(--gold)}
-.lb-row.top2{border-color:#6B7A8A}.lb-row.top3{border-color:#8A6244}
-/* B */
-.podium{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:end;margin-bottom:24px}
-.pod{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center}
-.pod .medal{font-size:30px}
-.pod .pname{font-size:20px;font-weight:600;margin-top:6px}
-.pod .pscore{font-family:"Chakra Petch";font-size:32px;margin-top:2px}
-.pod.p1{padding-bottom:44px;border-color:var(--gold)}.pod.p1 .pscore{color:var(--gold)}
-.pod.p2{padding-bottom:26px}.pod.p2 .pscore{color:#C3CEDA}
-.pod.p3{padding-bottom:16px}.pod.p3 .pscore{color:#D69B6E}
-.rest{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-@media (max-width:700px){.rest{grid-template-columns:1fr}.podium{grid-template-columns:1fr}}
-.rest div{display:grid;grid-template-columns:34px 1fr auto;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:15px}
-.rest .p{color:var(--ink-faint);font-family:"Chakra Petch"}
-.rest .s{font-family:"Chakra Petch";color:var(--cyan)}
-/* C */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1}
-@media (max-width:760px){.split{grid-template-columns:1fr}}
-.col{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-.col h3{font-size:21px;margin-bottom:4px}
-.col .sub{font-size:12px;color:var(--ink-faint);margin-bottom:14px}
-.col-row{display:grid;grid-template-columns:28px 1fr auto;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px}
-.col-row:last-child{border:0}
-.col-row .p{color:var(--ink-faint);font-family:"Chakra Petch"}
-.col-row .s{font-family:"Chakra Petch";color:var(--cyan)}
-.tv-foot{margin-top:18px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-faint)}
-
-/* ---------- ฝั่ง 3: แอดมิน ---------- */
-.adm{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.adm-tabs{display:flex;gap:2px;padding:10px 14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.adm-tabs button{padding:9px 15px;font-size:13.5px;color:var(--ink-dim);border-radius:9px 9px 0 0}
-.adm-tabs button[aria-selected="true"]{background:var(--panel-2);color:var(--ink);font-weight:600}
-.lang{margin-left:auto;display:flex;gap:2px;align-self:center;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;padding:3px;margin-bottom:8px}
-.lang button{padding:4px 11px;border-radius:6px;font-size:11.5px;font-weight:600;color:var(--ink-faint);letter-spacing:.06em}
-.lang button[aria-pressed="true"]{background:var(--ink-dim);color:var(--ground)}
-.screen-lang{position:absolute;bottom:12px;right:12px;margin:0;z-index:5;background:#0F0B14E6;backdrop-filter:blur(3px)}
-.board-lang{margin-left:auto}
-.adm-body{padding:20px}
-.adm-h{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
-.adm-h h2{font-size:19px}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);padding:0 12px 9px;font-weight:600}
-td{padding:11px 12px;border-top:1px solid var(--line)}
-.tbl-wrap{overflow-x:auto}
-.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:2px 9px;border-radius:99px;border:1px solid}
-.chip.on{color:var(--lime);border-color:#2F5C28;background:#16240F}
-.chip.off{color:var(--ink-faint);border-color:var(--line);background:var(--panel-2)}
-.chip.rev{color:var(--bad);border-color:#5C2828;background:#240F0F}
-.key{font-family:"Chakra Petch";letter-spacing:.16em;background:var(--panel-2);padding:3px 9px;border-radius:6px;border:1px solid var(--line)}
-.mini{font-size:12.5px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);color:var(--ink-dim)}
-.mini:hover{border-color:var(--poring);color:var(--ink)}
-.danger{color:var(--bad);border-color:#5C2828}
-.switch-row{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.switch-row p{margin:4px 0 0;font-size:12.5px;color:var(--ink-faint);max-width:56ch}
-.sw{width:50px;height:28px;border-radius:99px;background:#3A2C46;position:relative;flex:none}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--ink-dim);transition:.18s}
-.sw[aria-checked="true"]{background:var(--poring)}
-.sw[aria-checked="true"]::after{left:25px;background:#1B0A12}
-.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.stat b{display:block;font-family:"Chakra Petch";font-size:27px;line-height:1.2}
-.stat span{font-size:12px;color:var(--ink-faint)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.filters select,.filters input{background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:8px 11px;font:inherit;font-size:13px}
-.flag{color:var(--warn)}
-
-/* ---------- variant switcher (prototype chrome) ---------- */
-.switcher{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:80;
-  display:flex;align-items:center;gap:4px;background:#F2ECF5;color:#120E18;
-  border-radius:99px;padding:5px;box-shadow:0 10px 34px -8px #000;
-}
-.switcher button{width:34px;height:34px;border-radius:50%;font-size:16px;display:grid;place-items:center}
-.switcher button:hover{background:#DCD3E2}
-.switcher .lbl{font-family:"Chakra Petch";font-size:13px;font-weight:600;padding:0 12px;white-space:nowrap}
-[hidden]{display:none!important}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{ margin:0; background:var(--bg); color:var(--ink); display:grid; place-items:center;
+  padding:1.5rem; font:16px/1.6 "Segoe UI",system-ui,-apple-system,"Noto Sans Thai",
+  "Malgun Gothic","Microsoft YaHei",sans-serif; }
+.gate{ width:min(30rem,100%); background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:2rem 1.9rem 1.6rem; }
+.brand{ font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); font-weight:700; margin:0 0 .9rem; }
+h1{ font-size:1.16rem; line-height:1.4; margin:0 0 .55rem; font-weight:650; }
+.sub{ margin:0 0 1.4rem; color:var(--muted); font-size:.88rem; }
+.sub span{ display:block; margin-top:.15rem; }
+form{ display:flex; gap:.5rem; }
+input{ flex:1 1 auto; min-width:0; font:inherit; font-size:.92rem; padding:.6rem .75rem;
+  background:var(--bg); color:var(--ink); border:1px solid var(--line); border-radius:8px; }
+input:focus{ outline:none; border-color:var(--accent); }
+button{ flex:none; font:inherit; font-size:.88rem; font-weight:650; padding:.6rem 1.1rem;
+  background:var(--accent); color:var(--card); border:none; border-radius:8px; cursor:pointer; }
+button:disabled{ opacity:.55; cursor:progress; }
+.msg{ min-height:1.4em; margin:.8rem 0 0; font-size:.84rem; color:var(--bad); }
+.msg.work{ color:var(--muted); }
+.fine{ margin:1.5rem 0 0; padding-top:1rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.72rem; line-height:1.65; }
+.fine code{ font-family:Consolas,ui-monospace,monospace; font-size:.95em; color:var(--ink); }
 </style>
-
-<div class="shell">
-  <div class="shell-in">
-    <div class="brand"><b>RO MINIGAME</b><span>mockup · ยังไม่ต่อระบบจริง</span></div>
-    <div class="surfaces" role="tablist">
-      <button role="tab" data-surface="kiosk" aria-selected="true">เครื่องบนเวที</button>
-      <button role="tab" data-surface="board" aria-selected="false">จอในงาน</button>
-      <button role="tab" data-surface="admin" aria-selected="false">จอแอดมิน</button>
-    </div>
-  </div>
-</div>
-
-<div class="stage">
-
-<!-- ============ เครื่องบนเวที ============ -->
-<section id="s-kiosk">
-  <p class="note">เครื่องเดียวกันแต่ <b>คนอ่านสองกลุ่ม</b> — ขั้น 1–3 เป็นจอที่ <b style="color:var(--cyan)">ทีมงานถือ</b> (แถบฟ้าบนจอ) แล้วส่งเครื่องให้ <b style="color:var(--poring)">ผู้เล่น</b> ตอนกรอกชื่อ (แถบชมพู) · ทีมงานเป็นคนเลือกเกมให้ ไม่ใช่ผู้เล่นกดเอง · <b>ตัวตนใหม่ถูกออกตอนกรอกชื่อ</b> ⇒ คนถัดไปไม่สวมรอยคนก่อนหน้า · 🌐 <b>สลับ TH/EN ได้จากมุมล่างขวาของจอ</b> (ทีมงานตั้งค่าเริ่มต้นให้ทุกเครื่องได้จากจอแอดมิน)</p>
-  <div class="kiosk-wrap">
-    <div class="device">
-      <div class="screen">
-
-        <div data-step="lock">
-          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">เวทีซ้าย · เครื่อง #2</span></div>
-          <div class="scr-pad center">
-            <div class="lock-badge">🔒</div>
-            <div>
-              <p class="eyebrow">เครื่องนี้ยังไม่ได้เปิดใช้งาน</p>
-              <h2 class="big display">ใส่รหัสเปิดเครื่อง</h2>
-            </div>
-            <div class="keyfield"><input value="RMG-4K7Q" aria-label="รหัสเปิดเครื่อง"></div>
-            <p class="hint">ทีมงานรับรหัสจากจอแอดมิน · หนึ่งเครื่องหนึ่งรหัส</p>
-            <button class="btn-staff" data-go="staff">เปิดใช้งานเครื่อง</button>
-          </div>
-        </div>
-
-        <div data-step="staff" hidden>
-          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">เวทีซ้าย · เครื่อง #2 · รอบที่ 4</span></div>
-          <div class="scr-pad center">
-            <p class="eyebrow">พร้อมรับผู้เล่นคนถัดไป</p>
-            <h2 class="big display">รอผู้เล่น</h2>
-            <div class="queue">
-              <div><b class="num">41</b><span>เล่นไปแล้ววันนี้</span></div>
-              <div><b class="num">12</b><span>ในรอบนี้</span></div>
-              <div><b class="num">6:12</b><span>เหลือในรอบ</span></div>
-            </div>
-            <p class="hint">กดเมื่อมีคนขึ้นมาบนเวที — ทีมงานเลือกเกมให้ก่อน แล้วค่อยส่งเครื่อง</p>
-            <button class="btn-staff btn-lg" data-go="pick">เริ่มผู้เล่นคนใหม่</button>
-          </div>
-        </div>
-
-        <div data-step="pick" hidden>
-          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">ขั้นที่ 1 จาก 2 · ทีมงานเลือก</span></div>
-          <div class="scr-pad">
-            <h2 class="big display" style="margin-bottom:4px">เลือกเกมให้ผู้เล่น</h2>
-            <p class="hint" style="margin-bottom:16px">เลือกตามคิวหน้าเวที · เกมที่ปิดจากจอแอดมินจะไม่ขึ้นที่นี่</p>
-            <div class="game-grid">
-              <button class="game-card" data-go="nick">
-                <div class="game-art g1">🔨</div>
-                <div class="game-meta"><b>ตีโพริง</b><span>60 วินาที · แนวตั้ง · เล่นแล้ว 156 รอบ</span></div>
-              </button>
-              <button class="game-card" data-go="nick">
-                <div class="game-art g2">🐣</div>
-                <div class="game-meta"><b>เปโค แดช</b><span>~90 วินาที · แนวนอน · เล่นแล้ว 98 รอบ</span></div>
-              </button>
-            </div>
-            <div style="margin-top:auto;display:flex;justify-content:flex-end">
-              <button class="mini" data-go="staff">ยกเลิก กลับไปรอ</button>
-            </div>
-          </div>
-        </div>
-
-        <div data-step="nick" hidden>
-          <div class="mode-bar mode-player"><span class="dot"></span>ตาของผู้เล่น<span class="right">ตีโพริง · ขั้นที่ 2 จาก 2</span></div>
-          <div class="scr-pad center">
-            <div class="handoff">📱 ทีมงานส่งเครื่องให้ผู้เล่นตรงนี้</div>
-            <h2 class="big display">ใส่ชื่อที่จะขึ้นบอร์ด</h2>
-            <input class="nick-input" id="nick" value="โจ้" maxlength="12" aria-label="ชื่อเล่น" autocomplete="off">
-            <div id="nick-msg" class="nick-ok">ใช้ชื่อนี้ได้</div>
-            <div id="nick-suggest" class="suggest" hidden>
-              <span>ลองชื่อนี้แทน</span>
-              <button class="mini" data-suggest="แนน2">แนน2</button>
-              <button class="mini" data-suggest="แนนน้อย">แนนน้อย</button>
-            </div>
-            <p class="hint">สูงสุด 12 ตัวอักษร · ชื่อนี้จะขึ้นจอใหญ่หน้างาน · <b>ห้ามซ้ำกับคนที่เล่นไปแล้ว</b><br><span style="color:var(--ink-faint)">(ลองพิมพ์ “แนน” หรือ “ตี๋” ดู — เป็นชื่อที่มีคนใช้แล้ว)</span></p>
-            <button class="btn btn-lg" id="nick-go" data-go="play">เริ่มเล่น</button>
-          </div>
-        </div>
-
-        <div data-step="play" hidden>
-          <div class="mode-bar mode-player"><span class="dot"></span>ตาของผู้เล่น<span class="right">โจ้ · ตีโพริง</span></div>
-          <div class="playing">
-            <div class="play-hud"><span>ตีโพริง</span><span class="num">เหลือ 0:23</span></div>
-            <div style="text-align:center">
-              <p class="eyebrow">คะแนนตอนนี้</p>
-              <div class="play-score num">1,840</div>
-              <p class="hint" style="margin-top:22px">พื้นที่นี้คือตัวเกมจริงที่รันอยู่ในกรอบ</p>
-              <button class="mini" style="margin-top:14px" data-go="result">ข้ามไปจอสรุป →</button>
-            </div>
-          </div>
-        </div>
-
-        <div data-step="result" hidden>
-          <div class="mode-bar mode-player"><span class="dot"></span>ตาของผู้เล่น<span class="right">จบเกมแล้ว</span></div>
-          <div class="scr-pad center">
-            <p class="eyebrow">ตีโพริง · โจ้</p>
-            <div class="result-score num">2,410</div>
-            <div class="rank-line">ได้อันดับ <span class="rank-pill num">#3</span> ของรอบนี้</div>
-            <div class="mini-board">
-              <div><span>1 · แนน</span><b class="num">3,120</b></div>
-              <div><span>2 · ตี๋</span><b class="num">2,880</b></div>
-              <div class="me"><span>3 · โจ้</span><b class="num">2,410</b></div>
-              <div><span>4 · ปอนด์</span><b class="num">2,050</b></div>
-            </div>
-            <button class="btn btn-lg" data-go="handback">เสร็จแล้ว · คืนเครื่องให้ทีมงาน</button>
-            <p class="hint">อยากเล่นอีกเกม ทีมงานกดเลือกให้ใหม่จากจอถัดไป</p>
-          </div>
-        </div>
-
-        <div data-step="handback" hidden>
-          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">รับเครื่องคืนแล้ว · เวทีซ้าย #2</span></div>
-          <div class="scr-pad">
-            <p class="eyebrow">ผู้เล่นคนนี้เล่นอะไรไปแล้ว</p>
-            <h2 class="big display" style="margin-bottom:14px">โจ้</h2>
-            <div class="played">
-              <div class="done"><span>🔨 ตีโพริง</span><b class="num">2,410 · ที่ 3</b></div>
-              <div class="todo"><span>🐣 เปโค แดช</span><b>ยังไม่เล่น</b></div>
-            </div>
-            <div class="choice">
-              <button class="choice-main" data-go="staff">
-                <b>รับผู้เล่นคนใหม่</b>
-                <span>ล้างชื่อ “โจ้” ออกจากเครื่อง · คนถัดไปได้ตัวตนใหม่ของตัวเอง</span>
-              </button>
-              <button class="choice-alt" data-go="pick">
-                <b>ให้ “โจ้” เล่นต่ออีกรอบ</b>
-                <span>คะแนนรอบใหม่ไปรวมกับชื่อเดิม · เลือกเกมได้ทั้งเกมที่ยังไม่เล่นและเกมเดิม</span>
-              </button>
-            </div>
-            <p class="hint" style="margin-top:auto">ถ้าอันดับรวมทุกเกมเปิดใช้อยู่ การให้เล่นเกมที่ยังไม่เล่นจะทำให้ผู้เล่นคนนี้มีสิทธิ์ติดอันดับรวม</p>
-          </div>
-        </div>
-
-        <div data-step="paused" hidden>
-          <div class="mode-bar mode-hold"><span class="dot"></span>หยุดรับคะแนนชั่วคราว<span class="right">ทีมงานสั่งจากจอแอดมิน</span></div>
-          <div class="scr-pad center">
-            <div class="hold-badge">⏸</div>
-            <div>
-              <p class="eyebrow">กำลังประกาศผลรอบที่ 4</p>
-              <h2 class="big display">ยังไม่ส่งเครื่องให้ผู้เล่น</h2>
-            </div>
-            <p class="hint" style="max-width:34ch">ถ้าให้เล่นตอนนี้ คะแนนจะไม่ถูกนับ — รอทีมงานกดรับคะแนนต่อจากจอแอดมินก่อน</p>
-            <div class="queue" style="max-width:300px">
-              <div><b class="num">3</b><span>เครื่องที่หยุดพร้อมกัน</span></div>
-              <div><b class="num">12</b><span>คนในรอบนี้</span></div>
-            </div>
-            <button class="mini" data-go="staff">(mockup) กลับไปจอรอผู้เล่น</button>
-          </div>
-        </div>
-
-        <div class="lang screen-lang" role="group" aria-label="ภาษา / Language">
-          <button data-lang="th" aria-pressed="true">TH</button>
-          <button data-lang="en" aria-pressed="false">EN</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="steps">
-      <h3>ขั้นบนเครื่อง</h3>
-      <button data-go="lock" aria-current="true">1 · จอล็อก<small>ทีมงาน · เปิดเครื่องด้วยรหัส</small></button>
-      <button data-go="staff">2 · รอผู้เล่น<small>ทีมงาน · จอที่ค้างไว้ระหว่างวัน</small></button>
-      <button data-go="pick">3 · เลือกเกม<small>ทีมงาน · เลือกให้ผู้เล่น</small></button>
-      <button data-go="nick">4 · ส่งเครื่อง + ใส่ชื่อ<small>ผู้เล่น · ออกตัวตนใหม่ตรงนี้</small></button>
-      <button data-go="play">5 · กำลังเล่น<small>ผู้เล่น · เกมจริงรันในกรอบ</small></button>
-      <button data-go="result">6 · สรุป<small>ผู้เล่น · แล้วคืนเครื่องให้ทีมงาน</small></button>
-      <button data-go="handback">7 · รับเครื่องคืน<small>ทีมงาน · เล่นต่อ หรือรับคนใหม่</small></button>
-      <h3 style="margin-top:16px">สถานะแทรก</h3>
-      <button data-go="paused">⏸ หยุดรับคะแนน<small>ขึ้นทับได้ทุกจังหวะที่แอดมินสั่ง</small></button>
-    </div>
-  </div>
-</section>
-
-<!-- ============ จอในงาน ============ -->
-<section id="s-board" hidden>
-  <p class="note">จอใหญ่ที่คนในงานเห็น · เปิดค้างไว้ทั้งวัน ไม่ต้องใส่รหัส · <b>สี่มุมมองจากสองแกน</b> — กดที่แถบด้านล่างนี้ หรือลูกศรซ้าย/ขวา (แถบลอยกลางจอ) เพื่อไล่ดูทีละอัน · จอจริงหมุนสลับเองได้ ตั้งจากจอแอดมิน · <b>ของจริงโฟกัสมุมมอง “รอบนี้”</b> ส่วน “ทั้งวัน” ทำเผื่อไว้ เปิด/ปิดได้จากจอแอดมิน · 🔴 ระบบ<b>แสดงอันดับเท่านั้น ไม่ตัดสินผู้ชนะแทนคน</b> — การตัดสินและแจกรางวัลเป็นเรื่องของทีมงานหน้างาน</p>
-
-  <div class="view-bar">
-    <div class="axis" role="group" aria-label="ช่วงเวลา">
-      <button data-axis="when" data-val="round" aria-pressed="true">รอบนี้</button>
-      <button data-axis="when" data-val="day" aria-pressed="false">ทั้งวัน</button>
-    </div>
-    <div class="axis pink" role="group" aria-label="การรวมเกม">
-      <button data-axis="how" data-val="split" aria-pressed="true">แยกตามเกม</button>
-      <button data-axis="how" data-val="rank" aria-pressed="false">รวมทุกเกม · ตามอันดับ</button>
-      <button data-axis="how" data-val="score" aria-pressed="false">รวมทุกเกม · ตามคะแนน</button>
-    </div>
-    <div class="lang board-lang" role="group" aria-label="ภาษา / Language">
-      <button data-lang="th" aria-pressed="true">TH</button>
-      <button data-lang="en" aria-pressed="false">EN</button>
-    </div>
-  </div>
-
-  <!-- 1. รอบนี้ · แยกตามเกม -->
-  <div class="tv" data-view="round-split">
-    <div class="tv-head">
-      <div><p class="eyebrow">รอบนี้ · แยกตามเกม</p><h2 class="tv-title display">ใครนำในแต่ละเกม</h2></div>
-      <div class="round-chip">รอบที่ <b class="num">4</b> · เหลือ <b class="num">6:12</b></div>
-    </div>
-    <div class="split">
-      <div class="col">
-        <h3 class="display">ตีโพริง</h3><p class="sub">คะแนนจากการทุบ · 60 วินาที</p>
-        <div class="col-row"><span class="p num">1</span><span>แนน</span><span class="s num">3,120</span></div>
-        <div class="col-row"><span class="p num">2</span><span>ตี๋</span><span class="s num">2,880</span></div>
-        <div class="col-row"><span class="p num">3</span><span>โจ้</span><span class="s num">2,410</span></div>
-        <div class="col-row"><span class="p num">4</span><span>ปอนด์</span><span class="s num">2,050</span></div>
-        <div class="col-row"><span class="p num">5</span><span>มิ้นท์</span><span class="s num">1,975</span></div>
-      </div>
-      <div class="col">
-        <h3 class="display">เปโค แดช</h3><p class="sub">ระยะที่วิ่งได้ · เมตร</p>
-        <div class="col-row"><span class="p num">1</span><span>เอิร์ธ</span><span class="s num">1,284</span></div>
-        <div class="col-row"><span class="p num">2</span><span>แนน</span><span class="s num">1,150</span></div>
-        <div class="col-row"><span class="p num">3</span><span>กิ๊ฟ</span><span class="s num">1,092</span></div>
-        <div class="col-row"><span class="p num">4</span><span>ฟ้า</span><span class="s num">988</span></div>
-        <div class="col-row"><span class="p num">5</span><span>โจ้</span><span class="s num">874</span></div>
-      </div>
-    </div>
-    <div class="tv-foot"><span>คะแนนดีสุดของแต่ละคนในรอบนี้ · คนละเกมคนละหน่วย จึงไม่เอามาเรียงรวมกันที่นี่</span><span>อัปเดตทุก 5 วินาที</span></div>
-  </div>
-
-  <!-- 2. รอบนี้ · รวมทุกเกม · ตามอันดับ -->
-  <div class="tv" data-view="round-rank" hidden>
-    <div class="tv-head">
-      <div><p class="eyebrow">รอบนี้ · รวมทุกเกม · ตามอันดับ</p><h2 class="tv-title display">อันดับรวมของรอบ</h2></div>
-      <div class="round-chip">รอบที่ <b class="num">4</b> · เหลือ <b class="num">6:12</b></div>
-    </div>
-    <div class="rule">
-      รวมข้ามเกมด้วย <b>แต้มตามอันดับ</b> ไม่ใช่บวกคะแนนดิบ — เพราะตีโพริงนับ “แต้มทุบ” ส่วนเปโคแดชนับ “เมตร” บวกกันแล้วไม่มีความหมาย
-      <span class="pts"><span>#1 = 100</span><span>#2 = 80</span><span>#3 = 60</span><span>#4 = 50</span><span>#5 = 40</span></span>
-    </div>
-    <div class="lb">
-      <div class="lb-row wide top1"><span class="pos num">1</span><span class="who">แนน</span>
-        <span class="breakdown">ตีโพริง <b>#1</b> · เปโค <b>#2</b></span><span class="sc num">180</span></div>
-      <div class="lb-row wide top2"><span class="pos num">2</span><span class="who">โจ้</span>
-        <span class="breakdown">ตีโพริง <b>#3</b> · เปโค <b>#5</b></span><span class="sc num">100</span></div>
-      <div class="lb-row wide top2"><span class="pos num">2</span><span class="who">เอิร์ธ <span class="solo">เล่นเกมเดียว</span></span>
-        <span class="breakdown">เปโค <b>#1</b></span><span class="sc num">100</span></div>
-      <div class="lb-row wide"><span class="pos num">4</span><span class="who">ตี๋ <span class="solo">เล่นเกมเดียว</span></span>
-        <span class="breakdown">ตีโพริง <b>#2</b></span><span class="sc num">80</span></div>
-      <div class="lb-row wide"><span class="pos num">5</span><span class="who">กิ๊ฟ <span class="solo">เล่นเกมเดียว</span></span>
-        <span class="breakdown">เปโค <b>#3</b></span><span class="sc num">60</span></div>
-      <div class="lb-row wide"><span class="pos num">6</span><span class="who">ปอนด์</span>
-        <span class="breakdown">ตีโพริง <b>#4</b></span><span class="sc num">50</span></div>
-      <div class="lb-row wide"><span class="pos num">6</span><span class="who">ฟ้า</span>
-        <span class="breakdown">เปโค <b>#4</b></span><span class="sc num">50</span></div>
-    </div>
-    <div class="tv-foot"><span>คนที่เล่นครบสองเกมสะสมแต้มได้มากกว่าโดยธรรมชาติ</span><span>อัปเดตทุก 5 วินาที</span></div>
-  </div>
-
-  <!-- 3. รอบนี้ · รวมทุกเกม · ตามคะแนน -->
-  <div class="tv" data-view="round-score" hidden>
-    <div class="tv-head">
-      <div><p class="eyebrow">รอบนี้ · รวมทุกเกม · ตามคะแนน</p><h2 class="tv-title display">อันดับรวมของรอบ</h2></div>
-      <div class="round-chip">รอบที่ <b class="num">4</b> · เหลือ <b class="num">6:12</b></div>
-    </div>
-    <div class="rule warnbox">
-      บวก<b>คะแนนดิบ</b>ของทุกเกมเข้าด้วยกันตรง ๆ — ตรงไปตรงมาที่สุด แต่ตีโพริงนับ “แต้มทุบ” หลักพัน ส่วนเปโคแดชนับ “เมตร” หลักพันเหมือนกันแต่ได้ยากกว่า
-      ⇒ <b>เกมที่ตัวเลขเฟ้อกว่ากลายเป็นตัวตัดสิน</b> · ดูเอิร์ธที่อันดับ 6 เป็นตัวอย่าง
-    </div>
-    <div class="lb">
-      <div class="lb-row wide top1"><span class="pos num">1</span><span class="who">แนน</span>
-        <span class="breakdown">ตีโพริง <b>3,120</b> + เปโค <b>1,150</b></span><span class="sc num">4,270</span></div>
-      <div class="lb-row wide top2"><span class="pos num">2</span><span class="who">โจ้</span>
-        <span class="breakdown">ตีโพริง <b>2,410</b> + เปโค <b>874</b></span><span class="sc num">3,284</span></div>
-      <div class="lb-row wide top3"><span class="pos num">3</span><span class="who">ตี๋ <span class="solo">เล่นเกมเดียว</span></span>
-        <span class="breakdown">ตีโพริง <b>2,880</b></span><span class="sc num">2,880</span></div>
-      <div class="lb-row wide"><span class="pos num">4</span><span class="who">ปอนด์</span>
-        <span class="breakdown">ตีโพริง <b>2,050</b></span><span class="sc num">2,050</span></div>
-      <div class="lb-row wide"><span class="pos num">5</span><span class="who">มิ้นท์</span>
-        <span class="breakdown">ตีโพริง <b>1,975</b></span><span class="sc num">1,975</span></div>
-      <div class="lb-row wide flagged"><span class="pos num">6</span><span class="who">เอิร์ธ <span class="solo">ที่ 1 ของเปโคแดช</span></span>
-        <span class="breakdown">เปโค <b>1,284</b></span><span class="sc num">1,284</span></div>
-      <div class="lb-row wide"><span class="pos num">7</span><span class="who">กิ๊ฟ</span>
-        <span class="breakdown">เปโค <b>1,092</b></span><span class="sc num">1,092</span></div>
-    </div>
-    <div class="tv-foot"><span>คนที่ชนะเปโคแดชทั้งรอบ อยู่อันดับ 6 — เทียบกับอันดับ 2 ในมุมมองตามอันดับ</span><span>อัปเดตทุก 5 วินาที</span></div>
-  </div>
-
-  <!-- 4. ทั้งวัน · แยกตามเกม -->
-  <div class="tv" data-view="day-split" hidden>
-    <div class="tv-head">
-      <div><p class="eyebrow">ทั้งวัน · แยกตามเกม</p><h2 class="tv-title display">สถิติสูงสุดของวัน</h2></div>
-      <div class="round-chip">ผ่านไป <b class="num">4</b> รอบ · <b class="num">108</b> คน</div>
-    </div>
-    <div class="split">
-      <div class="col">
-        <h3 class="display">ตีโพริง</h3><p class="sub">คะแนนจากการทุบ · 60 วินาที</p>
-        <div class="col-row"><span class="p num">1</span><span>แนน</span><span class="s num">3,450</span></div>
-        <div class="col-row"><span class="p num">2</span><span>บอส</span><span class="s num">3,390</span></div>
-        <div class="col-row"><span class="p num">3</span><span>ตี๋</span><span class="s num">3,210</span></div>
-        <div class="col-row"><span class="p num">4</span><span>มิ้นท์</span><span class="s num">2,990</span></div>
-        <div class="col-row"><span class="p num">5</span><span>โจ้</span><span class="s num">2,410</span></div>
-      </div>
-      <div class="col">
-        <h3 class="display">เปโค แดช</h3><p class="sub">ระยะที่วิ่งได้ · เมตร</p>
-        <div class="col-row"><span class="p num">1</span><span>เอิร์ธ</span><span class="s num">1,512</span></div>
-        <div class="col-row"><span class="p num">2</span><span>กิ๊ฟ</span><span class="s num">1,348</span></div>
-        <div class="col-row"><span class="p num">3</span><span>แนน</span><span class="s num">1,150</span></div>
-        <div class="col-row"><span class="p num">4</span><span>บอส</span><span class="s num">1,120</span></div>
-        <div class="col-row"><span class="p num">5</span><span>ฟ้า</span><span class="s num">988</span></div>
-      </div>
-    </div>
-    <div class="tv-foot"><span>คะแนนดีสุดของแต่ละคนตลอดวัน ไม่ใช่ผลรวมของทุกรอบที่เล่น</span><span>อัปเดตทุก 5 วินาที</span></div>
-  </div>
-
-  <!-- 5. ทั้งวัน · รวมทุกเกม · ตามอันดับ -->
-  <div class="tv" data-view="day-rank" hidden>
-    <div class="tv-head">
-      <div><p class="eyebrow">ทั้งวัน · รวมทุกเกม · ตามอันดับ</p><h2 class="tv-title display">อันดับรวมทั้งวัน</h2></div>
-      <div class="round-chip">ผ่านไป <b class="num">4</b> รอบ · <b class="num">108</b> คน</div>
-    </div>
-    <div class="podium">
-      <div class="pod p2"><div class="medal">🥈</div><div class="pname">บอส</div><div class="pscore num">130</div></div>
-      <div class="pod p1"><div class="medal">👑</div><div class="pname">แนน</div><div class="pscore num">160</div></div>
-      <div class="pod p3"><div class="medal">🥉</div><div class="pname">เอิร์ธ</div><div class="pscore num">100</div></div>
-    </div>
-    <div class="rest">
-      <div><span class="p num">4</span><span>กิ๊ฟ</span><span class="s num">80</span></div>
-      <div><span class="p num">5</span><span>ตี๋</span><span class="s num">60</span></div>
-      <div><span class="p num">6</span><span>มิ้นท์</span><span class="s num">50</span></div>
-      <div><span class="p num">7</span><span>โจ้</span><span class="s num">40</span></div>
-      <div><span class="p num">7</span><span>ฟ้า</span><span class="s num">40</span></div>
-    </div>
-    <div class="rule" style="margin:18px 0 0">
-      จัดอันดับใหม่จาก<b> สถิติดีสุดของทั้งวัน</b> ของแต่ละเกม แล้วให้แต้มตามอันดับ — ไม่ใช่สะสมแต้มจากทุกรอบที่เล่น เพราะแบบนั้นคนที่ยึดเครื่องเล่นเยอะจะชนะแทนคนที่เล่นเก่ง
-    </div>
-    <div class="tv-foot"><span>แนน 160 = ตีโพริง #1 (100) + เปโค #3 (60)</span><span>อัปเดตทุก 5 วินาที</span></div>
-  </div>
-
-  <!-- 6. ทั้งวัน · รวมทุกเกม · ตามคะแนน -->
-  <div class="tv" data-view="day-score" hidden>
-    <div class="tv-head">
-      <div><p class="eyebrow">ทั้งวัน · รวมทุกเกม · ตามคะแนน</p><h2 class="tv-title display">อันดับรวมทั้งวัน</h2></div>
-      <div class="round-chip">ผ่านไป <b class="num">4</b> รอบ · <b class="num">108</b> คน</div>
-    </div>
-    <div class="podium">
-      <div class="pod p2"><div class="medal">🥈</div><div class="pname">บอส</div><div class="pscore num">4,510</div></div>
-      <div class="pod p1"><div class="medal">👑</div><div class="pname">แนน</div><div class="pscore num">4,600</div></div>
-      <div class="pod p3"><div class="medal">🥉</div><div class="pname">โจ้</div><div class="pscore num">3,284</div></div>
-    </div>
-    <div class="rest">
-      <div><span class="p num">4</span><span>ตี๋</span><span class="s num">3,210</span></div>
-      <div><span class="p num">5</span><span>มิ้นท์</span><span class="s num">2,990</span></div>
-      <div><span class="p num">6</span><span>เอิร์ธ</span><span class="s num">1,512</span></div>
-      <div><span class="p num">7</span><span>กิ๊ฟ</span><span class="s num">1,348</span></div>
-      <div><span class="p num">8</span><span>ฟ้า</span><span class="s num">988</span></div>
-    </div>
-    <div class="rule warnbox" style="margin:18px 0 0">
-      บวกสถิติดีสุดของทั้งวันจากทุกเกมเข้าด้วยกัน · เทียบกับมุมมอง <b>ตามอันดับ</b> แล้วผู้ชนะสองอันดับแรกเหมือนกัน
-      แต่ <b>เอิร์ธ</b> ที่เป็นแชมป์เปโคแดชของทั้งวัน ตกจากอันดับ 3 ไปอยู่อันดับ 6 และ <b>โจ้</b> ขึ้นมาแทน
-    </div>
-    <div class="tv-foot"><span>แนน 4,600 = ตีโพริง 3,450 + เปโค 1,150</span><span>อัปเดตทุก 5 วินาที</span></div>
-  </div>
-</section>
-
-<!-- ============ จอแอดมิน ============ -->
-<section id="s-admin" hidden>
-  <p class="note">เครื่องมือของทีมงาน — <b>ภาษาอังกฤษล้วน ไม่มีสลับภาษา</b> (เป็น tools ไม่ใช่จอที่คนในงานเห็น · แนวเดียวกับ <code>rou-admin</code> ของ ROPZ) · ส่วนจอที่คนในงานเห็นสลับภาษาได้ ดูที่ฝั่งเครื่องบนเวทีและจอในงาน</p>
-  <div class="adm">
-    <div class="adm-tabs" role="tablist">
-      <button role="tab" data-tab="stations" aria-selected="true">Stations</button>
-      <button role="tab" data-tab="round" aria-selected="false">Rounds</button>
-      <button role="tab" data-tab="screen" aria-selected="false">Stage screen</button>
-      <button role="tab" data-tab="runs" aria-selected="false">Runs</button>
-      <button role="tab" data-tab="games" aria-selected="false">Games</button>
-    </div>
-    <div class="adm-body">
-
-      <div data-panel="stations">
-        <div class="adm-h"><h2 class="display">Stations</h2><button class="btn mini" style="background:var(--poring);color:#1B0A12;border:0">+ Issue a code</button></div>
-        <div class="stat-row">
-          <div class="stat"><b class="num">4</b><span>Activated</span></div>
-          <div class="stat"><b class="num">3</b><span>Online now</span></div>
-          <div class="stat"><b class="num">1</b><span>Revoked</span></div>
-        </div>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>Station</th><th>Activation code</th><th>Status</th><th>Last seen</th><th>Runs</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>Left stage · #1</td><td><span class="key">RMG-8A2P</span></td><td><span class="chip on">● Online</span></td><td>Just now</td><td class="num">38</td><td><button class="mini danger">Revoke</button></td></tr>
-            <tr><td>Left stage · #2</td><td><span class="key">RMG-4K7Q</span></td><td><span class="chip on">● Online</span></td><td>Just now</td><td class="num">41</td><td><button class="mini danger">Revoke</button></td></tr>
-            <tr><td>Right stage · #3</td><td><span class="key">RMG-9C1M</span></td><td><span class="chip on">● Online</span></td><td>12s ago</td><td class="num">29</td><td><button class="mini danger">Revoke</button></td></tr>
-            <tr><td>Spare · #4</td><td><span class="key">RMG-2X6V</span></td><td><span class="chip off">Not activated</span></td><td>—</td><td class="num">0</td><td><button class="mini danger">Revoke</button></td></tr>
-            <tr><td>Test · #0</td><td><span class="key">RMG-0T0T</span></td><td><span class="chip rev">Revoked</span></td><td>Yesterday 17:40</td><td class="num">12</td><td><button class="mini">Issue new code</button></td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div data-panel="round" hidden>
-        <div class="adm-h"><h2 class="display">Rounds</h2></div>
-        <div class="switch-row">
-          <div><b>Split the event into rounds</b><p>Off — one board for the whole event, highest score leads. On — the board gets a “this round” view and you can start a new round at any time.</p></div>
-          <button class="sw" role="switch" aria-checked="true" aria-label="Split the event into rounds"></button>
-        </div>
-        <div class="stat-row">
-          <div class="stat"><b class="num">4</b><span>Current round</span></div>
-          <div class="stat"><b class="num">6:12</b><span>Left in this round</span></div>
-          <div class="stat"><b class="num">23</b><span>Players this round</span></div>
-          <div class="stat"><b class="num">108</b><span>Players today</span></div>
-        </div>
-        <div class="rule" style="margin-bottom:16px">
-          🔴 <b>Stations never wait for this button.</b> Players can start at any time, no matter when a round changes. “Start a new round” <b>draws a line on the board</b> — it does not open a gate.
-          <br>· A score belongs to the round the player <b>started</b> in, not the one they finished in, so anyone who starts before the line and finishes after it stays in the round they saw when they stepped up.
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-          <button class="btn">Start a new round</button>
-          <button class="mini" style="border-color:#5C4028;color:var(--warn)">⏸ Pause scoring</button>
-          <button class="mini danger">Clear this round</button>
-        </div>
-        <p class="hint" style="margin-top:14px"><b>Pause scoring</b> is for the announcement only — numbers stop moving while the host reads the names. Every station shows the ⏸ screen at the same time so no one hands a station to a player whose run would not count. <b>Rounds never advance on a timer</b> — only when someone presses the button.<br>Clearing asks for confirmation and records who did it. Past runs are kept and stay visible under Runs.</p>
-      </div>
-
-      <div data-panel="screen" hidden>
-        <div class="adm-h"><h2 class="display">Stage screen</h2><button class="mini">Open the screen ↗</button></div>
-        <div class="switch-row">
-          <div><b>Language shown on player-facing screens</b><p>Applies to the stage screen and to every station. Players can also switch it themselves from the corner of the station screen.</p></div>
-          <div class="lang" style="margin:0">
-            <button data-lang="th" aria-pressed="true">TH</button>
-            <button data-lang="en" aria-pressed="false">EN</button>
-          </div>
-        </div>
-        <div class="switch-row">
-          <div><b>Rotate through views</b><p>The screen walks through the views marked below on its own. Turn this off to hold one view.</p></div>
-          <button class="sw" role="switch" aria-checked="true" aria-label="Rotate through views"></button>
-        </div>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>View</th><th>Answers</th><th>In rotation</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>This round · per game</td><td>Who leads each game right now</td><td><span class="chip on">● Rotating</span></td><td><button class="mini">Hold this view</button></td></tr>
-            <tr><td>This round · combined by rank</td><td>Who leads this round overall</td><td><span class="chip on">● Rotating</span></td><td><button class="mini">Hold this view</button></td></tr>
-            <tr><td>This round · combined by score</td><td>Who leads this round (raw scores added)</td><td><span class="chip off">Off</span></td><td><button class="mini">Hold this view</button></td></tr>
-            <tr><td>All day · per game</td><td>Best score of the day in each game</td><td><span class="chip on">● Rotating</span></td><td><button class="mini">Hold this view</button></td></tr>
-            <tr><td>All day · combined by rank</td><td>Overall standings for the day</td><td><span class="chip off">Off</span></td><td><button class="mini">Hold this view</button></td></tr>
-            <tr><td>All day · combined by score</td><td>Overall standings for the day (raw scores added)</td><td><span class="chip off">Off</span></td><td><button class="mini">Hold this view</button></td></tr>
-          </tbody>
-        </table></div>
-        <p class="hint" style="margin:12px 0 20px">Typical use: rotate the “this round” views during the event, then hold an “all day” view for the announcement. Changes reach the screen immediately — nobody has to touch the machine driving it. 🔴 <b>Pick either “by rank” or “by score” and stay there. Never rotate both in front of an audience</b> — the standings reorder themselves with nothing wrong, and no one can explain that on stage.</p>
-
-        <div class="adm-h"><h2 class="display">How combined standings are worked out</h2></div>
-        <p class="hint" style="margin-bottom:12px"><b>By rank</b> — each game’s placing turns into points, then the points are added (table below). <b>By score</b> — raw scores from every game are added directly, which lets the game with the bigger numbers decide the outcome.</p>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>Placing in a game</th><th>#1</th><th>#2</th><th>#3</th><th>#4</th><th>#5</th><th>#6–10</th></tr></thead>
-          <tbody><tr><td>Points</td><td class="num">100</td><td class="num">80</td><td class="num">60</td><td class="num">50</td><td class="num">40</td><td class="num">30 · 25 · 20 · 15 · 10</td></tr></tbody>
-        </table></div>
-        <div class="switch-row" style="margin-top:16px">
-          <div><b>Require every game to appear in combined standings</b><p>On — players who only played one game drop off the combined board (they still appear in the per-game boards). Off — everyone counts, and players who played both games naturally have more points to gather.</p></div>
-          <button class="sw" role="switch" aria-checked="false" aria-label="Require every game"></button>
-        </div>
-      </div>
-
-      <div data-panel="runs" hidden>
-        <div class="adm-h"><h2 class="display">Runs</h2><button class="mini">Download CSV</button></div>
-        <div class="filters">
-          <select><option>All games</option><option>Whack a Poring</option><option>Peco Dash</option></select>
-          <select><option>All rounds</option><option>Round 4 (current)</option><option>Round 3</option></select>
-          <select><option>All stations</option><option>Left stage · #1</option><option>Left stage · #2</option></select>
-          <input placeholder="Search by name">
-        </div>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>Time</th><th>Name</th><th>Game</th><th>Score</th><th>Station</th><th>Round</th><th></th></tr></thead>
-          <tbody>
-            <tr><td class="num">14:21:08</td><td>แนน</td><td>Whack a Poring</td><td class="num">3,120</td><td>#1</td><td class="num">4</td><td></td></tr>
-            <tr><td class="num">14:19:47</td><td>ตี๋</td><td>Whack a Poring</td><td class="num">2,880</td><td>#2</td><td class="num">4</td><td></td></tr>
-            <tr><td class="num">14:18:02</td><td>โจ้</td><td>Whack a Poring</td><td class="num">2,410</td><td>#2</td><td class="num">4</td><td></td></tr>
-            <tr><td class="num">14:17:30</td><td class="flag">ไอ้เ*** ⚑</td><td>Peco Dash</td><td class="num">640</td><td>#3</td><td class="num">4</td><td><button class="mini danger">Hide name</button></td></tr>
-            <tr><td class="num">14:16:55</td><td>เอิร์ธ</td><td>Peco Dash</td><td class="num">1,284</td><td>#3</td><td class="num">4</td><td></td></tr>
-            <tr><td class="num">14:15:12</td><td>แนน</td><td>Peco Dash</td><td class="num">1,150</td><td>#1</td><td class="num">4</td><td></td></tr>
-            <tr><td class="num">14:12:40</td><td>โจ้</td><td>Whack a Poring</td><td class="num">1,880</td><td>#2</td><td class="num">3</td><td></td></tr>
-          </tbody>
-        </table></div>
-        <p class="hint" style="margin-top:12px">This is every run that was played, not the standings — the stage screen takes each player’s best run from here. A name flagged ⚑ is one the filter was unsure about; hiding it shows “Player #47” on the screen instead.</p>
-      </div>
-
-      <div data-panel="games" hidden>
-        <div class="adm-h"><h2 class="display">Games</h2><button class="mini">+ Add a game</button></div>
-        <div class="tbl-wrap"><table>
-          <thead><tr><th>Game</th><th>Aspect</th><th>Status</th><th>Plays</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>Whack a Poring</td><td>9:16 portrait</td><td><span class="chip on">● Playable</span></td><td class="num">156</td><td><button class="mini">Disable</button></td></tr>
-            <tr><td>Peco Dash</td><td>16:9 landscape</td><td><span class="chip on">● Playable</span></td><td class="num">98</td><td><button class="mini">Disable</button></td></tr>
-            <tr><td>Ragnarok Endless</td><td>16:9 landscape</td><td><span class="chip off">Spare · not enabled</span></td><td class="num">0</td><td><button class="mini">Enable</button></td></tr>
-          </tbody>
-        </table></div>
-        <p class="hint" style="margin-top:12px">Enabling or disabling a game reaches every station from the next player onward — nobody mid-run is cut off. Keep a spare enabled-ready in case a main game misbehaves on the day.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-</div>
-
-<div class="switcher" id="switcher" hidden>
-  <button id="prev" aria-label="แบบก่อนหน้า">←</button>
-  <span class="lbl" id="vlabel">A · ตารางอันดับ</span>
-  <button id="next" aria-label="แบบถัดไป">→</button>
-</div>
-
+</head>
+<body>
+<main class="gate">
+  <p class="brand">RO PlayZone</p>
+  <h1>RO MINIGAME Stage Kit</h1>
+  <p class="sub">This document is encrypted. Enter the passphrase to open it.
+    <span lang="th">เอกสารนี้เข้ารหัสไว้ ใส่รหัสผ่านเพื่อเปิดอ่าน</span></p>
+  <form id="f" autocomplete="off">
+    <input id="pw" type="password" placeholder="Passphrase / รหัสผ่าน" autocomplete="off" autofocus>
+    <button type="submit" id="go">Unlock</button>
+  </form>
+  <p class="msg" id="msg"></p>
+  <p class="fine">AES-256-GCM · PBKDF2-SHA256 <code>600000</code> iterations.
+    Decryption happens entirely in your browser — the passphrase is never sent anywhere.</p>
+</main>
 <script>
-const VIEWS = {
-  'round-split':'รอบนี้ · แยกตามเกม',
-  'round-rank' :'รอบนี้ · รวมทุกเกม · ตามอันดับ',
-  'round-score':'รอบนี้ · รวมทุกเกม · ตามคะแนน',
-  'day-split'  :'ทั้งวัน · แยกตามเกม',
-  'day-rank'   :'ทั้งวัน · รวมทุกเกม · ตามอันดับ',
-  'day-score'  :'ทั้งวัน · รวมทุกเกม · ตามคะแนน',
-};
-const KEYS = Object.keys(VIEWS);
-const $ = (s,r=document)=>r.querySelector(s);
-const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+var SALT = "m+iwvmNhB6yeam17ZLEonQ==", IV = "J4qs1CKAW7vFA89i", CT = "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", ITER = 600000;
 
-/* ---- surfaces ---- */
-function showSurface(name){
-  $$('.surfaces button').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.surface===name)));
-  ['kiosk','board','admin'].forEach(n=>{ $('#s-'+n).hidden = n!==name; });
-  $('#switcher').hidden = name!=='board';
-  const u = new URL(location); u.searchParams.set('surface',name); history.replaceState({},'',u);
+function b64(s){
+  var bin = atob(s), u = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return u;
 }
-$$('.surfaces button').forEach(b=>b.onclick=()=>showSurface(b.dataset.surface));
-
-/* ---- kiosk steps ---- */
-function showStep(step){
-  $$('[data-step]').forEach(el=>{ el.hidden = el.dataset.step!==step; });
-  $$('.steps button').forEach(b=>b.setAttribute('aria-current', String(b.dataset.go===step)));
+function say(t, working){
+  var m = document.getElementById("msg");
+  m.textContent = t; m.className = "msg" + (working ? " work" : "");
 }
-$$('[data-go]').forEach(b=>b.onclick=()=>showStep(b.dataset.go));
-
-/* ---- board views (2 แกน = 4 มุมมอง) ---- */
-function showVariant(v){
-  if(!VIEWS[v]) v='round-split';
-  $$('[data-view]').forEach(el=>{ el.hidden = el.dataset.view!==v; });
-  $('#vlabel').textContent = VIEWS[v];
-  const [when,how] = v.split('-');
-  $$('[data-axis]').forEach(b=>{
-    const on = (b.dataset.axis==='when' ? when : how) === b.dataset.val;
-    b.setAttribute('aria-pressed', String(on));
-  });
-  const u = new URL(location); u.searchParams.set('variant',v); history.replaceState({},'',u);
+async function ungzip(buf){
+  if (typeof DecompressionStream !== "function")
+    throw new Error("browser too old for DecompressionStream");
+  var ds = new DecompressionStream("gzip");
+  var stream = new Blob([buf]).stream().pipeThrough(ds);
+  return new Uint8Array(await new Response(stream).arrayBuffer());
 }
-function cycle(d){
-  const cur = new URL(location).searchParams.get('variant') || 'round-split';
-  const i = Math.max(0, KEYS.indexOf(cur));
-  showVariant(KEYS[(i + d + KEYS.length) % KEYS.length]);
+async function unlock(pass){
+  var enc = new TextEncoder();
+  var base = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
+  var key = await crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt:b64(SALT), iterations:ITER, hash:"SHA-256" },
+    base, { name:"AES-GCM", length:256 }, false, ["decrypt"]);
+  var packed = await crypto.subtle.decrypt({ name:"AES-GCM", iv:b64(IV) }, key, b64(CT));
+  var html = new TextDecoder().decode(await ungzip(packed));
+  swap(html);
 }
-$$('[data-axis]').forEach(b=>b.onclick=()=>{
-  const cur = (new URL(location).searchParams.get('variant') || 'round-split').split('-');
-  if(b.dataset.axis==='when') cur[0]=b.dataset.val; else cur[1]=b.dataset.val;
-  showVariant(cur.join('-'));
-});
-$('#prev').onclick=()=>cycle(-1);
-$('#next').onclick=()=>cycle(1);
-addEventListener('keydown', e=>{
-  if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
-  if($('#switcher').hidden) return;
-  if(e.key==='ArrowLeft') cycle(-1);
-  if(e.key==='ArrowRight') cycle(1);
-});
-
-/* ---- admin tabs ---- */
-$$('.adm-tabs button').forEach(b=>b.onclick=()=>{
-  $$('.adm-tabs button').forEach(x=>x.setAttribute('aria-selected', String(x===b)));
-  $$('[data-panel]').forEach(p=>{ p.hidden = p.dataset.panel!==b.dataset.tab; });
-});
-
-/* ---- สลับภาษาของ *จอที่คนในงานเห็น* (เครื่อง + บอร์ด) ----
-   จอแอดมินเป็นอังกฤษตายตัว ไม่อยู่ในนี้ — มันเป็น tools ไม่ใช่จอของคนในงาน
-   ชื่อผู้เล่นไม่แปล (เป็นชื่อคน) และตัวเลขไม่แปล */
-const EN = {
-  // โหมด / หัวจอ
-  'โหมดทีมงาน':'Staff mode','ตาของผู้เล่น':"Player's turn",'หยุดรับคะแนนชั่วคราว':'Scoring paused',
-  'เวทีซ้าย · เครื่อง #2':'Left stage · station #2',
-  'เวทีซ้าย · เครื่อง #2 · รอบที่ 4':'Left stage · station #2 · round 4',
-  'ขั้นที่ 1 จาก 2 · ทีมงานเลือก':'Step 1 of 2 · staff picks',
-  'ตีโพริง · ขั้นที่ 2 จาก 2':'Whack a Poring · step 2 of 2',
-  'รับเครื่องคืนแล้ว · เวทีซ้าย #2':'Station returned · left stage #2',
-  'ทีมงานสั่งจากจอแอดมิน':'Paused from the admin screen',
-  'โจ้ · ตีโพริง':'โจ้ · Whack a Poring','จบเกมแล้ว':'Run finished',
-  // จอล็อก
-  'เครื่องนี้ยังไม่ได้เปิดใช้งาน':'This station is not activated yet','ใส่รหัสเปิดเครื่อง':'Enter the activation code',
-  'ทีมงานรับรหัสจากจอแอดมิน · หนึ่งเครื่องหนึ่งรหัส':'Staff get the code from the admin screen — one code per station',
-  'เปิดใช้งานเครื่อง':'Activate this station',
-  // รอผู้เล่น
-  'พร้อมรับผู้เล่นคนถัดไป':'Ready for the next player','รอผู้เล่น':'Waiting for a player',
-  'เล่นไปแล้ววันนี้':'runs today','ในรอบนี้':'this round','เหลือในรอบ':'left in the round',
-  'กดเมื่อมีคนขึ้นมาบนเวที — ทีมงานเลือกเกมให้ก่อน แล้วค่อยส่งเครื่อง':'Press when someone steps up — staff pick the game first, then hand the station over',
-  'เริ่มผู้เล่นคนใหม่':'Start a new player',
-  // เลือกเกม
-  'เลือกเกมให้ผู้เล่น':'Pick a game for the player',
-  'เลือกตามคิวหน้าเวที · เกมที่ปิดจากจอแอดมินจะไม่ขึ้นที่นี่':'Pick to suit the queue — games disabled from the admin screen do not appear here',
-  'ตีโพริง':'Whack a Poring','เปโค แดช':'Peco Dash',
-  '60 วินาที · แนวตั้ง · เล่นแล้ว 156 รอบ':'60 seconds · portrait · 156 runs so far',
-  '~90 วินาที · แนวนอน · เล่นแล้ว 98 รอบ':'~90 seconds · landscape · 98 runs so far',
-  'ยกเลิก กลับไปรอ':'Cancel, go back to waiting',
-  // ใส่ชื่อ
-  '📱 ทีมงานส่งเครื่องให้ผู้เล่นตรงนี้':'📱 Staff hand the station over here',
-  'ใส่ชื่อที่จะขึ้นบอร์ด':'Enter the name for the board','ใช้ชื่อนี้ได้':'This name is free',
-  'ยังไม่ได้ใส่ชื่อ':'No name yet','ลองชื่อนี้แทน':'Try this instead','เริ่มเล่น':'Start playing',
-  // กำลังเล่น
-  'คะแนนตอนนี้':'Score so far','เหลือ 0:23':'0:23 left',
-  'พื้นที่นี้คือตัวเกมจริงที่รันอยู่ในกรอบ':'The real game runs inside this frame',
-  'ข้ามไปจอสรุป →':'Skip to the result screen →',
-  // สรุป
-  'ได้อันดับ':'Placed','ของรอบนี้':'this round',
-  'เสร็จแล้ว · คืนเครื่องให้ทีมงาน':'Done · return the station to staff',
-  'อยากเล่นอีกเกม ทีมงานกดเลือกให้ใหม่จากจอถัดไป':'To play again, staff pick a game on the next screen',
-  // รับเครื่องคืน
-  'ผู้เล่นคนนี้เล่นอะไรไปแล้ว':'What this player has played','ยังไม่เล่น':'Not played yet',
-  'รับผู้เล่นคนใหม่':'Start a new player',
-  'ล้างชื่อ “โจ้” ออกจากเครื่อง · คนถัดไปได้ตัวตนใหม่ของตัวเอง':'Clears “โจ้” from the station — the next person gets their own fresh identity',
-  'ให้ “โจ้” เล่นต่ออีกรอบ':'Let “โจ้” play another run',
-  'คะแนนรอบใหม่ไปรวมกับชื่อเดิม · เลือกเกมได้ทั้งเกมที่ยังไม่เล่นและเกมเดิม':'The new run counts under the same name — pick either the unplayed game or the same one again',
-  'ถ้าอันดับรวมทุกเกมเปิดใช้อยู่ การให้เล่นเกมที่ยังไม่เล่นจะทำให้ผู้เล่นคนนี้มีสิทธิ์ติดอันดับรวม':'If combined standings are in use, letting them play the unplayed game makes them eligible for it',
-  // หยุดรับคะแนน
-  'กำลังประกาศผลรอบที่ 4':'Announcing the results of round 4',
-  'ยังไม่ส่งเครื่องให้ผู้เล่น':'Do not hand the station to a player yet',
-  'ถ้าให้เล่นตอนนี้ คะแนนจะไม่ถูกนับ — รอทีมงานกดรับคะแนนต่อจากจอแอดมินก่อน':'A run started now would not count — wait until scoring is resumed from the admin screen',
-  'เครื่องที่หยุดพร้อมกัน':'stations paused','คนในรอบนี้':'players this round',
-  '(mockup) กลับไปจอรอผู้เล่น':'(mockup) back to the waiting screen',
-  // บอร์ด
-  'รอบนี้ · แยกตามเกม':'This round · per game','ใครนำในแต่ละเกม':'Who leads each game',
-  'รอบนี้ · รวมทุกเกม · ตามอันดับ':'This round · combined by rank','อันดับรวมของรอบ':'Combined standings for the round',
-  'รอบนี้ · รวมทุกเกม · ตามคะแนน':'This round · combined by score',
-  'ทั้งวัน · แยกตามเกม':'All day · per game','สถิติสูงสุดของวัน':'Best of the day',
-  'ทั้งวัน · รวมทุกเกม · ตามอันดับ':'All day · combined by rank','อันดับรวมทั้งวัน':'Standings for the day',
-  'ทั้งวัน · รวมทุกเกม · ตามคะแนน':'All day · combined by score',
-  'คะแนนจากการทุบ · 60 วินาที':'Hits scored · 60 seconds','ระยะที่วิ่งได้ · เมตร':'Distance run · metres',
-  'อัปเดตทุก 5 วินาที':'Updates every 5 seconds','เล่นเกมเดียว':'one game only',
-  'ที่ 1 ของเปโคแดช':'won Peco Dash',
-  'คะแนนดีสุดของแต่ละคนในรอบนี้ · คนละเกมคนละหน่วย จึงไม่เอามาเรียงรวมกันที่นี่':"Each player's best run this round — the games use different units, so they are not merged here",
-  'คนที่เล่นครบสองเกมสะสมแต้มได้มากกว่าโดยธรรมชาติ':'Players who took on both games naturally gather more points',
-  'คนที่ชนะเปโคแดชทั้งรอบ อยู่อันดับ 6 — เทียบกับอันดับ 2 ในมุมมองตามอันดับ':'The player who won Peco Dash sits 6th here — 2nd in the by-rank view',
-  'คะแนนดีสุดของแต่ละคนตลอดวัน ไม่ใช่ผลรวมของทุกรอบที่เล่น':"Each player's best run of the day, not the sum of every run",
-  'แนน 160 = ตีโพริง #1 (100) + เปโค #3 (60)':'แนน 160 = Whack a Poring #1 (100) + Peco #3 (60)',
-  'แนน 4,600 = ตีโพริง 3,450 + เปโค 1,150':'แนน 4,600 = Whack a Poring 3,450 + Peco 1,150',
-};
-const TH = Object.fromEntries(Object.entries(EN).map(([k,v])=>[v,k]));
-function setLang(l){
-  $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.lang===l)));
-  // แปลเฉพาะ element ที่ไม่มีลูก (leaf) ในฝั่งเครื่องและบอร์ด — ไม่แตะจอแอดมิน
-  $$('#s-kiosk .screen *, #s-board .tv *').forEach(el=>{
-    if(el.children.length) return;
-    const t = el.textContent.trim();
-    const to = l==='en' ? EN[t] : TH[t];
-    if(to) el.textContent = to;
-  });
-}
-$$('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
-/* [KEEP] web-publish: ภาษาจาก URL ?lang=en / #en ตอนขึ้น GitHub Pages — อย่าลบ */
-try{var _q=(new URLSearchParams(location.search).get('lang')||location.hash.replace('#','')||'').toLowerCase();if(_q==='en')setLang('en');}catch(e){}
-
-/* ---- ชื่อต้องไม่ซ้ำ (ทั้งงาน) ---- */
-const TAKEN = ['แนน','ตี๋','เอิร์ธ','ปอนด์','มิ้นท์','กิ๊ฟ','ฟ้า','บอส','บอล'];
-const nick = $('#nick'), nmsg = $('#nick-msg'), nsug = $('#nick-suggest'), ngo = $('#nick-go');
-function checkNick(){
-  const v = nick.value.trim();
-  const dup = TAKEN.includes(v);
-  const empty = v.length === 0;
-  nick.classList.toggle('bad', dup);
-  ngo.disabled = dup || empty;
-  nsug.hidden = !dup;
-  if(dup){
-    nmsg.className = 'nick-bad';
-    nmsg.textContent = '“'+v+'” มีคนใช้ชื่อนี้แล้ว ลองชื่ออื่น';
-    [...nsug.querySelectorAll('[data-suggest]')].forEach((b,i)=>{
-      b.dataset.suggest = i===0 ? v+'2' : v+'น้อย';
-      b.textContent = b.dataset.suggest;
-    });
-  } else if(empty){
-    nmsg.className = 'hint'; nmsg.textContent = 'ยังไม่ได้ใส่ชื่อ';
-  } else {
-    nmsg.className = 'nick-ok'; nmsg.textContent = 'ใช้ชื่อนี้ได้';
+/* สลับเนื้อในของ head/body แทน document.write (ซึ่งค้างกับไฟล์ขนาดหลายแสนไบต์)
+   และแทน replaceChild ทั้ง documentElement (ซึ่งทำให้ renderer ค้างเช่นกัน)
+   วิธีนี้คง URL เดิมไว้ ?lang= จึงยังทำงาน แต่ script ที่ parse มาจะไม่รันเอง
+   ต้องสร้าง <script> ใหม่ทับทีละตัว */
+function swap(html){
+  var doc = new DOMParser().parseFromString(html, "text/html");
+  document.head.innerHTML = doc.head.innerHTML;
+  document.body.innerHTML = doc.body.innerHTML;
+  document.body.className = doc.body.className;
+  var root = doc.documentElement;
+  for (var a = 0; a < root.attributes.length; a++)
+    document.documentElement.setAttribute(root.attributes[a].name, root.attributes[a].value);
+  var olds = [].slice.call(document.querySelectorAll("script"));
+  for (var i = 0; i < olds.length; i++){
+    var s = document.createElement("script");
+    for (var j = 0; j < olds[i].attributes.length; j++)
+      s.setAttribute(olds[i].attributes[j].name, olds[i].attributes[j].value);
+    s.textContent = olds[i].textContent;
+    olds[i].parentNode.replaceChild(s, olds[i]);
   }
 }
-if(nick){
-  nick.oninput = checkNick;
-  nsug.onclick = e=>{ const s = e.target.dataset.suggest; if(s){ nick.value = s; checkNick(); nick.focus(); } };
-  checkNick();
-}
-
-/* ---- switches ---- */
-$$('.sw').forEach(sw=>sw.onclick = ()=>
-  sw.setAttribute('aria-checked', sw.getAttribute('aria-checked')==='true' ? 'false':'true'));
-
-/* ---- boot from URL ---- */
-const p = new URL(location).searchParams;
-showSurface(p.get('surface') || 'kiosk');
-showStep('lock');
-showVariant(p.get('variant') || 'round-split');
+document.getElementById("f").addEventListener("submit", function(e){
+  e.preventDefault();
+  var pw = document.getElementById("pw").value;
+  if (!pw) return;
+  var btn = document.getElementById("go");
+  btn.disabled = true;
+  say("Decrypting… / กำลังถอดรหัส…", true);
+  /* หน่วงให้ข้อความขึ้นก่อน PBKDF2 กินเธรดหลัก — ห้ามใช้ requestAnimationFrame
+     เพราะมันไม่ยิงเมื่อหน้าอยู่ในแท็บหลัง จะทำให้ค้างที่ "กำลังถอดรหัส" ตลอดไป */
+  setTimeout(async function(){
+    try { await unlock(pw); }
+    catch (err){
+      btn.disabled = false;
+      say(String(err).indexOf("DecompressionStream") >= 0
+        ? "This browser is too old to open the document."
+        : "Wrong passphrase. / รหัสผ่านไม่ถูกต้อง");
+      document.getElementById("pw").select();
+    }
+  }, 30);
+});
+if (!window.crypto || !crypto.subtle)
+  say("Needs a secure context (https). / ต้องเปิดผ่าน https");
 </script>
-
-</body></html>
+</body>
+</html>
