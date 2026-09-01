@@ -1,0 +1,939 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><!-- [KEEP] web-publish: กัน Google index — อย่าลบ --><meta name="robots" content="noindex, nofollow, noarchive, nosnippet"><style>:root{color-scheme:dark}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#120E18;color:#F2ECF5}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style><title>RO MINIGAME Stage Kit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+</head><body>
+<style>
+/* PROTOTYPE — throwaway. ตอบคำถามเดียว: หน้าจอของงานควรเป็นแบบไหน
+   ไม่ต่อ API ไม่มี persistence รีเฟรชแล้วกลับค่าเริ่มต้น */
+:root{
+  --ink:#F2ECF5; --ink-dim:#B4A8C0; --ink-faint:#7C7089;
+  --ground:#120E18; --panel:#1B1522; --panel-2:#241C2E; --line:#33283F;
+  --poring:#FF7BA8; --poring-deep:#C94C79;
+  --cyan:#5BE1E6; --gold:#FFC861; --lime:#8BE86B; --warn:#FF9F5B; --bad:#FF6B6B;
+  --r:14px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  font-size:15px; line-height:1.55;
+}
+h1,h2,h3,.display{font-family:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;font-weight:700;text-wrap:balance;margin:0}
+.num{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell (ไม่ใช่ส่วนของดีไซน์ที่ตรวจ) ---------- */
+.shell{position:sticky;top:0;z-index:50;background:#0C0910;border-bottom:1px solid var(--line)}
+.shell-in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:9px}
+.brand b{font-family:"Chakra Petch";font-size:17px;letter-spacing:.02em}
+.brand span{font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase}
+.surfaces{display:flex;gap:4px;margin-left:auto;background:var(--panel);padding:4px;border-radius:11px}
+.surfaces button{padding:7px 15px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--ink-dim)}
+.surfaces button[aria-selected="true"]{background:var(--poring);color:#1B0A12;font-weight:600}
+.stage{max-width:1180px;margin:0 auto;padding:24px 20px 120px}
+.note{font-size:12.5px;color:var(--ink-faint);border-left:2px solid var(--line);padding-left:11px;margin:0 0 20px}
+
+/* ---------- ฝั่ง 1: เครื่องบนเวที ---------- */
+.kiosk-wrap{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:22px;align-items:start}
+@media (max-width:860px){.kiosk-wrap{grid-template-columns:1fr}}
+.device{
+  background:#0A070E;border:1px solid var(--line);border-radius:20px;padding:14px;
+  box-shadow:0 24px 60px -30px #000;
+}
+.screen{
+  background:linear-gradient(180deg,#1C1426,#140F1C);border-radius:12px;
+  min-height:520px;display:flex;flex-direction:column;position:relative;overflow:hidden;
+}
+.screen > [data-step]{flex:1;display:flex;flex-direction:column;min-height:0}
+.scr-pad{padding:34px 30px;flex:1;display:flex;flex-direction:column}
+.center{align-items:center;justify-content:center;text-align:center;gap:18px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+.big{font-size:34px;line-height:1.15}
+.lock-badge{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#2A1B24;border:1px solid var(--poring-deep);font-size:26px}
+.keyfield{display:flex;gap:8px;justify-content:center;margin-top:4px}
+.keyfield input{
+  font-family:"Chakra Petch";font-size:22px;letter-spacing:.3em;text-align:center;width:230px;
+  background:#0F0B14;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px
+}
+.btn{background:var(--poring);color:#1B0A12;font-weight:600;padding:13px 26px;border-radius:11px;font-size:15px}
+.btn:hover{background:#FF94B8}
+.btn-ghost{border:1px solid var(--line);color:var(--ink-dim);padding:12px 22px;border-radius:11px}
+.btn-lg{font-size:19px;padding:17px 40px;border-radius:14px}
+.attract-ring{width:120px;height:120px;border-radius:50%;border:2px dashed var(--poring-deep);display:grid;place-items:center;font-size:44px;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.05);opacity:1}}
+/* โหมดทีมงาน vs โหมดผู้เล่น — คนละคนอ่านคนละจอ ต้องแยกออกตั้งแต่ยังไม่อ่านตัวหนังสือ */
+.mode-bar{display:flex;align-items:center;gap:9px;padding:9px 18px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.mode-staff{background:#10222A;color:var(--cyan);border-bottom:1px solid #1D3D48}
+.mode-player{background:#2B1420;color:var(--poring);border-bottom:1px solid #47212F}
+.mode-hold{background:#241B0F;color:var(--warn);border-bottom:1px solid #5C4028}
+.hold-badge{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#241B0F;border:1px solid #5C4028;font-size:26px;color:var(--warn)}
+.mode-bar .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.mode-bar .right{margin-left:auto;letter-spacing:0;text-transform:none;color:var(--ink-faint);font-weight:400}
+.staff-screen{background:linear-gradient(180deg,#111A20,#0D1419)}
+.queue{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px}
+.queue div{background:#16232B;border:1px solid #1D3D48;border-radius:11px;padding:12px;text-align:center}
+.queue b{display:block;font-family:"Chakra Petch";font-size:24px;color:var(--cyan)}
+.queue span{font-size:11.5px;color:var(--ink-faint)}
+.btn-staff{background:var(--cyan);color:#06222A;font-weight:600;padding:13px 26px;border-radius:11px;font-size:15px}
+.btn-staff:hover{background:#7BEBEF}
+.handoff{display:flex;align-items:center;gap:10px;background:#2B1420;border:1px solid #47212F;border-radius:11px;padding:11px 15px;font-size:13px;color:var(--poring);max-width:400px}
+.played{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.played div{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-radius:11px;font-size:14px;border:1px solid}
+.played .done{background:#16232B;border-color:#1D3D48}
+.played .done b{color:var(--cyan);font-family:"Chakra Petch"}
+.played .todo{background:var(--panel-2);border-color:var(--line);color:var(--ink-faint)}
+.choice{display:grid;gap:10px}
+.choice button{text-align:left;padding:15px 18px;border-radius:13px;border:1px solid}
+.choice b{display:block;font-family:"Chakra Petch";font-size:17px;margin-bottom:3px}
+.choice span{font-size:12.5px;line-height:1.45;display:block}
+.choice-main{background:var(--cyan);color:#06222A;border-color:var(--cyan)}
+.choice-main span{color:#0A3540}
+.choice-main:hover{background:#7BEBEF}
+.choice-alt{background:transparent;border-color:var(--line);color:var(--ink)}
+.choice-alt span{color:var(--ink-faint)}
+.choice-alt:hover{border-color:var(--poring)}
+.nick-input{
+  font-family:"Chakra Petch";font-size:26px;text-align:center;width:100%;max-width:340px;
+  background:#0F0B14;border:1px solid var(--line);border-bottom:2px solid var(--poring);
+  color:var(--ink);border-radius:10px;padding:14px
+}
+.hint{font-size:12.5px;color:var(--ink-faint)}
+.nick-input.bad{border-color:var(--bad);border-bottom-color:var(--bad)}
+.nick-ok,.nick-bad{font-size:13px;font-weight:500}
+.nick-ok{color:var(--lime)}
+.nick-bad{color:var(--bad)}
+.suggest{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-faint);flex-wrap:wrap;justify-content:center}
+.btn:disabled{background:#3A2C46;color:var(--ink-faint);cursor:not-allowed}
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin-top:6px}
+@media (max-width:520px){.game-grid{grid-template-columns:1fr}}
+.game-card{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;text-align:left}
+.game-card:hover{border-color:var(--poring)}
+.game-art{height:104px;display:grid;place-items:center;font-size:38px}
+.g1{background:linear-gradient(145deg,#3A1E32,#5A2942)}
+.g2{background:linear-gradient(145deg,#1E2E3A,#27455A)}
+.game-meta{padding:11px 13px}
+.game-meta b{font-family:"Chakra Petch";font-size:16px;display:block}
+.game-meta span{font-size:12px;color:var(--ink-faint)}
+.playing{background:#0A070E;flex:1;display:grid;place-items:center;position:relative}
+.play-hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:14px 18px;font-size:13px;color:var(--ink-dim)}
+.play-score{font-family:"Chakra Petch";font-size:40px;color:var(--cyan)}
+.result-score{font-family:"Chakra Petch";font-size:64px;line-height:1;color:var(--gold)}
+.rank-line{display:flex;align-items:center;gap:10px;justify-content:center;font-size:15px;color:var(--ink-dim)}
+.rank-pill{background:var(--gold);color:#2A1B00;font-weight:700;padding:3px 12px;border-radius:99px;font-family:"Chakra Petch"}
+.mini-board{width:100%;max-width:360px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mini-board div{display:flex;justify-content:space-between;padding:8px 13px;font-size:13.5px;border-bottom:1px solid var(--line)}
+.mini-board div:last-child{border:0}
+.mini-board .me{background:#2B1A24;color:var(--ink)}
+.steps{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.steps h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.steps button{display:block;width:100%;text-align:left;padding:9px 12px;border-radius:9px;font-size:13.5px;color:var(--ink-dim);margin-bottom:3px}
+.steps button[aria-current="true"]{background:var(--panel-2);color:var(--ink);box-shadow:inset 2px 0 0 var(--poring)}
+.steps small{display:block;color:var(--ink-faint);font-size:11.5px}
+
+/* ---------- ฝั่ง 2: จอบอร์ด ---------- */
+.view-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.axis{display:flex;gap:3px;background:var(--panel);border:1px solid var(--line);padding:4px;border-radius:11px}
+.axis button{padding:8px 16px;border-radius:8px;font-size:13.5px;color:var(--ink-dim)}
+.axis button[aria-pressed="true"]{background:var(--cyan);color:#06222A;font-weight:600}
+.axis.pink button[aria-pressed="true"]{background:var(--poring);color:#1B0A12}
+.rule{background:#16232B;border:1px solid #1D3D48;border-radius:10px;padding:9px 14px;font-size:12.5px;color:var(--ink-dim);margin-bottom:16px}
+.rule b{color:var(--cyan);font-family:"Chakra Petch"}
+.pts{display:inline-flex;gap:5px;font-size:11.5px;color:var(--ink-faint);margin-left:10px}
+.pts span{background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;white-space:nowrap}
+.lb-row.wide{grid-template-columns:56px 1fr auto auto;gap:14px}
+.lb-row .breakdown{display:flex;gap:6px;font-size:11.5px;color:var(--ink-faint)}
+.lb-row .breakdown b{color:var(--ink-dim);font-family:"Chakra Petch"}
+.solo{color:var(--warn);font-size:11.5px;border:1px solid #5C4028;background:#241B0F;border-radius:6px;padding:1px 7px}
+.rule.warnbox{background:#241B0F;border-color:#5C4028;color:var(--ink-dim)}
+.rule.warnbox b{color:var(--warn)}
+.lb-row.flagged{border-color:#5C4028;background:linear-gradient(90deg,#241B0F,#1B1522)}
+.lb-row.flagged .sc{color:var(--warn)}
+.tv{background:#08060B;border:1px solid var(--line);border-radius:16px;padding:30px 34px;min-height:560px;display:flex;flex-direction:column}
+.tv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}
+.tv-title{font-size:32px}
+.round-chip{background:var(--panel-2);border:1px solid var(--line);border-radius:99px;padding:6px 15px;font-size:13px;color:var(--ink-dim)}
+.round-chip b{color:var(--cyan);font-family:"Chakra Petch"}
+/* A */
+.lb{display:flex;flex-direction:column;gap:7px;flex:1}
+.lb-row{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
+.lb-row .pos{font-family:"Chakra Petch";font-size:24px;color:var(--ink-faint);text-align:center}
+.lb-row .who{font-size:19px;font-weight:500}
+.lb-row .sc{font-family:"Chakra Petch";font-size:26px;color:var(--cyan)}
+.lb-row.top1{background:linear-gradient(90deg,#3A2410,#1B1522);border-color:var(--gold)}
+.lb-row.top1 .pos,.lb-row.top1 .sc{color:var(--gold)}
+.lb-row.top2{border-color:#6B7A8A}.lb-row.top3{border-color:#8A6244}
+/* B */
+.podium{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:end;margin-bottom:24px}
+.pod{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center}
+.pod .medal{font-size:30px}
+.pod .pname{font-size:20px;font-weight:600;margin-top:6px}
+.pod .pscore{font-family:"Chakra Petch";font-size:32px;margin-top:2px}
+.pod.p1{padding-bottom:44px;border-color:var(--gold)}.pod.p1 .pscore{color:var(--gold)}
+.pod.p2{padding-bottom:26px}.pod.p2 .pscore{color:#C3CEDA}
+.pod.p3{padding-bottom:16px}.pod.p3 .pscore{color:#D69B6E}
+.rest{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media (max-width:700px){.rest{grid-template-columns:1fr}.podium{grid-template-columns:1fr}}
+.rest div{display:grid;grid-template-columns:34px 1fr auto;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:15px}
+.rest .p{color:var(--ink-faint);font-family:"Chakra Petch"}
+.rest .s{font-family:"Chakra Petch";color:var(--cyan)}
+/* C */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.col h3{font-size:21px;margin-bottom:4px}
+.col .sub{font-size:12px;color:var(--ink-faint);margin-bottom:14px}
+.col-row{display:grid;grid-template-columns:28px 1fr auto;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px}
+.col-row:last-child{border:0}
+.col-row .p{color:var(--ink-faint);font-family:"Chakra Petch"}
+.col-row .s{font-family:"Chakra Petch";color:var(--cyan)}
+.tv-foot{margin-top:18px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-faint)}
+
+/* ---------- ฝั่ง 3: แอดมิน ---------- */
+.adm{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.adm-tabs{display:flex;gap:2px;padding:10px 14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.adm-tabs button{padding:9px 15px;font-size:13.5px;color:var(--ink-dim);border-radius:9px 9px 0 0}
+.adm-tabs button[aria-selected="true"]{background:var(--panel-2);color:var(--ink);font-weight:600}
+.lang{margin-left:auto;display:flex;gap:2px;align-self:center;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;padding:3px;margin-bottom:8px}
+.lang button{padding:4px 11px;border-radius:6px;font-size:11.5px;font-weight:600;color:var(--ink-faint);letter-spacing:.06em}
+.lang button[aria-pressed="true"]{background:var(--ink-dim);color:var(--ground)}
+.screen-lang{position:absolute;bottom:12px;right:12px;margin:0;z-index:5;background:#0F0B14E6;backdrop-filter:blur(3px)}
+.board-lang{margin-left:auto}
+.adm-body{padding:20px}
+.adm-h{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.adm-h h2{font-size:19px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);padding:0 12px 9px;font-weight:600}
+td{padding:11px 12px;border-top:1px solid var(--line)}
+.tbl-wrap{overflow-x:auto}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:2px 9px;border-radius:99px;border:1px solid}
+.chip.on{color:var(--lime);border-color:#2F5C28;background:#16240F}
+.chip.off{color:var(--ink-faint);border-color:var(--line);background:var(--panel-2)}
+.chip.rev{color:var(--bad);border-color:#5C2828;background:#240F0F}
+.key{font-family:"Chakra Petch";letter-spacing:.16em;background:var(--panel-2);padding:3px 9px;border-radius:6px;border:1px solid var(--line)}
+.mini{font-size:12.5px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);color:var(--ink-dim)}
+.mini:hover{border-color:var(--poring);color:var(--ink)}
+.danger{color:var(--bad);border-color:#5C2828}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.switch-row p{margin:4px 0 0;font-size:12.5px;color:var(--ink-faint);max-width:56ch}
+.sw{width:50px;height:28px;border-radius:99px;background:#3A2C46;position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--ink-dim);transition:.18s}
+.sw[aria-checked="true"]{background:var(--poring)}
+.sw[aria-checked="true"]::after{left:25px;background:#1B0A12}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat b{display:block;font-family:"Chakra Petch";font-size:27px;line-height:1.2}
+.stat span{font-size:12px;color:var(--ink-faint)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filters select,.filters input{background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:8px 11px;font:inherit;font-size:13px}
+.flag{color:var(--warn)}
+
+/* ---------- variant switcher (prototype chrome) ---------- */
+.switcher{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:80;
+  display:flex;align-items:center;gap:4px;background:#F2ECF5;color:#120E18;
+  border-radius:99px;padding:5px;box-shadow:0 10px 34px -8px #000;
+}
+.switcher button{width:34px;height:34px;border-radius:50%;font-size:16px;display:grid;place-items:center}
+.switcher button:hover{background:#DCD3E2}
+.switcher .lbl{font-family:"Chakra Petch";font-size:13px;font-weight:600;padding:0 12px;white-space:nowrap}
+[hidden]{display:none!important}
+</style>
+
+<div class="shell">
+  <div class="shell-in">
+    <div class="brand"><b>RO MINIGAME</b><span>mockup · ยังไม่ต่อระบบจริง</span></div>
+    <div class="surfaces" role="tablist">
+      <button role="tab" data-surface="kiosk" aria-selected="true">เครื่องบนเวที</button>
+      <button role="tab" data-surface="board" aria-selected="false">จอในงาน</button>
+      <button role="tab" data-surface="admin" aria-selected="false">จอแอดมิน</button>
+    </div>
+  </div>
+</div>
+
+<div class="stage">
+
+<!-- ============ เครื่องบนเวที ============ -->
+<section id="s-kiosk">
+  <p class="note">เครื่องเดียวกันแต่ <b>คนอ่านสองกลุ่ม</b> — ขั้น 1–3 เป็นจอที่ <b style="color:var(--cyan)">ทีมงานถือ</b> (แถบฟ้าบนจอ) แล้วส่งเครื่องให้ <b style="color:var(--poring)">ผู้เล่น</b> ตอนกรอกชื่อ (แถบชมพู) · ทีมงานเป็นคนเลือกเกมให้ ไม่ใช่ผู้เล่นกดเอง · <b>ตัวตนใหม่ถูกออกตอนกรอกชื่อ</b> ⇒ คนถัดไปไม่สวมรอยคนก่อนหน้า · 🌐 <b>สลับ TH/EN ได้จากมุมล่างขวาของจอ</b> (ทีมงานตั้งค่าเริ่มต้นให้ทุกเครื่องได้จากจอแอดมิน)</p>
+  <div class="kiosk-wrap">
+    <div class="device">
+      <div class="screen">
+
+        <div data-step="lock">
+          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">เวทีซ้าย · เครื่อง #2</span></div>
+          <div class="scr-pad center">
+            <div class="lock-badge">🔒</div>
+            <div>
+              <p class="eyebrow">เครื่องนี้ยังไม่ได้เปิดใช้งาน</p>
+              <h2 class="big display">ใส่รหัสเปิดเครื่อง</h2>
+            </div>
+            <div class="keyfield"><input value="RMG-4K7Q" aria-label="รหัสเปิดเครื่อง"></div>
+            <p class="hint">ทีมงานรับรหัสจากจอแอดมิน · หนึ่งเครื่องหนึ่งรหัส</p>
+            <button class="btn-staff" data-go="staff">เปิดใช้งานเครื่อง</button>
+          </div>
+        </div>
+
+        <div data-step="staff" hidden>
+          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">เวทีซ้าย · เครื่อง #2 · รอบที่ 4</span></div>
+          <div class="scr-pad center">
+            <p class="eyebrow">พร้อมรับผู้เล่นคนถัดไป</p>
+            <h2 class="big display">รอผู้เล่น</h2>
+            <div class="queue">
+              <div><b class="num">41</b><span>เล่นไปแล้ววันนี้</span></div>
+              <div><b class="num">12</b><span>ในรอบนี้</span></div>
+              <div><b class="num">6:12</b><span>เหลือในรอบ</span></div>
+            </div>
+            <p class="hint">กดเมื่อมีคนขึ้นมาบนเวที — ทีมงานเลือกเกมให้ก่อน แล้วค่อยส่งเครื่อง</p>
+            <button class="btn-staff btn-lg" data-go="pick">เริ่มผู้เล่นคนใหม่</button>
+          </div>
+        </div>
+
+        <div data-step="pick" hidden>
+          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">ขั้นที่ 1 จาก 2 · ทีมงานเลือก</span></div>
+          <div class="scr-pad">
+            <h2 class="big display" style="margin-bottom:4px">เลือกเกมให้ผู้เล่น</h2>
+            <p class="hint" style="margin-bottom:16px">เลือกตามคิวหน้าเวที · เกมที่ปิดจากจอแอดมินจะไม่ขึ้นที่นี่</p>
+            <div class="game-grid">
+              <button class="game-card" data-go="nick">
+                <div class="game-art g1">🔨</div>
+                <div class="game-meta"><b>ตีโพริง</b><span>60 วินาที · แนวตั้ง · เล่นแล้ว 156 รอบ</span></div>
+              </button>
+              <button class="game-card" data-go="nick">
+                <div class="game-art g2">🐣</div>
+                <div class="game-meta"><b>เปโค แดช</b><span>~90 วินาที · แนวนอน · เล่นแล้ว 98 รอบ</span></div>
+              </button>
+            </div>
+            <div style="margin-top:auto;display:flex;justify-content:flex-end">
+              <button class="mini" data-go="staff">ยกเลิก กลับไปรอ</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-step="nick" hidden>
+          <div class="mode-bar mode-player"><span class="dot"></span>ตาของผู้เล่น<span class="right">ตีโพริง · ขั้นที่ 2 จาก 2</span></div>
+          <div class="scr-pad center">
+            <div class="handoff">📱 ทีมงานส่งเครื่องให้ผู้เล่นตรงนี้</div>
+            <h2 class="big display">ใส่ชื่อที่จะขึ้นบอร์ด</h2>
+            <input class="nick-input" id="nick" value="โจ้" maxlength="12" aria-label="ชื่อเล่น" autocomplete="off">
+            <div id="nick-msg" class="nick-ok">ใช้ชื่อนี้ได้</div>
+            <div id="nick-suggest" class="suggest" hidden>
+              <span>ลองชื่อนี้แทน</span>
+              <button class="mini" data-suggest="แนน2">แนน2</button>
+              <button class="mini" data-suggest="แนนน้อย">แนนน้อย</button>
+            </div>
+            <p class="hint">สูงสุด 12 ตัวอักษร · ชื่อนี้จะขึ้นจอใหญ่หน้างาน · <b>ห้ามซ้ำกับคนที่เล่นไปแล้ว</b><br><span style="color:var(--ink-faint)">(ลองพิมพ์ “แนน” หรือ “ตี๋” ดู — เป็นชื่อที่มีคนใช้แล้ว)</span></p>
+            <button class="btn btn-lg" id="nick-go" data-go="play">เริ่มเล่น</button>
+          </div>
+        </div>
+
+        <div data-step="play" hidden>
+          <div class="mode-bar mode-player"><span class="dot"></span>ตาของผู้เล่น<span class="right">โจ้ · ตีโพริง</span></div>
+          <div class="playing">
+            <div class="play-hud"><span>ตีโพริง</span><span class="num">เหลือ 0:23</span></div>
+            <div style="text-align:center">
+              <p class="eyebrow">คะแนนตอนนี้</p>
+              <div class="play-score num">1,840</div>
+              <p class="hint" style="margin-top:22px">พื้นที่นี้คือตัวเกมจริงที่รันอยู่ในกรอบ</p>
+              <button class="mini" style="margin-top:14px" data-go="result">ข้ามไปจอสรุป →</button>
+            </div>
+          </div>
+        </div>
+
+        <div data-step="result" hidden>
+          <div class="mode-bar mode-player"><span class="dot"></span>ตาของผู้เล่น<span class="right">จบเกมแล้ว</span></div>
+          <div class="scr-pad center">
+            <p class="eyebrow">ตีโพริง · โจ้</p>
+            <div class="result-score num">2,410</div>
+            <div class="rank-line">ได้อันดับ <span class="rank-pill num">#3</span> ของรอบนี้</div>
+            <div class="mini-board">
+              <div><span>1 · แนน</span><b class="num">3,120</b></div>
+              <div><span>2 · ตี๋</span><b class="num">2,880</b></div>
+              <div class="me"><span>3 · โจ้</span><b class="num">2,410</b></div>
+              <div><span>4 · ปอนด์</span><b class="num">2,050</b></div>
+            </div>
+            <button class="btn btn-lg" data-go="handback">เสร็จแล้ว · คืนเครื่องให้ทีมงาน</button>
+            <p class="hint">อยากเล่นอีกเกม ทีมงานกดเลือกให้ใหม่จากจอถัดไป</p>
+          </div>
+        </div>
+
+        <div data-step="handback" hidden>
+          <div class="mode-bar mode-staff"><span class="dot"></span>โหมดทีมงาน<span class="right">รับเครื่องคืนแล้ว · เวทีซ้าย #2</span></div>
+          <div class="scr-pad">
+            <p class="eyebrow">ผู้เล่นคนนี้เล่นอะไรไปแล้ว</p>
+            <h2 class="big display" style="margin-bottom:14px">โจ้</h2>
+            <div class="played">
+              <div class="done"><span>🔨 ตีโพริง</span><b class="num">2,410 · ที่ 3</b></div>
+              <div class="todo"><span>🐣 เปโค แดช</span><b>ยังไม่เล่น</b></div>
+            </div>
+            <div class="choice">
+              <button class="choice-main" data-go="staff">
+                <b>รับผู้เล่นคนใหม่</b>
+                <span>ล้างชื่อ “โจ้” ออกจากเครื่อง · คนถัดไปได้ตัวตนใหม่ของตัวเอง</span>
+              </button>
+              <button class="choice-alt" data-go="pick">
+                <b>ให้ “โจ้” เล่นต่ออีกรอบ</b>
+                <span>คะแนนรอบใหม่ไปรวมกับชื่อเดิม · เลือกเกมได้ทั้งเกมที่ยังไม่เล่นและเกมเดิม</span>
+              </button>
+            </div>
+            <p class="hint" style="margin-top:auto">ถ้าอันดับรวมทุกเกมเปิดใช้อยู่ การให้เล่นเกมที่ยังไม่เล่นจะทำให้ผู้เล่นคนนี้มีสิทธิ์ติดอันดับรวม</p>
+          </div>
+        </div>
+
+        <div data-step="paused" hidden>
+          <div class="mode-bar mode-hold"><span class="dot"></span>หยุดรับคะแนนชั่วคราว<span class="right">ทีมงานสั่งจากจอแอดมิน</span></div>
+          <div class="scr-pad center">
+            <div class="hold-badge">⏸</div>
+            <div>
+              <p class="eyebrow">กำลังประกาศผลรอบที่ 4</p>
+              <h2 class="big display">ยังไม่ส่งเครื่องให้ผู้เล่น</h2>
+            </div>
+            <p class="hint" style="max-width:34ch">ถ้าให้เล่นตอนนี้ คะแนนจะไม่ถูกนับ — รอทีมงานกดรับคะแนนต่อจากจอแอดมินก่อน</p>
+            <div class="queue" style="max-width:300px">
+              <div><b class="num">3</b><span>เครื่องที่หยุดพร้อมกัน</span></div>
+              <div><b class="num">12</b><span>คนในรอบนี้</span></div>
+            </div>
+            <button class="mini" data-go="staff">(mockup) กลับไปจอรอผู้เล่น</button>
+          </div>
+        </div>
+
+        <div class="lang screen-lang" role="group" aria-label="ภาษา / Language">
+          <button data-lang="th" aria-pressed="true">TH</button>
+          <button data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <h3>ขั้นบนเครื่อง</h3>
+      <button data-go="lock" aria-current="true">1 · จอล็อก<small>ทีมงาน · เปิดเครื่องด้วยรหัส</small></button>
+      <button data-go="staff">2 · รอผู้เล่น<small>ทีมงาน · จอที่ค้างไว้ระหว่างวัน</small></button>
+      <button data-go="pick">3 · เลือกเกม<small>ทีมงาน · เลือกให้ผู้เล่น</small></button>
+      <button data-go="nick">4 · ส่งเครื่อง + ใส่ชื่อ<small>ผู้เล่น · ออกตัวตนใหม่ตรงนี้</small></button>
+      <button data-go="play">5 · กำลังเล่น<small>ผู้เล่น · เกมจริงรันในกรอบ</small></button>
+      <button data-go="result">6 · สรุป<small>ผู้เล่น · แล้วคืนเครื่องให้ทีมงาน</small></button>
+      <button data-go="handback">7 · รับเครื่องคืน<small>ทีมงาน · เล่นต่อ หรือรับคนใหม่</small></button>
+      <h3 style="margin-top:16px">สถานะแทรก</h3>
+      <button data-go="paused">⏸ หยุดรับคะแนน<small>ขึ้นทับได้ทุกจังหวะที่แอดมินสั่ง</small></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ จอในงาน ============ -->
+<section id="s-board" hidden>
+  <p class="note">จอใหญ่ที่คนในงานเห็น · เปิดค้างไว้ทั้งวัน ไม่ต้องใส่รหัส · <b>สี่มุมมองจากสองแกน</b> — กดที่แถบด้านล่างนี้ หรือลูกศรซ้าย/ขวา (แถบลอยกลางจอ) เพื่อไล่ดูทีละอัน · จอจริงหมุนสลับเองได้ ตั้งจากจอแอดมิน · <b>ของจริงโฟกัสมุมมอง “รอบนี้”</b> ส่วน “ทั้งวัน” ทำเผื่อไว้ เปิด/ปิดได้จากจอแอดมิน · 🔴 ระบบ<b>แสดงอันดับเท่านั้น ไม่ตัดสินผู้ชนะแทนคน</b> — การตัดสินและแจกรางวัลเป็นเรื่องของทีมงานหน้างาน</p>
+
+  <div class="view-bar">
+    <div class="axis" role="group" aria-label="ช่วงเวลา">
+      <button data-axis="when" data-val="round" aria-pressed="true">รอบนี้</button>
+      <button data-axis="when" data-val="day" aria-pressed="false">ทั้งวัน</button>
+    </div>
+    <div class="axis pink" role="group" aria-label="การรวมเกม">
+      <button data-axis="how" data-val="split" aria-pressed="true">แยกตามเกม</button>
+      <button data-axis="how" data-val="rank" aria-pressed="false">รวมทุกเกม · ตามอันดับ</button>
+      <button data-axis="how" data-val="score" aria-pressed="false">รวมทุกเกม · ตามคะแนน</button>
+    </div>
+    <div class="lang board-lang" role="group" aria-label="ภาษา / Language">
+      <button data-lang="th" aria-pressed="true">TH</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+
+  <!-- 1. รอบนี้ · แยกตามเกม -->
+  <div class="tv" data-view="round-split">
+    <div class="tv-head">
+      <div><p class="eyebrow">รอบนี้ · แยกตามเกม</p><h2 class="tv-title display">ใครนำในแต่ละเกม</h2></div>
+      <div class="round-chip">รอบที่ <b class="num">4</b> · เหลือ <b class="num">6:12</b></div>
+    </div>
+    <div class="split">
+      <div class="col">
+        <h3 class="display">ตีโพริง</h3><p class="sub">คะแนนจากการทุบ · 60 วินาที</p>
+        <div class="col-row"><span class="p num">1</span><span>แนน</span><span class="s num">3,120</span></div>
+        <div class="col-row"><span class="p num">2</span><span>ตี๋</span><span class="s num">2,880</span></div>
+        <div class="col-row"><span class="p num">3</span><span>โจ้</span><span class="s num">2,410</span></div>
+        <div class="col-row"><span class="p num">4</span><span>ปอนด์</span><span class="s num">2,050</span></div>
+        <div class="col-row"><span class="p num">5</span><span>มิ้นท์</span><span class="s num">1,975</span></div>
+      </div>
+      <div class="col">
+        <h3 class="display">เปโค แดช</h3><p class="sub">ระยะที่วิ่งได้ · เมตร</p>
+        <div class="col-row"><span class="p num">1</span><span>เอิร์ธ</span><span class="s num">1,284</span></div>
+        <div class="col-row"><span class="p num">2</span><span>แนน</span><span class="s num">1,150</span></div>
+        <div class="col-row"><span class="p num">3</span><span>กิ๊ฟ</span><span class="s num">1,092</span></div>
+        <div class="col-row"><span class="p num">4</span><span>ฟ้า</span><span class="s num">988</span></div>
+        <div class="col-row"><span class="p num">5</span><span>โจ้</span><span class="s num">874</span></div>
+      </div>
+    </div>
+    <div class="tv-foot"><span>คะแนนดีสุดของแต่ละคนในรอบนี้ · คนละเกมคนละหน่วย จึงไม่เอามาเรียงรวมกันที่นี่</span><span>อัปเดตทุก 5 วินาที</span></div>
+  </div>
+
+  <!-- 2. รอบนี้ · รวมทุกเกม · ตามอันดับ -->
+  <div class="tv" data-view="round-rank" hidden>
+    <div class="tv-head">
+      <div><p class="eyebrow">รอบนี้ · รวมทุกเกม · ตามอันดับ</p><h2 class="tv-title display">อันดับรวมของรอบ</h2></div>
+      <div class="round-chip">รอบที่ <b class="num">4</b> · เหลือ <b class="num">6:12</b></div>
+    </div>
+    <div class="rule">
+      รวมข้ามเกมด้วย <b>แต้มตามอันดับ</b> ไม่ใช่บวกคะแนนดิบ — เพราะตีโพริงนับ “แต้มทุบ” ส่วนเปโคแดชนับ “เมตร” บวกกันแล้วไม่มีความหมาย
+      <span class="pts"><span>#1 = 100</span><span>#2 = 80</span><span>#3 = 60</span><span>#4 = 50</span><span>#5 = 40</span></span>
+    </div>
+    <div class="lb">
+      <div class="lb-row wide top1"><span class="pos num">1</span><span class="who">แนน</span>
+        <span class="breakdown">ตีโพริง <b>#1</b> · เปโค <b>#2</b></span><span class="sc num">180</span></div>
+      <div class="lb-row wide top2"><span class="pos num">2</span><span class="who">โจ้</span>
+        <span class="breakdown">ตีโพริง <b>#3</b> · เปโค <b>#5</b></span><span class="sc num">100</span></div>
+      <div class="lb-row wide top2"><span class="pos num">2</span><span class="who">เอิร์ธ <span class="solo">เล่นเกมเดียว</span></span>
+        <span class="breakdown">เปโค <b>#1</b></span><span class="sc num">100</span></div>
+      <div class="lb-row wide"><span class="pos num">4</span><span class="who">ตี๋ <span class="solo">เล่นเกมเดียว</span></span>
+        <span class="breakdown">ตีโพริง <b>#2</b></span><span class="sc num">80</span></div>
+      <div class="lb-row wide"><span class="pos num">5</span><span class="who">กิ๊ฟ <span class="solo">เล่นเกมเดียว</span></span>
+        <span class="breakdown">เปโค <b>#3</b></span><span class="sc num">60</span></div>
+      <div class="lb-row wide"><span class="pos num">6</span><span class="who">ปอนด์</span>
+        <span class="breakdown">ตีโพริง <b>#4</b></span><span class="sc num">50</span></div>
+      <div class="lb-row wide"><span class="pos num">6</span><span class="who">ฟ้า</span>
+        <span class="breakdown">เปโค <b>#4</b></span><span class="sc num">50</span></div>
+    </div>
+    <div class="tv-foot"><span>คนที่เล่นครบสองเกมสะสมแต้มได้มากกว่าโดยธรรมชาติ</span><span>อัปเดตทุก 5 วินาที</span></div>
+  </div>
+
+  <!-- 3. รอบนี้ · รวมทุกเกม · ตามคะแนน -->
+  <div class="tv" data-view="round-score" hidden>
+    <div class="tv-head">
+      <div><p class="eyebrow">รอบนี้ · รวมทุกเกม · ตามคะแนน</p><h2 class="tv-title display">อันดับรวมของรอบ</h2></div>
+      <div class="round-chip">รอบที่ <b class="num">4</b> · เหลือ <b class="num">6:12</b></div>
+    </div>
+    <div class="rule warnbox">
+      บวก<b>คะแนนดิบ</b>ของทุกเกมเข้าด้วยกันตรง ๆ — ตรงไปตรงมาที่สุด แต่ตีโพริงนับ “แต้มทุบ” หลักพัน ส่วนเปโคแดชนับ “เมตร” หลักพันเหมือนกันแต่ได้ยากกว่า
+      ⇒ <b>เกมที่ตัวเลขเฟ้อกว่ากลายเป็นตัวตัดสิน</b> · ดูเอิร์ธที่อันดับ 6 เป็นตัวอย่าง
+    </div>
+    <div class="lb">
+      <div class="lb-row wide top1"><span class="pos num">1</span><span class="who">แนน</span>
+        <span class="breakdown">ตีโพริง <b>3,120</b> + เปโค <b>1,150</b></span><span class="sc num">4,270</span></div>
+      <div class="lb-row wide top2"><span class="pos num">2</span><span class="who">โจ้</span>
+        <span class="breakdown">ตีโพริง <b>2,410</b> + เปโค <b>874</b></span><span class="sc num">3,284</span></div>
+      <div class="lb-row wide top3"><span class="pos num">3</span><span class="who">ตี๋ <span class="solo">เล่นเกมเดียว</span></span>
+        <span class="breakdown">ตีโพริง <b>2,880</b></span><span class="sc num">2,880</span></div>
+      <div class="lb-row wide"><span class="pos num">4</span><span class="who">ปอนด์</span>
+        <span class="breakdown">ตีโพริง <b>2,050</b></span><span class="sc num">2,050</span></div>
+      <div class="lb-row wide"><span class="pos num">5</span><span class="who">มิ้นท์</span>
+        <span class="breakdown">ตีโพริง <b>1,975</b></span><span class="sc num">1,975</span></div>
+      <div class="lb-row wide flagged"><span class="pos num">6</span><span class="who">เอิร์ธ <span class="solo">ที่ 1 ของเปโคแดช</span></span>
+        <span class="breakdown">เปโค <b>1,284</b></span><span class="sc num">1,284</span></div>
+      <div class="lb-row wide"><span class="pos num">7</span><span class="who">กิ๊ฟ</span>
+        <span class="breakdown">เปโค <b>1,092</b></span><span class="sc num">1,092</span></div>
+    </div>
+    <div class="tv-foot"><span>คนที่ชนะเปโคแดชทั้งรอบ อยู่อันดับ 6 — เทียบกับอันดับ 2 ในมุมมองตามอันดับ</span><span>อัปเดตทุก 5 วินาที</span></div>
+  </div>
+
+  <!-- 4. ทั้งวัน · แยกตามเกม -->
+  <div class="tv" data-view="day-split" hidden>
+    <div class="tv-head">
+      <div><p class="eyebrow">ทั้งวัน · แยกตามเกม</p><h2 class="tv-title display">สถิติสูงสุดของวัน</h2></div>
+      <div class="round-chip">ผ่านไป <b class="num">4</b> รอบ · <b class="num">108</b> คน</div>
+    </div>
+    <div class="split">
+      <div class="col">
+        <h3 class="display">ตีโพริง</h3><p class="sub">คะแนนจากการทุบ · 60 วินาที</p>
+        <div class="col-row"><span class="p num">1</span><span>แนน</span><span class="s num">3,450</span></div>
+        <div class="col-row"><span class="p num">2</span><span>บอส</span><span class="s num">3,390</span></div>
+        <div class="col-row"><span class="p num">3</span><span>ตี๋</span><span class="s num">3,210</span></div>
+        <div class="col-row"><span class="p num">4</span><span>มิ้นท์</span><span class="s num">2,990</span></div>
+        <div class="col-row"><span class="p num">5</span><span>โจ้</span><span class="s num">2,410</span></div>
+      </div>
+      <div class="col">
+        <h3 class="display">เปโค แดช</h3><p class="sub">ระยะที่วิ่งได้ · เมตร</p>
+        <div class="col-row"><span class="p num">1</span><span>เอิร์ธ</span><span class="s num">1,512</span></div>
+        <div class="col-row"><span class="p num">2</span><span>กิ๊ฟ</span><span class="s num">1,348</span></div>
+        <div class="col-row"><span class="p num">3</span><span>แนน</span><span class="s num">1,150</span></div>
+        <div class="col-row"><span class="p num">4</span><span>บอส</span><span class="s num">1,120</span></div>
+        <div class="col-row"><span class="p num">5</span><span>ฟ้า</span><span class="s num">988</span></div>
+      </div>
+    </div>
+    <div class="tv-foot"><span>คะแนนดีสุดของแต่ละคนตลอดวัน ไม่ใช่ผลรวมของทุกรอบที่เล่น</span><span>อัปเดตทุก 5 วินาที</span></div>
+  </div>
+
+  <!-- 5. ทั้งวัน · รวมทุกเกม · ตามอันดับ -->
+  <div class="tv" data-view="day-rank" hidden>
+    <div class="tv-head">
+      <div><p class="eyebrow">ทั้งวัน · รวมทุกเกม · ตามอันดับ</p><h2 class="tv-title display">อันดับรวมทั้งวัน</h2></div>
+      <div class="round-chip">ผ่านไป <b class="num">4</b> รอบ · <b class="num">108</b> คน</div>
+    </div>
+    <div class="podium">
+      <div class="pod p2"><div class="medal">🥈</div><div class="pname">บอส</div><div class="pscore num">130</div></div>
+      <div class="pod p1"><div class="medal">👑</div><div class="pname">แนน</div><div class="pscore num">160</div></div>
+      <div class="pod p3"><div class="medal">🥉</div><div class="pname">เอิร์ธ</div><div class="pscore num">100</div></div>
+    </div>
+    <div class="rest">
+      <div><span class="p num">4</span><span>กิ๊ฟ</span><span class="s num">80</span></div>
+      <div><span class="p num">5</span><span>ตี๋</span><span class="s num">60</span></div>
+      <div><span class="p num">6</span><span>มิ้นท์</span><span class="s num">50</span></div>
+      <div><span class="p num">7</span><span>โจ้</span><span class="s num">40</span></div>
+      <div><span class="p num">7</span><span>ฟ้า</span><span class="s num">40</span></div>
+    </div>
+    <div class="rule" style="margin:18px 0 0">
+      จัดอันดับใหม่จาก<b> สถิติดีสุดของทั้งวัน</b> ของแต่ละเกม แล้วให้แต้มตามอันดับ — ไม่ใช่สะสมแต้มจากทุกรอบที่เล่น เพราะแบบนั้นคนที่ยึดเครื่องเล่นเยอะจะชนะแทนคนที่เล่นเก่ง
+    </div>
+    <div class="tv-foot"><span>แนน 160 = ตีโพริง #1 (100) + เปโค #3 (60)</span><span>อัปเดตทุก 5 วินาที</span></div>
+  </div>
+
+  <!-- 6. ทั้งวัน · รวมทุกเกม · ตามคะแนน -->
+  <div class="tv" data-view="day-score" hidden>
+    <div class="tv-head">
+      <div><p class="eyebrow">ทั้งวัน · รวมทุกเกม · ตามคะแนน</p><h2 class="tv-title display">อันดับรวมทั้งวัน</h2></div>
+      <div class="round-chip">ผ่านไป <b class="num">4</b> รอบ · <b class="num">108</b> คน</div>
+    </div>
+    <div class="podium">
+      <div class="pod p2"><div class="medal">🥈</div><div class="pname">บอส</div><div class="pscore num">4,510</div></div>
+      <div class="pod p1"><div class="medal">👑</div><div class="pname">แนน</div><div class="pscore num">4,600</div></div>
+      <div class="pod p3"><div class="medal">🥉</div><div class="pname">โจ้</div><div class="pscore num">3,284</div></div>
+    </div>
+    <div class="rest">
+      <div><span class="p num">4</span><span>ตี๋</span><span class="s num">3,210</span></div>
+      <div><span class="p num">5</span><span>มิ้นท์</span><span class="s num">2,990</span></div>
+      <div><span class="p num">6</span><span>เอิร์ธ</span><span class="s num">1,512</span></div>
+      <div><span class="p num">7</span><span>กิ๊ฟ</span><span class="s num">1,348</span></div>
+      <div><span class="p num">8</span><span>ฟ้า</span><span class="s num">988</span></div>
+    </div>
+    <div class="rule warnbox" style="margin:18px 0 0">
+      บวกสถิติดีสุดของทั้งวันจากทุกเกมเข้าด้วยกัน · เทียบกับมุมมอง <b>ตามอันดับ</b> แล้วผู้ชนะสองอันดับแรกเหมือนกัน
+      แต่ <b>เอิร์ธ</b> ที่เป็นแชมป์เปโคแดชของทั้งวัน ตกจากอันดับ 3 ไปอยู่อันดับ 6 และ <b>โจ้</b> ขึ้นมาแทน
+    </div>
+    <div class="tv-foot"><span>แนน 4,600 = ตีโพริง 3,450 + เปโค 1,150</span><span>อัปเดตทุก 5 วินาที</span></div>
+  </div>
+</section>
+
+<!-- ============ จอแอดมิน ============ -->
+<section id="s-admin" hidden>
+  <p class="note">เครื่องมือของทีมงาน — <b>ภาษาอังกฤษล้วน ไม่มีสลับภาษา</b> (เป็น tools ไม่ใช่จอที่คนในงานเห็น · แนวเดียวกับ <code>rou-admin</code> ของ ROPZ) · ส่วนจอที่คนในงานเห็นสลับภาษาได้ ดูที่ฝั่งเครื่องบนเวทีและจอในงาน</p>
+  <div class="adm">
+    <div class="adm-tabs" role="tablist">
+      <button role="tab" data-tab="stations" aria-selected="true">Stations</button>
+      <button role="tab" data-tab="round" aria-selected="false">Rounds</button>
+      <button role="tab" data-tab="screen" aria-selected="false">Stage screen</button>
+      <button role="tab" data-tab="runs" aria-selected="false">Runs</button>
+      <button role="tab" data-tab="games" aria-selected="false">Games</button>
+    </div>
+    <div class="adm-body">
+
+      <div data-panel="stations">
+        <div class="adm-h"><h2 class="display">Stations</h2><button class="btn mini" style="background:var(--poring);color:#1B0A12;border:0">+ Issue a code</button></div>
+        <div class="stat-row">
+          <div class="stat"><b class="num">4</b><span>Activated</span></div>
+          <div class="stat"><b class="num">3</b><span>Online now</span></div>
+          <div class="stat"><b class="num">1</b><span>Revoked</span></div>
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Station</th><th>Activation code</th><th>Status</th><th>Last seen</th><th>Runs</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Left stage · #1</td><td><span class="key">RMG-8A2P</span></td><td><span class="chip on">● Online</span></td><td>Just now</td><td class="num">38</td><td><button class="mini danger">Revoke</button></td></tr>
+            <tr><td>Left stage · #2</td><td><span class="key">RMG-4K7Q</span></td><td><span class="chip on">● Online</span></td><td>Just now</td><td class="num">41</td><td><button class="mini danger">Revoke</button></td></tr>
+            <tr><td>Right stage · #3</td><td><span class="key">RMG-9C1M</span></td><td><span class="chip on">● Online</span></td><td>12s ago</td><td class="num">29</td><td><button class="mini danger">Revoke</button></td></tr>
+            <tr><td>Spare · #4</td><td><span class="key">RMG-2X6V</span></td><td><span class="chip off">Not activated</span></td><td>—</td><td class="num">0</td><td><button class="mini danger">Revoke</button></td></tr>
+            <tr><td>Test · #0</td><td><span class="key">RMG-0T0T</span></td><td><span class="chip rev">Revoked</span></td><td>Yesterday 17:40</td><td class="num">12</td><td><button class="mini">Issue new code</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div data-panel="round" hidden>
+        <div class="adm-h"><h2 class="display">Rounds</h2></div>
+        <div class="switch-row">
+          <div><b>Split the event into rounds</b><p>Off — one board for the whole event, highest score leads. On — the board gets a “this round” view and you can start a new round at any time.</p></div>
+          <button class="sw" role="switch" aria-checked="true" aria-label="Split the event into rounds"></button>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b class="num">4</b><span>Current round</span></div>
+          <div class="stat"><b class="num">6:12</b><span>Left in this round</span></div>
+          <div class="stat"><b class="num">23</b><span>Players this round</span></div>
+          <div class="stat"><b class="num">108</b><span>Players today</span></div>
+        </div>
+        <div class="rule" style="margin-bottom:16px">
+          🔴 <b>Stations never wait for this button.</b> Players can start at any time, no matter when a round changes. “Start a new round” <b>draws a line on the board</b> — it does not open a gate.
+          <br>· A score belongs to the round the player <b>started</b> in, not the one they finished in, so anyone who starts before the line and finishes after it stays in the round they saw when they stepped up.
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <button class="btn">Start a new round</button>
+          <button class="mini" style="border-color:#5C4028;color:var(--warn)">⏸ Pause scoring</button>
+          <button class="mini danger">Clear this round</button>
+        </div>
+        <p class="hint" style="margin-top:14px"><b>Pause scoring</b> is for the announcement only — numbers stop moving while the host reads the names. Every station shows the ⏸ screen at the same time so no one hands a station to a player whose run would not count. <b>Rounds never advance on a timer</b> — only when someone presses the button.<br>Clearing asks for confirmation and records who did it. Past runs are kept and stay visible under Runs.</p>
+      </div>
+
+      <div data-panel="screen" hidden>
+        <div class="adm-h"><h2 class="display">Stage screen</h2><button class="mini">Open the screen ↗</button></div>
+        <div class="switch-row">
+          <div><b>Language shown on player-facing screens</b><p>Applies to the stage screen and to every station. Players can also switch it themselves from the corner of the station screen.</p></div>
+          <div class="lang" style="margin:0">
+            <button data-lang="th" aria-pressed="true">TH</button>
+            <button data-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+        <div class="switch-row">
+          <div><b>Rotate through views</b><p>The screen walks through the views marked below on its own. Turn this off to hold one view.</p></div>
+          <button class="sw" role="switch" aria-checked="true" aria-label="Rotate through views"></button>
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>View</th><th>Answers</th><th>In rotation</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>This round · per game</td><td>Who leads each game right now</td><td><span class="chip on">● Rotating</span></td><td><button class="mini">Hold this view</button></td></tr>
+            <tr><td>This round · combined by rank</td><td>Who leads this round overall</td><td><span class="chip on">● Rotating</span></td><td><button class="mini">Hold this view</button></td></tr>
+            <tr><td>This round · combined by score</td><td>Who leads this round (raw scores added)</td><td><span class="chip off">Off</span></td><td><button class="mini">Hold this view</button></td></tr>
+            <tr><td>All day · per game</td><td>Best score of the day in each game</td><td><span class="chip on">● Rotating</span></td><td><button class="mini">Hold this view</button></td></tr>
+            <tr><td>All day · combined by rank</td><td>Overall standings for the day</td><td><span class="chip off">Off</span></td><td><button class="mini">Hold this view</button></td></tr>
+            <tr><td>All day · combined by score</td><td>Overall standings for the day (raw scores added)</td><td><span class="chip off">Off</span></td><td><button class="mini">Hold this view</button></td></tr>
+          </tbody>
+        </table></div>
+        <p class="hint" style="margin:12px 0 20px">Typical use: rotate the “this round” views during the event, then hold an “all day” view for the announcement. Changes reach the screen immediately — nobody has to touch the machine driving it. 🔴 <b>Pick either “by rank” or “by score” and stay there. Never rotate both in front of an audience</b> — the standings reorder themselves with nothing wrong, and no one can explain that on stage.</p>
+
+        <div class="adm-h"><h2 class="display">How combined standings are worked out</h2></div>
+        <p class="hint" style="margin-bottom:12px"><b>By rank</b> — each game’s placing turns into points, then the points are added (table below). <b>By score</b> — raw scores from every game are added directly, which lets the game with the bigger numbers decide the outcome.</p>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Placing in a game</th><th>#1</th><th>#2</th><th>#3</th><th>#4</th><th>#5</th><th>#6–10</th></tr></thead>
+          <tbody><tr><td>Points</td><td class="num">100</td><td class="num">80</td><td class="num">60</td><td class="num">50</td><td class="num">40</td><td class="num">30 · 25 · 20 · 15 · 10</td></tr></tbody>
+        </table></div>
+        <div class="switch-row" style="margin-top:16px">
+          <div><b>Require every game to appear in combined standings</b><p>On — players who only played one game drop off the combined board (they still appear in the per-game boards). Off — everyone counts, and players who played both games naturally have more points to gather.</p></div>
+          <button class="sw" role="switch" aria-checked="false" aria-label="Require every game"></button>
+        </div>
+      </div>
+
+      <div data-panel="runs" hidden>
+        <div class="adm-h"><h2 class="display">Runs</h2><button class="mini">Download CSV</button></div>
+        <div class="filters">
+          <select><option>All games</option><option>Whack a Poring</option><option>Peco Dash</option></select>
+          <select><option>All rounds</option><option>Round 4 (current)</option><option>Round 3</option></select>
+          <select><option>All stations</option><option>Left stage · #1</option><option>Left stage · #2</option></select>
+          <input placeholder="Search by name">
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Time</th><th>Name</th><th>Game</th><th>Score</th><th>Station</th><th>Round</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="num">14:21:08</td><td>แนน</td><td>Whack a Poring</td><td class="num">3,120</td><td>#1</td><td class="num">4</td><td></td></tr>
+            <tr><td class="num">14:19:47</td><td>ตี๋</td><td>Whack a Poring</td><td class="num">2,880</td><td>#2</td><td class="num">4</td><td></td></tr>
+            <tr><td class="num">14:18:02</td><td>โจ้</td><td>Whack a Poring</td><td class="num">2,410</td><td>#2</td><td class="num">4</td><td></td></tr>
+            <tr><td class="num">14:17:30</td><td class="flag">ไอ้เ*** ⚑</td><td>Peco Dash</td><td class="num">640</td><td>#3</td><td class="num">4</td><td><button class="mini danger">Hide name</button></td></tr>
+            <tr><td class="num">14:16:55</td><td>เอิร์ธ</td><td>Peco Dash</td><td class="num">1,284</td><td>#3</td><td class="num">4</td><td></td></tr>
+            <tr><td class="num">14:15:12</td><td>แนน</td><td>Peco Dash</td><td class="num">1,150</td><td>#1</td><td class="num">4</td><td></td></tr>
+            <tr><td class="num">14:12:40</td><td>โจ้</td><td>Whack a Poring</td><td class="num">1,880</td><td>#2</td><td class="num">3</td><td></td></tr>
+          </tbody>
+        </table></div>
+        <p class="hint" style="margin-top:12px">This is every run that was played, not the standings — the stage screen takes each player’s best run from here. A name flagged ⚑ is one the filter was unsure about; hiding it shows “Player #47” on the screen instead.</p>
+      </div>
+
+      <div data-panel="games" hidden>
+        <div class="adm-h"><h2 class="display">Games</h2><button class="mini">+ Add a game</button></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Game</th><th>Aspect</th><th>Status</th><th>Plays</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Whack a Poring</td><td>9:16 portrait</td><td><span class="chip on">● Playable</span></td><td class="num">156</td><td><button class="mini">Disable</button></td></tr>
+            <tr><td>Peco Dash</td><td>16:9 landscape</td><td><span class="chip on">● Playable</span></td><td class="num">98</td><td><button class="mini">Disable</button></td></tr>
+            <tr><td>Ragnarok Endless</td><td>16:9 landscape</td><td><span class="chip off">Spare · not enabled</span></td><td class="num">0</td><td><button class="mini">Enable</button></td></tr>
+          </tbody>
+        </table></div>
+        <p class="hint" style="margin-top:12px">Enabling or disabling a game reaches every station from the next player onward — nobody mid-run is cut off. Keep a spare enabled-ready in case a main game misbehaves on the day.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="switcher" id="switcher" hidden>
+  <button id="prev" aria-label="แบบก่อนหน้า">←</button>
+  <span class="lbl" id="vlabel">A · ตารางอันดับ</span>
+  <button id="next" aria-label="แบบถัดไป">→</button>
+</div>
+
+<script>
+const VIEWS = {
+  'round-split':'รอบนี้ · แยกตามเกม',
+  'round-rank' :'รอบนี้ · รวมทุกเกม · ตามอันดับ',
+  'round-score':'รอบนี้ · รวมทุกเกม · ตามคะแนน',
+  'day-split'  :'ทั้งวัน · แยกตามเกม',
+  'day-rank'   :'ทั้งวัน · รวมทุกเกม · ตามอันดับ',
+  'day-score'  :'ทั้งวัน · รวมทุกเกม · ตามคะแนน',
+};
+const KEYS = Object.keys(VIEWS);
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+
+/* ---- surfaces ---- */
+function showSurface(name){
+  $$('.surfaces button').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.surface===name)));
+  ['kiosk','board','admin'].forEach(n=>{ $('#s-'+n).hidden = n!==name; });
+  $('#switcher').hidden = name!=='board';
+  const u = new URL(location); u.searchParams.set('surface',name); history.replaceState({},'',u);
+}
+$$('.surfaces button').forEach(b=>b.onclick=()=>showSurface(b.dataset.surface));
+
+/* ---- kiosk steps ---- */
+function showStep(step){
+  $$('[data-step]').forEach(el=>{ el.hidden = el.dataset.step!==step; });
+  $$('.steps button').forEach(b=>b.setAttribute('aria-current', String(b.dataset.go===step)));
+}
+$$('[data-go]').forEach(b=>b.onclick=()=>showStep(b.dataset.go));
+
+/* ---- board views (2 แกน = 4 มุมมอง) ---- */
+function showVariant(v){
+  if(!VIEWS[v]) v='round-split';
+  $$('[data-view]').forEach(el=>{ el.hidden = el.dataset.view!==v; });
+  $('#vlabel').textContent = VIEWS[v];
+  const [when,how] = v.split('-');
+  $$('[data-axis]').forEach(b=>{
+    const on = (b.dataset.axis==='when' ? when : how) === b.dataset.val;
+    b.setAttribute('aria-pressed', String(on));
+  });
+  const u = new URL(location); u.searchParams.set('variant',v); history.replaceState({},'',u);
+}
+function cycle(d){
+  const cur = new URL(location).searchParams.get('variant') || 'round-split';
+  const i = Math.max(0, KEYS.indexOf(cur));
+  showVariant(KEYS[(i + d + KEYS.length) % KEYS.length]);
+}
+$$('[data-axis]').forEach(b=>b.onclick=()=>{
+  const cur = (new URL(location).searchParams.get('variant') || 'round-split').split('-');
+  if(b.dataset.axis==='when') cur[0]=b.dataset.val; else cur[1]=b.dataset.val;
+  showVariant(cur.join('-'));
+});
+$('#prev').onclick=()=>cycle(-1);
+$('#next').onclick=()=>cycle(1);
+addEventListener('keydown', e=>{
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+  if($('#switcher').hidden) return;
+  if(e.key==='ArrowLeft') cycle(-1);
+  if(e.key==='ArrowRight') cycle(1);
+});
+
+/* ---- admin tabs ---- */
+$$('.adm-tabs button').forEach(b=>b.onclick=()=>{
+  $$('.adm-tabs button').forEach(x=>x.setAttribute('aria-selected', String(x===b)));
+  $$('[data-panel]').forEach(p=>{ p.hidden = p.dataset.panel!==b.dataset.tab; });
+});
+
+/* ---- สลับภาษาของ *จอที่คนในงานเห็น* (เครื่อง + บอร์ด) ----
+   จอแอดมินเป็นอังกฤษตายตัว ไม่อยู่ในนี้ — มันเป็น tools ไม่ใช่จอของคนในงาน
+   ชื่อผู้เล่นไม่แปล (เป็นชื่อคน) และตัวเลขไม่แปล */
+const EN = {
+  // โหมด / หัวจอ
+  'โหมดทีมงาน':'Staff mode','ตาของผู้เล่น':"Player's turn",'หยุดรับคะแนนชั่วคราว':'Scoring paused',
+  'เวทีซ้าย · เครื่อง #2':'Left stage · station #2',
+  'เวทีซ้าย · เครื่อง #2 · รอบที่ 4':'Left stage · station #2 · round 4',
+  'ขั้นที่ 1 จาก 2 · ทีมงานเลือก':'Step 1 of 2 · staff picks',
+  'ตีโพริง · ขั้นที่ 2 จาก 2':'Whack a Poring · step 2 of 2',
+  'รับเครื่องคืนแล้ว · เวทีซ้าย #2':'Station returned · left stage #2',
+  'ทีมงานสั่งจากจอแอดมิน':'Paused from the admin screen',
+  'โจ้ · ตีโพริง':'โจ้ · Whack a Poring','จบเกมแล้ว':'Run finished',
+  // จอล็อก
+  'เครื่องนี้ยังไม่ได้เปิดใช้งาน':'This station is not activated yet','ใส่รหัสเปิดเครื่อง':'Enter the activation code',
+  'ทีมงานรับรหัสจากจอแอดมิน · หนึ่งเครื่องหนึ่งรหัส':'Staff get the code from the admin screen — one code per station',
+  'เปิดใช้งานเครื่อง':'Activate this station',
+  // รอผู้เล่น
+  'พร้อมรับผู้เล่นคนถัดไป':'Ready for the next player','รอผู้เล่น':'Waiting for a player',
+  'เล่นไปแล้ววันนี้':'runs today','ในรอบนี้':'this round','เหลือในรอบ':'left in the round',
+  'กดเมื่อมีคนขึ้นมาบนเวที — ทีมงานเลือกเกมให้ก่อน แล้วค่อยส่งเครื่อง':'Press when someone steps up — staff pick the game first, then hand the station over',
+  'เริ่มผู้เล่นคนใหม่':'Start a new player',
+  // เลือกเกม
+  'เลือกเกมให้ผู้เล่น':'Pick a game for the player',
+  'เลือกตามคิวหน้าเวที · เกมที่ปิดจากจอแอดมินจะไม่ขึ้นที่นี่':'Pick to suit the queue — games disabled from the admin screen do not appear here',
+  'ตีโพริง':'Whack a Poring','เปโค แดช':'Peco Dash',
+  '60 วินาที · แนวตั้ง · เล่นแล้ว 156 รอบ':'60 seconds · portrait · 156 runs so far',
+  '~90 วินาที · แนวนอน · เล่นแล้ว 98 รอบ':'~90 seconds · landscape · 98 runs so far',
+  'ยกเลิก กลับไปรอ':'Cancel, go back to waiting',
+  // ใส่ชื่อ
+  '📱 ทีมงานส่งเครื่องให้ผู้เล่นตรงนี้':'📱 Staff hand the station over here',
+  'ใส่ชื่อที่จะขึ้นบอร์ด':'Enter the name for the board','ใช้ชื่อนี้ได้':'This name is free',
+  'ยังไม่ได้ใส่ชื่อ':'No name yet','ลองชื่อนี้แทน':'Try this instead','เริ่มเล่น':'Start playing',
+  // กำลังเล่น
+  'คะแนนตอนนี้':'Score so far','เหลือ 0:23':'0:23 left',
+  'พื้นที่นี้คือตัวเกมจริงที่รันอยู่ในกรอบ':'The real game runs inside this frame',
+  'ข้ามไปจอสรุป →':'Skip to the result screen →',
+  // สรุป
+  'ได้อันดับ':'Placed','ของรอบนี้':'this round',
+  'เสร็จแล้ว · คืนเครื่องให้ทีมงาน':'Done · return the station to staff',
+  'อยากเล่นอีกเกม ทีมงานกดเลือกให้ใหม่จากจอถัดไป':'To play again, staff pick a game on the next screen',
+  // รับเครื่องคืน
+  'ผู้เล่นคนนี้เล่นอะไรไปแล้ว':'What this player has played','ยังไม่เล่น':'Not played yet',
+  'รับผู้เล่นคนใหม่':'Start a new player',
+  'ล้างชื่อ “โจ้” ออกจากเครื่อง · คนถัดไปได้ตัวตนใหม่ของตัวเอง':'Clears “โจ้” from the station — the next person gets their own fresh identity',
+  'ให้ “โจ้” เล่นต่ออีกรอบ':'Let “โจ้” play another run',
+  'คะแนนรอบใหม่ไปรวมกับชื่อเดิม · เลือกเกมได้ทั้งเกมที่ยังไม่เล่นและเกมเดิม':'The new run counts under the same name — pick either the unplayed game or the same one again',
+  'ถ้าอันดับรวมทุกเกมเปิดใช้อยู่ การให้เล่นเกมที่ยังไม่เล่นจะทำให้ผู้เล่นคนนี้มีสิทธิ์ติดอันดับรวม':'If combined standings are in use, letting them play the unplayed game makes them eligible for it',
+  // หยุดรับคะแนน
+  'กำลังประกาศผลรอบที่ 4':'Announcing the results of round 4',
+  'ยังไม่ส่งเครื่องให้ผู้เล่น':'Do not hand the station to a player yet',
+  'ถ้าให้เล่นตอนนี้ คะแนนจะไม่ถูกนับ — รอทีมงานกดรับคะแนนต่อจากจอแอดมินก่อน':'A run started now would not count — wait until scoring is resumed from the admin screen',
+  'เครื่องที่หยุดพร้อมกัน':'stations paused','คนในรอบนี้':'players this round',
+  '(mockup) กลับไปจอรอผู้เล่น':'(mockup) back to the waiting screen',
+  // บอร์ด
+  'รอบนี้ · แยกตามเกม':'This round · per game','ใครนำในแต่ละเกม':'Who leads each game',
+  'รอบนี้ · รวมทุกเกม · ตามอันดับ':'This round · combined by rank','อันดับรวมของรอบ':'Combined standings for the round',
+  'รอบนี้ · รวมทุกเกม · ตามคะแนน':'This round · combined by score',
+  'ทั้งวัน · แยกตามเกม':'All day · per game','สถิติสูงสุดของวัน':'Best of the day',
+  'ทั้งวัน · รวมทุกเกม · ตามอันดับ':'All day · combined by rank','อันดับรวมทั้งวัน':'Standings for the day',
+  'ทั้งวัน · รวมทุกเกม · ตามคะแนน':'All day · combined by score',
+  'คะแนนจากการทุบ · 60 วินาที':'Hits scored · 60 seconds','ระยะที่วิ่งได้ · เมตร':'Distance run · metres',
+  'อัปเดตทุก 5 วินาที':'Updates every 5 seconds','เล่นเกมเดียว':'one game only',
+  'ที่ 1 ของเปโคแดช':'won Peco Dash',
+  'คะแนนดีสุดของแต่ละคนในรอบนี้ · คนละเกมคนละหน่วย จึงไม่เอามาเรียงรวมกันที่นี่':"Each player's best run this round — the games use different units, so they are not merged here",
+  'คนที่เล่นครบสองเกมสะสมแต้มได้มากกว่าโดยธรรมชาติ':'Players who took on both games naturally gather more points',
+  'คนที่ชนะเปโคแดชทั้งรอบ อยู่อันดับ 6 — เทียบกับอันดับ 2 ในมุมมองตามอันดับ':'The player who won Peco Dash sits 6th here — 2nd in the by-rank view',
+  'คะแนนดีสุดของแต่ละคนตลอดวัน ไม่ใช่ผลรวมของทุกรอบที่เล่น':"Each player's best run of the day, not the sum of every run",
+  'แนน 160 = ตีโพริง #1 (100) + เปโค #3 (60)':'แนน 160 = Whack a Poring #1 (100) + Peco #3 (60)',
+  'แนน 4,600 = ตีโพริง 3,450 + เปโค 1,150':'แนน 4,600 = Whack a Poring 3,450 + Peco 1,150',
+};
+const TH = Object.fromEntries(Object.entries(EN).map(([k,v])=>[v,k]));
+function setLang(l){
+  $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.lang===l)));
+  // แปลเฉพาะ element ที่ไม่มีลูก (leaf) ในฝั่งเครื่องและบอร์ด — ไม่แตะจอแอดมิน
+  $$('#s-kiosk .screen *, #s-board .tv *').forEach(el=>{
+    if(el.children.length) return;
+    const t = el.textContent.trim();
+    const to = l==='en' ? EN[t] : TH[t];
+    if(to) el.textContent = to;
+  });
+}
+$$('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+/* [KEEP] web-publish: ภาษาจาก URL ?lang=en / #en ตอนขึ้น GitHub Pages — อย่าลบ */
+try{var _q=(new URLSearchParams(location.search).get('lang')||location.hash.replace('#','')||'').toLowerCase();if(_q==='en')setLang('en');}catch(e){}
+
+/* ---- ชื่อต้องไม่ซ้ำ (ทั้งงาน) ---- */
+const TAKEN = ['แนน','ตี๋','เอิร์ธ','ปอนด์','มิ้นท์','กิ๊ฟ','ฟ้า','บอส','บอล'];
+const nick = $('#nick'), nmsg = $('#nick-msg'), nsug = $('#nick-suggest'), ngo = $('#nick-go');
+function checkNick(){
+  const v = nick.value.trim();
+  const dup = TAKEN.includes(v);
+  const empty = v.length === 0;
+  nick.classList.toggle('bad', dup);
+  ngo.disabled = dup || empty;
+  nsug.hidden = !dup;
+  if(dup){
+    nmsg.className = 'nick-bad';
+    nmsg.textContent = '“'+v+'” มีคนใช้ชื่อนี้แล้ว ลองชื่ออื่น';
+    [...nsug.querySelectorAll('[data-suggest]')].forEach((b,i)=>{
+      b.dataset.suggest = i===0 ? v+'2' : v+'น้อย';
+      b.textContent = b.dataset.suggest;
+    });
+  } else if(empty){
+    nmsg.className = 'hint'; nmsg.textContent = 'ยังไม่ได้ใส่ชื่อ';
+  } else {
+    nmsg.className = 'nick-ok'; nmsg.textContent = 'ใช้ชื่อนี้ได้';
+  }
+}
+if(nick){
+  nick.oninput = checkNick;
+  nsug.onclick = e=>{ const s = e.target.dataset.suggest; if(s){ nick.value = s; checkNick(); nick.focus(); } };
+  checkNick();
+}
+
+/* ---- switches ---- */
+$$('.sw').forEach(sw=>sw.onclick = ()=>
+  sw.setAttribute('aria-checked', sw.getAttribute('aria-checked')==='true' ? 'false':'true'));
+
+/* ---- boot from URL ---- */
+const p = new URL(location).searchParams;
+showSurface(p.get('surface') || 'kiosk');
+showStep('lock');
+showVariant(p.get('variant') || 'round-split');
+</script>
+
+</body></html>
