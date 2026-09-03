@@ -1,0 +1,898 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish: กัน Google index — อย่าลบ -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>แก้ gnjoy.in.th ให้ผ่าน AdSense</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F6F8FA; --surface:#FFFFFF; --surface-2:#EFF3F6;
+  --ink:#141A21; --ink-2:#48545F; --ink-3:#78848F;
+  --rule:#DFE5EA; --rule-2:#C9D2DA;
+  --accent:#1B6B5A; --accent-soft:#E4EFEB; --accent-line:#9CC6BA;
+  --crit:#AD3327; --crit-soft:#FAEAE7; --crit-line:#E0A79F;
+  --warn:#8A5A0B; --warn-soft:#F9F1DF; --warn-line:#DCC38A;
+  --link:#1A5FB4;
+  --code-bg:#111820; --code-ink:#D9E2EA; --code-dim:#6E7C8A;
+  --tab-bg:#DDE3E9; --tab-active:#FFFFFF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1319; --surface:#161C24; --surface-2:#1D242D;
+    --ink:#E7EDF3; --ink-2:#A7B3BE; --ink-3:#7C8896;
+    --rule:#262E38; --rule-2:#333D49;
+    --accent:#54B9A2; --accent-soft:#152824; --accent-line:#2C5B51;
+    --crit:#E88478; --crit-soft:#2A1614; --crit-line:#63302A;
+    --warn:#D9A544; --warn-soft:#241C0C; --warn-line:#5A461C;
+    --link:#7FB0F0;
+    --code-bg:#0A0E13; --code-ink:#D9E2EA; --code-dim:#5D6A78;
+    --tab-bg:#1D242D; --tab-active:#2A333E;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1319; --surface:#161C24; --surface-2:#1D242D;
+  --ink:#E7EDF3; --ink-2:#A7B3BE; --ink-3:#7C8896;
+  --rule:#262E38; --rule-2:#333D49;
+  --accent:#54B9A2; --accent-soft:#152824; --accent-line:#2C5B51;
+  --crit:#E88478; --crit-soft:#2A1614; --crit-line:#63302A;
+  --warn:#D9A544; --warn-soft:#241C0C; --warn-line:#5A461C;
+  --link:#7FB0F0;
+  --code-bg:#0A0E13; --code-ink:#D9E2EA; --code-dim:#5D6A78;
+  --tab-bg:#1D242D; --tab-active:#2A333E;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans Thai","Noto Sans Thai",-apple-system,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.75; margin:0; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1000px; margin:0 auto; padding:0 24px 96px}
+h1,h2,h3,h4{font-family:"Bai Jamjuree","IBM Plex Sans Thai",sans-serif; text-wrap:balance; margin:0}
+code,kbd,pre,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+.mast{border-bottom:2px solid var(--ink); padding:56px 0 22px; margin-bottom:36px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 14px}
+.mast h1{font-size:clamp(30px,5vw,46px); line-height:1.18; font-weight:700; letter-spacing:-.015em}
+.mast .lede{color:var(--ink-2); font-size:18px; max-width:62ch; margin:16px 0 0}
+.mast-meta{display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:24px;
+  font-size:12.5px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.mast-meta b{color:var(--ink-2); font-weight:500}
+
+section{margin:52px 0 0}
+h2{font-size:25px; font-weight:600; letter-spacing:-.01em}
+.h2rule{display:flex; align-items:baseline; gap:14px; border-bottom:1px solid var(--rule);
+  padding-bottom:10px; margin-bottom:22px}
+.h2rule .num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-3);
+  letter-spacing:.1em; flex:none}
+p{margin:0 0 14px; max-width:68ch}
+.sm{font-size:14px; color:var(--ink-2)}
+a{color:var(--link)}
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:22px 24px}
+
+.tablewrap{overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:560px}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{background:var(--surface-2); font-family:"Bai Jamjuree",sans-serif; font-weight:600;
+  font-size:12.5px; letter-spacing:.02em; color:var(--ink-2); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.mono,th.mono{font-family:"IBM Plex Mono",monospace; font-size:13px}
+
+.chip{display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace;
+  font-size:11px; letter-spacing:.04em; padding:3px 8px; border-radius:2px;
+  border:1px solid var(--rule-2); color:var(--ink-2); white-space:nowrap}
+.chip.pass{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent)}
+.chip.crit{background:var(--crit-soft); border-color:var(--crit-line); color:var(--crit)}
+.chip.warn{background:var(--warn-soft); border-color:var(--warn-line); color:var(--warn)}
+
+.tier{
+  font-family:"Bai Jamjuree",sans-serif; font-size:13px; font-weight:600; letter-spacing:.02em;
+  display:flex; align-items:center; gap:10px; margin:38px 0 16px; color:var(--ink-2)
+}
+.tier::after{content:""; flex:1; height:1px; background:var(--rule)}
+.tier .badge{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; padding:3px 9px; border-radius:2px
+}
+.tier.must .badge{background:var(--crit-soft); color:var(--crit); border:1px solid var(--crit-line)}
+.tier.help .badge{background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent-line)}
+
+.case{background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  margin:0 0 26px; overflow:hidden}
+.case-head{display:flex; gap:18px; align-items:flex-start; padding:20px 24px;
+  border-bottom:1px solid var(--rule); position:relative}
+.case-head::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--rule-2)}
+.case.sev-crit .case-head::before{background:var(--crit)}
+.case.sev-high .case-head::before{background:var(--warn)}
+.case.sev-med  .case-head::before{background:var(--accent-line)}
+.case-n{font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:500;
+  color:var(--ink-3); line-height:1.2; flex:none; padding-top:2px}
+.case-t{flex:1; min-width:0}
+.case-t h3{font-size:19.5px; font-weight:600; line-height:1.35}
+.case-facts{display:flex; flex-wrap:wrap; gap:6px; margin-top:11px}
+.case-body{padding:22px 24px 26px}
+.case-body > :first-child{margin-top:0}
+h4{font-size:12px; font-family:"IBM Plex Mono",monospace; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin:26px 0 12px}
+.case-body h4:first-of-type{margin-top:0}
+
+.quote{
+  border-left:3px solid var(--accent); background:var(--accent-soft);
+  padding:12px 16px; margin:0 0 16px; font-size:14px; color:var(--ink-2); border-radius:0 2px 2px 0
+}
+.quote i{color:var(--ink); font-style:italic}
+.quote .src{display:block; margin-top:6px; font-family:"IBM Plex Mono",monospace;
+  font-size:11px; color:var(--ink-3); letter-spacing:.03em}
+
+.ba{display:grid; gap:16px; grid-template-columns:1fr; margin:0 0 8px}
+@media(min-width:760px){ .ba{grid-template-columns:1fr 1fr} }
+.ba-col{border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--surface-2)}
+.ba-lab{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; padding:7px 12px; border-bottom:1px solid var(--rule);
+  display:flex; justify-content:space-between; gap:10px}
+.ba-col.bad .ba-lab{background:var(--crit-soft); color:var(--crit)}
+.ba-col.good .ba-lab{background:var(--accent-soft); color:var(--accent)}
+.ba-in{padding:16px 14px}
+
+.tabstrip{display:flex; gap:2px; background:var(--tab-bg); padding:7px 7px 0; border-radius:4px 4px 0 0}
+.tab{background:var(--tab-active); border-radius:5px 5px 0 0; padding:7px 9px;
+  font-size:11.5px; display:flex; align-items:center; gap:6px; width:132px; min-width:0;
+  color:var(--ink-2); opacity:.62}
+.tab.on{opacity:1; color:var(--ink)}
+.tab .dot{width:9px; height:9px; border-radius:2px; background:var(--accent); flex:none; opacity:.85}
+.tab .lbl{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tabbase{height:8px; background:var(--tab-active); border-radius:0 0 4px 4px}
+
+.urlbar{display:flex; align-items:center; gap:9px; background:var(--surface);
+  border:1px solid var(--rule-2); border-radius:20px; padding:7px 14px;
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-2);
+  overflow-x:auto; white-space:nowrap}
+.urlbar .lock{width:11px; height:11px; border:1.5px solid var(--ink-3); border-radius:2px;
+  border-bottom-width:5px; flex:none}
+.urlbar b{color:var(--ink); font-weight:500}
+.urlrow{display:flex; align-items:center; gap:10px; margin:0 0 9px}
+.urlrow .tagend{font-family:"IBM Plex Mono",monospace; font-size:11px; flex:none}
+
+.serp{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:15px 16px}
+.serp + .serp{margin-top:10px}
+.serp .crumb{font-size:12.5px; color:var(--ink-2); font-family:"IBM Plex Mono",monospace; margin-bottom:3px}
+.serp .st{font-size:18px; color:var(--link); line-height:1.4; font-family:"Bai Jamjuree",sans-serif; font-weight:500}
+.serp .sd{font-size:13.5px; color:var(--ink-2); margin-top:4px; line-height:1.6}
+
+.outline{font-family:"IBM Plex Mono",monospace; font-size:12.5px; line-height:2.1}
+.outline div{display:flex; gap:10px; align-items:baseline}
+.outline .lv{color:var(--ink-3); flex:none; width:26px}
+.outline .h1 .lv{color:var(--accent); font-weight:500}
+.outline .empty{color:var(--crit); font-style:italic}
+.outline .ind1{padding-left:26px}
+.outline .ind2{padding-left:52px}
+
+.crawl{font-family:"IBM Plex Mono",monospace; font-size:12.5px; line-height:1.95}
+.crawl .cnode{color:var(--ink); font-weight:500}
+.crawl .cbranch{color:var(--ink-2); padding-left:4px}
+.crawl .csrc{color:var(--accent); font-weight:500; margin-top:10px}
+.crawl .cgap{color:var(--ink-3); padding-left:12px; letter-spacing:.3em}
+.crawl .cdead{color:var(--crit); padding-left:4px}
+.crawl .tag{display:inline-block; margin-left:6px; vertical-align:1px}
+
+.pagemock{font-size:13.5px; line-height:1.6}
+.pagemock .ln{padding:5px 9px; border-radius:2px; margin-bottom:5px}
+.pagemock .dup{background:var(--crit-soft); color:var(--crit); border:1px dashed var(--crit-line)}
+.pagemock .keep{background:var(--accent-soft); color:var(--ink); border:1px solid var(--accent-line)}
+.pagemock .plain{color:var(--ink-2)}
+.pagemock .note-inline{font-family:"IBM Plex Mono",monospace; font-size:10.5px; opacity:.85}
+
+pre{background:var(--code-bg); color:var(--code-ink); border-radius:3px; padding:15px 17px;
+  overflow-x:auto; font-size:13px; line-height:1.72; margin:0 0 14px; border:1px solid var(--rule)}
+pre .c{color:var(--code-dim)}
+pre .k{color:#8FD3C1}
+pre .s{color:#E6C08A}
+:not(pre) > code{background:var(--surface-2); border:1px solid var(--rule); border-radius:2px;
+  padding:1px 5px; font-size:13px; color:var(--ink)}
+
+.note{border-left:3px solid var(--rule-2); padding:13px 0 13px 16px; margin:0 0 16px;
+  font-size:14.5px; color:var(--ink-2)}
+.note.crit{border-color:var(--crit)}
+.note.crit b{color:var(--crit)}
+.note.ok{border-color:var(--accent)}
+.note.ok b{color:var(--accent)}
+.note p:last-child{margin-bottom:0}
+
+ul.ck{list-style:none; padding:0; margin:0; font-size:14.5px}
+ul.ck li{display:flex; gap:12px; padding:9px 0; border-bottom:1px solid var(--rule); align-items:flex-start}
+ul.ck li:last-child{border-bottom:none}
+ul.ck .box{width:15px; height:15px; border:1.5px solid var(--rule-2); border-radius:2px;
+  flex:none; margin-top:5px}
+
+.toc{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:4px 22px 14px}
+.toc .tier{margin:18px 0 8px}
+.toc ol{margin:0; padding-left:22px; font-size:14.5px}
+.toc li{margin:4px 0}
+
+footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--rule);
+  font-size:12.5px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+footer p{max-width:none; margin:0 0 5px}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">เอกสารภายใน · สำหรับทีมเว็บ GNJOY</p>
+  <h1>แก้ gnjoy.in.th ให้ผ่าน AdSense</h1>
+  <p class="lede">
+    เทียบเว็บจริงกับเกณฑ์ที่ Google เขียนไว้ทีละข้อ แล้วแยกให้ชัดว่า
+    <b>อะไรต้องแก้เพื่อผ่านการตรวจ</b> กับ <b>อะไรช่วยได้แต่ไม่ใช่เกณฑ์</b>
+  </p>
+  <div class="mast-meta">
+    <span>ตรวจเมื่อ <b>2 ก.ย. 2026</b></span>
+    <span>โดเมนที่ยื่น <b>gnjoy.in.th</b></span>
+    <span>Publisher <b>pub-1547224935471604</b></span>
+    <span>สถานะคำขอ <b>Getting ready</b></span>
+  </div>
+</header>
+
+<section>
+  <div class="h2rule"><span class="num">A</span><h2>เกณฑ์ที่ใช้ตัดสิน</h2></div>
+
+  <p>
+    Google แบ่งสาเหตุที่เว็บไม่พร้อมแสดงโฆษณาไว้ <b>4 หมวด</b> — โค้ดไม่ครบ · เข้าเว็บไม่ได้ ·
+    เนื้อหาไม่พอหรือประสบการณ์ผู้ใช้ไม่ดี · ผิดนโยบาย
+  </p>
+
+  <h4>สามหมวดที่ตรวจแล้วผ่าน — ไม่ต้องแตะ</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>รายการ</th><th>ผลตรวจ</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>โค้ด AdSense อยู่ใน <code>&lt;head&gt;</code></td><td class="mono">1 ใน head · 0 ใน body</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td><code>ads.txt</code></td><td class="mono">200 · text/plain · ID ตรง</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>SSL และการเด้ง HTTP&nbsp;→&nbsp;HTTPS</td><td class="mono">redirect ทำงาน + HSTS</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>ตัวบล็อก crawler</td><td class="mono">ไม่มี robots.txt = ไม่บล็อก</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>Cloudflare บล็อกตาม user agent</td><td class="mono">Mediapartners-Google → 200<br>AdsBot-Google → 200</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>บล็อกตาม IP หรือประเทศ</td><td>ทีมเซิร์ฟเวอร์ยืนยันว่าไม่มี</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>CSP อนุญาตโดเมนโฆษณา</td><td class="mono">googlesyndication · doubleclick<br>googleadservices · adtrafficquality</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>Policy center</td><td>ไม่มีรายการผิดนโยบาย</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      <tr><td>เนื้อหาบทความเป็นข้อความจริง</td><td class="mono">365 คำ + รูป 6 ใบ ต่อบทความ</td><td><span class="chip pass">ผ่าน</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>เหลือหมวดเดียว และนี่คือข้อความจริงจากหน้าเกณฑ์ของ Google</h4>
+
+  <div class="quote">
+    <i>“make sure that your pages have enough unique content so that we can determine what your site is about”</i>
+    <span class="src">เกณฑ์ที่ 1 — Provide enough unique content</span>
+  </div>
+  <div class="quote">
+    <i>“ensure that the same content is not duplicated in the same page or across multiple pages of your site”</i><br>
+    <i>“try to minimize repeating long segments of text in different pages of your site”</i>
+    <span class="src">เกณฑ์ที่ 2 — Make certain that there’s no duplicate content</span>
+  </div>
+  <div class="quote">
+    <i>“Your content should also be informative and organized in a manner that’s easy for users to navigate”</i><br>
+    <i>“Add navigational elements to the menu bar and organize your content by topic, category”</i>
+    <span class="src">เกณฑ์ที่ 3 — Build a good user experience with navigational elements</span>
+  </div>
+
+  <div class="note crit">
+    <p><b>สังเกตว่าเกณฑ์ทั้งสามข้อไม่ได้พูดถึง <code>title</code> · <code>h1</code> ·
+    <code>meta description</code> · <code>sitemap</code> เลยแม้แต่คำเดียว</b></p>
+    <p>เอกสารนี้จึงแยกเป็นสองชั้น — ชั้นแรกคือของที่<b>ชนเกณฑ์ตรง ๆ</b>
+    ชั้นที่สองคือของที่<b>ช่วยให้ Google เข้าใจเว็บได้ดีขึ้น แต่ไม่ใช่เกณฑ์</b>
+    ถ้าเวลาจำกัด ทำชั้นแรกให้ครบก่อน</p>
+  </div>
+</section>
+
+<section>
+  <div class="h2rule"><span class="num">B</span><h2>สิ่งที่ต้องแก้</h2></div>
+  <div class="toc">
+    <div class="tier must"><span class="badge">ต้องแก้</span> ชนเกณฑ์ของ Google ตรง ๆ</div>
+    <ol>
+      <li>ทุกหน้ามี 2 URL — <code>www</code> กับไม่มี <code>www</code> <span class="sm">→ เกณฑ์ที่ 2</span></li>
+      <li>เนื้อหาซ้ำในหน้าเดียวกัน <span class="sm">→ เกณฑ์ที่ 2</span></li>
+      <li>เดินไปถึงเนื้อหาส่วนใหญ่ของเว็บไม่ได้ <span class="sm">→ เกณฑ์ที่ 1 และ 3</span></li>
+    </ol>
+    <div class="tier help"><span class="badge">ช่วยได้</span> ไม่ใช่เกณฑ์ ทำทีหลังได้</div>
+    <ol start="4">
+      <li><code>sitemap.xml</code> — ทำให้คลังข่าวถูกมองเห็น</li>
+      <li><code>&lt;title&gt;</code> และ <code>&lt;h1&gt;</code> — ทำให้ระบบแยกได้ว่าแต่ละหน้าคืออะไร</li>
+    </ol>
+  </div>
+</section>
+
+<div class="tier must"><span class="badge">ต้องแก้</span> ชนเกณฑ์ของ Google ตรง ๆ</div>
+
+<!-- ============ CASE 1 ============ -->
+<article class="case sev-crit" id="c1">
+  <div class="case-head">
+    <div class="case-n">01</div>
+    <div class="case-t">
+      <h3>ทุกหน้ามี 2 URL — Google เห็นเป็นเนื้อหาซ้ำทั้งเว็บ</h3>
+      <div class="case-facts">
+        <span class="chip crit">รุนแรงที่สุด</span>
+        <span class="chip">เกณฑ์ที่ 2</span>
+        <span class="chip">แก้ที่ Cloudflare</span>
+        <span class="chip">~15 นาที</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+
+    <h4>ผลทดสอบจริง</h4>
+    <pre>https://www.gnjoy.in.th/                        <span class="c">→ 200  ไม่ redirect</span>
+https://www.gnjoy.in.th/Events/EventDetail/563  <span class="c">→ 200  ไม่ redirect</span>
+https://gnjoy.in.th/Events/EventDetail/563      <span class="c">→ 200  ไม่ redirect</span>
+canonical tag                                   <span class="c">→ ไม่มีเลยทั้งสองแบบ</span></pre>
+
+    <p>
+      เนื้อหาทุกหน้าของเว็บมีอยู่ที่ <b>2 ที่อยู่</b> โดยไม่มีอะไรบอก Google ว่าอันไหนคือตัวจริง
+      และหน้าแรกยัง<b>ลิงก์ไปหาทั้งสองแบบสลับกันเอง</b> — ข่าวเดียวกันมีทั้งลิงก์ <code>www</code>
+      และไม่มี ปนกันอยู่ในหน้าเดียว
+    </p>
+
+    <div class="quote">
+      <i>“ensure that the same content is not duplicated … across multiple pages of your site”</i>
+      <span class="src">นี่คือประโยคที่เคสนี้ชนตรง ๆ</span>
+    </div>
+
+    <div class="ba">
+      <div class="ba-col bad">
+        <div class="ba-lab"><span>ตอนนี้</span><span>เนื้อหาซ้ำ</span></div>
+        <div class="ba-in">
+          <div class="urlrow"><div class="urlbar"><span class="lock"></span><span>https://<b>www.</b>gnjoy.in.th/Events/EventDetail/563</span></div></div>
+          <div class="urlrow"><div class="urlbar"><span class="lock"></span><span>https://gnjoy.in.th/Events/EventDetail/563</span></div></div>
+          <p class="sm" style="margin:12px 0 0">สองที่อยู่ → <b>หน้าเดียวกันเป๊ะ</b> · ไม่มี redirect · ไม่มี canonical</p>
+        </div>
+      </div>
+      <div class="ba-col good">
+        <div class="ba-lab"><span>ต้องเป็น</span><span>ตัวจริงหนึ่งเดียว</span></div>
+        <div class="ba-in">
+          <div class="urlrow">
+            <div class="urlbar"><span class="lock"></span><span>https://<b>www.</b>gnjoy.in.th/Events/EventDetail/563</span></div>
+            <span class="tagend"><span class="chip crit">301</span></span>
+          </div>
+          <div class="urlrow">
+            <div class="urlbar"><span class="lock"></span><span>https://gnjoy.in.th/Events/EventDetail/563</span></div>
+            <span class="tagend"><span class="chip pass">200</span></span>
+          </div>
+          <p class="sm" style="margin:12px 0 0"><code>www</code> เด้งเข้า non-www ด้วย <b>301</b> · ทุกหน้ามี canonical ชี้ non-www</p>
+        </div>
+      </div>
+    </div>
+
+    <h4>วิธีแก้ · ก. Cloudflare — ทำได้เลยไม่ต้องรอ deploy</h4>
+    <p class="sm">Cloudflare → Rules → Redirect Rules → Create rule</p>
+    <pre><span class="c">// เงื่อนไข</span>
+Hostname  <span class="k">equals</span>  <span class="s">"www.gnjoy.in.th"</span>
+
+<span class="c">// การกระทำ — Dynamic redirect</span>
+URL       <span class="k">concat</span>(<span class="s">"https://gnjoy.in.th"</span>, http.request.uri)
+Status    <span class="k">301</span>   <span class="c">(Permanent)</span>
+Preserve query string  <span class="k">on</span></pre>
+
+    <h4>วิธีแก้ · ข. canonical ในโค้ด</h4>
+    <p class="sm">ใส่ใน <code>_Layout.cshtml</code> ครั้งเดียว ได้ทุกหน้า</p>
+    <pre>&lt;link rel=<span class="s">"canonical"</span>
+      href=<span class="s">"https://gnjoy.in.th@(Context.Request.Path)@(Context.Request.QueryString)"</span>&gt;</pre>
+
+    <h4>วิธีแก้ · ค. ลิงก์ภายใน</h4>
+    <p>
+      หาลิงก์ที่ hardcode <code>https://www.gnjoy.in.th</code> ในหน้าแรกและหน้ารายการข่าว
+      เปลี่ยนเป็น relative path (<code>/Events/EventDetail/563</code>) ให้หมด
+    </p>
+
+    <h4>ตรวจว่าเสร็จ</h4>
+    <pre>curl -I https://www.gnjoy.in.th/
+<span class="c">→ ต้องได้ HTTP/2 301  และ  location: https://gnjoy.in.th/</span></pre>
+  </div>
+</article>
+
+<!-- ============ CASE 2 ============ -->
+<article class="case sev-crit" id="c2">
+  <div class="case-head">
+    <div class="case-n">02</div>
+    <div class="case-t">
+      <h3>เนื้อหาซ้ำในหน้าเดียวกัน — ชื่อข่าวถูกพิมพ์ซ้ำ 3–4 ครั้ง</h3>
+      <div class="case-facts">
+        <span class="chip crit">ต้องแก้</span>
+        <span class="chip">เกณฑ์ที่ 2</span>
+        <span class="chip">View ของหน้าข่าว</span>
+        <span class="chip">~1 ชม.</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+
+    <h4>ที่พบ</h4>
+    <p>
+      หน้า <code>/Events/EventDetail/563</code> มีข้อความ 4,255 ตัวอักษร
+      แต่<b>ชื่อข่าวเดียวกันถูกพิมพ์ออกมา 3–4 ครั้ง</b>ในหน้าเดียว
+      ทั้งเป็นหัวเรื่อง ซ้ำใต้หัวเรื่อง และซ้ำอีกในย่อหน้าแรกของเนื้อหา
+    </p>
+
+    <div class="quote">
+      <i>“ensure that the same content is not duplicated <b>in the same page</b> …”</i><br>
+      <i>“try to minimize repeating long segments of text”</i>
+      <span class="src">Google เขียนถึงกรณีนี้ไว้ตรงตัว</span>
+    </div>
+
+    <p>
+      และเพราะเป็น <b>template ของหน้าข่าว</b> อาการนี้จึงเกิดกับ<b>ทุกข่าวในเว็บ</b>
+      ไม่ใช่ข่าวเดียว — เมื่อรวมกับข้อ 01 ที่ทำให้ทุกหน้ามีสองที่อยู่
+      สัญญาณเนื้อหาซ้ำจึงคูณกันสองชั้น
+    </p>
+
+    <h4>เห็นเป็นภาพ · เนื้อหาบนหน้าข่าว</h4>
+    <div class="ba">
+      <div class="ba-col bad">
+        <div class="ba-lab"><span>ตอนนี้</span><span>ซ้ำ 4 ครั้ง</span></div>
+        <div class="ba-in">
+          <div class="pagemock">
+            <div class="ln dup">เปิดรับสมัคร Pre-CBT <span class="note-inline">← หัวเรื่อง</span></div>
+            <div class="ln dup">เปิดรับสมัคร Pre-CBT <span class="note-inline">← ซ้ำ</span></div>
+            <div class="ln plain">วันที่ : 9/1/2026 2:50:46 PM</div>
+            <div class="ln dup">เปิดรับสมัคร Pre-CBT <span class="note-inline">← ซ้ำ</span></div>
+            <div class="ln dup">เปิดรับสมัคร Pre-CBT อย่างเป็นทางการ <span class="note-inline">← ซ้ำ</span></div>
+            <div class="ln plain">ชวนเหล่านักผจญภัยมาร่วมสัมผัส…</div>
+          </div>
+        </div>
+      </div>
+      <div class="ba-col good">
+        <div class="ba-lab"><span>ต้องเป็น</span><span>ครั้งเดียว</span></div>
+        <div class="ba-in">
+          <div class="pagemock">
+            <div class="ln keep">เปิดรับสมัคร Pre-CBT <span class="note-inline">← หัวเรื่อง ครั้งเดียว</span></div>
+            <div class="ln plain">วันที่ : 1 กันยายน 2569</div>
+            <div class="ln plain">Ragnarok : The Promised Adventure เปิดรับสมัครผู้เล่นเข้าร่วมทดสอบอย่างเป็นทางการ</div>
+            <div class="ln plain">ชวนเหล่านักผจญภัยมาร่วมสัมผัส…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>วิธีแก้</h4>
+    <ul class="ck">
+      <li><span class="box"></span><span>เปิด View ของหน้าข่าว หาจุดที่พิมพ์ <code>@Model.Title</code> ออกมา — <b>เหลือไว้จุดเดียว</b></span></li>
+      <li><span class="box"></span><span>ถ้ามีทั้งฟิลด์ <code>Title</code> และ <code>SubTitle</code> ที่ผู้ลงข่าวกรอกซ้ำกัน ให้แสดงเฉพาะตัวที่ต่างกันจริง</span></li>
+      <li><span class="box"></span><span>ถ้าย่อหน้าแรกของ <code>Body</code> ขึ้นต้นด้วยชื่อข่าวซ้ำ ให้แจ้งทีมคอนเทนต์ให้เลิกพิมพ์ซ้ำตอนลงข่าว — <b>เป็นเรื่องขั้นตอนทำงาน ไม่ใช่แค่โค้ด</b></span></li>
+      <li><span class="box"></span><span>ตรวจ footer และ sidebar ว่ามีข้อความยาวซ้ำทุกหน้าหรือไม่ ถ้ามีให้ย่อแล้วลิงก์ไปหน้ารายละเอียด</span></li>
+    </ul>
+
+    <h4>ตรวจว่าเสร็จ</h4>
+    <p class="sm">เปิดหน้าข่าวแล้วรันใน Console — ต้องได้ <code>1</code></p>
+    <pre>document.body.innerText.split(<span class="s">"เปิดรับสมัคร Pre-CBT"</span>).length - <span class="k">1</span></pre>
+  </div>
+</article>
+
+<!-- ============ CASE 3 ============ -->
+<article class="case sev-crit" id="c3">
+  <div class="case-head">
+    <div class="case-n">03</div>
+    <div class="case-t">
+      <h3>เดินไปถึงเนื้อหาส่วนใหญ่ของเว็บไม่ได้</h3>
+      <div class="case-facts">
+        <span class="chip crit">ต้องแก้</span>
+        <span class="chip">เกณฑ์ที่ 1 และ 3</span>
+        <span class="chip">หน้ารายการข่าว + เมนู</span>
+        <span class="chip">~1 วัน</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+
+    <h4>ที่พบ</h4>
+    <p>
+      หน้าแรกของ <code>gnjoy.in.th</code> มีลิงก์ภายในทั้งหมด <b>31 ลิงก์</b>
+      และโชว์ข่าวแค่ <b>6 ข่าว</b> ข่าวที่เหลืออยู่ในคลังย้อนหลัง
+      ซึ่ง<b>เดินไปถึงจากหน้าแรกไม่ได้</b>
+    </p>
+    <p>
+      ⚠️ และถ้าตัวแบ่งหน้าของรายการข่าวเป็น JavaScript หรือปุ่ม “โหลดเพิ่ม”
+      <b>ทั้งผู้ใช้บางส่วนและ crawler เดินต่อไม่ได้เลย</b> จบแค่หน้าแรกของรายการ
+    </p>
+
+    <div class="quote">
+      <i>“Your content should also be informative and <b>organized in a manner that’s easy for users to navigate</b>”</i><br>
+      <i>“Add navigational elements to the menu bar and organize your content by topic, category”</i><br>
+      <i>“Are all navigational elements clickable?”</i>
+      <span class="src">เกณฑ์ที่ 3 พูดถึงเมนูและการนำทางเป็นหัวข้อเต็ม ๆ หัวข้อหนึ่ง</span>
+    </div>
+
+    <p>
+      ผลรวมสองชั้น — <b>ผู้ใช้</b>หาข่าวเก่าไม่เจอ (ผิดเกณฑ์ที่ 3) และ
+      <b>Google</b> รู้จักเว็บนี้แค่ไม่กี่สิบหน้าทั้งที่มีข่าวสะสมเป็นร้อย
+      จึงตัดสินว่าเนื้อหาไม่พอ (ผิดเกณฑ์ที่ 1)
+    </p>
+
+    <h4>เห็นเป็นภาพ · เส้นทางที่เดินได้</h4>
+    <div class="ba">
+      <div class="ba-col bad">
+        <div class="ba-lab"><span>ตอนนี้</span><span>เดินไปถึงแค่ยอดภูเขา</span></div>
+        <div class="ba-in">
+          <div class="crawl">
+            <div class="cnode">gnjoy.in.th (หน้าแรก)</div>
+            <div class="cbranch">├─ ลิงก์ภายใน 31 ลิงก์</div>
+            <div class="cbranch">└─ ข่าวล่าสุด 6 ข่าว<span class="tag chip pass">ถึง</span></div>
+            <div class="cgap">⋮</div>
+            <div class="cdead">✗ ข่าวเก่าทั้งคลัง<span class="tag chip crit">เดินไปไม่ถึง</span></div>
+            <div class="cdead">✗ หน้ากิจกรรมย้อนหลัง<span class="tag chip crit">เดินไปไม่ถึง</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ba-col good">
+        <div class="ba-lab"><span>ต้องเป็น</span><span>เดินถึงได้ทุกหน้า</span></div>
+        <div class="ba-in">
+          <div class="crawl">
+            <div class="cnode">gnjoy.in.th (หน้าแรก)</div>
+            <div class="cbranch">├─ เมนู: ข่าว · เกม PC · เกมมือถือ</div>
+            <div class="cbranch">└─ “ข่าวทั้งหมด”<span class="tag chip pass">ถึง</span></div>
+            <div class="csrc">/Events/Index/1 → 2 → 3 …</div>
+            <div class="cbranch">├─ ข่าวหมวดกิจกรรม<span class="tag chip pass">ถึง</span></div>
+            <div class="cbranch">├─ ข่าวหมวดอัปเดตเกม<span class="tag chip pass">ถึง</span></div>
+            <div class="cbranch">└─ คลังข่าวย้อนหลังทั้งหมด<span class="tag chip pass">ถึง</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>วิธีแก้</h4>
+    <ul class="ck">
+      <li><span class="box"></span><span><b>ตัวแบ่งหน้าต้องเป็น <code>&lt;a href&gt;</code> จริง</b> ที่มี URL ต่างกันต่อหน้า (<code>/Events/Index/2</code>) — ห้ามเป็นปุ่มที่เรียก JavaScript เท่านั้น</span></li>
+      <li><span class="box"></span><span>มีลิงก์ <b>“ข่าวทั้งหมด”</b> จากหน้าแรกไปหน้ารายการ และมีลิงก์กลับ</span></li>
+      <li><span class="box"></span><span><b>จัดหมวดข่าว</b> ตามที่เกณฑ์ที่ 3 บอก — กิจกรรม · อัปเดตเกม · ประกาศ · แยกตามเกม แล้วให้แต่ละหมวดมีหน้าของตัวเองที่เดินเข้าไปได้</span></li>
+      <li><span class="box"></span><span>ตรวจ<b>เมนูบนมือถือ</b> ว่ากดได้ครบทุกปุ่มและพาไปถูกหน้า — เกณฑ์ที่ 3 ระบุเรื่อง alignment · readability · functionality · accuracy ไว้ชัด</span></li>
+      <li><span class="box"></span><span>ไล่หา<b>ลิงก์เสีย</b> ที่พาไปหน้า 404 หรือหน้าที่ไม่เกี่ยว — เกณฑ์ระบุว่าห้ามมี</span></li>
+    </ul>
+
+    <div class="note ok">
+      <p><b>ข้อนี้ไม่ต้องเขียนบทความใหม่แม้แต่ชิ้นเดียว</b> — เนื้อหามีอยู่แล้ว
+      แค่ทำให้เดินไปถึงได้ทั้งคนและเครื่อง</p>
+    </div>
+  </div>
+</article>
+
+<div class="tier help"><span class="badge">ช่วยได้</span> ไม่ใช่เกณฑ์ ทำทีหลังได้</div>
+
+<!-- ============ CASE 4 ============ -->
+<article class="case sev-med" id="c4">
+  <div class="case-head">
+    <div class="case-n">04</div>
+    <div class="case-t">
+      <h3><code>sitemap.xml</code> — ส่งบัญชีรายชื่อหน้าให้ Google ตรง ๆ</h3>
+      <div class="case-facts">
+        <span class="chip">ช่วยได้</span>
+        <span class="chip">ฝั่งเซิร์ฟเวอร์</span>
+        <span class="chip">~2–4 ชม.</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+
+    <h4>ทำไปทำไม</h4>
+    <p>
+      <b>Google ค้นหน้าใหม่ด้วยวิธีเดียวคือเดินตามลิงก์</b> จากหน้าที่มันรู้จักอยู่แล้ว
+      หน้าไหนไม่มีลิงก์ชี้ไปถึงเลยเรียกว่า <b>orphan page</b> — Google หาไม่เจอตลอดชีวิต
+      แม้หน้านั้นจะเปิดได้ปกติเมื่อพิมพ์ URL เอง
+    </p>
+    <p>
+      sitemap เปลี่ยนจาก <b>“ให้ Google เดินหาเอง”</b> เป็น <b>“เราส่งบัญชีรายชื่อให้ตรง ๆ”</b>
+      จึงเป็นตัวช่วยที่เร็วที่สุดของข้อ 03 ระหว่างที่งานปรับเมนูและตัวแบ่งหน้ายังไม่เสร็จ
+    </p>
+
+    <div class="note">
+      <p><b>ทำไมอยู่ชั้น “ช่วยได้” ไม่ใช่ “ต้องแก้”</b> — เกณฑ์ทั้งสามข้อของ Google
+      ไม่ได้พูดถึง sitemap เลย และ<b>ไม่มี sitemap ก็ผ่านได้</b>
+      แต่มันช่วยให้เนื้อหาที่มีอยู่ถูกนับเร็วขึ้นมาก</p>
+    </div>
+
+    <h4>ไฟล์หน้าตาเป็นอย่างไร</h4>
+    <p>ใช้แค่ <b>2 แท็ก</b> — <code>loc</code> คือที่อยู่ · <code>lastmod</code> คือวันที่แก้ครั้งสุดท้าย</p>
+    <pre>&lt;?xml version=<span class="s">"1.0"</span> encoding=<span class="s">"UTF-8"</span>?&gt;
+&lt;urlset xmlns=<span class="s">"http://www.sitemaps.org/schemas/sitemap/0.9"</span>&gt;
+  &lt;url&gt;
+    &lt;loc&gt;<span class="s">https://gnjoy.in.th/Events/EventDetail/563</span>&lt;/loc&gt;
+    &lt;lastmod&gt;<span class="s">2026-09-01</span>&lt;/lastmod&gt;
+  &lt;/url&gt;
+  <span class="c">&lt;!-- วนทุกข่าวจาก DB --&gt;</span>
+&lt;/urlset&gt;</pre>
+    <p class="sm">
+      ส่วน <code>priority</code> กับ <code>changefreq</code> ที่เห็นในตัวอย่างตามเน็ต
+      <b>Google ประกาศแล้วว่าไม่สนใจ</b> — ไม่ต้องใส่
+    </p>
+
+    <h4>โค้ด · สร้างจาก DB ไม่ใช่ไฟล์ที่แก้มือ</h4>
+    <p class="sm">ถ้าทำเป็นไฟล์นิ่งจะต้องแก้ทุกครั้งที่ลงข่าว แล้วก็จะลืม</p>
+    <pre>[Route(<span class="s">"sitemap.xml"</span>)]
+[ResponseCache(Duration = <span class="k">3600</span>)]            <span class="c">// cache 1 ชม. กันยิง DB ถี่</span>
+<span class="k">public</span> IActionResult Sitemap()
+{
+    <span class="k">var</span> news = _db.News.Where(n =&gt; n.IsPublished)
+                       .OrderByDescending(n =&gt; n.UpdatedAt).ToList();
+
+    <span class="k">var</span> sb = <span class="k">new</span> StringBuilder();
+    sb.AppendLine(<span class="s">@"&lt;?xml version=""1.0"" encoding=""UTF-8""?&gt;"</span>);
+    sb.AppendLine(<span class="s">@"&lt;urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9""&gt;"</span>);
+
+    <span class="k">void</span> Add(<span class="k">string</span> path, DateTime mod) =&gt; sb.AppendLine(
+        <span class="s">$"  &lt;url&gt;&lt;loc&gt;https://gnjoy.in.th{path}&lt;/loc&gt;"</span> +
+        <span class="s">$"&lt;lastmod&gt;{mod:yyyy-MM-dd}&lt;/lastmod&gt;&lt;/url&gt;"</span>);
+
+    Add(<span class="s">"/"</span>,                DateTime.UtcNow);
+    Add(<span class="s">"/Game/GamePC"</span>,     <span class="k">new</span> DateTime(<span class="k">2026</span>, <span class="k">8</span>, <span class="k">1</span>));
+    Add(<span class="s">"/Game/GameMobile"</span>, <span class="k">new</span> DateTime(<span class="k">2026</span>, <span class="k">8</span>, <span class="k">1</span>));
+    <span class="k">foreach</span> (<span class="k">var</span> n <span class="k">in</span> news) Add(<span class="s">$"/Events/EventDetail/{n.Id}"</span>, n.UpdatedAt);
+
+    sb.AppendLine(<span class="s">"&lt;/urlset&gt;"</span>);
+    <span class="k">return</span> Content(sb.ToString(), <span class="s">"application/xml"</span>, Encoding.UTF8);
+}</pre>
+
+    <h4>เอาไปใช้</h4>
+    <ul class="ck">
+      <li><span class="box"></span><span>เปิด <code>https://gnjoy.in.th/sitemap.xml</code> ได้ และมีข่าว<b>ทั้งคลัง</b></span></li>
+      <li><span class="box"></span><span>ส่งเข้า <b>Search Console → Sitemaps</b> → วาง URL → Submit</span></li>
+    </ul>
+
+    <h4>ได้อะไรกลับมา</h4>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>ประโยชน์</th><th>รายละเอียด</th></tr></thead>
+      <tbody>
+        <tr><td><b>เนื้อหาถูกนับครบ</b></td><td>ช่วยเกณฑ์ที่ 1 โดยไม่ต้องรอให้งานปรับเมนูเสร็จ</td></tr>
+        <tr><td><b>ข่าวใหม่เข้า index เร็วขึ้น</b></td>
+            <td>ตรงกับธุรกิจเกมโดยตรง — <b>ข่าวกิจกรรมมีอายุสั้น</b> ถ้า Google เก็บช้าสองสัปดาห์
+                กิจกรรมจบไปแล้ว คนค้นเจอตอนหมดเวลา</td></tr>
+        <tr><td><b>ข่าวเก่าเข้า index</b></td><td>ได้ traffic จากการค้นหาที่ตอนนี้ไม่ได้เลย เพราะ Google ไม่รู้ว่ามีอยู่</td></tr>
+        <tr><td><b>กลายเป็นเครื่องมือวัด</b></td>
+            <td>Search Console จะรายงาน <b>Discovered / Indexed</b> —
+                ตัวเลขนี้คือเครื่องวัดว่าปัญหาเนื้อหาไม่พอดีขึ้นจริงไหม
+                และบอกว่าหน้าไหนติด 404 · redirect · noindex</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h4>ข้อควรระวัง</h4>
+    <ul class="ck">
+      <li><span class="box"></span><span>🔴 <b>URL ต้องเป็น non-www</b> ให้ตรงกับข้อ 01 — ถ้าใส่ <code>www.</code> จะขัดกับ canonical แล้วสับสนหนักกว่าเดิม</span></li>
+      <li><span class="box"></span><span><b><code>lastmod</code> ต้องเป็นวันจริง</b> จาก <code>UpdatedAt</code> — ถ้าใส่วันนี้ทุกหน้าทุกวัน Google จะเลิกเชื่อทั้งไฟล์</span></li>
+      <li><span class="box"></span><span><b>ห้ามใส่หน้าที่ 404 · redirect · noindex</b></span></li>
+      <li><span class="box"></span><span>จำกัด <b>50,000 URL ต่อไฟล์</b> — เกินต้องแตกหลายไฟล์ (เว็บนี้ยังไม่ใกล้)</span></li>
+      <li><span class="box"></span><span><b>โดเมนย่อยต้องมีไฟล์ของตัวเอง</b> — ไฟล์ของ <code>gnjoy.in.th</code> ใส่ URL ของ <code>event.gnjoy.in.th</code> ไม่ได้ เพราะต่างโฮสต์กัน</span></li>
+    </ul>
+
+    <div class="note">
+      <p><b>sitemap ไม่ได้แทนอะไรบ้าง</b> — ไม่การันตีว่า Google จะ index (แค่บอกว่ามีอยู่) ·
+      ไม่ช่วยอันดับโดยตรง · และ<b>ไม่แทนข้อ 03</b> เพราะผู้ใช้จริงเดินตาม sitemap ไม่ได้
+      ยังต้องมีเมนูและตัวแบ่งหน้าที่ใช้งานได้อยู่ดี</p>
+    </div>
+  </div>
+</article>
+
+<!-- ============ CASE 5 ============ -->
+<article class="case sev-med" id="c5">
+  <div class="case-head">
+    <div class="case-n">05</div>
+    <div class="case-t">
+      <h3><code>&lt;title&gt;</code> และ <code>&lt;h1&gt;</code> — ทำให้แยกได้ว่าแต่ละหน้าคืออะไร</h3>
+      <div class="case-facts">
+        <span class="chip">ช่วยได้</span>
+        <span class="chip">_Layout.cshtml + View</span>
+        <span class="chip">~3–4 ชม.</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-body">
+
+    <div class="note">
+      <p><b>ทำไมอยู่ชั้น “ช่วยได้”</b> — เกณฑ์ของ Google ไม่ได้พูดถึง <code>title</code>
+      หรือ <code>h1</code> เลย <b>เว็บที่ title ซ้ำก็ผ่านได้</b>
+      แต่ประโยค <i>“so that we can determine what your site is about”</i> ในเกณฑ์ที่ 1
+      คือสิ่งที่สองแท็กนี้ช่วยตรง ๆ และมันช่วยงาน SEO กับมาร์เก็ตติ้งด้วย</p>
+    </div>
+
+    <h4>ที่พบ</h4>
+    <p>
+      ทุก URL ที่ตรวจได้ <code>&lt;title&gt;GNJOY&lt;/title&gt;</code> เหมือนกันหมด
+      และทั้งหน้า<b>ไม่มี <code>&lt;h1&gt;</code> เลยแม้แต่ตัวเดียว</b> —
+      ชื่อข่าวถูกเรนเดอร์เป็น <code>div</code> ธรรมดา
+    </p>
+
+    <h4>เห็นเป็นภาพ · แท็บเบราว์เซอร์</h4>
+    <div class="ba">
+      <div class="ba-col bad">
+        <div class="ba-lab"><span>ตอนนี้</span><span>แยกไม่ออกว่าแท็บไหนคืออะไร</span></div>
+        <div class="ba-in" style="padding:14px 12px">
+          <div class="tabstrip">
+            <div class="tab on"><span class="dot"></span><span class="lbl">GNJOY</span></div>
+            <div class="tab"><span class="dot"></span><span class="lbl">GNJOY</span></div>
+            <div class="tab"><span class="dot"></span><span class="lbl">GNJOY</span></div>
+            <div class="tab"><span class="dot"></span><span class="lbl">GNJOY</span></div>
+          </div>
+          <div class="tabbase"></div>
+        </div>
+      </div>
+      <div class="ba-col good">
+        <div class="ba-lab"><span>ต้องเป็น</span><span>บอกได้ว่าหน้าอะไร เกมอะไร</span></div>
+        <div class="ba-in" style="padding:14px 12px">
+          <div class="tabstrip">
+            <div class="tab on"><span class="dot"></span><span class="lbl">เปิดรับสมัคร Pre-CBT | Rag…</span></div>
+            <div class="tab"><span class="dot"></span><span class="lbl">ข่าวสารและกิจกรรม | GNJOY</span></div>
+            <div class="tab"><span class="dot"></span><span class="lbl">เกมออนไลน์บน PC | GNJOY</span></div>
+            <div class="tab"><span class="dot"></span><span class="lbl">GNJOY | ศูนย์รวมเกม Rag…</span></div>
+          </div>
+          <div class="tabbase"></div>
+        </div>
+      </div>
+    </div>
+
+    <h4>เห็นเป็นภาพ · ผลค้นหา Google</h4>
+    <div class="ba">
+      <div class="ba-col bad">
+        <div class="ba-lab"><span>ตอนนี้</span><span>อ่านเหมือนกันหมด</span></div>
+        <div class="ba-in">
+          <div class="serp">
+            <div class="crumb">gnjoy.in.th › Events › EventDetail › 563</div>
+            <div class="st">GNJOY</div>
+          </div>
+          <div class="serp">
+            <div class="crumb">gnjoy.in.th › Events › EventDetail › 554</div>
+            <div class="st">GNJOY</div>
+          </div>
+        </div>
+      </div>
+      <div class="ba-col good">
+        <div class="ba-lab"><span>ต้องเป็น</span><span>แต่ละหน้ามีตัวตนของตัวเอง</span></div>
+        <div class="ba-in">
+          <div class="serp">
+            <div class="crumb">gnjoy.in.th › Events › EventDetail › 563</div>
+            <div class="st">เปิดรับสมัคร Pre-CBT | Ragnarok: The Promised Adventure | GNJOY</div>
+          </div>
+          <div class="serp">
+            <div class="crumb">gnjoy.in.th › Events › EventDetail › 554</div>
+            <div class="st">Ragnarok Online x Dragonica Landverse | GNJOY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>รูปแบบ <code>title</code> ที่ต้องใช้</h4>
+    <p>GNJOY ดูแลหลายเกม ดังนั้น <code>title</code> ต้องบอกทั้ง <b>หน้าอะไร</b> และ <b>เกมอะไร</b></p>
+    <pre>{หัวข้อเฉพาะของหน้า} | {ชื่อเกม} | GNJOY   <span class="c">← หน้าที่ผูกกับเกมใดเกมหนึ่ง</span>
+{หัวข้อเฉพาะของหน้า} | GNJOY               <span class="c">← หน้าที่ไม่ผูกกับเกม</span></pre>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th class="mono">URL</th><th>ตอนนี้</th><th>ต้องเป็น</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">/</td><td class="mono">GNJOY</td><td>GNJOY | ศูนย์รวมเกมออนไลน์ Ragnarok ในไทย</td></tr>
+        <tr><td class="mono">/Events/Index/1</td><td class="mono">GNJOY</td><td>ข่าวสารและกิจกรรมทั้งหมด | GNJOY</td></tr>
+        <tr><td class="mono">/Events/EventDetail/563</td><td class="mono">GNJOY</td><td>เปิดรับสมัคร Pre-CBT | Ragnarok: The Promised Adventure | GNJOY</td></tr>
+        <tr><td class="mono">/Game/GamePC</td><td class="mono">GNJOY</td><td>เกมออนไลน์บน PC | GNJOY</td></tr>
+        <tr><td class="mono">/Game/GameMobile</td><td class="mono">GNJOY</td><td>เกมมือถือ | GNJOY</td></tr>
+        <tr><td class="mono">/Game/ROLite</td><td class="mono">GNJOY</td><td>Ragnarok Online Lite | GNJOY</td></tr>
+        <tr><td class="mono">/Privacy</td><td class="mono">GNJOY</td><td>นโยบายความเป็นส่วนตัว | GNJOY</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <ul class="ck">
+      <li><span class="box"></span><span><b>ห้ามซ้ำแม้แต่คู่เดียว</b> — ทุก URL ต้องได้ title ไม่เหมือนกัน</span></li>
+      <li><span class="box"></span><span>ยาว <b>50–60 ตัวอักษร</b> ที่ Google แสดง</span></li>
+      <li><span class="box"></span><span><b>ภาษาไทยกินพื้นที่มากกว่าอังกฤษ</b> → เอาคำสำคัญไว้ต้นประโยค ไม่ใช่ท้าย</span></li>
+      <li><span class="box"></span><span>ข่าวที่ไม่ผูกกับเกมใดเกมหนึ่ง <b>ให้ตัดท่อนชื่อเกมออก อย่าใส่เกมมั่ว</b></span></li>
+    </ul>
+
+    <h4>โค้ด · title</h4>
+    <pre><span class="c">// Controller หรือหัวไฟล์ View ของแต่ละหน้า</span>
+ViewData[<span class="s">"Title"</span>] = <span class="k">$"</span><span class="s">{news.Title} | {news.GameName} | GNJOY</span><span class="k">"</span>;</pre>
+    <pre><span class="c">&lt;!-- _Layout.cshtml — เปลี่ยนจาก title ค่าคงที่ --&gt;</span>
+&lt;title&gt;@(ViewData[<span class="s">"Title"</span>] ?? <span class="s">"GNJOY"</span>)&lt;/title&gt;</pre>
+
+    <h4>เห็นเป็นภาพ · โครงหัวข้อของหน้าข่าว</h4>
+    <div class="ba">
+      <div class="ba-col bad">
+        <div class="ba-lab"><span>ตอนนี้</span><span>โครงว่างเปล่า</span></div>
+        <div class="ba-in">
+          <div class="outline">
+            <div><span class="lv">h1</span><span class="empty">— ไม่มี —</span></div>
+            <div><span class="lv">h2</span><span class="empty">— ไม่มี —</span></div>
+            <div><span class="lv">div</span><span>เปิดรับสมัคร Pre-CBT</span></div>
+            <div class="ind1"><span class="lv">div</span><span>วันที่ 9/1/2026</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ba-col good">
+        <div class="ba-lab"><span>ต้องเป็น</span><span>ลำดับชั้นชัดเจน</span></div>
+        <div class="ba-in">
+          <div class="outline">
+            <div class="h1"><span class="lv">h1</span><span>เปิดรับสมัคร Pre-CBT</span></div>
+            <div class="ind1"><span class="lv">h2</span><span>ช่วงเวลาลงทะเบียน</span></div>
+            <div class="ind1"><span class="lv">h2</span><span>เงื่อนไขการเข้าร่วม</span></div>
+            <div class="ind2"><span class="lv">h3</span><span>สเปกเครื่องที่รองรับ</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>โค้ด · h1 — วิธีที่เร็วที่สุด</h4>
+    <p>
+      หาแท็กที่แสดงหัวเรื่องอยู่แล้ว <b>เปลี่ยนชนิดแท็กแล้วยก <code>class</code> เดิมมาทั้งชุด</b>
+      หน้าตาไม่เปลี่ยนเลย ไม่ต้องแตะ CSS
+    </p>
+    <pre><span class="c">&lt;!-- ก่อน --&gt;</span>
+&lt;div class=<span class="s">"news-title"</span>&gt;@Model.Title&lt;/div&gt;
+
+<span class="c">&lt;!-- หลัง — class เดิม สไตล์เดิม --&gt;</span>
+&lt;h1 class=<span class="s">"news-title"</span>&gt;@Model.Title&lt;/h1&gt;</pre>
+
+    <ul class="ck">
+      <li><span class="box"></span><span><code>h1</code> <b>1 ตัวต่อหน้า เท่านั้น</b> — ไม่ใช่ 0 และไม่ใช่หลายตัว</span></li>
+      <li><span class="box"></span><span>ต้องเป็น <b>ข้อความจริง ไม่ใช่รูปภาพ</b></span></li>
+      <li><span class="box"></span><span><b>ห้ามซ่อนด้วย <code>display:none</code></b> — ถ้าดีไซน์ไม่อยากให้เห็น ใช้คลาส <code>sr-only</code></span></li>
+    </ul>
+    <pre><span class="c">/* ใช้อันนี้ถ้าต้องซ่อน h1 ห้ามใช้ display:none */</span>
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}</pre>
+  </div>
+</article>
+
+<section>
+  <div class="h2rule"><span class="num">C</span><h2>เกณฑ์ตรวจรับ</h2></div>
+  <p class="sm">ไล่ตามนี้ก่อนกด Request review รอบถัดไป</p>
+  <div class="card">
+    <div class="tier must" style="margin-top:6px"><span class="badge">ต้องแก้</span></div>
+    <ul class="ck">
+      <li><span class="box"></span><span><code>curl -I https://www.gnjoy.in.th/</code> ได้ <b>301</b> ไป <code>https://gnjoy.in.th/</code></span></li>
+      <li><span class="box"></span><span>ทุกหน้ามี <code>&lt;link rel="canonical"&gt;</code> ชี้ไป non-www</span></li>
+      <li><span class="box"></span><span>ไม่มีลิงก์ภายในที่ชี้ไป <code>www.</code> เหลืออยู่</span></li>
+      <li><span class="box"></span><span>หน้าข่าวมีชื่อข่าวปรากฏ <b>ครั้งเดียว</b></span></li>
+      <li><span class="box"></span><span>ตัวแบ่งหน้ารายการข่าวเป็น <code>&lt;a href&gt;</code> ที่มี URL ต่างกันต่อหน้า</span></li>
+      <li><span class="box"></span><span>เดินจากหน้าแรกไปถึงข่าวเก่าที่สุดได้ด้วยการคลิกอย่างเดียว</span></li>
+      <li><span class="box"></span><span>เมนูบนมือถือกดได้ครบและพาไปถูกหน้า</span></li>
+      <li><span class="box"></span><span>ไม่มีลิงก์เสียพาไปหน้า 404</span></li>
+    </ul>
+    <div class="tier help"><span class="badge">ช่วยได้</span></div>
+    <ul class="ck">
+      <li><span class="box"></span><span><code>https://gnjoy.in.th/sitemap.xml</code> เปิดได้ และมีข่าวทั้งคลัง</span></li>
+      <li><span class="box"></span><span>ส่ง sitemap เข้า Search Console เรียบร้อย</span></li>
+      <li><span class="box"></span><span><code>view-source:</code> ทั้ง 7 หน้าในตารางข้อ 05 → <b><code>&lt;title&gt;</code> ไม่ซ้ำกันเลย</b></span></li>
+      <li><span class="box"></span><span>ทุกหน้า <code>document.querySelectorAll('h1').length</code> เท่ากับ <b>1</b></span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="h2rule"><span class="num">D</span><h2>ข้อควรระวัง</h2></div>
+  <div class="note crit">
+    <p><b>อย่าแก้ <code>ads.txt</code></b> — ไฟล์ถูกต้องสมบูรณ์แล้ว
+    ที่คอนโซลขึ้น <i>Ads.txt: Not found</i> เป็นเพราะ Google ยังไม่ได้เข้ามาเก็บข้อมูล
+    ไม่ใช่เพราะไฟล์หาย เห็นคำนี้แล้วมักมีคนไปแก้ไฟล์ที่ถูกอยู่แล้วจนพัง</p>
+  </div>
+  <div class="note crit">
+    <p><b>ห้ามคลิกโฆษณาบนเว็บตัวเอง</b> ไม่ว่าจะเพื่อทดสอบหรืออะไรก็ตาม
+    บัญชีนี้เป็นของ Gravity Game Tech Co., Ltd. และใช้ร่วมกับ AdMob ของเกมมือถือ
+    ถ้าถูกระงับจาก invalid traffic จะกระทบทั้งสองฝั่ง</p>
+  </div>
+  <div class="note">
+    <p><b>แก้ระหว่างที่สถานะยัง <code>Getting ready</code> ได้เลย</b> ไม่รบกวนการตรวจ
+    ถ้าผลรอบนี้ออกมาไม่ผ่าน จะได้ยื่นซ้ำทันทีโดยที่เว็บแก้ไปแล้ว —
+    <b>ยื่นซ้ำโดยไม่แก้อะไร ผลจะออกมาเหมือนเดิม</b></p>
+  </div>
+  <div class="note">
+    <p><b>สิ่งที่เอกสารนี้ยังไม่รู้</b> — Google ไม่ได้ระบุเหตุผลเฉพาะในเมลรอบก่อน
+    และ Policy center ก็ว่าง เอกสารนี้จึงเป็น<b>การเทียบเว็บกับเกณฑ์ทีละข้อ</b>
+    ไม่ใช่การอ่านคำตัดสินของ Google ข้อ 01–03 คือของที่ชนเกณฑ์ชัดที่สุดเท่าที่ตรวจพบ</p>
+  </div>
+</section>
+
+<footer>
+  <p>ROPZ_AdSense_SiteFix_GNJOY_TH_260902 · เอกสารภายใน GGT Game Studio</p>
+  <p>ตรวจ gnjoy.in.th ด้วยเบราว์เซอร์และ curl เมื่อ 2 ก.ย. 2026</p>
+  <p>เกณฑ์อ้างจาก AdSense Help — “What to do when your site is not ready to show ads” (answer/12176698) และ “Google AdSense content and user experience” (answer/10015918)</p>
+  <p>เอกสารแม่: MD Doc/ROPZ_AdSense_Setup_Checklist_TH_260901.md</p>
+</footer>
+
+</div>
