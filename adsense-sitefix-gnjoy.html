@@ -145,14 +145,15 @@ h4{font-size:12px; font-family:"IBM Plex Mono",monospace; letter-spacing:.14em;
 .tab .lbl{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .tabbase{height:8px; background:var(--tab-active); border-radius:0 0 4px 4px}
 
-.urlbar{display:flex; align-items:center; gap:9px; background:var(--surface);
-  border:1px solid var(--rule-2); border-radius:20px; padding:7px 14px;
-  font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-2);
-  overflow-x:auto; white-space:nowrap}
+.urlbar{display:flex; align-items:flex-start; gap:9px; background:var(--surface);
+  border:1px solid var(--rule-2); border-radius:14px; padding:8px 14px; min-width:0; flex:1;
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px; line-height:1.55; color:var(--ink-2);
+  white-space:normal; overflow-wrap:anywhere; word-break:break-word}
 .urlbar .lock{width:11px; height:11px; border:1.5px solid var(--ink-3); border-radius:2px;
-  border-bottom-width:5px; flex:none}
+  border-bottom-width:5px; flex:none; margin-top:4px}
 .urlbar b{color:var(--ink); font-weight:500}
-.urlrow{display:flex; align-items:center; gap:10px; margin:0 0 9px}
+.urlrow{display:flex; align-items:flex-start; gap:10px; margin:0 0 9px; min-width:0}
+.urlrow .tagend{padding-top:6px}
 .urlrow .tagend{font-family:"IBM Plex Mono",monospace; font-size:11px; flex:none}
 
 .serp{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:15px 16px}
@@ -320,72 +321,101 @@ footer p{max-width:none; margin:0 0 5px}
   </div>
   <div class="case-body">
 
-    <h4>ผลทดสอบจริง</h4>
-    <pre>https://www.gnjoy.in.th/                        <span class="c">→ 200  ไม่ redirect</span>
-https://www.gnjoy.in.th/Events/EventDetail/563  <span class="c">→ 200  ไม่ redirect</span>
-https://gnjoy.in.th/Events/EventDetail/563      <span class="c">→ 200  ไม่ redirect</span>
-canonical tag                                   <span class="c">→ ไม่มีเลยทั้งสองแบบ</span></pre>
-
-    <p>
-      เนื้อหาทุกหน้าของเว็บมีอยู่ที่ <b>2 ที่อยู่</b> โดยไม่มีอะไรบอก Google ว่าอันไหนคือตัวจริง
-      และหน้าแรกยัง<b>ลิงก์ไปหาทั้งสองแบบสลับกันเอง</b> — ข่าวเดียวกันมีทั้งลิงก์ <code>www</code>
-      และไม่มี ปนกันอยู่ในหน้าเดียว
-    </p>
-
-    <div class="quote">
-      <i>“ensure that the same content is not duplicated … across multiple pages of your site”</i>
-      <span class="src">นี่คือประโยคที่เคสนี้ชนตรง ๆ</span>
+    <div class="note crit">
+      <p><b>🔴 อัปเดตเร่งด่วน 2 ก.ย. 2026 · ช่วงบ่าย — มีคนเพิ่ม redirect เข้ามาแล้ว แต่ตั้งผิด</b></p>
+      <p>ตอนตรวจรอบเช้า <code>gnjoy.in.th</code> ยังเสิร์ฟเนื้อหาปกติทุกหน้า
+      ตอนตรวจซ้ำรอบบ่ายพบว่ามี <b>Cloudflare redirect rule ใหม่</b> ที่ส่งทุก URL ของ
+      <code>gnjoy.in.th</code> ไปที่ <b>หน้าแรกของ www</b> โดย<b>ทิ้ง path ทั้งหมด</b></p>
+      <p><b>ต้องแก้ทันทีวันนี้</b> เพราะสถานะคำขอเป็น <code>Getting ready</code>
+      คือ Google กำลังตรวจอยู่ ถ้าเข้ามาเก็บข้อมูลตอนนี้จะเห็นเว็บที่<b>มีหน้าเดียว</b></p>
     </div>
+
+    <h4>ผลทดสอบจริง — ทุกพาธ ไม่ใช่แค่บางพาธ</h4>
+    <pre><span class="c">// โดเมนที่ลงทะเบียนไว้กับ AdSense คือ gnjoy.in.th (ไม่มี www)</span>
+https://gnjoy.in.th/                        <span class="c">→ 301 → https://www.gnjoy.in.th/</span>
+https://gnjoy.in.th/Events/Index/1          <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
+https://gnjoy.in.th/Events/EventDetail/563  <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
+https://gnjoy.in.th/Game/GamePC             <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
+https://gnjoy.in.th/Privacy                 <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
+https://gnjoy.in.th/ads.txt                 <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ ได้ HTML หน้าแรก!</span>
+
+<span class="c">// ฝั่ง www ทำงานถูกต้องทุกพาธ</span>
+https://www.gnjoy.in.th/ads.txt             <span class="c">→ 200  google.com, pub-1547224935471604, DIRECT, …</span>
+
+<span class="c">// redirect มาจาก Cloudflare ไม่ใช่จากเซิร์ฟเวอร์</span>
+Server: cloudflare · CF-RAY: …-BKK</pre>
+
+    <h4>เกิดอะไรขึ้น</h4>
+    <p>
+      Redirect rule ถูกตั้งเป็นแบบ <b>static</b> คือชี้ไปที่ URL ปลายทางตัวเดียวตายตัว
+      แทนที่จะเป็นแบบ <b>dynamic</b> ที่นำ path เดิมไปต่อท้ายด้วย
+    </p>
+    <p>ผลที่ตามมา 3 ข้อ เรียงตามความรุนแรง</p>
+    <ul class="ck">
+      <li><span class="box"></span><span>🔴 <b><code>ads.txt</code> หาไม่เจอถาวร</b> — Google ไปเก็บที่ <code>gnjoy.in.th/ads.txt</code> ตามโดเมนที่ลงทะเบียนไว้ แล้วได้ HTML หน้าแรกกลับไป <b>อธิบายได้ว่าทำไมคอนโซลขึ้น “Ads.txt: Not found”</b></span></li>
+      <li><span class="box"></span><span>🔴 <b>เว็บทั้งเว็บกลายเป็นหน้าเดียว</b> ในสายตา Google เมื่อมองจากโดเมนที่ลงทะเบียนไว้ — ทุก URL คืนเนื้อหาเดียวกัน = ชนเกณฑ์ที่ 1 (เนื้อหาไม่พอ) หนักกว่าเดิม</span></li>
+      <li><span class="box"></span><span><b>ลิงก์พาไปหน้าที่ไม่เกี่ยว</b> — คลิก “ข่าวสาร” แล้วไปโผล่หน้าแรก ชนเกณฑ์ที่ 3 ตรงตัว (<i>“Irrelevant or misleading pages”</i>)</span></li>
+    </ul>
 
     <div class="ba">
       <div class="ba-col bad">
-        <div class="ba-lab"><span>ตอนนี้</span><span>เนื้อหาซ้ำ</span></div>
+        <div class="ba-lab"><span>ตอนนี้</span><span>path หาย ทุก URL ได้หน้าแรก</span></div>
         <div class="ba-in">
-          <div class="urlrow"><div class="urlbar"><span class="lock"></span><span>https://<b>www.</b>gnjoy.in.th/Events/EventDetail/563</span></div></div>
           <div class="urlrow"><div class="urlbar"><span class="lock"></span><span>https://gnjoy.in.th/Events/EventDetail/563</span></div></div>
-          <p class="sm" style="margin:12px 0 0">สองที่อยู่ → <b>หน้าเดียวกันเป๊ะ</b> · ไม่มี redirect · ไม่มี canonical</p>
+          <div class="urlrow" style="padding-left:18px"><span class="tagend"><span class="chip crit">301 →</span></span>
+            <div class="urlbar"><span class="lock"></span><span>https://www.gnjoy.in.th/<b> ← หน้าแรก</b></span></div>
+          </div>
+          <p class="sm" style="margin:12px 0 0">บทความหาย · <code>ads.txt</code> หาย · หน้านโยบายหาย</p>
         </div>
       </div>
       <div class="ba-col good">
-        <div class="ba-lab"><span>ต้องเป็น</span><span>ตัวจริงหนึ่งเดียว</span></div>
+        <div class="ba-lab"><span>ต้องเป็น</span><span>รักษา path</span></div>
         <div class="ba-in">
-          <div class="urlrow">
-            <div class="urlbar"><span class="lock"></span><span>https://<b>www.</b>gnjoy.in.th/Events/EventDetail/563</span></div>
-            <span class="tagend"><span class="chip crit">301</span></span>
+          <div class="urlrow"><div class="urlbar"><span class="lock"></span><span>https://gnjoy.in.th/Events/EventDetail/563</span></div></div>
+          <div class="urlrow" style="padding-left:18px"><span class="tagend"><span class="chip pass">301 →</span></span>
+            <div class="urlbar"><span class="lock"></span><span>https://www.gnjoy.in.th/Events/EventDetail/<b>563</b></span></div>
           </div>
-          <div class="urlrow">
-            <div class="urlbar"><span class="lock"></span><span>https://gnjoy.in.th/Events/EventDetail/563</span></div>
-            <span class="tagend"><span class="chip pass">200</span></span>
-          </div>
-          <p class="sm" style="margin:12px 0 0"><code>www</code> เด้งเข้า non-www ด้วย <b>301</b> · ทุกหน้ามี canonical ชี้ non-www</p>
+          <p class="sm" style="margin:12px 0 0">หนึ่งเนื้อหา หนึ่ง URL · เข้าถึงได้ครบ · ไม่ซ้ำ</p>
         </div>
       </div>
     </div>
 
-    <h4>วิธีแก้ · ก. Cloudflare — ทำได้เลยไม่ต้องรอ deploy</h4>
-    <p class="sm">Cloudflare → Rules → Redirect Rules → Create rule</p>
+    <h4>🔴 วิธีแก้ · แก้ rule เดิมให้เป็น dynamic — 10 นาที ไม่ต้องแตะโค้ด</h4>
+    <p class="sm">Cloudflare → Rules → Redirect Rules → เปิด rule ที่เพิ่งสร้าง แล้วแก้ให้เป็นแบบนี้</p>
     <pre><span class="c">// เงื่อนไข</span>
-Hostname  <span class="k">equals</span>  <span class="s">"www.gnjoy.in.th"</span>
+Hostname  <span class="k">equals</span>  <span class="s">"gnjoy.in.th"</span>
 
-<span class="c">// การกระทำ — Dynamic redirect</span>
-URL       <span class="k">concat</span>(<span class="s">"https://gnjoy.in.th"</span>, http.request.uri)
-Status    <span class="k">301</span>   <span class="c">(Permanent)</span>
+<span class="c">// การกระทำ — ต้องเลือก Dynamic ไม่ใช่ Static</span>
+Type      <span class="k">Dynamic</span>
+Expression <span class="k">concat</span>(<span class="s">"https://www.gnjoy.in.th"</span>, http.request.uri)
+Status    <span class="k">301</span>
 Preserve query string  <span class="k">on</span></pre>
 
-    <h4>วิธีแก้ · ข. canonical ในโค้ด</h4>
-    <p class="sm">ใส่ใน <code>_Layout.cshtml</code> ครั้งเดียว ได้ทุกหน้า</p>
-    <pre>&lt;link rel=<span class="s">"canonical"</span>
-      href=<span class="s">"https://gnjoy.in.th@(Context.Request.Path)@(Context.Request.QueryString)"</span>&gt;</pre>
-
-    <h4>วิธีแก้ · ค. ลิงก์ภายใน</h4>
-    <p>
-      หาลิงก์ที่ hardcode <code>https://www.gnjoy.in.th</code> ในหน้าแรกและหน้ารายการข่าว
-      เปลี่ยนเป็น relative path (<code>/Events/EventDetail/563</code>) ให้หมด
-    </p>
+    <div class="note ok">
+      <p><b>ทำไมเลือกให้ <code>www</code> เป็นตัวจริง ไม่ใช่ non-www</b></p>
+      <p>เพราะ<b>ลิงก์ภายในของเว็บชี้ไป <code>www</code> อยู่แล้ว</b> และฝั่ง <code>www</code>
+      เสิร์ฟทุกพาธได้ถูกต้องอยู่แล้ว → เลือกทางนี้แล้ว<b>ไม่ต้องแก้โค้ดแม้แต่บรรทัดเดียว</b>
+      ไม่ต้องรอคิวทีม System Development</p>
+      <p>และการลงทะเบียน AdSense ไว้เป็น <code>gnjoy.in.th</code> <b>ยังใช้ได้ตามเดิม</b> —
+      Google ลงทะเบียนที่ระดับโดเมน ซึ่งครอบ <code>www</code> ให้อยู่แล้ว</p>
+    </div>
 
     <h4>ตรวจว่าเสร็จ</h4>
-    <pre>curl -I https://www.gnjoy.in.th/
-<span class="c">→ ต้องได้ HTTP/2 301  และ  location: https://gnjoy.in.th/</span></pre>
+    <pre>curl -s -o /dev/null -w <span class="s">"%{http_code} %{url_effective}\n"</span> -L \
+     https://gnjoy.in.th/Events/EventDetail/563
+<span class="c">→ ต้องได้  200 https://www.gnjoy.in.th/Events/EventDetail/563</span>
+
+curl -s -L https://gnjoy.in.th/ads.txt
+<span class="c">→ ต้องได้  google.com, pub-1547224935471604, DIRECT, f08c47fec0942fa0</span>
+<span class="c">   ไม่ใช่ HTML</span></pre>
+
+    <h4>ทำทีหลังได้ · canonical ในโค้ด</h4>
+    <p class="sm">
+      พอ redirect ถูกแล้ว เนื้อหาซ้ำหายไปเกือบหมด · canonical เป็นชั้นกันพลาดเพิ่ม
+      ใส่ตอนที่ทีม dev ว่างก็ได้ ไม่เร่ง
+    </p>
+    <pre>&lt;link rel=<span class="s">"canonical"</span>
+      href=<span class="s">"https://www.gnjoy.in.th@(Context.Request.Path)@(Context.Request.QueryString)"</span>&gt;</pre>
   </div>
 </article>
 
