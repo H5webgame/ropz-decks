@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish: กัน Google index — อย่าลบ -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<style>
+  :root{color-scheme:light dark}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>แก้ชื่อข่าวซ้ำใน template GNJOY</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F6F8FA; --surface:#FFFFFF; --surface-2:#EFF3F6;
+  --ink:#141A21; --ink-2:#48545F; --ink-3:#78848F;
+  --rule:#DFE5EA; --rule-2:#C9D2DA;
+  --accent:#1B6B5A; --accent-soft:#E4EFEB; --accent-line:#9CC6BA;
+  --crit:#AD3327; --crit-soft:#FAEAE7; --crit-line:#E0A79F;
+  --warn:#8A5A0B; --warn-soft:#F9F1DF; --warn-line:#DCC38A;
+  --link:#1A5FB4;
+  --code-bg:#111820; --code-ink:#D9E2EA; --code-dim:#6E7C8A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1319; --surface:#161C24; --surface-2:#1D242D;
+    --ink:#E7EDF3; --ink-2:#A7B3BE; --ink-3:#7C8896;
+    --rule:#262E38; --rule-2:#333D49;
+    --accent:#54B9A2; --accent-soft:#152824; --accent-line:#2C5B51;
+    --crit:#E88478; --crit-soft:#2A1614; --crit-line:#63302A;
+    --warn:#D9A544; --warn-soft:#241C0C; --warn-line:#5A461C;
+    --link:#7FB0F0;
+    --code-bg:#0A0E13; --code-ink:#D9E2EA; --code-dim:#5D6A78;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1319; --surface:#161C24; --surface-2:#1D242D;
+  --ink:#E7EDF3; --ink-2:#A7B3BE; --ink-3:#7C8896;
+  --rule:#262E38; --rule-2:#333D49;
+  --accent:#54B9A2; --accent-soft:#152824; --accent-line:#2C5B51;
+  --crit:#E88478; --crit-soft:#2A1614; --crit-line:#63302A;
+  --warn:#D9A544; --warn-soft:#241C0C; --warn-line:#5A461C;
+  --link:#7FB0F0;
+  --code-bg:#0A0E13; --code-ink:#D9E2EA; --code-dim:#5D6A78;
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans Thai","Noto Sans Thai",-apple-system,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.75; margin:0; -webkit-font-smoothing:antialiased}
+.wrap{max-width:860px; margin:0 auto; padding:0 24px 90px}
+h1,h2,h3,h4{font-family:"Bai Jamjuree","IBM Plex Sans Thai",sans-serif; text-wrap:balance; margin:0}
+code,pre,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+p{margin:0 0 14px; max-width:66ch}
+.sm{font-size:14px; color:var(--ink-2)}
+
+.mast{border-bottom:2px solid var(--ink); padding:52px 0 20px; margin-bottom:14px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 13px}
+.mast h1{font-size:clamp(28px,4.6vw,40px); line-height:1.2; font-weight:700; letter-spacing:-.015em}
+.mast .lede{color:var(--ink-2); font-size:17px; max-width:60ch; margin:15px 0 0}
+.mast-meta{display:flex; flex-wrap:wrap; gap:8px 26px; margin-top:22px;
+  font-size:12.5px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.mast-meta b{color:var(--ink-2); font-weight:500}
+
+/* summary strip */
+.summary{display:grid; gap:12px; grid-template-columns:1fr; margin:30px 0 44px}
+@media(min-width:700px){ .summary{grid-template-columns:repeat(3,1fr)} }
+.sumcard{border:1px solid var(--rule); border-radius:3px; background:var(--surface);
+  padding:16px 18px; position:relative; overflow:hidden}
+.sumcard::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px}
+.sumcard.must::before{background:var(--crit)}
+.sumcard.opt::before{background:var(--warn)}
+.sumcard.no::before{background:var(--rule-2)}
+.sumcard .k{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:7px}
+.sumcard .v{font-family:"Bai Jamjuree",sans-serif; font-size:16px; font-weight:600; line-height:1.4}
+.sumcard .d{font-size:13px; color:var(--ink-2); margin-top:6px; line-height:1.6}
+
+.task{background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  margin:0 0 28px; overflow:hidden}
+.task-head{display:flex; gap:16px; align-items:flex-start; padding:19px 22px;
+  border-bottom:1px solid var(--rule); position:relative}
+.task-head::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px}
+.task.must .task-head::before{background:var(--crit)}
+.task.opt  .task-head::before{background:var(--warn)}
+.task.no   .task-head::before{background:var(--rule-2)}
+.task-n{font-family:"IBM Plex Mono",monospace; font-size:21px; color:var(--ink-3);
+  flex:none; padding-top:2px}
+.task-t h3{font-size:19px; font-weight:600; line-height:1.35}
+.facts{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.task-body{padding:20px 22px 24px}
+.task-body > :first-child{margin-top:0}
+
+h4{font-size:12px; font-family:"IBM Plex Mono",monospace; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin:24px 0 11px}
+.task-body h4:first-of-type{margin-top:0}
+
+.chip{display:inline-flex; align-items:center; font-family:"IBM Plex Mono",monospace;
+  font-size:11px; letter-spacing:.04em; padding:3px 8px; border-radius:2px;
+  border:1px solid var(--rule-2); color:var(--ink-2); white-space:nowrap}
+.chip.crit{background:var(--crit-soft); border-color:var(--crit-line); color:var(--crit)}
+.chip.pass{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent)}
+.chip.warn{background:var(--warn-soft); border-color:var(--warn-line); color:var(--warn)}
+
+.tablewrap{overflow-x:auto; border:1px solid var(--rule); border-radius:3px;
+  background:var(--surface); margin:0 0 16px}
+table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:520px}
+th,td{text-align:left; padding:10px 13px; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{background:var(--surface-2); font-family:"Bai Jamjuree",sans-serif; font-weight:600;
+  font-size:12.5px; color:var(--ink-2); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.mono{font-family:"IBM Plex Mono",monospace; font-size:12.5px}
+tr.hit td{background:var(--crit-soft)}
+tr.hit td.mono b{color:var(--crit)}
+
+pre{background:var(--code-bg); color:var(--code-ink); border-radius:3px; padding:14px 16px;
+  overflow-x:auto; font-size:13px; line-height:1.7; margin:0 0 14px; border:1px solid var(--rule)}
+pre .c{color:var(--code-dim)}
+pre .k{color:#8FD3C1}
+pre .s{color:#E6C08A}
+:not(pre) > code{background:var(--surface-2); border:1px solid var(--rule); border-radius:2px;
+  padding:1px 5px; font-size:13px; color:var(--ink)}
+
+.note{border-left:3px solid var(--rule-2); padding:12px 0 12px 15px; margin:0 0 15px;
+  font-size:14.5px; color:var(--ink-2)}
+.note.crit{border-color:var(--crit)} .note.crit b{color:var(--crit)}
+.note.ok{border-color:var(--accent)} .note.ok b{color:var(--accent)}
+.note p:last-child{margin-bottom:0}
+
+ul.ck{list-style:none; padding:0; margin:0; font-size:14.5px}
+ul.ck li{display:flex; gap:11px; padding:9px 0; border-bottom:1px solid var(--rule); align-items:flex-start}
+ul.ck li:last-child{border-bottom:none}
+ul.ck .box{width:15px; height:15px; border:1.5px solid var(--rule-2); border-radius:2px;
+  flex:none; margin-top:5px}
+
+footer{margin-top:56px; padding-top:18px; border-top:1px solid var(--rule);
+  font-size:12.5px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+footer p{max-width:none; margin:0 0 5px}
+footer a{color:var(--link)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">ใบสั่งงาน · ทีม System Development</p>
+  <h1>แก้ชื่อข่าวซ้ำใน template GNJOY</h1>
+  <p class="lede">
+    หน้าข่าวเรนเดอร์ชื่อข่าวเดียวกันออกมา 3 จุดจาก template
+    ทำให้ Google ตัดสินว่าเว็บมีเนื้อหาซ้ำ — ต้องยุบให้เหลือจุดเดียว
+  </p>
+  <div class="mast-meta">
+    <span>ตรวจจาก DOM จริง <b>2 ก.ย. 2026</b></span>
+    <span>หน้าตัวอย่าง <b>/Events/EventDetail/563</b></span>
+    <span>ประเมินเวลา <b>~1 ชม.</b></span>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="sumcard must">
+    <span class="k">ต้องทำ</span>
+    <div class="v">ยุบชื่อข่าว 3 จุด เหลือ 1</div>
+    <div class="d">แก้ที่ View ของหน้าข่าว</div>
+  </div>
+  <div class="sumcard opt">
+    <span class="k">ทำก็ได้ ไม่ทำก็ได้</span>
+    <div class="v">ทำจุดที่เหลือเป็น <code>h1</code></div>
+    <div class="d">มีวิธีที่ฟอนต์ไม่ขยับ · ข้ามได้ไม่กระทบอะไร</div>
+  </div>
+  <div class="sumcard must">
+    <span class="k">ต้องทำ</span>
+    <div class="v">แก้เนื้อหาข่าวที่พังบนมือถือ</div>
+    <div class="d">ตัวหนังสือ 12px + หน้าเลื่อนแนวนอน 303px</div>
+  </div>
+</div>
+
+<div class="note ok" style="margin:-24px 0 40px">
+  <p><b>ข่าวดี — ทั้งสามงานแตะที่เดียวกัน</b> คือ template และ CSS ของหน้าข่าว
+  ทำรอบเดียวจบ และ<b>มีผลย้อนหลังกับข่าวทั้งคลัง 400–580 บทความ</b>
+  โดยไม่ต้องไปแก้ข่าวทีละชิ้น</p>
+</div>
+
+<!-- ============ TASK 1 ============ -->
+<article class="task must">
+  <div class="task-head">
+    <div class="task-n">01</div>
+    <div class="task-t">
+      <h3>ยุบชื่อข่าวที่ซ้ำ 3 จุด ให้เหลือจุดเดียว</h3>
+      <div class="facts">
+        <span class="chip crit">ต้องทำ</span>
+        <span class="chip">View หน้าข่าว</span>
+        <span class="chip">~1 ชม.</span>
+      </div>
+    </div>
+  </div>
+  <div class="task-body">
+
+    <h4>หลักฐาน — อ่านจาก DOM จริง ไม่ได้ประมาณ</h4>
+    <p>ชื่อข่าวเดียวกันปรากฏบนหน้าเดียว <b>5 ครั้ง</b> โดย <b>3 ครั้งมาจาก template</b></p>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Element</th><th>ขนาดที่เรนเดอร์จริง</th><th>ทำอย่างไร</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono">LI.breadcrumb-item active</td>
+          <td class="mono">14px / 300 / Kanit</td>
+          <td><span class="chip pass">เก็บไว้</span> เป็น breadcrumb ที่ถูกต้อง</td>
+        </tr>
+        <tr class="hit">
+          <td class="mono"><b>P.txt-head</b></td>
+          <td class="mono">24px / 400 / Kanit</td>
+          <td rowspan="3" style="vertical-align:middle; background:var(--surface)">
+            <span class="chip crit">เลือกเก็บ 1 ลบ 2</span><br>
+            <span class="sm">สามจุดนี้คือชื่อข่าวเดียวกันทั้งหมด
+            เลือกเก็บตัวที่ดีไซน์ต้องการ ที่เหลือลบทิ้ง</span>
+          </td>
+        </tr>
+        <tr class="hit">
+          <td class="mono"><b>H5.card-title</b></td>
+          <td class="mono">20px / 500 / Kanit</td>
+        </tr>
+        <tr class="hit">
+          <td class="mono"><b>P.txt-title</b></td>
+          <td class="mono">16px / 400 / Kanit</td>
+        </tr>
+        <tr>
+          <td class="mono">SPAN ในเนื้อหา</td>
+          <td class="mono">12px / 500 / Noto Sans Thai</td>
+          <td><span class="chip warn">งานคอนเทนต์</span> คนลงข่าวพิมพ์ชื่อซ้ำในช่องเนื้อหา ไม่ใช่โค้ด</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="note crit">
+      <p><b>เป็น template จึงเกิดกับทุกข่าวในเว็บ</b> ไม่ใช่แค่ข่าวเดียว —
+      คลังข่าวมีประมาณ 400–580 บทความ ทุกบทความมีอาการนี้เหมือนกันหมด</p>
+    </div>
+
+    <h4>ทำไมต้องแก้</h4>
+    <p>
+      Google เขียนเกณฑ์ไว้ตรงตัวว่า
+      <i>“ensure that the same content is not duplicated <b>in the same page</b>”</i>
+      และ <i>“try to minimize repeating long segments of text”</i>
+    </p>
+    <p class="sm">
+      เว็บกำลังรอผลตรวจเพื่อเปิดใช้โฆษณา และเกณฑ์ข้อนี้คือข้อที่เว็บสุ่มเสี่ยงจะตกมากที่สุด
+    </p>
+
+    <h4>สิ่งที่ต้องทำ</h4>
+    <ul class="ck">
+      <li><span class="box"></span><span>เปิด View ของหน้าข่าว หา 3 element ในตาราง → <b>เก็บไว้ตัวเดียว ลบอีกสองตัว</b></span></li>
+      <li><span class="box"></span><span>ถ้าสามจุดดึงมาจากคนละฟิลด์ (<code>Title</code> · <code>SubTitle</code> · <code>ShortTitle</code>) แล้วคนลงข่าวกรอกเหมือนกันหมด → <b>แก้ที่เครื่องมือเขียนข่าว</b> ให้ยุบฟิลด์ที่ไม่ได้ใช้จริง หรือเตือนเมื่อกรอกซ้ำ</span></li>
+      <li><span class="box"></span><span>ถ้า layout พังเพราะลบ element ออก ให้ย้าย <code>class</code> ของ element ที่ลบไปไว้ที่ตัวที่เก็บ แทนการเก็บทั้งสามตัวไว้แล้วซ่อนด้วย CSS</span></li>
+    </ul>
+
+    <div class="note">
+      <p><b>⚠️ ห้ามแก้ด้วยการซ่อน</b> — ใช้ <code>display:none</code> หรือ <code>visibility:hidden</code>
+      กับ element ที่ซ้ำ <b>ไม่ช่วย</b> เพราะข้อความยังอยู่ใน HTML ที่ Google อ่าน
+      ต้องลบออกจากผลลัพธ์จริง</p>
+    </div>
+
+    <h4>ตรวจว่าเสร็จ</h4>
+    <p class="sm">เปิดหน้าข่าวแล้ววางใน Console — ต้องได้ <code>2</code> (breadcrumb 1 + หัวเรื่อง 1)</p>
+    <pre><span class="c">// นับว่าชื่อข่าวโผล่กี่ครั้งในหน้า</span>
+[...document.querySelectorAll(<span class="s">'body *'</span>)].filter(e =&gt;
+  [...e.childNodes].filter(n =&gt; n.nodeType === <span class="k">3</span>)
+    .map(n =&gt; n.textContent).join(<span class="s">''</span>)
+    .includes(<span class="s">'ใส่ชื่อข่าวตรงนี้'</span>)
+).length</pre>
+  </div>
+</article>
+
+<!-- ============ TASK 2 ============ -->
+<article class="task opt">
+  <div class="task-head">
+    <div class="task-n">02</div>
+    <div class="task-t">
+      <h3>ทำจุดที่เหลือให้เป็น <code>h1</code> — พร้อมวิธีที่ฟอนต์ไม่เพี้ยน</h3>
+      <div class="facts">
+        <span class="chip warn">ทางเลือก</span>
+        <span class="chip">+CSS 4 บรรทัด</span>
+        <span class="chip">~15 นาที</span>
+      </div>
+    </div>
+  </div>
+  <div class="task-body">
+
+    <div class="note ok">
+      <p><b>ทีมเคยลองแล้วฟอนต์เพี้ยน เลยเลี่ยงไปใช้แท็กธรรมดา — เป็นการตัดสินใจที่ถูกต้อง
+      ภายใต้ข้อมูลที่มีตอนนั้น</b> และนี่คือสาเหตุที่แท้จริง</p>
+    </div>
+
+    <h4>สาเหตุคือ Bootstrap ไม่ใช่ CMS</h4>
+    <p>
+      เว็บใช้ Bootstrap (เห็นจากคลาส <code>breadcrumb-item</code> · <code>card-title</code>)
+      และ <b>Bootstrap Reboot ตั้งขนาดฟอนต์ให้ <code>h1</code>–<code>h6</code> ตามชื่อแท็ก</b>
+    </p>
+    <pre>h5 → 1.25rem = <span class="k">20px</span>   <span class="c">← ขนาดที่เห็นอยู่ตอนนี้</span>
+h1 → 2.5rem  = <span class="k">40px</span>   <span class="c">← พอเปลี่ยนแท็ก ขนาดกระโดดเป็นสองเท่า</span></pre>
+    <p>
+      ตัวเลข 20px ที่เห็นอยู่ <b>มาจากกฎ <code>h5</code> ของ Bootstrap
+      ไม่ได้มาจากคลาส <code>.card-title</code></b> พอเปลี่ยนแท็กจึงเสียขนาดไปด้วย
+    </p>
+
+    <h4>วิธีที่ฟอนต์ไม่ขยับแม้แต่พิกเซลเดียว</h4>
+    <pre><span class="c">/* pin ขนาดของ h1 ให้เท่ากับที่ h5 เป็นอยู่ทุกประการ
+   ค่าทั้งหมดอ่านมาจาก computed style จริงของหน้าเว็บ */</span>
+h1.card-title{
+  font-size:     <span class="k">1.25rem</span>;   <span class="c">/* = 20px เท่าเดิม */</span>
+  font-weight:   <span class="k">500</span>;       <span class="c">/* เท่าเดิม */</span>
+  line-height:   <span class="k">1.2</span>;
+  margin-bottom: <span class="k">.5rem</span>;
+}</pre>
+    <pre><span class="c">&lt;!-- เปลี่ยนแค่ชื่อแท็ก class เดิมทั้งหมด --&gt;</span>
+&lt;h1 class=<span class="s">"card-title"</span>&gt;@Model.Title&lt;/h1&gt;</pre>
+
+    <p class="sm">
+      ถ้าเลือกเก็บ <code>P.txt-head</code> หรือ <code>P.txt-title</code> ไว้แทน
+      ให้เปลี่ยนชื่อคลาสในกฎ CSS ข้างบนตาม แล้วปรับ <code>font-size</code> เป็น
+      <code>24px</code> หรือ <code>16px</code> ให้ตรงกับของเดิม
+    </p>
+
+    <h4>โครงหัวข้อปัจจุบัน — เหลือขาดแค่ H1</h4>
+    <p>ส่วนที่เหลือของหน้าถูกต้องอยู่แล้ว <b>ไม่ต้องแตะ</b></p>
+    <pre>h1  <span class="c">— ไม่มี — ← จุดเดียวที่ขาด</span>
+h5  ชื่อข่าว (.card-title)
+h2  Ragnarok : The Promised Adventure
+h2  กำหนดการ Pre-CBT
+h3  MVP Boss
+h3  Poring Island Challenge
+h4  Relate News</pre>
+
+    <div class="note crit">
+      <p><b>ถ้าประเมินแล้วยังเสี่ยง — ข้ามข้อนี้ได้เลย</b></p>
+      <p>เกณฑ์ของ Google <b>ไม่ได้พูดถึง <code>h1</code> เลยแม้แต่คำเดียว</b>
+      เว็บที่ไม่มี <code>h1</code> ก็ผ่านการอนุมัติได้ —
+      <b>ข้อ 01 เป็นข้อเดียวที่จำเป็นจริง</b></p>
+      <p>เหตุผลเดียวที่เสนอให้ทำพ่วงคือมัน<b>แตะไฟล์เดียวกันกับข้อ 01</b>
+      จึงประหยัดรอบ deploy</p>
+    </div>
+
+    <h4>ตรวจว่าเสร็จ</h4>
+    <pre>document.querySelectorAll(<span class="s">'h1'</span>).length   <span class="c">// ต้องได้ 1</span>
+getComputedStyle(document.querySelector(<span class="s">'h1'</span>)).fontSize
+<span class="c">// ต้องได้ค่าเดิมก่อนแก้ เช่น "20px"</span></pre>
+  </div>
+</article>
+
+<!-- ============ TASK 3 ============ -->
+<article class="task must">
+  <div class="task-head">
+    <div class="task-n">03</div>
+    <div class="task-t">
+      <h3>เนื้อหาข่าวพังบนมือถือ — เป็นผลข้างเคียงจากการก๊อปวาง</h3>
+      <div class="facts">
+        <span class="chip crit">ต้องทำ</span>
+        <span class="chip">CSS ของ template</span>
+        <span class="chip">~2 ชม.</span>
+        <span class="chip">แก้ครั้งเดียวได้ทุกข่าว</span>
+      </div>
+    </div>
+  </div>
+  <div class="task-body">
+
+    <h4>โค้ดแปลก ๆ นั้นคืออะไร — ระบุได้แล้ว</h4>
+    <p>
+      ไม่ใช่ CMS เจนเอง แต่เป็น<b>ร่องรอยการก๊อปเนื้อหามาจาก Google Docs</b>
+      แล้ววางลงในเครื่องมือเขียนข่าว ตัวแก้ไขจึงเก็บ inline style ของ Google Docs มาทั้งชุด
+    </p>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>inline style ที่พบ</th><th>จำนวน</th><th>แปลว่า</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">font-family:'Noto Sans Thai',sans-serif</td><td class="mono">95</td><td>ฟอนต์เริ่มต้นของ Google Docs</td></tr>
+        <tr><td class="mono">color:#000000</td><td class="mono">92</td><td>สีดำตายตัว</td></tr>
+        <tr class="hit"><td class="mono"><b>font-size:9pt</b></td><td class="mono"><b>88</b></td><td><b>= 12px — ต้นเหตุของปัญหา</b></td></tr>
+        <tr><td class="mono">color:#1155cc</td><td class="mono">3</td><td>สีลิงก์ของ Google Docs</td></tr>
+        <tr><td class="mono">&lt;font color=#ababab&gt;</td><td class="mono">8</td><td>แท็กที่เลิกใช้แล้ว อยู่ที่ footer</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sm">
+      ไม่พบร่องรอยของ Microsoft Word เลย (<code>mso-</code> · <code>&lt;o:p&gt;</code> · <code>MsoNormal</code> = 0)
+      จึงยืนยันได้ว่ามาจาก Google Docs
+    </p>
+
+    <h4>🔴 ผลข้างเคียงสองอย่างที่เป็นปัญหาจริง</h4>
+    <p>ตัวความรกไม่ใช่ปัญหา แต่สองอย่างนี้ชนเกณฑ์ของ Google ตรง ๆ</p>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>อาการ</th><th>วัดได้เท่าไร</th><th>ชนเกณฑ์ข้อไหน</th></tr></thead>
+      <tbody>
+        <tr class="hit">
+          <td><b>ตัวหนังสือเนื้อหาข่าวเล็กเกินไป</b></td>
+          <td class="mono">12px<br>ทั้งบนเดสก์ท็อปและมือถือ</td>
+          <td><i>“Readability — Is the text content on your site easy to read?”</i></td>
+        </tr>
+        <tr class="hit">
+          <td><b>หน้าเลื่อนแนวนอนได้บนมือถือ</b></td>
+          <td class="mono">ล้นออกไป <b>303px</b><br>บนจอกว้าง 375px</td>
+          <td><i>“Alignment — Are all the navigational elements lined up correctly <b>across all devices</b>?”</i></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p class="sm">
+      ทดสอบด้วยการจำลองจอมือถือ 375×812 แล้ววัดจากหน้าจริง —
+      ตัวที่ล้นออกนอกจอคือ <code>SPAN</code> และ <code>IMG</code> ในเนื้อหาข่าว
+    </p>
+
+    <h4>วิธีแก้ — CSS ชั้นเดียว ไม่ต้องไล่แก้ข่าวเก่า 400 กว่าชิ้น</h4>
+    <p>
+      inline style ชนะ stylesheet ปกติ จึงต้องใช้ <code>!important</code> ทับ
+      ใส่ครั้งเดียวที่ template <b>มีผลย้อนหลังกับทุกข่าวที่ลงไปแล้ว</b>
+    </p>
+    <pre><span class="c">/* เปลี่ยน .news-body เป็นคลาสของกล่องเนื้อหาข่าวจริง */</span>
+.news-body{
+  font-size: <span class="k">16px</span>;
+  line-height: <span class="k">1.75</span>;
+  overflow-wrap: anywhere;
+}
+
+<span class="c">/* ล้าง inline style ที่ติดมาจากการวาง — เว้น h2/h3/h4 ไว้ให้มีขนาดของตัวเอง */</span>
+.news-body span,
+.news-body p,
+.news-body div,
+.news-body li{
+  font-size:   inherit <span class="k">!important</span>;
+  font-family: inherit <span class="k">!important</span>;
+  color:       inherit <span class="k">!important</span>;
+}
+
+<span class="c">/* กันรูปและตารางล้นจอมือถือ */</span>
+.news-body img,
+.news-body table,
+.news-body iframe{
+  max-width: <span class="k">100%</span> <span class="k">!important</span>;
+  height:    auto <span class="k">!important</span>;
+}</pre>
+
+    <div class="note">
+      <p><b>ต้องทดสอบก่อนขึ้นจริง</b> — ถ้าข่าวเก่าบางชิ้นตั้งใจใช้สีหรือขนาดพิเศษ
+      กฎนี้จะล้างทิ้งไปด้วย ลองกับข่าวสัก 5–10 ชิ้นที่หน้าตาต่างกันก่อน
+      ถ้าเจอปัญหา ให้ตัด <code>color: inherit</code> ออกก่อนเป็นอย่างแรก</p>
+    </div>
+
+    <h4>แก้ที่ต้นทางด้วย — ไม่ให้เกิดซ้ำ</h4>
+    <ul class="ck">
+      <li><span class="box"></span><span>ตั้งค่าเครื่องมือเขียนข่าวให้ <b>ล้าง format ตอนวาง</b> (paste as plain text) — ตัวแก้ไขข้อความส่วนใหญ่มีตัวเลือกนี้อยู่แล้ว</span></li>
+      <li><span class="box"></span><span>หรือใส่ตัวกรองฝั่งเซิร์ฟเวอร์ ตัด attribute <code>style</code> ออกตอนบันทึกข่าว</span></li>
+      <li><span class="box"></span><span>แจ้งทีมคอนเทนต์ว่าให้วางแบบไม่มีรูปแบบ (<code>Ctrl+Shift+V</code>) เวลาก๊อปจาก Google Docs</span></li>
+    </ul>
+
+    <h4>ตรวจว่าเสร็จ</h4>
+    <pre><span class="c">// เปิดหน้าข่าวบนมือถือหรือย่อจอเหลือ 375px แล้ววางใน Console</span>
+document.documentElement.scrollWidth - document.documentElement.clientWidth
+<span class="c">// ต้องได้ 0 (ตอนนี้ได้ 303)</span>
+
+getComputedStyle(document.querySelector(<span class="s">'.news-body span'</span>)).fontSize
+<span class="c">// ต้องได้ "16px" (ตอนนี้ได้ "12px")</span></pre>
+  </div>
+</article>
+
+<!-- ============ ไม่ต้องทำ ============ -->
+<article class="task no">
+  <div class="task-head">
+    <div class="task-n">—</div>
+    <div class="task-t">
+      <h3>สิ่งที่ <u>ไม่ต้อง</u> ทำ</h3>
+      <div class="facts"><span class="chip">อ่านเพื่อความสบายใจ</span></div>
+    </div>
+  </div>
+  <div class="task-body">
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>เรื่อง</th><th>สถานะ</th></tr></thead>
+      <tbody>
+        <tr><td><b>ความรกของ HTML ที่ CMS เจนออกมา</b> — span ซ้อนกัน · แท็ก <code>&lt;font&gt;</code> · span ว่าง 16 ตัว</td>
+            <td><span class="chip pass">ไม่ต้องแก้</span><br><span class="sm">Google ไม่มีเกณฑ์ใดพูดถึงความสะอาดของ HTML — <b>แต่ดูข้อ 03 ก่อน มีผลข้างเคียงสองอย่างที่ต้องแก้</b></span></td></tr>
+        <tr><td><b><code>h2</code> · <code>h3</code> · <code>h4</code> ในหน้าข่าว</b></td>
+            <td><span class="chip pass">ถูกต้องอยู่แล้ว</span><br><span class="sm">โครงหัวข้อสมบูรณ์ ไม่ต้องแตะ</span></td></tr>
+        <tr><td><b>ตัวแบ่งหน้าของรายการข่าว</b></td>
+            <td><span class="chip pass">ถูกต้องอยู่แล้ว</span><br><span class="sm">ตรวจแล้วเป็น <code>&lt;a href&gt;</code> จริง ไม่ใช่ JavaScript</span></td></tr>
+        <tr><td><b><code>&lt;title&gt;</code> ที่ซ้ำกันทุกหน้า</b></td>
+            <td><span class="chip warn">คนละใบสั่งงาน</span><br><span class="sm">ไม่ใช่เกณฑ์ที่ต้องแก้ตอนนี้ อยู่ในเอกสารแม่</span></td></tr>
+        <tr><td><b><code>ads.txt</code> · redirect · SSL</b></td>
+            <td><span class="chip pass">จัดการแล้ว</span><br><span class="sm">แก้ที่ Cloudflare ไปแล้ว ไม่ใช่งานทีมนี้</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="note ok">
+      <p><b>สรุป</b> — จากทั้งหมดที่ตรวจเจอบนเว็บ งานที่ตกมาถึงทีม System
+      มี<b>เรื่องเดียว</b> คือชื่อข่าวซ้ำใน template ที่เหลือจัดการที่อื่นหมดแล้ว
+      หรือไม่ใช่ปัญหาตั้งแต่ต้น</p>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <p>ROPZ_NewsTemplate_Task_System_TH_260902 · เอกสารภายใน GGT Game Studio</p>
+  <p>ตรวจจาก DOM จริงของ https://www.gnjoy.in.th/Events/EventDetail/563 เมื่อ 2 ก.ย. 2026</p>
+  <p>เอกสารแม่ (บริบท AdSense ทั้งหมด): PM Workspace/ROPZ_AdSense_SiteFix_GNJOY_TH_260902.html</p>
+</footer>
+
+</div>
+</body>
+</html>

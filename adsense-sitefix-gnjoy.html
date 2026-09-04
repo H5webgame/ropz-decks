@@ -321,41 +321,42 @@ footer p{max-width:none; margin:0 0 5px}
   </div>
   <div class="case-body">
 
-    <div class="note crit">
-      <p><b>🔴 อัปเดตเร่งด่วน 2 ก.ย. 2026 · ช่วงบ่าย — มีคนเพิ่ม redirect เข้ามาแล้ว แต่ตั้งผิด</b></p>
-      <p>ตอนตรวจรอบเช้า <code>gnjoy.in.th</code> ยังเสิร์ฟเนื้อหาปกติทุกหน้า
-      ตอนตรวจซ้ำรอบบ่ายพบว่ามี <b>Cloudflare redirect rule ใหม่</b> ที่ส่งทุก URL ของ
-      <code>gnjoy.in.th</code> ไปที่ <b>หน้าแรกของ www</b> โดย<b>ทิ้ง path ทั้งหมด</b></p>
-      <p><b>ต้องแก้ทันทีวันนี้</b> เพราะสถานะคำขอเป็น <code>Getting ready</code>
-      คือ Google กำลังตรวจอยู่ ถ้าเข้ามาเก็บข้อมูลตอนนี้จะเห็นเว็บที่<b>มีหน้าเดียว</b></p>
+    <div class="note ok">
+      <p><b>✅ แก้เรียบร้อยแล้ว · ยืนยัน 2 ก.ย. 2026 ช่วงเย็น</b></p>
+      <p>ทีมที่ดูแล Cloudflare ตั้ง redirect ให้ <code>gnjoy.in.th</code> ทั้งโดเมนชี้ไป
+      <code>www.gnjoy.in.th</code> <b>โดยรักษา path ครบ</b> — ตรวจผ่านทั้ง 6 ข้อ
+      หัวข้อนี้เก็บไว้เป็นบันทึกว่าแก้อะไรไป และเป็นแบบให้ <code>roplayzone.com</code> ทำตาม</p>
     </div>
 
-    <h4>ผลทดสอบจริง — ทุกพาธ ไม่ใช่แค่บางพาธ</h4>
-    <pre><span class="c">// โดเมนที่ลงทะเบียนไว้กับ AdSense คือ gnjoy.in.th (ไม่มี www)</span>
-https://gnjoy.in.th/                        <span class="c">→ 301 → https://www.gnjoy.in.th/</span>
-https://gnjoy.in.th/Events/Index/1          <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
-https://gnjoy.in.th/Events/EventDetail/563  <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
-https://gnjoy.in.th/Game/GamePC             <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
-https://gnjoy.in.th/Privacy                 <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ path หาย</span>
-https://gnjoy.in.th/ads.txt                 <span class="c">→ 301 → https://www.gnjoy.in.th/  ✗ ได้ HTML หน้าแรก!</span>
+    <h4>ผลตรวจหลังแก้ — ผ่านครบ</h4>
+    <pre>https://gnjoy.in.th/Events/EventDetail/563  <span class="c">→ 301 → www.gnjoy.in.th/Events/EventDetail/563  ✅</span>
+https://gnjoy.in.th/Events/Index/1          <span class="c">→ 301 → www.gnjoy.in.th/Events/Index/1          ✅</span>
+https://gnjoy.in.th/Privacy                 <span class="c">→ 301 → www.gnjoy.in.th/Privacy                 ✅</span>
+https://gnjoy.in.th/ads.txt                 <span class="c">→ 301 → www.gnjoy.in.th/ads.txt                 ✅</span>
+                                            <span class="c">   คืนไฟล์จริง ไม่ใช่ HTML</span>
 
-<span class="c">// ฝั่ง www ทำงานถูกต้องทุกพาธ</span>
-https://www.gnjoy.in.th/ads.txt             <span class="c">→ 200  google.com, pub-1547224935471604, DIRECT, …</span>
+<span class="c">// รายละเอียดที่ตรวจเพิ่ม</span>
+status code       <span class="c">301 Moved Permanently  ✅ (ถาวร ไม่ใช่ 302)</span>
+query string      <span class="c">?page=3&amp;lang=th ตามไปครบ  ✅</span>
+redirect loop     <span class="c">www ตอบ 200 ตรง ไม่เด้งต่อ  ✅</span>
+http:// เข้ามา    <span class="c">ถึง https://www. ใน 1 hop  ✅</span></pre>
 
-<span class="c">// redirect มาจาก Cloudflare ไม่ใช่จากเซิร์ฟเวอร์</span>
-Server: cloudflare · CF-RAY: …-BKK</pre>
+    <div class="note">
+      <p><b>สิ่งที่การแก้นี้น่าจะปลดล็อกไปด้วย</b> — ก่อนหน้านี้ <code>www</code> และแบบไม่มี
+      <code>www</code> <b>ต่างก็ตอบ 200 ทั้งคู่ ไม่มี redirect ไม่มี canonical</b>
+      คือทุกหน้าของเว็บมีอยู่สองที่อยู่ ซึ่งเป็นสัญญาณเนื้อหาซ้ำที่ครอบทั้งเว็บ
+      และน่าจะเป็นสาเหตุของการถูกปฏิเสธรอบก่อนหน้า — <b>ตอนนี้หายไปแล้ว</b></p>
+    </div>
 
-    <h4>เกิดอะไรขึ้น</h4>
+    <h4>บทเรียนที่ต้องส่งต่อให้ roplayzone.com</h4>
     <p>
-      Redirect rule ถูกตั้งเป็นแบบ <b>static</b> คือชี้ไปที่ URL ปลายทางตัวเดียวตายตัว
-      แทนที่จะเป็นแบบ <b>dynamic</b> ที่นำ path เดิมไปต่อท้ายด้วย
+      ระหว่างทางมีจังหวะที่ rule ถูกตั้งเป็นแบบ <b>Static</b> (ชี้ปลายทางตายตัว) ทำให้
+      <b>ทุก URL ไปโผล่หน้าแรกและ path หายหมด</b> รวมถึง <code>ads.txt</code> ที่คืน HTML แทนไฟล์
     </p>
-    <p>ผลที่ตามมา 3 ข้อ เรียงตามความรุนแรง</p>
-    <ul class="ck">
-      <li><span class="box"></span><span>🔴 <b><code>ads.txt</code> หาไม่เจอถาวร</b> — Google ไปเก็บที่ <code>gnjoy.in.th/ads.txt</code> ตามโดเมนที่ลงทะเบียนไว้ แล้วได้ HTML หน้าแรกกลับไป <b>อธิบายได้ว่าทำไมคอนโซลขึ้น “Ads.txt: Not found”</b></span></li>
-      <li><span class="box"></span><span>🔴 <b>เว็บทั้งเว็บกลายเป็นหน้าเดียว</b> ในสายตา Google เมื่อมองจากโดเมนที่ลงทะเบียนไว้ — ทุก URL คืนเนื้อหาเดียวกัน = ชนเกณฑ์ที่ 1 (เนื้อหาไม่พอ) หนักกว่าเดิม</span></li>
-      <li><span class="box"></span><span><b>ลิงก์พาไปหน้าที่ไม่เกี่ยว</b> — คลิก “ข่าวสาร” แล้วไปโผล่หน้าแรก ชนเกณฑ์ที่ 3 ตรงตัว (<i>“Irrelevant or misleading pages”</i>)</span></li>
-    </ul>
+    <p>
+      ตอนตั้ง redirect ให้โดเมนใหม่ <b>ต้องเลือก Dynamic เสมอ</b> และตรวจ 4 อย่างเดิม —
+      path · status 301 · query string · ไม่มี loop
+    </p>
 
     <div class="ba">
       <div class="ba-col bad">
@@ -388,8 +389,29 @@ Hostname  <span class="k">equals</span>  <span class="s">"gnjoy.in.th"</span>
 <span class="c">// การกระทำ — ต้องเลือก Dynamic ไม่ใช่ Static</span>
 Type      <span class="k">Dynamic</span>
 Expression <span class="k">concat</span>(<span class="s">"https://www.gnjoy.in.th"</span>, http.request.uri)
-Status    <span class="k">301</span>
-Preserve query string  <span class="k">on</span></pre>
+Status    <span class="k">301</span>  Permanent Redirect
+Preserve query string  <span class="k">ไม่ต้องติ๊ก</span></pre>
+
+    <div class="note crit">
+      <p><b>🔴 “Preserve query string” ต้องไม่ติ๊ก เมื่อใช้ <code>http.request.uri</code></b></p>
+      <p>เพราะ <code>http.request.uri</code> <b>มี query string รวมอยู่แล้ว</b>
+      (ต่างจาก <code>http.request.uri.path</code> ที่มีแต่ path)
+      ถ้าติ๊กเพิ่มจะกลายเป็นต่อ query เข้าไปซ้ำอีกรอบ</p>
+      <p>ยืนยันด้วยการทดสอบจริงแล้ว — ยิง <code>?page=3&amp;lang=th</code> เข้าไปโดยที่ช่องนี้ไม่ติ๊ก
+      query ตามไปครบถ้วนถูกต้อง</p>
+    </div>
+
+    <div class="note">
+      <p><b>⚠️ เรื่อง POST ที่ Cloudflare ขึ้นเตือนไว้ในหน้าตั้งค่า</b> —
+      301 จะเปลี่ยน POST เป็น GET และ<b>ทิ้ง body ทิ้ง</b></p>
+      <p>สำหรับคนเปิดเว็บทั่วไปไม่มีปัญหา แต่ต้องตรวจว่า
+      <b>มีระบบภายนอกยิง POST มาที่ <code>gnjoy.in.th</code> (แบบไม่มี www) หรือไม่</b> —
+      จาก CSP ของเว็บเห็นว่ามีการต่อกับ <b>UniPin · Razer Gold · Freshworks</b>
+      ถ้า callback ของระบบจ่ายเงินตัวใดยิงมาที่โดเมนแบบไม่มี www <b>จะพังเงียบ ๆ</b></p>
+      <p>วิธีตรวจ: ถามทีมที่ดูแลการเชื่อมต่อว่า URL ปลายทางที่ให้ผู้ให้บริการไว้เป็น
+      <code>www</code> หรือไม่ · ถ้าเจอว่าไม่ใช่ ให้เพิ่มเงื่อนไขยกเว้น path นั้นออกจาก rule
+      หรือใช้ <b>308</b> เฉพาะ path นั้นแทน 301</p>
+    </div>
 
     <div class="note ok">
       <p><b>ทำไมเลือกให้ <code>www</code> เป็นตัวจริง ไม่ใช่ non-www</b></p>
@@ -435,11 +457,29 @@ curl -s -L https://gnjoy.in.th/ads.txt
   </div>
   <div class="case-body">
 
-    <h4>ที่พบ</h4>
+    <h4>ที่พบ — ระบุ element ตรงจุดแล้ว</h4>
     <p>
-      หน้า <code>/Events/EventDetail/563</code> มีข้อความ 4,255 ตัวอักษร
-      แต่<b>ชื่อข่าวเดียวกันถูกพิมพ์ออกมา 3–4 ครั้ง</b>ในหน้าเดียว
-      ทั้งเป็นหัวเรื่อง ซ้ำใต้หัวเรื่อง และซ้ำอีกในย่อหน้าแรกของเนื้อหา
+      อ่านจาก DOM จริงของหน้า <code>/Events/EventDetail/563</code> —
+      ชื่อข่าวเดียวกันปรากฏ <b>5 ครั้ง</b> โดย <b>3 ครั้งมาจาก template</b>
+    </p>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th class="mono">Element</th><th>ขนาดจริง</th><th>ทำอย่างไร</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">LI.breadcrumb-item active</td><td class="mono">14px Kanit</td>
+            <td><span class="chip pass">เก็บไว้</span> เป็น breadcrumb ที่ถูกต้อง</td></tr>
+        <tr><td class="mono"><b>P.txt-head</b></td><td class="mono">24px Kanit</td>
+            <td rowspan="3" style="vertical-align:middle"><span class="chip crit">ยุบเหลือ 1</span>
+                <b>สามจุดนี้คือชื่อข่าวเดียวกันทั้งหมด</b> เลือกเก็บไว้จุดเดียวตามดีไซน์ ที่เหลือลบทิ้ง</td></tr>
+        <tr><td class="mono"><b>H5.card-title</b></td><td class="mono">20px Kanit</td></tr>
+        <tr><td class="mono"><b>P.txt-title</b></td><td class="mono">16px Kanit</td></tr>
+        <tr><td class="mono">SPAN ในเนื้อหา</td><td class="mono">12px Noto Sans Thai</td>
+            <td><span class="chip warn">งานคอนเทนต์</span> คนลงข่าวพิมพ์ชื่อซ้ำในเนื้อหา ไม่ใช่โค้ด</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sm">
+      สี่แถวแรกมาจาก template ของหน้าข่าว → <b>เกิดกับทุกข่าวในเว็บ ไม่ใช่ข่าวเดียว</b>
     </p>
 
     <div class="quote">
@@ -460,11 +500,12 @@ curl -s -L https://gnjoy.in.th/ads.txt
         <div class="ba-lab"><span>ตอนนี้</span><span>ซ้ำ 4 ครั้ง</span></div>
         <div class="ba-in">
           <div class="pagemock">
-            <div class="ln dup">เปิดรับสมัคร Pre-CBT <span class="note-inline">← หัวเรื่อง</span></div>
-            <div class="ln dup">เปิดรับสมัคร Pre-CBT <span class="note-inline">← ซ้ำ</span></div>
+            <div class="ln plain">Ragnarok · เปิดรับสมัคร Pre-CBT <span class="note-inline">← breadcrumb (ok)</span></div>
+            <div class="ln dup">Ragnarok : … เปิดรับสมัคร Pre-CBT <span class="note-inline">← P.txt-head 24px</span></div>
+            <div class="ln dup">Ragnarok : … เปิดรับสมัคร Pre-CBT <span class="note-inline">← H5.card-title 20px</span></div>
             <div class="ln plain">วันที่ : 9/1/2026 2:50:46 PM</div>
-            <div class="ln dup">เปิดรับสมัคร Pre-CBT <span class="note-inline">← ซ้ำ</span></div>
-            <div class="ln dup">เปิดรับสมัคร Pre-CBT อย่างเป็นทางการ <span class="note-inline">← ซ้ำ</span></div>
+            <div class="ln dup">Ragnarok : … เปิดรับสมัคร Pre-CBT <span class="note-inline">← P.txt-title 16px</span></div>
+            <div class="ln dup">เปิดรับสมัครผู้เล่นเข้าร่วมทดสอบ <span class="note-inline">← SPAN ในเนื้อหา</span></div>
             <div class="ln plain">ชวนเหล่านักผจญภัยมาร่วมสัมผัส…</div>
           </div>
         </div>
@@ -482,13 +523,18 @@ curl -s -L https://gnjoy.in.th/ads.txt
       </div>
     </div>
 
-    <h4>วิธีแก้</h4>
+    <h4>วิธีแก้ · งานของทีม System (ตัวสร้างหน้าข่าว)</h4>
     <ul class="ck">
-      <li><span class="box"></span><span>เปิด View ของหน้าข่าว หาจุดที่พิมพ์ <code>@Model.Title</code> ออกมา — <b>เหลือไว้จุดเดียว</b></span></li>
-      <li><span class="box"></span><span>ถ้ามีทั้งฟิลด์ <code>Title</code> และ <code>SubTitle</code> ที่ผู้ลงข่าวกรอกซ้ำกัน ให้แสดงเฉพาะตัวที่ต่างกันจริง</span></li>
-      <li><span class="box"></span><span>ถ้าย่อหน้าแรกของ <code>Body</code> ขึ้นต้นด้วยชื่อข่าวซ้ำ ให้แจ้งทีมคอนเทนต์ให้เลิกพิมพ์ซ้ำตอนลงข่าว — <b>เป็นเรื่องขั้นตอนทำงาน ไม่ใช่แค่โค้ด</b></span></li>
+      <li><span class="box"></span><span>เปิด View ของหน้าข่าว → เก็บ <b>หนึ่งใน</b> <code>P.txt-head</code> · <code>H5.card-title</code> · <code>P.txt-title</code> ไว้ตัวเดียว ที่เหลือลบ — เลือกตัวไหนก็ได้ตามที่ดีไซน์ต้องการ</span></li>
+      <li><span class="box"></span><span>ถ้าสามจุดนี้ดึงมาจากคนละฟิลด์ (<code>Title</code> · <code>SubTitle</code> · <code>ShortTitle</code>) แล้วคนลงข่าวกรอกเหมือนกันหมด → แก้ที่ <b>เครื่องมือเขียนข่าว</b> ให้เตือนหรือยุบฟิลด์ที่ไม่ได้ใช้จริง</span></li>
+      <li><span class="box"></span><span><b>งานทีมคอนเทนต์</b> — เลิกพิมพ์ชื่อข่าวซ้ำในช่องเนื้อหา (จุดที่ 5 ในตาราง) เป็นเรื่องขั้นตอนทำงาน ไม่ใช่โค้ด</span></li>
       <li><span class="box"></span><span>ตรวจ footer และ sidebar ว่ามีข้อความยาวซ้ำทุกหน้าหรือไม่ ถ้ามีให้ย่อแล้วลิงก์ไปหน้ารายละเอียด</span></li>
     </ul>
+
+    <div class="note ok">
+      <p><b>💡 แก้ทีเดียวได้สองข้อ</b> — ตัวที่เลือกเก็บไว้ ทำให้เป็น <code>&lt;h1&gt;</code> ไปเลย
+      จบทั้งเคสนี้และเคส 05 ในงานเดียว วิธีที่ฟอนต์ไม่ขยับอยู่ในเคส 05</p>
+    </div>
 
     <h4>ตรวจว่าเสร็จ</h4>
     <p class="sm">เปิดหน้าข่าวแล้วรันใน Console — ต้องได้ <code>1</code></p>
@@ -501,27 +547,47 @@ curl -s -L https://gnjoy.in.th/ads.txt
   <div class="case-head">
     <div class="case-n">03</div>
     <div class="case-t">
-      <h3>เดินไปถึงเนื้อหาส่วนใหญ่ของเว็บไม่ได้</h3>
+      <h3>การนำทางและการจัดหมวดเนื้อหา</h3>
       <div class="case-facts">
-        <span class="chip crit">ต้องแก้</span>
-        <span class="chip">เกณฑ์ที่ 1 และ 3</span>
+        <span class="chip pass">ลดระดับแล้ว</span>
+        <span class="chip">เกณฑ์ที่ 3</span>
         <span class="chip">หน้ารายการข่าว + เมนู</span>
-        <span class="chip">~1 วัน</span>
+        <span class="chip">ไม่เร่ง</span>
       </div>
     </div>
   </div>
   <div class="case-body">
 
-    <h4>ที่พบ</h4>
-    <p>
-      หน้าแรกของ <code>gnjoy.in.th</code> มีลิงก์ภายในทั้งหมด <b>31 ลิงก์</b>
-      และโชว์ข่าวแค่ <b>6 ข่าว</b> ข่าวที่เหลืออยู่ในคลังย้อนหลัง
-      ซึ่ง<b>เดินไปถึงจากหน้าแรกไม่ได้</b>
-    </p>
-    <p>
-      ⚠️ และถ้าตัวแบ่งหน้าของรายการข่าวเป็น JavaScript หรือปุ่ม “โหลดเพิ่ม”
-      <b>ทั้งผู้ใช้บางส่วนและ crawler เดินต่อไม่ได้เลย</b> จบแค่หน้าแรกของรายการ
-    </p>
+    <div class="note ok">
+      <p><b>✅ ตรวจซ้ำ 2 ก.ย. เย็น — เบากว่าที่ประเมินไว้มาก</b></p>
+      <p>ตอนประเมินรอบแรกยังเข้าคลังข่าวไม่ได้เพราะติด redirect ที่ตั้งผิด
+      พอข้อ 01 แก้แล้วจึงตรวจของจริงได้ และพบว่า<b>โครงการนำทางใช้งานได้อยู่แล้ว</b></p>
+    </div>
+
+    <h4>ผลตรวจจริงหลังแก้ข้อ 01</h4>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>ตรวจอะไร</th><th>ผล</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>ตัวแบ่งหน้าเป็นลิงก์จริงหรือ JavaScript</td>
+            <td class="mono">&lt;a href="/Events/Index/2"&gt;</td>
+            <td><span class="chip pass">ลิงก์จริง</span></td></tr>
+        <tr><td>ข่าวต่อหน้า</td><td class="mono">21 รายการ</td><td><span class="chip pass">ผ่าน</span></td></tr>
+        <tr><td>ความลึกของคลังข่าว</td>
+            <td class="mono">หน้า 20 ยังเต็ม · หน้า 30 ว่าง<br>≈ <b>400–580 บทความ</b></td>
+            <td><span class="chip pass">เนื้อหาเยอะ</span></td></tr>
+        <tr><td>crawler เดินถึงข่าวเก่าได้ไหม</td><td>ได้ ผ่านลิงก์ « »</td><td><span class="chip pass">ผ่าน</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="note">
+      <p><b>ข้อสรุปที่เปลี่ยนไป</b> — เว็บนี้<b>ไม่ได้มีเนื้อหาน้อย</b> มีบทความหลายร้อยชิ้นและเดินไปถึงได้จริง
+      ความรู้สึกว่า “เนื้อหาไม่พอ” เกิดจากหน้าแรกโชว์แค่ 6 ข่าว บวกกับช่วงที่ redirect พังจนทุก URL คืนหน้าแรก
+      ทั้งสองอย่างแก้ไปแล้ว</p>
+    </div>
+
+    <h4>ที่ยังเหลือ — ทำเมื่อว่าง ไม่ใช่ blocker</h4>
 
     <div class="quote">
       <i>“Your content should also be informative and <b>organized in a manner that’s easy for users to navigate</b>”</i><br>
@@ -684,7 +750,7 @@ curl -s -L https://gnjoy.in.th/ads.txt
 
     <h4>ข้อควรระวัง</h4>
     <ul class="ck">
-      <li><span class="box"></span><span>🔴 <b>URL ต้องเป็น non-www</b> ให้ตรงกับข้อ 01 — ถ้าใส่ <code>www.</code> จะขัดกับ canonical แล้วสับสนหนักกว่าเดิม</span></li>
+      <li><span class="box"></span><span>🔴 <b>URL ต้องเป็น <code>https://www.gnjoy.in.th/…</code></b> ให้ตรงกับข้อ 01 — เว็บใช้ <code>www</code> เป็นตัวหลัก ถ้าใส่แบบไม่มี <code>www</code> ทุก URL ใน sitemap จะกลายเป็น redirect ซึ่งผิดกติกาของ sitemap เอง</span></li>
       <li><span class="box"></span><span><b><code>lastmod</code> ต้องเป็นวันจริง</b> จาก <code>UpdatedAt</code> — ถ้าใส่วันนี้ทุกหน้าทุกวัน Google จะเลิกเชื่อทั้งไฟล์</span></li>
       <li><span class="box"></span><span><b>ห้ามใส่หน้าที่ 404 · redirect · noindex</b></span></li>
       <li><span class="box"></span><span>จำกัด <b>50,000 URL ต่อไฟล์</b> — เกินต้องแตกหลายไฟล์ (เว็บนี้ยังไม่ใกล้)</span></li>
@@ -724,9 +790,12 @@ curl -s -L https://gnjoy.in.th/ads.txt
     <h4>ที่พบ</h4>
     <p>
       ทุก URL ที่ตรวจได้ <code>&lt;title&gt;GNJOY&lt;/title&gt;</code> เหมือนกันหมด
-      และทั้งหน้า<b>ไม่มี <code>&lt;h1&gt;</code> เลยแม้แต่ตัวเดียว</b> —
-      ชื่อข่าวถูกเรนเดอร์เป็น <code>div</code> ธรรมดา
     </p>
+    <div class="note ok">
+      <p><b>✅ แก้ข้อมูลเดิมที่ผมเขียนไว้ผิด</b> — ฉบับก่อนเขียนว่า “ไม่มี <code>h1</code> เลย”
+      ซึ่งชวนให้เข้าใจว่าไม่มีโครงหัวข้อเลย <b>ความจริงคือหน้าข่าวมี heading ครบอยู่แล้ว
+      ขาดแค่ระดับ H1 ระดับเดียว</b></p>
+    </div>
 
     <h4>เห็นเป็นภาพ · แท็บเบราว์เซอร์</h4>
     <div class="ba">
@@ -822,39 +891,81 @@ ViewData[<span class="s">"Title"</span>] = <span class="k">$"</span><span class=
     <h4>เห็นเป็นภาพ · โครงหัวข้อของหน้าข่าว</h4>
     <div class="ba">
       <div class="ba-col bad">
-        <div class="ba-lab"><span>ตอนนี้</span><span>โครงว่างเปล่า</span></div>
+        <div class="ba-lab"><span>ตอนนี้</span><span>ครบ ยกเว้น H1</span></div>
         <div class="ba-in">
           <div class="outline">
             <div><span class="lv">h1</span><span class="empty">— ไม่มี —</span></div>
-            <div><span class="lv">h2</span><span class="empty">— ไม่มี —</span></div>
-            <div><span class="lv">div</span><span>เปิดรับสมัคร Pre-CBT</span></div>
-            <div class="ind1"><span class="lv">div</span><span>วันที่ 9/1/2026</span></div>
+            <div><span class="lv">h5</span><span>ชื่อข่าว <span style="opacity:.6">(.card-title)</span></span></div>
+            <div class="ind1"><span class="lv">h2</span><span>Ragnarok : The Promised Adventure</span></div>
+            <div class="ind1"><span class="lv">h2</span><span>กำหนดการ Pre-CBT</span></div>
+            <div class="ind2"><span class="lv">h3</span><span>MVP Boss</span></div>
+            <div class="ind2"><span class="lv">h3</span><span>Poring Island Challenge</span></div>
+            <div class="ind1"><span class="lv">h4</span><span>Relate News</span></div>
           </div>
         </div>
       </div>
       <div class="ba-col good">
-        <div class="ba-lab"><span>ต้องเป็น</span><span>ลำดับชั้นชัดเจน</span></div>
+        <div class="ba-lab"><span>ต้องเป็น</span><span>เปลี่ยนแค่บรรทัดเดียว</span></div>
         <div class="ba-in">
           <div class="outline">
-            <div class="h1"><span class="lv">h1</span><span>เปิดรับสมัคร Pre-CBT</span></div>
-            <div class="ind1"><span class="lv">h2</span><span>ช่วงเวลาลงทะเบียน</span></div>
-            <div class="ind1"><span class="lv">h2</span><span>เงื่อนไขการเข้าร่วม</span></div>
-            <div class="ind2"><span class="lv">h3</span><span>สเปกเครื่องที่รองรับ</span></div>
+            <div class="h1"><span class="lv">h1</span><span>ชื่อข่าว <span style="opacity:.6">(.card-title เดิม)</span></span></div>
+            <div class="ind1"><span class="lv">h2</span><span>Ragnarok : The Promised Adventure</span></div>
+            <div class="ind1"><span class="lv">h2</span><span>กำหนดการ Pre-CBT</span></div>
+            <div class="ind2"><span class="lv">h3</span><span>MVP Boss</span></div>
+            <div class="ind2"><span class="lv">h3</span><span>Poring Island Challenge</span></div>
+            <div class="ind1"><span class="lv">h4</span><span>Relate News</span></div>
           </div>
+          <p class="sm" style="margin:12px 0 0">
+            <code>h2</code>–<code>h4</code> <b>ไม่ต้องแตะเลย</b> ถูกต้องอยู่แล้ว
+          </p>
         </div>
       </div>
     </div>
 
-    <h4>โค้ด · h1 — วิธีที่เร็วที่สุด</h4>
+    <h4>🔎 ทำไมเปลี่ยนเป็น h1 แล้วฟอนต์เพี้ยน — สาเหตุคือ Bootstrap</h4>
+    <div class="note">
+      <p>ทีม System เคยลองแล้วพบว่าฟอนต์เพี้ยน เลยเลี่ยงไปใช้แท็กธรรมดา —
+      <b>เป็นการตัดสินใจที่ถูกต้องภายใต้ข้อมูลที่มีตอนนั้น</b> และนี่คือสาเหตุที่แท้จริง</p>
+    </div>
     <p>
-      หาแท็กที่แสดงหัวเรื่องอยู่แล้ว <b>เปลี่ยนชนิดแท็กแล้วยก <code>class</code> เดิมมาทั้งชุด</b>
-      หน้าตาไม่เปลี่ยนเลย ไม่ต้องแตะ CSS
+      เว็บใช้ <b>Bootstrap</b> (เห็นจากคลาส <code>breadcrumb-item</code> · <code>card-title</code>)
+      และ Bootstrap Reboot <b>ตั้งขนาดฟอนต์ให้ <code>h1</code>–<code>h6</code> ตามชื่อแท็ก</b>
     </p>
-    <pre><span class="c">&lt;!-- ก่อน --&gt;</span>
-&lt;div class=<span class="s">"news-title"</span>&gt;@Model.Title&lt;/div&gt;
+    <pre>h5 → 1.25rem = <span class="k">20px</span>   <span class="c">← ขนาดที่เห็นอยู่ตอนนี้</span>
+h1 → 2.5rem  = <span class="k">40px</span>   <span class="c">← พอเปลี่ยนแท็ก ขนาดกระโดดเป็นสองเท่าทันที</span></pre>
+    <p>
+      ตัวเลข 20px ที่เห็นอยู่ <b>มาจากกฎ <code>h5</code> ของ Bootstrap ไม่ได้มาจากคลาส
+      <code>.card-title</code></b> — พอเปลี่ยนแท็กจึงเสียขนาดไปด้วย
+      <b>ไม่เกี่ยวกับ CMS และไม่เกี่ยวกับโค้ดที่ CMS เจนออกมา</b>
+    </p>
 
-<span class="c">&lt;!-- หลัง — class เดิม สไตล์เดิม --&gt;</span>
-&lt;h1 class=<span class="s">"news-title"</span>&gt;@Model.Title&lt;/h1&gt;</pre>
+    <h4>โค้ด · h1 ที่ฟอนต์ไม่ขยับแม้แต่พิกเซลเดียว</h4>
+    <pre><span class="c">/* pin ขนาดของ h1 ให้เท่ากับที่ h5 เป็นอยู่ทุกประการ
+   ค่าทั้งหมดอ่านมาจากค่า computed จริงของหน้าเว็บ ไม่ได้ประมาณ */</span>
+h1.card-title{
+  font-size:   <span class="k">1.25rem</span>;   <span class="c">/* = 20px เท่าเดิม */</span>
+  font-weight: <span class="k">500</span>;       <span class="c">/* เท่าเดิม */</span>
+  line-height: <span class="k">1.2</span>;
+  margin-bottom: <span class="k">.5rem</span>;
+}</pre>
+    <pre><span class="c">&lt;!-- เปลี่ยนแค่ชื่อแท็ก class เดิมทั้งหมด --&gt;</span>
+&lt;h1 class=<span class="s">"card-title"</span>&gt;@Model.Title&lt;/h1&gt;</pre>
+
+    <div class="note crit">
+      <p><b>ถ้ายังไม่อยากเสี่ยง — ข้ามข้อนี้ได้</b></p>
+      <p>เกณฑ์ทั้งสามข้อของ Google <b>ไม่ได้พูดถึง <code>h1</code> เลยแม้แต่คำเดียว</b>
+      เว็บที่ไม่มี <code>h1</code> ก็ผ่านการอนุมัติได้ —
+      ข้อที่<b>ต้อง</b>ทำจริงคือเคส 02 (ยุบชื่อข่าวที่ซ้ำ 3 จุด) เท่านั้น</p>
+      <p>แต่ถ้าจะทำเคส 02 อยู่แล้ว <b>ทำ h1 พ่วงไปเลยคุ้มกว่า</b>
+      เพราะแตะไฟล์เดียวกันและเพิ่ม CSS แค่ 4 บรรทัด</p>
+    </div>
+
+    <div class="note">
+      <p><b>เรื่องที่ทีม System ไม่ต้องกังวล</b> — หน้าข่าวมี element ที่ติด inline style
+      อยู่ <b>190 จุด</b> จากโค้ดที่ CMS เจนออกมา
+      <b>Google ไม่สนใจเรื่องนี้เลย</b> ไม่มีเกณฑ์ข้อใดพูดถึงความสะอาดของ HTML
+      สิ่งที่เป็นปัญหาคือ<b>ชื่อข่าวซ้ำ</b> อย่างเดียว</p>
+    </div>
 
     <ul class="ck">
       <li><span class="box"></span><span><code>h1</code> <b>1 ตัวต่อหน้า เท่านั้น</b> — ไม่ใช่ 0 และไม่ใช่หลายตัว</span></li>
@@ -875,9 +986,9 @@ ViewData[<span class="s">"Title"</span>] = <span class="k">$"</span><span class=
   <div class="card">
     <div class="tier must" style="margin-top:6px"><span class="badge">ต้องแก้</span></div>
     <ul class="ck">
-      <li><span class="box"></span><span><code>curl -I https://www.gnjoy.in.th/</code> ได้ <b>301</b> ไป <code>https://gnjoy.in.th/</code></span></li>
-      <li><span class="box"></span><span>ทุกหน้ามี <code>&lt;link rel="canonical"&gt;</code> ชี้ไป non-www</span></li>
-      <li><span class="box"></span><span>ไม่มีลิงก์ภายในที่ชี้ไป <code>www.</code> เหลืออยู่</span></li>
+      <li><span class="box"></span><span><code>curl -sL -o /dev/null -w "%{url_effective}" https://gnjoy.in.th/Events/EventDetail/563</code><br>ต้องได้ <code>https://www.gnjoy.in.th/Events/EventDetail/563</code> — <b>path ต้องไม่หาย</b></span></li>
+      <li><span class="box"></span><span><code>curl -sL https://gnjoy.in.th/ads.txt</code> ต้องได้บรรทัด <code>google.com, pub-…</code> <b>ไม่ใช่ HTML</b></span></li>
+      <li><span class="box"></span><span>ทุกหน้ามี <code>&lt;link rel="canonical"&gt;</code> ชี้ไป <b><code>www</code></b> <span class="sm">(ทำทีหลังได้)</span></span></li>
       <li><span class="box"></span><span>หน้าข่าวมีชื่อข่าวปรากฏ <b>ครั้งเดียว</b></span></li>
       <li><span class="box"></span><span>ตัวแบ่งหน้ารายการข่าวเป็น <code>&lt;a href&gt;</code> ที่มี URL ต่างกันต่อหน้า</span></li>
       <li><span class="box"></span><span>เดินจากหน้าแรกไปถึงข่าวเก่าที่สุดได้ด้วยการคลิกอย่างเดียว</span></li>
