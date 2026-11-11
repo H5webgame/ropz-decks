@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish --><meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><!-- /[KEEP] -->
+<title>Development Timeline ROPZ</title>
+<meta name="description" content="RO PlayZone Development Timeline: 10 เดือน พ.ย. 2026 – ส.ค. 2027 แบ่งช่วง 0–3 + หลังเปิด · ตามแผน v2 (4 พ.ย.) + มติ 11 พ.ย. เปิดบริการปลาย ส.ค. 27 · เลนมินิเกมรอเคาะ · TH / EN / KO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f6; --page:#ffffff; --ink:#1a1f2b; --muted:#6b7280; --line:#e3e6ec; --soft:#f3f5f9;
+  --now:#c0392b;
+  --c0:#1f5fd1; --c1:#1e8a4c; --c2:#b8860b; --c3:#2c7a5a; --c4:#6c4fd1;
+  --b0:#2f6fe4; --b1:#c7d2e3; --b2:#e3b04b; --b3:#bfe2cd;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101318; --page:#181c23; --ink:#e8e9ee; --muted:#9aa3b2; --line:#2b313c; --soft:#1f2530;
+    --now:#ef6b5a;
+    --c0:#6b9cff; --c1:#5fcf8a; --c2:#e8c25a; --c3:#6fcfa5; --c4:#b39cff;
+    --b0:#3f7ff0; --b1:#3a4559; --b2:#b58a2e; --b3:#2f6a4c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101318; --page:#181c23; --ink:#e8e9ee; --muted:#9aa3b2; --line:#2b313c; --soft:#1f2530;
+  --now:#ef6b5a;
+  --c0:#6b9cff; --c1:#5fcf8a; --c2:#e8c25a; --c3:#6fcfa5; --c4:#b39cff;
+  --b0:#3f7ff0; --b1:#3a4559; --b2:#b58a2e; --b3:#2f6a4c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans KR",system-ui,sans-serif;font-size:14px;line-height:1.45}
+html[lang="ko"] body{font-family:"Noto Sans KR","Sarabun",system-ui,sans-serif}
+.page{max-width:1240px;margin:20px auto;background:var(--page);border-radius:14px;padding:34px 40px 26px;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:22px}
+h1{font-size:34px;margin:0 0 2px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:15px;margin:0}
+.meta{text-align:right;font-size:12.5px;color:var(--muted);line-height:1.5}
+.meta b{display:block;color:var(--ink);font-size:13px;letter-spacing:.04em}
+.tools{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;align-items:center}
+button{font:inherit;font-weight:600;font-size:12px;padding:5px 10px;border-radius:7px;border:1px solid var(--line);background:var(--page);color:var(--ink);cursor:pointer}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-right:6px}
+.lang button{border:0;border-radius:0}
+.lang button+button{border-left:1px solid var(--line)}
+.lang button.on{background:var(--ink);color:var(--page)}
+
+/* progress bar */
+.bar{position:relative;margin:0 0 70px}
+.lv{display:flex;font-weight:700;font-size:13px;margin-bottom:6px}
+.lv span:nth-child(1){color:var(--c0)} .lv span:nth-child(2){color:var(--c1)} .lv span:nth-child(3){color:var(--c2)} .lv span:nth-child(4){color:var(--c3)}
+.seg{display:flex;height:18px;border-radius:3px;overflow:hidden}
+.seg div{height:100%}
+.seg .s0,.seg .s1{background:var(--b1)} .seg .s2{background:var(--b2)} .seg .s3{background:var(--b3)}
+.fill{position:absolute;left:0;top:25px;height:18px;background:var(--b0);border-radius:3px 0 0 3px}
+.cursor{position:absolute;top:21px;width:2px;height:26px;background:var(--now)}
+.prog{position:absolute;left:0;top:48px;font-size:12.5px;white-space:nowrap}
+.prog b{color:var(--now)}
+.marks{position:absolute;left:0;right:0;top:48px}
+.mk{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.mk::before{content:"";display:block;width:9px;height:9px;background:var(--c1);transform:rotate(45deg);margin:0 auto 5px}
+.mk.ms::before{background:var(--c2)}
+.mk.go::before{background:var(--now)}
+.mk.last{transform:none;text-align:right;left:auto!important;right:0}
+.mk.last::before{margin-right:0}
+.mk b{display:block;font-size:12.5px}
+.mk small{display:block;font-size:11px;color:var(--muted)}
+
+/* columns */
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.col{padding:0 16px 10px 0;border-right:1px solid var(--line)}
+.col+.col{padding-left:16px}
+.col:last-child{border-right:0;padding-right:0}
+.col .ttl{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding-bottom:6px;border-bottom:3px solid currentColor}
+.col .ttl small{display:block;font-weight:500;font-size:12px;letter-spacing:0;text-transform:none;color:var(--muted);margin-top:6px}
+.col.k0 .ttl,.col.k0 .goal{color:var(--c0)} .col.k1 .ttl,.col.k1 .goal{color:var(--c1)} .col.k2 .ttl,.col.k2 .goal{color:var(--c2)} .col.k3 .ttl,.col.k3 .goal{color:var(--c3)} .col.k4 .ttl,.col.k4 .goal{color:var(--c4)}
+.dur{margin:14px 0 2px;font-size:13px;color:var(--muted)}
+.dur b{font-size:34px;color:var(--ink);font-weight:600;margin-right:6px;line-height:1}
+.range{font-size:13px;color:var(--muted)}
+.goal{font-size:13px;font-weight:600;margin:6px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.grp{font-size:11.5px;color:var(--muted);font-weight:600;margin:12px 0 4px}
+.it{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:2px 0}
+.it span:last-child{color:var(--muted);font-size:12px;white-space:nowrap;padding-top:2px}
+.it.ms span:first-child{font-weight:700}
+.it.ext span:first-child{color:var(--muted)}
+.it.q span:first-child{color:var(--now);font-weight:600}
+.note{margin-top:20px;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:12px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--page);padding:8px 14px;border-radius:8px;font-size:14px;transition:.2s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:1000px){
+  .cols{grid-template-columns:repeat(2,1fr)}
+  .col{border-right:0;border-bottom:1px solid var(--line);padding:0 0 16px;margin-bottom:16px}
+  .col+.col{padding-left:0}
+  .page{padding:24px 20px}
+  .bar{margin-bottom:84px}
+  .mk b{font-size:11px}
+}
+@media (max-width:600px){ .cols{grid-template-columns:1fr} header{flex-direction:column} .meta{text-align:left} .tools{justify-content:flex-start} }
+@media print{ body{background:#fff} .page{box-shadow:none;margin:0;max-width:none} .tools,.toast{display:none} @page{size:landscape;margin:10mm} }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div>
+    <h1 id="t-title"></h1>
+    <p class="sub" id="t-sub"></p>
+  </div>
+  <div class="meta">
+    <b>RO PLAYZONE · GGT GAME STUDIO</b>
+    <span id="t-meta"></span>
+    <div class="tools">
+      <span class="lang" id="langBox"><button data-lang="th">ไทย</button><button data-lang="en">EN</button><button data-lang="ko">한국어</button></span>
+      <button id="copyBtn"></button><button id="themeBtn"></button><button id="printBtn"></button>
+    </div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="lv" id="lv"></div>
+  <div class="seg"><div class="s0" style="width:20%"></div><div class="s1" style="width:30%"></div><div class="s2" style="width:30%"></div><div class="s3" style="width:20%"></div></div>
+  <div class="fill" style="width:3.5%"></div><div class="cursor" style="left:3.5%"></div>
+  <div class="prog" id="prog"></div>
+  <div class="marks" id="marks"></div>
+</div>
+
+<div class="cols" id="cols"></div>
+
+<div class="note"><span id="t-note"></span><span id="t-full"></span></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var I18N = {
+th: {
+  title: "Development Timeline",
+  sub: "10 เดือน · พ.ย. 2026 – ส.ค. 2027 · เปิดบริการปลาย ส.ค. 2027 (Q3) · ระยะต่อยอดตั้งแต่ ก.ย. 2027",
+  meta: "เอกสารภายใน · ห้ามเผยแพร่ · 11 พ.ย. 2026 · ตามแผน v2 (4 พ.ย.) + มติ 11 พ.ย.",
+  btn: { copy: "คัดลอกข้อความ", theme: "สลับธีม", print: "พิมพ์ / PDF", copied: "คัดลอกแล้ว", fail: "คัดลอกไม่สำเร็จ" },
+  lv: ["ช่วง 0", "ช่วง 1", "ช่วง 2", "ช่วง 3"],
+  prog: "<b>เดือน 1/10</b> · 4%",
+  marks: [
+    [18, "", "ธ.ค. 2026", "ส่งสเปก ROPC / Gnjoy"],
+    [46, "ms", "มี.ค. 2027", "A · Alpha ไทย"],
+    [74, "ms", "มิ.ย. 2027", "B · Closed Beta"],
+    [87, "ms", "ต้น ส.ค. 2027", "C · เดฟเสร็จ"],
+    [0, "go last", "ปลาย ส.ค.", "เปิดบริการ"]
+  ],
+  cols: [
+    { ttl: "ช่วง 0 · Pre-production", sub: "เตรียม + สเปก", n: "2", u: "เดือน", range: "พ.ย. – ธ.ค. 2026", goal: "สเปกส่งครบ ล็อกวิธีเรนเดอร์ตัวละคร",
+      groups: [
+        ["ระบบพอร์ทัล", [["ต้นแบบเรนเดอร์ตัวละคร เป้า ≤ 2 วิ", "พ.ย.", ""], ["ล็อกวิธีเรนเดอร์ → RFP ให้ ART", "ธ.ค.", ""], ["สเปกเสา 1 Portal ID / gnjoy_link", "ธ.ค.", ""]]],
+        ["NPC + ROPC (Question & Solution)", [["ขอ GP ทำ NPC ทดสอบ 2 ตัว", "9 พ.ย.", ""], ["คำถามฝั่ง System 22 ข้อ", "11 พ.ย.", ""], ["วัดขนาดดัมตัวละคร", "พ.ย.", ""], ["ส่งสเปก NPC 3 ขา + API ไอดีเกม (รอภายนอก)", "ธ.ค.", "ext"]]],
+        ["มินิเกม (พักไว้ก่อน)", [["เคาะจำนวนเกม + จ้าง outsource หรือไม่", "ธ.ค.", "q"], ["มีในมือ 14 เกม (ตัด Tavern ที่หยุดพัฒนา) · แผนที่เหลือรอหลังเคาะ", "", ""]]]
+      ] },
+    { ttl: "ช่วง 1 · Production", sub: "ตัวตน + บ้าน", n: "3", u: "เดือน", range: "ม.ค. – มี.ค. 2027", goal: "หมุด A · Alpha ไทย: เห็นตัวเองเดินในบ้าน ชุดตรงเกม",
+      groups: [
+        ["ระบบพอร์ทัล", [["Portal ID + ผูก Gnjoy SSO", "ม.ค.", ""], ["ตัวละครขึ้นจอ + กระเป๋าต่อเซิร์ฟ", "ม.ค.", ""], ["บ้าน 1 หลังต่อเซิร์ฟที่ผูก", "ก.พ.", ""], ["หน้าแรก World Map + ข่าวอัตโนมัติ", "ก.พ.", ""], ["หน้า Character เรนเดอร์จริง", "มี.ค.", "ms"]]],
+        ["NPC + ROPC (Question & Solution)", [["NPC ลง QA (รอภายนอก)", "ม.ค.", "ext"]]]
+      ] },
+    { ttl: "ช่วง 2 · Production", sub: "คลัง + รางวัล + สังคม", n: "3", u: "เดือน", range: "เม.ย. – มิ.ย. 2027", goal: "หมุด B · Closed Beta: ฝาก → เว็บ → คราฟต์ → กลับเข้าเกม",
+      groups: [
+        ["ระบบพอร์ทัล", [["คลังฝาก NPC + ถอนคืน + โรงคราฟต์ v1", "เม.ย.", ""], ["ลูปฟาร์ม / เหมือง / สัตว์เลี้ยง", "พ.ค.", ""], ["ของกลับเข้าเกมทาง Rodex", "มิ.ย.", "ms"], ["เควสต์เซ็ต + คอสตูมผ่านเควสต์", "มิ.ย.", ""]]],
+        ["สังคม", [["เพื่อน + เยี่ยมบ้าน · เริ่ม presence", "เม.ย.", ""], ["แชท + สติกเกอร์ · แชร์คะแนน", "พ.ค.", ""]]],
+        ["ภายนอก", [["หนังสือสิทธิ์ GRF ก่อนเปิดให้คนนอกเห็น (รอภายนอก)", "ก่อน มิ.ย.", "ext"]]]
+      ] },
+    { ttl: "ช่วง 3 · Post-production", sub: "ไต้หวัน + ปิดงาน + เปิดบริการ", n: "2", u: "เดือน", range: "ก.ค. – ส.ค. 2027", goal: "หมุด C · เดฟเสร็จต้น ส.ค. → เปิดบริการปลาย ส.ค.",
+      groups: [
+        ["ระบบพอร์ทัล", [["ไต้หวัน = ภูมิภาค 2 (TWZeny)", "ก.ค.", ""], ["บ้านร่วมคู่สมรส · ซีซั่นทดลองบน QA", "ก.ค.", ""], ["โหลดเทสต์ · PDPA 2 เขต · Security review", "ต้น ส.ค.", ""], ["ทดสอบบนเซิร์ฟจริง → เดฟเสร็จ", "ต้น ส.ค.", "ms"]]],
+        ["เปิดบริการ", [["เปิดบริการจริง พร้อมซีซั่น 1", "ปลาย ส.ค.", "ms"]]]
+      ] },
+    { ttl: "After Launch", sub: "ระยะต่อยอด", n: "ต่อเนื่อง", u: "", range: "ก.ย. 2027 →", goal: "บัฟเฟอร์ + ดูแลหลังเปิด · เฟส 2",
+      groups: [
+        ["หลังเปิด (ปี 2027)", [["ก.ย. – Q4 = บัฟเฟอร์ + live ops", "ก.ย.", ""], ["ซีซั่นถัดไป ทุก 2 เดือน", "ต.ค. →", ""]]],
+        ["เฟส 2", [["แอป (Companion / มือถือ)", "ก.ย. 27 →", ""], ["ภูมิภาคที่ 3 (รองรับโดยไม่รื้อ)", "2028", ""]]]
+      ] }
+  ],
+  note: "แถบด้านบน = เวลาที่ผ่านไปจริง ไม่ใช่งานที่เสร็จ · (รอภายนอก) = ต้องรอ ROPC / Gnjoy · สีแดง = ต้องเคาะ · รอบดึงตัวละคร 6 หรือ 8 ชม. ยังไม่เคาะ",
+  full: "ฉบับเต็ม: ROPZ_DevTimeline_v2_TH_261104.html"
+},
+en: {
+  title: "Development Timeline",
+  sub: "10 months · Nov 2026 – Aug 2027 · service launch late Aug 2027 (Q3) · post-launch phase from Sep 2027",
+  meta: "Internal · do not distribute · 11 Nov 2026 · per plan v2 (4 Nov) + decision of 11 Nov",
+  btn: { copy: "Copy as text", theme: "Toggle theme", print: "Print / PDF", copied: "Copied", fail: "Copy failed" },
+  lv: ["Phase 0", "Phase 1", "Phase 2", "Phase 3"],
+  prog: "<b>Month 1/10</b> · 4%",
+  marks: [
+    [18, "", "Dec 2026", "Specs sent to ROPC / Gnjoy"],
+    [46, "ms", "Mar 2027", "A · Alpha TH"],
+    [74, "ms", "Jun 2027", "B · Closed Beta"],
+    [87, "ms", "Early Aug", "C · Dev complete"],
+    [0, "go last", "Late Aug", "Service launch"]
+  ],
+  cols: [
+    { ttl: "Phase 0 · Pre-production", sub: "Prep + specs", n: "2", u: "months", range: "Nov – Dec 2026", goal: "All specs delivered, character render method locked",
+      groups: [
+        ["Portal systems", [["Character render prototype, target ≤ 2 s", "Nov", ""], ["Lock render method → RFP to ART", "Dec", ""], ["Pillar 1 spec: Portal ID / gnjoy_link", "Dec", ""]]],
+        ["NPC + ROPC (Question & Solution)", [["Ask GP for 2 test NPCs", "9 Nov", ""], ["22 questions for the System team", "11 Nov", ""], ["Measure character dump size", "Nov", ""], ["Send 3-leg NPC spec + game ID API (external)", "Dec", "ext"]]],
+        ["Mini games (parked)", [["Decide game count + outsource or not", "Dec", "q"], ["14 games in hand (Tavern paused, excluded) · rest of the lane waits for the decision", "", ""]]]
+      ] },
+    { ttl: "Phase 1 · Production", sub: "Identity + house", n: "3", u: "months", range: "Jan – Mar 2027", goal: "Milestone A · Alpha TH: see your own character walk in your house, gear matches the game",
+      groups: [
+        ["Portal systems", [["Portal ID + Gnjoy SSO link", "Jan", ""], ["Character on screen + per-server wallet", "Jan", ""], ["One house per linked server", "Feb", ""], ["Home page World Map + auto news", "Feb", ""], ["Character page, real render", "Mar", "ms"]]],
+        ["NPC + ROPC (Question & Solution)", [["NPC on QA (external)", "Jan", "ext"]]]
+      ] },
+    { ttl: "Phase 2 · Production", sub: "Storage + rewards + social", n: "3", u: "months", range: "Apr – Jun 2027", goal: "Milestone B · Closed Beta: deposit → web → craft → back into the game",
+      groups: [
+        ["Portal systems", [["NPC storage + withdraw + craft v1", "Apr", ""], ["Farm / mine / pet loops", "May", ""], ["Items back into the game via Rodex", "Jun", "ms"], ["Quest sets + costumes via quests", "Jun", ""]]],
+        ["Social", [["Friends + house visits · presence starts", "Apr", ""], ["Chat + stickers · score sharing", "May", ""]]],
+        ["External", [["GRF rights letter before public exposure (external)", "before Jun", "ext"]]]
+      ] },
+    { ttl: "Phase 3 · Post-production", sub: "Taiwan + wrap-up + launch", n: "2", u: "months", range: "Jul – Aug 2027", goal: "Milestone C · dev complete early Aug → launch late Aug",
+      groups: [
+        ["Portal systems", [["Taiwan = region 2 (TWZeny)", "Jul", ""], ["Shared house for married pairs · trial season on QA", "Jul", ""], ["Load test · PDPA 2 regions · security review", "early Aug", ""], ["Live-server test → dev complete", "early Aug", "ms"]]],
+        ["Launch", [["Service launch with Season 1", "late Aug", "ms"]]]
+      ] },
+    { ttl: "After Launch", sub: "Post-launch", n: "Ongoing", u: "", range: "Sep 2027 →", goal: "Buffer + live ops · Phase 2",
+      groups: [
+        ["Post-launch (2027)", [["Sep – Q4 = buffer + live ops", "Sep", ""], ["Next seasons every 2 months", "Oct →", ""]]],
+        ["Phase 2", [["App (Companion / mobile)", "Sep 27 →", ""], ["Region 3 (no re-architecture)", "2028", ""]]]
+      ] }
+  ],
+  note: "Top bar = elapsed time, not work done · (external) = waiting on ROPC / Gnjoy · red = decision needed · character sync 6 h or 8 h still open",
+  full: "Full version: ROPZ_DevTimeline_v2_TH_261104.html"
+},
+ko: {
+  title: "Development Timeline",
+  sub: "10개월 · 2026년 11월 – 2027년 8월 · 서비스 오픈 2027년 8월 말 (Q3) · 2027년 9월부터 후속 단계",
+  meta: "내부 문서 · 배포 금지 · 2026년 11월 11일 · v2 계획 (11/4) + 11/11 결정 기준",
+  btn: { copy: "텍스트로 복사", theme: "테마 전환", print: "인쇄 / PDF", copied: "복사됨", fail: "복사 실패" },
+  lv: ["단계 0", "단계 1", "단계 2", "단계 3"],
+  prog: "<b>1/10개월</b> · 4%",
+  marks: [
+    [18, "", "2026년 12월", "ROPC / Gnjoy에 스펙 전달"],
+    [46, "ms", "2027년 3월", "A · 알파 (태국)"],
+    [74, "ms", "2027년 6월", "B · 클로즈 베타"],
+    [87, "ms", "8월 초", "C · 개발 완료"],
+    [0, "go last", "8월 말", "서비스 오픈"]
+  ],
+  cols: [
+    { ttl: "단계 0 · Pre-production", sub: "준비 + 스펙", n: "2", u: "개월", range: "2026년 11월 – 12월", goal: "스펙 전달 완료, 캐릭터 렌더 방식 확정",
+      groups: [
+        ["포털 시스템", [["캐릭터 렌더 프로토타입 목표 ≤ 2초", "11월", ""], ["렌더 방식 확정 → ART에 RFP", "12월", ""], ["기둥 1 스펙: Portal ID / gnjoy_link", "12월", ""]]],
+        ["NPC + ROPC (Question & Solution)", [["GP에 테스트 NPC 2종 요청", "11/9", ""], ["시스템팀 질문 22개", "11/11", ""], ["캐릭터 덤프 용량 측정", "11월", ""], ["NPC 3단계 스펙 + 게임 ID API 전달 (외부 대기)", "12월", "ext"]]],
+        ["미니게임 (보류)", [["게임 수 + 외주 여부 결정", "12월", "q"], ["보유 게임 14개 (개발 중단된 Tavern 제외) · 나머지 계획은 결정 후", "", ""]]]
+      ] },
+    { ttl: "단계 1 · Production", sub: "계정 + 집", n: "3", u: "개월", range: "2027년 1월 – 3월", goal: "마일스톤 A · 알파 (태국): 내 캐릭터가 내 집을 걷고 장비가 게임과 일치",
+      groups: [
+        ["포털 시스템", [["Portal ID + Gnjoy SSO 연동", "1월", ""], ["캐릭터 표시 + 서버별 지갑", "1월", ""], ["연동 서버당 집 1채", "2월", ""], ["메인 World Map + 자동 뉴스", "2월", ""], ["캐릭터 페이지 실제 렌더", "3월", "ms"]]],
+        ["NPC + ROPC (Question & Solution)", [["NPC QA 서버 적용 (외부 대기)", "1월", "ext"]]]
+      ] },
+    { ttl: "단계 2 · Production", sub: "보관 + 보상 + 소셜", n: "3", u: "개월", range: "2027년 4월 – 6월", goal: "마일스톤 B · 클로즈 베타: 보관 → 웹 → 제작 → 게임으로 반환",
+      groups: [
+        ["포털 시스템", [["NPC 보관 + 출금 + 제작 v1", "4월", ""], ["농장 / 광산 / 펫 루프", "5월", ""], ["Rodex로 아이템 게임 반환", "6월", "ms"], ["퀘스트 세트 + 퀘스트 코스튬", "6월", ""]]],
+        ["소셜", [["친구 + 집 방문 · presence 착수", "4월", ""], ["채팅 + 스티커 · 점수 공유", "5월", ""]]],
+        ["외부", [["외부 공개 전 GRF 권리 확인서 (외부 대기)", "6월 전", "ext"]]]
+      ] },
+    { ttl: "단계 3 · Post-production", sub: "대만 + 마무리 + 오픈", n: "2", u: "개월", range: "2027년 7월 – 8월", goal: "마일스톤 C · 8월 초 개발 완료 → 8월 말 오픈",
+      groups: [
+        ["포털 시스템", [["대만 = 2번째 지역 (TWZeny)", "7월", ""], ["부부 공동 집 · QA 시범 시즌", "7월", ""], ["부하 테스트 · PDPA 2개 지역 · 보안 검토", "8월 초", ""], ["실서버 테스트 → 개발 완료", "8월 초", "ms"]]],
+        ["오픈", [["시즌 1과 함께 정식 서비스 오픈", "8월 말", "ms"]]]
+      ] },
+    { ttl: "After Launch", sub: "후속 단계", n: "지속", u: "", range: "2027년 9월 →", goal: "버퍼 + 라이브 운영 · 2단계",
+      groups: [
+        ["오픈 후 (2027)", [["9월 – Q4 = 버퍼 + 라이브 운영", "9월", ""], ["다음 시즌 2개월마다", "10월 →", ""]]],
+        ["2단계", [["앱 (Companion / 모바일)", "27년 9월 →", ""], ["3번째 지역 (구조 변경 없이)", "2028", ""]]]
+      ] }
+  ],
+  note: "상단 바 = 경과 시간이며 완료된 작업 아님 · (외부 대기) = ROPC / Gnjoy 대기 · 빨간색 = 결정 필요 · 캐릭터 동기화 6시간 또는 8시간 미정",
+  full: "전체본: ROPZ_DevTimeline_v2_TH_261104.html"
+}
+};
+var LANG = "th";
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function render(){
+  var T = I18N[LANG];
+  document.documentElement.setAttribute("lang", LANG);
+  document.getElementById("t-title").textContent = T.title;
+  document.getElementById("t-sub").textContent = T.sub;
+  document.getElementById("t-meta").textContent = T.meta;
+  document.getElementById("copyBtn").textContent = T.btn.copy;
+  document.getElementById("themeBtn").textContent = T.btn.theme;
+  document.getElementById("printBtn").textContent = T.btn.print;
+  var w = [20,30,30,20];
+  document.getElementById("lv").innerHTML = T.lv.map(function(x,i){return "<span style=\"width:"+w[i]+"%\">"+esc(x)+"</span>";}).join("");
+  document.getElementById("prog").innerHTML = T.prog;
+  document.getElementById("marks").innerHTML = T.marks.map(function(m){
+    var st = m[1].indexOf("last")>=0 ? "" : " style=\"left:"+m[0]+"%\"";
+    return "<div class=\"mk "+m[1]+"\""+st+"><b>"+esc(m[2])+"</b><small>"+esc(m[3])+"</small></div>";
+  }).join("");
+  document.getElementById("cols").innerHTML = T.cols.map(function(c,i){
+    var h = "<div class=\"col k"+i+"\"><div class=\"ttl\">"+esc(c.ttl)+"<small>"+esc(c.sub)+"</small></div>";
+    h += "<div class=\"dur\"><b>"+esc(c.n)+"</b>"+esc(c.u)+"</div><div class=\"range\">"+esc(c.range)+"</div><div class=\"goal\">"+esc(c.goal)+"</div>";
+    c.groups.forEach(function(g){
+      h += "<div class=\"grp\">"+esc(g[0])+"</div>";
+      g[1].forEach(function(it){ h += "<div class=\"it "+it[2]+"\"><span>"+esc(it[0])+"</span><span>"+esc(it[1])+"</span></div>"; });
+    });
+    return h + "</div>";
+  }).join("");
+  document.getElementById("t-note").textContent = T.note;
+  document.getElementById("t-full").textContent = T.full;
+  document.querySelectorAll("#langBox button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-lang")===LANG); });
+}
+function toText(){
+  var T = I18N[LANG], L = [T.title+" · "+T.sub, ""];
+  T.marks.forEach(function(m){ L.push("◆ "+m[2]+" "+m[3]); });
+  L.push("");
+  T.cols.forEach(function(c){
+    L.push("== "+c.ttl+" · "+c.sub+" · "+c.range+" ==");
+    L.push(c.goal);
+    c.groups.forEach(function(g){ L.push("["+g[0]+"]"); g[1].forEach(function(it){ L.push("  - "+it[0]+" — "+it[1]); }); });
+    L.push("");
+  });
+  L.push(T.note);
+  return L.join("\n");
+}
+(function(){
+  var root = document.documentElement;
+  try{ var t = localStorage.getItem("ropz-theme"); if (t) root.setAttribute("data-theme", t); }catch(e){}
+  try{
+    var q = (location.search.match(/[?&]lang=(th|en|ko)/)||[])[1];
+    LANG = q || localStorage.getItem("ropz-tl-lang") || "th";
+  }catch(e){}
+  render();
+  document.getElementById("langBox").addEventListener("click", function(ev){
+    var b = ev.target.closest("button"); if (!b) return;
+    LANG = b.getAttribute("data-lang");
+    try{ localStorage.setItem("ropz-tl-lang", LANG); }catch(e){}
+    render();
+  });
+  document.getElementById("themeBtn").addEventListener("click", function(){
+    var cur = root.getAttribute("data-theme");
+    var dark = cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try{ localStorage.setItem("ropz-theme", next); }catch(e){}
+  });
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+  function toast(msg){ var el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show"); setTimeout(function(){ el.classList.remove("show"); },1400); }
+  function fallback(txt){ var ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); toast(I18N[LANG].btn.copied); }catch(e){ toast(I18N[LANG].btn.fail); } document.body.removeChild(ta); }
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var txt = toText();
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){ toast(I18N[LANG].btn.copied); }, function(){ fallback(txt); }); }
+    else fallback(txt);
+  });
+})();
+</script>
+</body>
+</html>

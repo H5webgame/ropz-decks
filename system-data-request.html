@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- [KEEP] web-publish --><meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><!-- /[KEEP] -->
+<title>คำขอข้อมูลฝั่ง System</title>
+<meta name="description" content="RO PlayZone: รายการข้อมูลและของที่ต้องขอจากฝั่ง System/GP สำหรับรอบทดสอบ NPC + ดึงตัวละคร (11 พ.ย. 2026) · TH / EN / KO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1f2328; --muted:#5b6470; --line:#e2ddd2;
+  --head:#efe9dc; --accent:#b4482b; --accent-ink:#ffffff;
+  --new:#fff4d6; --new-ink:#7a4f00; --new-line:#f0c96a;
+  --old:#e8f1ea; --old-ink:#1f5a35;
+  --crit:#fde8e4; --crit-ink:#8a2a16;
+  --sec:#f1ede4;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171b; --card:#1d2026; --ink:#e8e6e1; --muted:#a2a8b3; --line:#30343c;
+    --head:#262a32; --accent:#e0714f; --accent-ink:#15171b;
+    --new:#3a3012; --new-ink:#f2d58a; --new-line:#7a5f1e;
+    --old:#17301f; --old-ink:#9fd7b2;
+    --crit:#3d1b14; --crit-ink:#f5a58f;
+    --sec:#22262d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171b; --card:#1d2026; --ink:#e8e6e1; --muted:#a2a8b3; --line:#30343c;
+  --head:#262a32; --accent:#e0714f; --accent-ink:#15171b;
+  --new:#3a3012; --new-ink:#f2d58a; --new-line:#7a5f1e;
+  --old:#17301f; --old-ink:#9fd7b2;
+  --crit:#3d1b14; --crit-ink:#f5a58f;
+  --sec:#22262d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.55}
+html[lang="ko"] body{font-family:"Noto Sans KR","Sarabun",system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+header{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
+h1{font-size:26px;margin:0 0 4px;font-weight:700}
+.sub{color:var(--muted);margin:0;font-size:14px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button{font:inherit;font-weight:600;font-size:14px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:active{transform:translateY(1px)}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lang button{border:0;border-radius:0;padding:8px 12px;background:var(--card)}
+.lang button+button{border-left:1px solid var(--line)}
+.lang button.on{background:var(--ink);color:var(--bg)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px;font-size:13px;color:var(--muted)}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.tag.old{background:var(--old);color:var(--old-ink)}
+.tag.new{background:var(--new);color:var(--new-ink);border:1px solid var(--new-line)}
+.tag.crit{background:var(--crit);color:var(--crit-ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top;text-align:left}
+thead th{background:var(--head);border-top:0;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+td.n{width:40px;color:var(--muted);font-variant-numeric:tabular-nums}
+td.k{width:30%;font-weight:600}
+td.s{width:104px;white-space:nowrap}
+code{font-size:13px;background:var(--sec);padding:1px 5px;border-radius:4px}
+tr.sec td{background:var(--sec);font-weight:700;font-size:14px;padding:8px 12px;color:var(--muted)}
+tr.crit td.k::before{content:"★ ";color:var(--accent)}
+.note{margin:18px 0 0;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px}
+.note h2{font-size:16px;margin:0 0 6px}
+.note ol{margin:0;padding-left:22px}
+.note li{margin:4px 0}
+footer{margin-top:18px;font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:14px;transition:.2s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:640px){
+  td.k{width:auto} td.s{width:auto}
+  thead{display:none}
+  tr{display:block;border-top:1px solid var(--line)}
+  tr.sec{border-top:0}
+  td{display:block;border-top:0;padding:4px 12px}
+  td.n{display:none}
+  td.k{padding-top:10px}
+  td.s{padding-bottom:10px}
+}
+@media print{
+  body{background:#fff;color:#000}
+  .tools,.toast{display:none}
+  .card,.note{border-color:#999}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1 id="t-title"></h1>
+    <p class="sub" id="t-sub"></p>
+  </div>
+  <div class="tools">
+    <span class="lang" id="langBox">
+      <button data-lang="th">ไทย</button><button data-lang="en">EN</button><button data-lang="ko">한국어</button>
+    </span>
+    <button id="copyBtn" class="primary"></button>
+    <button id="themeBtn"></button>
+    <button id="printBtn"></button>
+  </div>
+</header>
+
+<div class="legend" id="legend"></div>
+
+<div class="card">
+<table id="tbl">
+<thead><tr><th>#</th><th id="h-k"></th><th id="h-w"></th><th id="h-s"></th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+
+<div class="note">
+  <h2 id="t-note"></h2>
+  <ol id="noteList"></ol>
+</div>
+
+<footer id="t-foot"></footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var I18N = {
+th: {
+  title: "คำขอข้อมูลฝั่ง System · รอบทดสอบ NPC + ดึงตัวละคร",
+  sub: "RO PlayZone · 11 พ.ย. 2026 · ใช้ถามว่า “ดึงอะไรได้บ้าง / ทำอะไรให้ได้บ้าง” ก่อนเริ่มทดสอบ",
+  copy: "คัดลอกเป็นข้อความ", theme: "สลับธีม", print: "พิมพ์ / PDF", copied: "คัดลอกแล้ว", copyfail: "คัดลอกไม่สำเร็จ",
+  tag: { old: "เดิม", "new": "เพิ่ม", crit: "★ ชี้ขาด" },
+  legend: { old: "อยู่ในลิสต์ที่ร่างไว้แล้ว", "new": "ที่ยังขาด ควรถามรอบเดียวกัน", crit: "คำตอบเปลี่ยนงานฝั่งเราทั้งก้อน" },
+  head: { k: "ข้อมูล / ของที่ขอ", w: "ใช้ทำอะไร · ต้องถามอะไรเพิ่ม", s: "สถานะ" },
+  sections: ["1. บัญชี", "2. เซิร์ฟเวอร์และตัวละคร", "3. ชุดและไอเทม", "4. NPC", "5. ของกลับเข้าเกม", "6. การดึงข้อมูล", "7. สภาพแวดล้อมทดสอบ"],
+  rows: [
+    ["Gnjoy Account", "เชื่อมกับ Account ของ Portal"],
+    ["วิธีเชื่อม Gnjoy", "Portal ยืนยันเจ้าของบัญชีอย่างไร (OAuth / token / SSO ของ Gnjoy) Portal จะไม่รับรหัสผ่านเอง"],
+    ["ROID ↔ AID", "1 Gnjoy มีกี่ AID · RO1 กับ ROC แยก AID ไหม · ขอตารางจับคู่ครบทุกเซิร์ฟ"],
+    ["Server", "แสดงที่หน้า Portal · ขอรหัส HSID / world id ของแต่ละเซิร์ฟด้วย ใช้ตอนส่ง Rodex"],
+    ["CID (char_id) · สล็อต · flag ลบ", "คีย์ถาวรของตัวละคร ชื่อเปลี่ยนได้แต่ CID ไม่เปลี่ยน · ตัวละครที่ลบแล้วต้องไม่โผล่บน Portal"],
+    ["ชื่อตัวละคร", "แสดงที่หน้า Portal"],
+    ["อาชีพ", "แสดงที่หน้า Portal · ขอเป็น job id ตัวเลข ไม่ใช่ชื่อ เพื่อจับคู่สไปรต์"],
+    ["เลเวล", "แสดงที่หน้า Portal · ขอทั้ง Base level และ Job level"],
+    ["เพศ · ทรงผม · สีผม · สีเสื้อ · body style", "ไม่มี 5 ค่านี้วาดตัวละครไม่ได้ ต่อให้มี Costume ครบ"],
+    ["last login / สถานะออนไลน์", "เรียงตัวละครที่เล่นล่าสุดขึ้นก่อน และกรองตัวที่ทิ้งแล้ว"],
+    ["Costume ที่ใส่ ทุกตัวละครใน ID", "แสดงที่หน้า Portal · head top / mid / low · costume garment"],
+    ["ชุดธรรมดาที่สวมอยู่", "หมวก / ผ้าคลุม / อาวุธ / โล่ ช่องปกติ เพราะผู้เล่นที่ไม่ใส่ costume ต้องวาดชุดจริง"],
+    ["ของที่สวมอยู่ในตารางไหน", "ของสวมอยู่ในตาราง inventory มี equip position · ถามว่า System join มาให้ หรือ Portal ต้อง join เอง"],
+    ["Item Info", "เช็คว่าไอเทมคืออะไร · ขอ item_id → ชื่อไทย / ประเภท / stackable / tradable / <b>view id + ชื่อไฟล์สไปรต์</b> ไม่มี view id จะวาดของบนตัวละครไม่ได้"],
+    ["ไอเทมใหม่ “เศษกระจก” / “เศษไม้”", "ยังไม่มีในเกม ต้องสร้าง item id ใหม่ หรือใช้ของแทนตอนทดสอบ (Glass Bead 746 / Wood 6008)"],
+    ["NPC 1 แลกวัตถุดิบ", "Jellopy 1000 → เศษกระจก 1 · Trunk 1 → เศษไม้ 1"],
+    ["NPC 2 ฝากของเข้า Portal", "คล้าย Kafra ฝากของออกจากเกมเข้าเว็บ · <b>สคริปต์ NPC ยิง HTTP ออกได้ไหม หรือเขียนได้แค่ SQL</b><br><b>ข้อเสนอ ROPZ:</b> Portal จะไม่แตะ DB เกมโดยตรง ทุกอย่างผ่าน <b>Gateway API</b> ที่ฝั่ง GP ดูแล (C#/.NET) · ทางที่ 1 (แนะนำ) NPC → HTTP → Gateway · ทางที่ 2 ถ้า NPC เขียนได้แค่ SQL ให้เขียนลง<b>ตารางพักของเกมเอง</b> แล้วมี relay ฝั่ง GP ส่งต่อเข้า Gateway · ทั้ง 2 ทาง Portal ไม่มี credential ของ DB เกม"],
+    ["ทางเข้า Rodex ผ่าน API", "ไม่มีในลิสต์เดิมเลย · ขอ API แทนการเรียก SP <code>usp_deliveryagent_RODEX_insert_web</code> ตรง · ถ้ายังไม่มี ใช้ท่อ Item Code ของ Gnjoy เป็นสะพานชั่วคราวได้ไหม"],
+    ["รอบดึงข้อมูล", "รอบแรกดัมทั้งเซิร์ฟ (≥1 ล้านตัวละคร) จากนั้นทุก 8 ชม. เฉพาะ AID ที่ผูก Portal แล้ว · ส่งเป็นไฟล์ / replica / API · ดึงจาก replica ไม่แตะ DB จริง"],
+    ["วัดขนาดก่อน", "ขอตัวอย่าง 1 ROID × 10 ตัวละคร เป็น raw rows + ผล <code>sp_spaceused</code> ต่อเซิร์ฟ เพื่อประเมินขนาดดัมเต็ม"],
+    ["เซิร์ฟทดสอบ + บัญชี GM", "ขอเซิร์ฟทดสอบ ไอเทมทดสอบ และบัญชีที่ใช้เดินทดสอบครบ 3 ขา (แลก → ฝาก → ส่งกลับ)"],
+    ["ตารางล็อก + ผู้ติดต่อ", "ล็อกใครฝาก / ถอน / แลก เมื่อไร สถานะสำเร็จหรือล้มเหลว · ชื่อคนติดต่อฝั่ง System และกำหนดเวลา"]
+  ],
+  note: "3 ข้อที่ต้องได้คำตอบก่อนข้ออื่น",
+  notes: [
+    "<b>view id ของไอเทม (ข้อ 14)</b> ตัดสินว่า Portal วาดตัวละครพร้อมชุดได้หรือไม่",
+    "<b>NPC ยิง HTTP ได้ไหม (ข้อ 17)</b> ตัดสินว่า Gateway รับ request ตรง หรือต้องมี relay จากตารางพักของเกม · ไม่ว่าทางไหน Portal ไม่แตะ DB เกมโดยตรง",
+    "<b>ทางเข้า Rodex (ข้อ 18)</b> ตัดสินว่ารอบทดสอบนี้ส่งของกลับเข้าเกมได้เลย หรือต้องรอรอบถัดไป"
+  ],
+  foot: "ฉบับละเอียดพร้อมสเปกตาราง / API อยู่ที่ MD Doc/ROPZ_NPC_TestRequest_GP_TH_261109.md (§4.2 ฟิลด์ · §5 คำถามถึง GP · §7 Rodex)"
+},
+en: {
+  title: "Data request to the System team · NPC + character export test round",
+  sub: "RO PlayZone · 11 Nov 2026 · to confirm what can be exported and what can be built before the test starts",
+  copy: "Copy as text", theme: "Toggle theme", print: "Print / PDF", copied: "Copied", copyfail: "Copy failed",
+  tag: { old: "existing", "new": "added", crit: "★ decisive" },
+  legend: { old: "already in the draft list", "new": "missing, ask in the same round", crit: "the answer changes our whole workload" },
+  head: { k: "Data / item requested", w: "Purpose · what else to ask", s: "Status" },
+  sections: ["1. Account", "2. Server and characters", "3. Equipment and items", "4. NPC", "5. Items back into the game", "6. Data export", "7. Test environment"],
+  rows: [
+    ["Gnjoy Account", "Linked to the Portal account"],
+    ["How Gnjoy linking works", "How does the Portal verify account ownership (OAuth / token / Gnjoy SSO)? The Portal never handles the password itself"],
+    ["ROID ↔ AID", "How many AIDs per Gnjoy account · are RO1 and ROC separate AIDs · need the full mapping table for every server"],
+    ["Server", "Shown on the Portal · also need the HSID / world id of each server, used when sending Rodex mail"],
+    ["CID (char_id) · slot · deleted flag", "Permanent character key. Names can change, CID cannot · deleted characters must not appear on the Portal"],
+    ["Character name", "Shown on the Portal"],
+    ["Job / class", "Shown on the Portal · need the numeric job id, not the name, to map sprites"],
+    ["Level", "Shown on the Portal · need both Base level and Job level"],
+    ["Sex · hair style · hair color · cloth color · body style", "Without these five values the character cannot be drawn, even with full costume data"],
+    ["Last login / online status", "Sort the most recently played characters first and filter out abandoned ones"],
+    ["Costumes worn, every character on the ID", "Shown on the Portal · head top / mid / low · costume garment"],
+    ["Normal equipment worn", "Headgear / garment / weapon / shield in the normal slots, because players without costumes must be drawn with their real gear"],
+    ["Which table holds equipped items", "Equipped items live in the inventory table with an equip position · will System join them for us, or must the Portal join"],
+    ["Item Info", "To identify what an item is · need item_id → Thai name / type / stackable / tradable / <b>view id + sprite file name</b>. Without the view id, items cannot be drawn on the character"],
+    ["New items “Glass Shard” / “Wood Shard”", "Do not exist in the game yet · create new item ids, or use stand-ins for the test (Glass Bead 746 / Wood 6008)"],
+    ["NPC 1 material exchange", "Jellopy 1000 → Glass Shard 1 · Trunk 1 → Wood Shard 1"],
+    ["NPC 2 deposit into the Portal", "Kafra-like NPC that moves items out of the game into the web · <b>can the NPC script make an HTTP call, or only write SQL?</b><br><b>ROPZ proposal:</b> the Portal never touches the game DB directly; everything goes through a <b>Gateway API</b> owned by GP (C#/.NET) · Option 1 (preferred) NPC → HTTP → Gateway · Option 2, if the NPC can only write SQL, it writes to a <b>staging table inside the game DB</b> and a GP-side relay forwards it to the Gateway · in both options the Portal holds no game DB credentials"],
+    ["Rodex entry point via API", "Not in the original list at all · need an API instead of calling the SP <code>usp_deliveryagent_RODEX_insert_web</code> directly · if none exists, can the Gnjoy Item Code pipeline serve as a temporary bridge"],
+    ["Export cadence", "First run: full-server dump (≥1 million characters), then every 8 hours only AIDs linked to the Portal · delivered as files / replica / API · read from a replica, never the live DB"],
+    ["Measure the size first", "Need a sample of 1 ROID × 10 characters as raw rows plus <code>sp_spaceused</code> per server, to size the full dump"],
+    ["Test server + GM account", "Test server, test items, and accounts to walk all 3 legs (exchange → deposit → send back)"],
+    ["Log table + contact person", "Log who deposited / withdrew / exchanged, when, and success or failure · name a System contact and a schedule"]
+  ],
+  note: "3 answers needed before anything else",
+  notes: [
+    "<b>Item view id (row 14)</b> decides whether the Portal can draw characters with their gear",
+    "<b>Can the NPC call HTTP (row 17)</b> decides whether the Gateway receives requests directly or needs a relay from a game-side staging table · either way the Portal never touches the game DB",
+    "<b>Rodex entry point (row 18)</b> decides whether items can return to the game in this test round or must wait for the next"
+  ],
+  foot: "Full version with table / API specs: MD Doc/ROPZ_NPC_TestRequest_GP_TH_261109.md (§4.2 fields · §5 questions for GP · §7 Rodex)"
+},
+ko: {
+  title: "시스템팀 데이터 요청 · NPC + 캐릭터 추출 테스트 라운드",
+  sub: "RO PlayZone · 2026년 11월 11일 · 테스트 시작 전 “어떤 데이터를 추출할 수 있고 무엇을 만들어 줄 수 있는지” 확인용",
+  copy: "텍스트로 복사", theme: "테마 전환", print: "인쇄 / PDF", copied: "복사됨", copyfail: "복사 실패",
+  tag: { old: "기존", "new": "추가", crit: "★ 핵심" },
+  legend: { old: "초안 목록에 이미 있음", "new": "누락됨, 같은 라운드에 질문", crit: "답변에 따라 우리 작업 전체가 바뀜" },
+  head: { k: "요청 데이터 / 항목", w: "용도 · 추가 질문", s: "상태" },
+  sections: ["1. 계정", "2. 서버 및 캐릭터", "3. 장비 및 아이템", "4. NPC", "5. 게임으로 아이템 반환", "6. 데이터 추출", "7. 테스트 환경"],
+  rows: [
+    ["Gnjoy 계정", "Portal 계정과 연동"],
+    ["Gnjoy 연동 방식", "Portal이 계정 소유자를 어떻게 확인하는지 (OAuth / token / Gnjoy SSO) · Portal은 비밀번호를 직접 받지 않음"],
+    ["ROID ↔ AID", "Gnjoy 1개당 AID 몇 개인지 · RO1과 ROC는 AID가 분리되는지 · 전 서버 매핑 테이블 필요"],
+    ["서버", "Portal에 표시 · Rodex 발송 시 필요한 서버별 HSID / world id도 요청"],
+    ["CID (char_id) · 슬롯 · 삭제 플래그", "캐릭터 영구 키. 이름은 바뀌어도 CID는 불변 · 삭제된 캐릭터는 Portal에 노출되면 안 됨"],
+    ["캐릭터 이름", "Portal에 표시"],
+    ["직업", "Portal에 표시 · 스프라이트 매핑을 위해 이름이 아닌 숫자 job id로 요청"],
+    ["레벨", "Portal에 표시 · Base level과 Job level 모두 요청"],
+    ["성별 · 헤어스타일 · 머리색 · 옷 색 · body style", "이 5개 값이 없으면 코스튬이 다 있어도 캐릭터를 그릴 수 없음"],
+    ["최근 접속 / 온라인 상태", "최근 플레이한 캐릭터를 앞에 정렬하고 방치된 캐릭터를 걸러냄"],
+    ["착용 코스튬, ID 내 전 캐릭터", "Portal에 표시 · head top / mid / low · costume garment"],
+    ["착용 중인 일반 장비", "일반 슬롯의 투구 / 망토 / 무기 / 방패 · 코스튬이 없는 플레이어는 실제 장비로 그려야 함"],
+    ["착용 아이템이 저장된 테이블", "착용 아이템은 inventory 테이블에 equip position으로 저장됨 · 시스템팀이 join해서 줄지, Portal이 직접 join할지 확인"],
+    ["Item Info", "아이템 식별용 · item_id → 태국어 이름 / 종류 / stackable / tradable / <b>view id + 스프라이트 파일명</b> 요청 · view id가 없으면 캐릭터에 아이템을 그릴 수 없음"],
+    ["신규 아이템 “유리 조각” / “나무 조각”", "게임에 아직 없음 · 신규 item id 생성 또는 테스트용 대체 아이템 사용 (Glass Bead 746 / Wood 6008)"],
+    ["NPC 1 재료 교환", "Jellopy 1000 → 유리 조각 1 · Trunk 1 → 나무 조각 1"],
+    ["NPC 2 Portal 보관", "Kafra 유사 NPC로 게임 아이템을 웹으로 반출 · <b>NPC 스크립트가 HTTP 호출이 가능한지, SQL 쓰기만 가능한지</b><br><b>ROPZ 제안:</b> Portal은 게임 DB를 직접 건드리지 않고 모든 요청을 GP가 관리하는 <b>Gateway API</b> (C#/.NET)로 처리 · 1안 (권장) NPC → HTTP → Gateway · 2안 NPC가 SQL만 가능하면 <b>게임 DB 내 스테이징 테이블</b>에 쓰고 GP측 relay가 Gateway로 전달 · 두 안 모두 Portal은 게임 DB 자격증명을 갖지 않음"],
+    ["API를 통한 Rodex 진입점", "기존 목록에 전혀 없음 · SP <code>usp_deliveryagent_RODEX_insert_web</code> 직접 호출 대신 API 요청 · 없다면 Gnjoy Item Code 파이프라인을 임시 브리지로 쓸 수 있는지"],
+    ["추출 주기", "첫 회는 전 서버 덤프 (캐릭터 100만 이상), 이후 8시간마다 Portal 연동 AID만 · 파일 / replica / API로 전달 · 운영 DB가 아닌 replica에서 읽기"],
+    ["용량 먼저 측정", "1 ROID × 캐릭터 10개 샘플을 raw rows로, 서버별 <code>sp_spaceused</code> 결과와 함께 요청 · 전체 덤프 크기 산정용"],
+    ["테스트 서버 + GM 계정", "테스트 서버, 테스트 아이템, 3단계 (교환 → 보관 → 반환) 전체를 돌릴 계정"],
+    ["로그 테이블 + 담당자", "누가 언제 보관 / 출금 / 교환했고 성공·실패인지 기록 · 시스템팀 담당자와 일정"]
+  ],
+  note: "다른 무엇보다 먼저 답이 필요한 3가지",
+  notes: [
+    "<b>아이템 view id (14번)</b> Portal이 장비까지 입힌 캐릭터를 그릴 수 있는지 결정",
+    "<b>NPC가 HTTP 호출 가능한지 (17번)</b> Gateway가 요청을 직접 받을지, 게임측 스테이징 테이블에서 relay할지 결정 · 어느 쪽이든 Portal은 게임 DB를 직접 건드리지 않음",
+    "<b>Rodex 진입점 (18번)</b> 이번 테스트 라운드에 아이템을 게임으로 되돌릴 수 있는지, 다음 라운드로 미뤄야 하는지 결정"
+  ],
+  foot: "테이블 / API 상세 스펙 전체본: MD Doc/ROPZ_NPC_TestRequest_GP_TH_261109.md (§4.2 필드 · §5 GP 질문 · §7 Rodex)"
+}
+};
+/* row → section index, status */
+var ROWMETA = [
+  [0,"old"],[0,"new"],[0,"old"],
+  [1,"old"],[1,"new"],[1,"old"],[1,"old"],[1,"old"],[1,"new"],[1,"new"],
+  [2,"old"],[2,"new"],[2,"new"],[2,"crit"],[2,"new"],
+  [3,"new"],[3,"crit"],
+  [4,"crit"],
+  [5,"new"],[5,"new"],
+  [6,"new"],[6,"new"]
+];
+var LANG = "th";
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function render(){
+  var T = I18N[LANG];
+  document.documentElement.setAttribute("lang", LANG);
+  document.title = T.title.split(" · ")[0];
+  document.getElementById("t-title").textContent = T.title;
+  document.getElementById("t-sub").textContent = T.sub;
+  document.getElementById("copyBtn").textContent = T.copy;
+  document.getElementById("themeBtn").textContent = T.theme;
+  document.getElementById("printBtn").textContent = T.print;
+  document.getElementById("h-k").textContent = T.head.k;
+  document.getElementById("h-w").textContent = T.head.w;
+  document.getElementById("h-s").textContent = T.head.s;
+  document.getElementById("legend").innerHTML =
+    "<span><span class=\"tag old\">"+esc(T.tag.old)+"</span> "+esc(T.legend.old)+"</span>"+
+    "<span><span class=\"tag new\">"+esc(T.tag["new"])+"</span> "+esc(T.legend["new"])+"</span>"+
+    "<span><span class=\"tag crit\">"+esc(T.tag.crit)+"</span> "+esc(T.legend.crit)+"</span>";
+  var h = [], lastSec = -1;
+  T.rows.forEach(function(r, i){
+    var sec = ROWMETA[i][0], st = ROWMETA[i][1];
+    if (sec !== lastSec){ h.push("<tr class=\"sec\"><td colspan=\"4\">"+esc(T.sections[sec])+"</td></tr>"); lastSec = sec; }
+    h.push("<tr class=\""+st+"\"><td class=\"n\">"+(i+1)+"</td><td class=\"k\">"+r[0]+"</td><td class=\"w\">"+r[1]+"</td><td class=\"s\"><span class=\"tag "+st+"\">"+esc(T.tag[st])+"</span></td></tr>");
+  });
+  document.getElementById("tbody").innerHTML = h.join("");
+  document.getElementById("t-note").textContent = T.note;
+  document.getElementById("noteList").innerHTML = T.notes.map(function(n){return "<li>"+n+"</li>";}).join("");
+  document.getElementById("t-foot").textContent = T.foot;
+  document.querySelectorAll("#langBox button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-lang")===LANG); });
+}
+function toText(){
+  var T = I18N[LANG], L = [T.title, T.sub, ""], lastSec = -1;
+  var strip = function(s){ var d=document.createElement("div"); d.innerHTML=s; return d.textContent; };
+  T.rows.forEach(function(r, i){
+    var sec = ROWMETA[i][0], st = ROWMETA[i][1];
+    if (sec !== lastSec){ L.push(""); L.push("== "+T.sections[sec]+" =="); lastSec = sec; }
+    L.push((i+1)+". "+strip(r[0])+" ["+T.tag[st]+"]\t"+strip(r[1]));
+  });
+  L.push(""); L.push(T.note);
+  T.notes.forEach(function(n, i){ L.push((i+1)+") "+strip(n)); });
+  return L.join("\n");
+}
+(function(){
+  var root = document.documentElement;
+  try{ var t = localStorage.getItem("ropz-theme"); if (t) root.setAttribute("data-theme", t); }catch(e){}
+  try{
+    var q = (location.search.match(/[?&]lang=(th|en|ko)/)||[])[1];
+    var saved = localStorage.getItem("ropz-sysreq-lang");
+    LANG = q || saved || "th";
+  }catch(e){}
+  render();
+  document.getElementById("langBox").addEventListener("click", function(ev){
+    var b = ev.target.closest("button"); if (!b) return;
+    LANG = b.getAttribute("data-lang");
+    try{ localStorage.setItem("ropz-sysreq-lang", LANG); }catch(e){}
+    render();
+  });
+  document.getElementById("themeBtn").addEventListener("click", function(){
+    var cur = root.getAttribute("data-theme");
+    var dark = cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try{ localStorage.setItem("ropz-theme", next); }catch(e){}
+  });
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+  function toast(msg){ var el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show"); setTimeout(function(){ el.classList.remove("show"); },1400); }
+  function fallback(txt){ var ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); toast(I18N[LANG].copied); }catch(e){ toast(I18N[LANG].copyfail); } document.body.removeChild(ta); }
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var txt = toText();
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){ toast(I18N[LANG].copied); }, function(){ fallback(txt); }); }
+    else fallback(txt);
+  });
+})();
+</script>
+</body>
+</html>
