@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- [KEEP] web-publish --><meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><!-- /[KEEP] -->
+<title>RO PlayZone — Project Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root,html[data-theme="day"]{
+    --page:#dfe4ee;            /* เวทีรอบนอก */
+    --bg:#F3F5F9;              /* พื้นหน้าเว็บจำลอง */
+    --card:#FFFFFF;--line:#E3E8F2;--urlbg:#F1F4FA;
+    --nav:#1E5EE6;--navInk:#FFFFFF;
+    --ink:#0B2A5B;--hi:#2F7BFF;--dim:#4B5A75;--tint:#E8F0FF;
+    --yellow:#FFC53D;--pink:#FF5FA2;--green:#2ECC71;--red:#FF4D4D;
+    --frame-sh:0 30px 80px rgba(11,42,91,.18);
+    --card-sh:0 8px 24px rgba(11,42,91,.08);
+    --btn-bg:#ffffff;--btn-ink:#0B2A5B;--btn-line:#C9D6F0;--btn-sh:0 8px 22px rgba(11,42,91,.14);
+    --help:#6b7893;
+  }
+  html[data-theme="dark"]{
+    --page:#060b14;
+    --bg:#0B1220;
+    --card:#141C2E;--line:#263352;--urlbg:#1A2338;
+    --nav:#1E5EE6;--navInk:#FFFFFF;
+    --ink:#F2F6FF;--hi:#5B9CFF;--dim:#A9B6D3;--tint:#1B2A4A;
+    --yellow:#FFC53D;--pink:#FF5FA2;--green:#2ECC71;--red:#FF4D4D;
+    --frame-sh:0 30px 80px rgba(0,0,0,.6);
+    --card-sh:0 8px 24px rgba(0,0,0,.35);
+    --btn-bg:#141C2E;--btn-ink:#dbe8ff;--btn-line:#263352;--btn-sh:0 8px 24px rgba(0,0,0,.5);
+    --help:#7f93b8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--page);color:var(--ink);overflow:hidden;
+    font-family:Poppins,Kanit,"Noto Sans KR","Noto Sans JP","Noto Sans SC","Segoe UI",system-ui,sans-serif}
+  html[lang="th"] body{font-family:Kanit,Poppins,system-ui,sans-serif}
+  html[lang="ko"] body{font-family:"Noto Sans KR",Poppins,system-ui,sans-serif}
+  html[lang="ja"] body{font-family:"Noto Sans JP",Poppins,system-ui,sans-serif}
+  html[lang="zh-CN"] body{font-family:"Noto Sans SC",Poppins,system-ui,sans-serif}
+  #stage{position:fixed;inset:0}
+  .slide{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center;display:none;overflow:hidden;background:var(--page)}
+  .slide.on{display:block}
+  .slide,.slide *{user-select:text;-webkit-user-select:text}
+
+  /* ---------- กรอบเบราว์เซอร์ (ทุกหน้า) ---------- */
+  .frame{position:absolute;left:84px;top:54px;right:84px;bottom:54px;background:var(--bg);border-radius:26px;overflow:hidden;box-shadow:var(--frame-sh);border:1px solid var(--line)}
+  .bar{height:64px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 24px}
+  .dots{display:flex;gap:8px}
+  .dots i{width:14px;height:14px;border-radius:50%;display:block}
+  .dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+  .tab{display:flex;align-items:center;gap:10px;background:var(--urlbg);border-radius:10px;padding:7px 16px;font-size:18px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .tab img{width:26px;height:26px;border-radius:7px}
+  .tab .plus{color:var(--dim);margin-left:12px;font-weight:500}
+  .url{flex:1;max-width:560px;margin:0 auto;background:var(--urlbg);border-radius:999px;padding:8px 20px;font-size:17px;color:var(--dim);text-align:center}
+  .url b{color:var(--ink);font-weight:600}
+  .playnow{margin-left:auto;background:var(--nav);color:#fff;border-radius:12px;padding:10px 24px;font-size:18px;font-weight:700;white-space:nowrap}
+  .nav{height:66px;background:var(--nav);display:flex;align-items:center;gap:8px;padding:0 28px}
+  .nav .brand{display:flex;align-items:center;gap:12px;color:var(--navInk);font-weight:700;font-size:21px;margin-right:34px;white-space:nowrap}
+  .nav .brand img{width:42px;height:42px;border-radius:10px}
+  .nav span{color:var(--navInk);font-size:18px;font-weight:600;padding:8px 20px;border-radius:999px;white-space:nowrap}
+  .nav span.on{background:#fff;color:var(--nav)}
+  .body{position:absolute;left:0;right:0;top:130px;bottom:0;padding:44px 72px 70px}
+  .foot{position:absolute;left:72px;bottom:24px;font-size:14px;letter-spacing:.22em;color:var(--dim);font-weight:600}
+  .pg{position:absolute;right:72px;bottom:22px;font-size:16px;color:var(--dim);font-weight:600}
+
+  .eyebrow{font-size:15px;letter-spacing:.3em;color:var(--hi);font-weight:700;text-transform:uppercase;margin:0 0 10px}
+  h1{font-size:112px;line-height:1.02;margin:0;font-weight:800;letter-spacing:-.01em}
+  h2{font-size:56px;line-height:1.12;margin:0 0 10px;font-weight:800;letter-spacing:-.01em}
+  h2 em,h1 em,.hi{font-style:normal;color:var(--hi)}
+  .grad{background:linear-gradient(90deg,var(--hi) 0%,#7c5cff 60%,var(--pink) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  p.lead{font-size:24px;line-height:1.45;color:var(--dim);margin:0 0 26px;max-width:1500px;font-weight:500}
+  p.lead b{color:var(--ink)}
+  .chip{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.14em;padding:5px 14px;border-radius:999px;text-transform:uppercase;line-height:1}
+  .chip.b{background:var(--tint);color:var(--hi)} .chip.y{background:#FFF1C9;color:#8a5a00} .chip.p{background:#FFE3F0;color:#b4246a} .chip.g{background:#DDF7E7;color:#15763f} .chip.r{background:#FFE1E1;color:#b42020}
+  html[data-theme="dark"] .chip.y{background:#3a2d12;color:var(--yellow)} html[data-theme="dark"] .chip.p{background:#3a1a2a;color:var(--pink)} html[data-theme="dark"] .chip.g{background:#13301f;color:var(--green)} html[data-theme="dark"] .chip.r{background:#3a1515;color:var(--red)}
+
+  /* ---------- ปก ---------- */
+  .cover .body{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:20px}
+  .cover .logo{width:250px;height:250px;border-radius:50%;box-shadow:0 20px 50px rgba(11,42,91,.22);margin:18px 0 26px}
+  .cover .km{margin-top:14px;font-size:30px;font-weight:600;color:var(--dim);max-width:1300px;line-height:1.4}
+  .cover .km b{color:var(--ink)}
+  .cover .sub{margin-top:22px;font-size:15px;color:var(--dim);letter-spacing:.3em;font-weight:600;text-transform:uppercase}
+  .cover .deco{position:absolute;width:150px;opacity:.95;pointer-events:none}
+  .cover .deco.d1{left:230px;top:130px;width:170px} .cover .deco.d2{right:220px;top:120px;width:210px} .cover .deco.d3{left:400px;bottom:120px;width:120px} .cover .deco.d4{right:420px;bottom:140px;width:120px}
+
+  /* ---------- ซ้ายข้อความ ขวาภาพ ---------- */
+  .split{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;height:calc(100% - 30px)}
+  .shot{border-radius:22px;overflow:hidden;box-shadow:var(--card-sh);border:1px solid var(--line);background:#0b1733;position:relative}
+  .shot img{width:100%;display:block;max-height:600px;object-fit:cover}
+  .shot .chipbox{position:absolute;left:18px;top:18px;display:flex;gap:8px}
+  .bul{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+  .bul li{display:flex;gap:16px;align-items:flex-start;font-size:25px;line-height:1.4;color:var(--ink)}
+  .bul li .n{flex:none;width:40px;height:40px;border-radius:50%;background:var(--nav);color:#fff;font-weight:800;font-size:19px;display:grid;place-items:center;margin-top:4px}
+  .bul li:nth-child(2) .n{background:var(--yellow);color:#4a3400} .bul li:nth-child(3) .n{background:var(--pink)} .bul li:nth-child(4) .n{background:var(--green);color:#0d3b22}
+  .bul b{color:var(--hi)}
+
+  /* ---------- flow 5 ขั้น ---------- */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:22px}
+  .st{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 22px 20px;box-shadow:var(--card-sh);min-height:470px}
+  .st .no{width:46px;height:46px;border-radius:50%;background:var(--nav);color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;margin-bottom:12px}
+  .st:nth-child(2) .no{background:var(--yellow);color:#4a3400}.st:nth-child(3) .no{background:var(--pink)}.st:nth-child(4) .no{background:var(--green);color:#0d3b22}.st:nth-child(5) .no{background:#7c5cff}
+  .st img{height:150px;width:100%;display:block;margin:0 auto 14px;object-fit:contain;border-radius:14px}
+  .st img.cover{object-fit:cover}
+  .st h3{margin:0 0 8px;font-size:25px;font-weight:700;line-height:1.2}
+  .st p{margin:0;font-size:18.5px;color:var(--dim);line-height:1.42}
+  .st:after{content:"›";position:absolute;right:-19px;top:44%;font-size:48px;color:var(--hi);font-weight:800}
+  .st:last-child:after{content:""}
+
+  /* ---------- 4 เสา ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:18px}
+  .pl{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 24px;box-shadow:var(--card-sh);min-height:430px;border-top:6px solid var(--nav)}
+  .pl:nth-child(2){border-top-color:var(--yellow)}.pl:nth-child(3){border-top-color:var(--pink)}.pl:nth-child(4){border-top-color:var(--green)}
+  .pl .ic{font-size:50px;line-height:1;margin-bottom:12px}
+  .pl h3{margin:0 0 8px;font-size:28px;font-weight:800}
+  .pl h3 small{display:block;font-size:13px;color:var(--hi);letter-spacing:.24em;font-weight:800;margin-bottom:6px}
+  .pl p{margin:0;font-size:19.5px;color:var(--dim);line-height:1.45}
+  .base{margin-top:18px;background:var(--tint);border-radius:16px;padding:14px 24px;font-size:20px;line-height:1.4;color:var(--ink)}
+  .base b{color:var(--hi)}
+
+  /* ---------- NPC 3 ขา ---------- */
+  .legs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:18px}
+  .leg{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 28px;box-shadow:var(--card-sh);min-height:400px}
+  .leg .tag{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--nav);color:#fff;font-weight:800;font-size:26px;margin-bottom:14px}
+  .leg:nth-child(2) .tag{background:var(--yellow);color:#4a3400}.leg:nth-child(3) .tag{background:var(--pink)}
+  .leg h3{margin:0 0 10px;font-size:29px;font-weight:800}
+  .leg p{margin:0;font-size:20.5px;color:var(--dim);line-height:1.45}
+  .leg p b{color:var(--ink)}
+  .legnote{margin-top:18px;font-size:20px;color:var(--dim);display:flex;gap:22px;align-items:center;background:var(--tint);border-radius:16px;padding:10px 24px}
+  .legnote img{height:84px}
+
+  /* ---------- เควสต์ ---------- */
+  .quest{display:grid;grid-template-columns:1fr 80px 1fr;gap:16px;align-items:stretch;margin-top:10px}
+  .qcol{display:grid;gap:14px}
+  .qbox{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 24px;box-shadow:var(--card-sh)}
+  .qbox h3{margin:0 0 6px;font-size:26px;font-weight:800}
+  .qbox h3 small{display:block;font-size:12px;letter-spacing:.24em;color:var(--hi);font-weight:800;margin-bottom:4px}
+  .qbox p{margin:0;font-size:19px;color:var(--dim);line-height:1.42}
+  .qbox.set{background:var(--tint);border-color:transparent}
+  .qarrow{display:grid;place-items:center;font-size:60px;color:var(--hi);font-weight:800}
+  .qnote{margin-top:14px;font-size:19.5px;color:var(--dim);line-height:1.45}
+  .qnote b{color:var(--ink)}
+
+  /* ---------- มินิเกม ---------- */
+  .tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:6px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--card-sh);position:relative}
+  .tile img{width:100%;height:150px;object-fit:cover;display:block}
+  .tile div{padding:10px 14px;font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tile .chip{position:absolute;left:10px;top:10px}
+  .mgstats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
+  .ms{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 20px;text-align:center;box-shadow:var(--card-sh)}
+  .ms b{display:block;font-size:56px;line-height:1;font-weight:800;color:var(--hi)}
+  .ms span{display:block;margin-top:6px;font-size:18px;color:var(--dim);font-weight:500}
+
+  /* ---------- ไทม์ไลน์ ---------- */
+  .tl{margin-top:22px}
+  .tl .bar2{display:flex;height:22px;border-radius:8px;overflow:hidden;gap:4px}
+  .tl .bar2 div{height:100%;border-radius:6px;transform-origin:left}
+  .tl .b0{background:#8d97a8;width:20%} .tl .b1{background:var(--nav);width:30%} .tl .b2{background:var(--yellow);width:30%} .tl .b3{background:var(--pink);width:20%}
+  .tl .ph{display:grid;grid-template-columns:20% 30% 30% 20%;margin-top:12px}
+  .tl .ph div{padding:0 10px;font-size:19px;line-height:1.3}
+  .tl .ph b{display:block;font-size:22px;font-weight:800}
+  .tl .ph small{display:block;color:var(--dim);font-size:17px}
+  .msrow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+  .msb{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--card-sh);min-height:230px}
+  .msb b{display:block;font-size:40px;color:var(--hi);line-height:1;font-weight:800}
+  .msb span{display:block;font-size:21px;font-weight:700;margin-top:8px}
+  .msb small{display:block;font-size:17px;color:var(--dim);margin-top:6px;line-height:1.35}
+  .msb.go{background:var(--nav);color:#fff;border-color:transparent}
+  .msb.go b,.msb.go small{color:#fff}
+
+  /* ---------- KPI ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:4px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;text-align:center;box-shadow:var(--card-sh)}
+  .kpi b{display:block;font-size:70px;line-height:1;font-weight:800;color:var(--hi)}
+  .kpi span{display:block;margin-top:8px;font-size:21px;font-weight:700}
+  .kpi small{display:block;margin-top:6px;font-size:17px;color:var(--dim);line-height:1.35}
+  .festa{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;margin-top:22px}
+  .festa .shot img{max-height:300px}
+
+  /* ---------- สิ่งที่ต้องการ ---------- */
+  .final{display:grid;gap:12px;margin-top:4px}
+  .fi{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 24px;box-shadow:var(--card-sh)}
+  .fi .no{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;background:var(--nav);color:#fff}
+  .fi:nth-child(2) .no{background:var(--yellow);color:#4a3400}.fi:nth-child(3) .no{background:var(--pink)}.fi:nth-child(4) .no{background:var(--green);color:#0d3b22}.fi:nth-child(5) .no{background:#7c5cff}
+  .fi p{margin:0;font-size:21.5px;line-height:1.42;padding-top:7px}
+  .fi p b{color:var(--hi)}
+
+  /* ---------- ปุ่มคุม ---------- */
+  .note{position:fixed;left:0;right:0;bottom:0;background:#0f1a33;color:#ffe9b0;font-size:22px;line-height:1.5;padding:18px 40px 22px;border-top:2px solid var(--hi);display:none;max-height:42vh;overflow:auto;white-space:pre-wrap;z-index:700}
+  body.notes .note{display:block}
+  .help{position:fixed;right:16px;top:12px;color:var(--help);font-size:13px;opacity:.75;font-family:system-ui}
+  .navbtn{position:fixed;bottom:18px;z-index:500;width:64px;height:64px;border-radius:50%;border:2px solid var(--btn-line);background:var(--btn-bg);color:var(--hi);font-size:34px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:var(--btn-sh);transition:transform .12s,background .12s;font-family:system-ui}
+  .navbtn:hover{background:var(--nav);color:#fff;transform:scale(1.08)}
+  .navbtn:disabled{opacity:.25;cursor:default;transform:none}
+  .navbtn.prev{left:18px} .navbtn.next{right:18px}
+  .copy{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:500;border:1px solid var(--btn-line);background:var(--btn-bg);color:var(--btn-ink);font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy:hover{background:var(--nav);color:#fff}
+  .langs{position:fixed;left:16px;top:12px;z-index:600;display:flex;gap:5px}
+  .langs button,.themeBtn{font:inherit;font-size:13px;line-height:1;color:var(--btn-ink);background:var(--btn-bg);border:1px solid var(--btn-line);border-radius:8px;padding:7px 11px;cursor:pointer;box-shadow:var(--btn-sh)}
+  .langs button:hover{border-color:var(--hi);color:var(--hi)}
+  .langs button.on{background:var(--nav);border-color:var(--nav);color:#fff;font-weight:700}
+  .themeBtn{position:fixed;right:16px;top:40px;z-index:600}
+  body.clean .navbtn,body.clean .copy,body.clean .help,body.clean .themeBtn,body.clean .langs{display:none}
+
+  /* ---------- แอนิเมชัน ---------- */
+  @keyframes slFade{from{opacity:0}to{opacity:1}}
+  @keyframes slRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+  @keyframes slPop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+  @keyframes slLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  @keyframes slRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  @keyframes slFrame{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+  @keyframes slWide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.25);opacity:.7}}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+
+  body.anim .slide.on .frame{animation:slFrame .5s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .nav span.on{animation:slPop .45s .35s cubic-bezier(.2,.8,.3,1.2) both}
+  body.anim .slide.on .body>*{animation:slRise .55s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .body>*:nth-child(1){animation-delay:.18s}
+  body.anim .slide.on .body>*:nth-child(2){animation-delay:.28s}
+  body.anim .slide.on .body>*:nth-child(3){animation-delay:.38s}
+  body.anim .slide.on .body>*:nth-child(4){animation-delay:.48s}
+  body.anim .slide.on .body>*:nth-child(5){animation-delay:.58s}
+  body.anim .slide.on .cover .logo{animation:slPop .7s .2s cubic-bezier(.2,.8,.3,1.15) both,floaty 4s 1s ease-in-out infinite}
+  body.anim .slide.on .cover h1{animation:slRise .6s .4s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .grad{background-size:200% 100%;animation:shimmer 6s linear infinite}
+  body.anim .slide.on .cover .deco{animation:slPop .6s both,bob 5s 1s ease-in-out infinite}
+  body.anim .slide.on .cover .deco.d1{animation-delay:.5s,1s}.body.anim .slide.on .cover .deco.d2{animation-delay:.6s,1.4s}
+  body.anim .slide.on .cover .deco.d3{animation-delay:.7s,1.8s}body.anim .slide.on .cover .deco.d4{animation-delay:.8s,2.2s}
+  body.anim .slide.on .st{animation:slPop .5s cubic-bezier(.2,.8,.3,1.1) both}
+  body.anim .slide.on .st:nth-child(1){animation-delay:.35s}body.anim .slide.on .st:nth-child(2){animation-delay:.5s}body.anim .slide.on .st:nth-child(3){animation-delay:.65s}body.anim .slide.on .st:nth-child(4){animation-delay:.8s}body.anim .slide.on .st:nth-child(5){animation-delay:.95s}
+  body.anim .slide.on .st:after{animation:slFade .4s both;animation-delay:inherit}
+  body.anim .slide.on .pl,body.anim .slide.on .leg,body.anim .slide.on .tile,body.anim .slide.on .kpi,body.anim .slide.on .msb,body.anim .slide.on .ms,body.anim .slide.on .fi{animation:slRise .5s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .pl:nth-child(1),body.anim .slide.on .leg:nth-child(1),body.anim .slide.on .tile:nth-child(1),body.anim .slide.on .kpi:nth-child(1),body.anim .slide.on .msb:nth-child(1),body.anim .slide.on .ms:nth-child(1),body.anim .slide.on .fi:nth-child(1){animation-delay:.35s}
+  body.anim .slide.on .pl:nth-child(2),body.anim .slide.on .leg:nth-child(2),body.anim .slide.on .tile:nth-child(2),body.anim .slide.on .kpi:nth-child(2),body.anim .slide.on .msb:nth-child(2),body.anim .slide.on .ms:nth-child(2),body.anim .slide.on .fi:nth-child(2){animation-delay:.47s}
+  body.anim .slide.on .pl:nth-child(3),body.anim .slide.on .leg:nth-child(3),body.anim .slide.on .tile:nth-child(3),body.anim .slide.on .kpi:nth-child(3),body.anim .slide.on .msb:nth-child(3),body.anim .slide.on .ms:nth-child(3),body.anim .slide.on .fi:nth-child(3){animation-delay:.59s}
+  body.anim .slide.on .pl:nth-child(4),body.anim .slide.on .tile:nth-child(4),body.anim .slide.on .kpi:nth-child(4),body.anim .slide.on .msb:nth-child(4),body.anim .slide.on .ms:nth-child(4),body.anim .slide.on .fi:nth-child(4){animation-delay:.71s}
+  body.anim .slide.on .tile:nth-child(5),body.anim .slide.on .fi:nth-child(5){animation-delay:.83s}
+  body.anim .slide.on .tile:nth-child(6){animation-delay:.95s}
+  body.anim .slide.on .bul li{animation:slLeft .5s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .bul li:nth-child(1){animation-delay:.4s}body.anim .slide.on .bul li:nth-child(2){animation-delay:.55s}body.anim .slide.on .bul li:nth-child(3){animation-delay:.7s}body.anim .slide.on .bul li:nth-child(4){animation-delay:.85s}
+  body.anim .slide.on .split .shot{animation:slRight .6s .45s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .qcol:first-child .qbox{animation:slLeft .5s both}
+  body.anim .slide.on .qcol:last-child .qbox{animation:slRight .5s both}
+  body.anim .slide.on .qbox:nth-child(1){animation-delay:.4s}body.anim .slide.on .qbox:nth-child(2){animation-delay:.55s}body.anim .slide.on .qbox:nth-child(3){animation-delay:.7s}
+  body.anim .slide.on .qarrow{animation:slFade .4s .9s both,pulse 1.6s 1.3s ease-in-out infinite}
+  body.anim .slide.on .tl .bar2 div{animation:slWide .7s cubic-bezier(.2,.8,.3,1) both}
+  body.anim .slide.on .tl .b0{animation-delay:.4s}body.anim .slide.on .tl .b1{animation-delay:.6s}body.anim .slide.on .tl .b2{animation-delay:.8s}body.anim .slide.on .tl .b3{animation-delay:1s}
+  body.anim .slide.on .legnote{animation-delay:.95s}
+  body.anim .slide.on .base{animation-delay:.9s}
+  body.anim .slide.on .mgstats{animation-delay:.9s}
+  @media (prefers-reduced-motion:reduce),print{.slide.on,.slide.on *{animation:none !important}}
+</style>
+</head>
+<body>
+<div class="langs">
+  <button data-l="th">ไทย</button><button data-l="en">EN</button><button data-l="ko">한국어</button><button data-l="ja">日本語</button><button data-l="zh">中文</button>
+</div>
+<button class="themeBtn" id="themeBtn" onclick="toggleTheme()"></button>
+<div class="help" data-i="help"></div>
+<div id="stage">
+
+<!-- 1 ปก -->
+<section class="slide cover" data-n="n1">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / home</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <img class="deco d1" src="project-deck-img/pcoin.png" alt=""><img class="deco d2" src="project-deck-img/char_main.png" alt=""><img class="deco d3" src="project-deck-img/gift.png" alt=""><img class="deco d4" src="project-deck-img/costume_ice_wing.png" alt="">
+      <p class="eyebrow" data-i="c_eyebrow"></p>
+      <h1>Welcome to <span class="grad">RO PlayZone</span></h1>
+      <img class="logo" src="project-deck-img/ropz_logo.png" alt="RO PlayZone">
+      <div class="km">A home for your RO character — <b>play on the web, bring rewards back into RO.</b></div>
+      <div class="sub" data-i="c_sub"></div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div>
+  </div>
+</section>
+
+<!-- 2 ROPZ คืออะไร -->
+<section class="slide" data-n="n2">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Home<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / home</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k2"></p>
+      <h2 data-i="h2"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="b2a"></span></li><li><span class="n">2</span><span data-i="b2b"></span></li><li><span class="n">3</span><span data-i="b2c"></span></li><li><span class="n">4</span><span data-i="b2d"></span></li></ul>
+        <div class="shot"><img src="project-deck-img/landing_art.jpg" alt=""><div class="chipbox"><span class="chip b">Play</span><span class="chip y">Earn</span><span class="chip p">Redeem</span></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">2</div>
+  </div>
+</section>
+
+<!-- 3 ลูปผู้เล่น -->
+<section class="slide" data-n="n3">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Earn<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / rewards</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span class="on">Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k3"></p>
+      <h2 data-i="h3"></h2>
+      <div class="flow">
+        <div class="st"><div class="no">1</div><img src="project-deck-img/char_main.png" alt=""><h3 data-i="f1"></h3><p data-i="fd1"></p></div>
+        <div class="st"><div class="no">2</div><img class="cover" src="project-deck-img/myhouse_room.png" alt=""><h3 data-i="f2"></h3><p data-i="fd2"></p></div>
+        <div class="st"><div class="no">3</div><img class="cover" src="project-deck-img/gt_whack.jpg" alt=""><h3 data-i="f3"></h3><p data-i="fd3"></p></div>
+        <div class="st"><div class="no">4</div><img src="project-deck-img/npc_chef.png" alt=""><h3 data-i="f4"></h3><p data-i="fd4"></p></div>
+        <div class="st"><div class="no">5</div><img src="project-deck-img/npc_mailbox.png" alt=""><h3 data-i="f5"></h3><p data-i="fd5"></p></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">3</div>
+  </div>
+</section>
+
+<!-- 4 เสาหลัก -->
+<section class="slide" data-n="n4">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Overview<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / overview</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k4"></p>
+      <h2 data-i="h4"></h2>
+      <div class="pillars">
+        <div class="pl"><div class="ic">🪪</div><h3><small data-i="p1k"></small><span data-i="p1t"></span></h3><p data-i="p1d"></p></div>
+        <div class="pl"><div class="ic">🏠</div><h3><small data-i="p2k"></small><span data-i="p2t"></span></h3><p data-i="p2d"></p></div>
+        <div class="pl"><div class="ic">🎁</div><h3><small data-i="p3k"></small><span data-i="p3t"></span></h3><p data-i="p3d"></p></div>
+        <div class="pl"><div class="ic">👥</div><h3><small data-i="p4k"></small><span data-i="p4t"></span></h3><p data-i="p4d"></p></div>
+      </div>
+      <div class="base" data-i="base"></div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">4</div>
+  </div>
+</section>
+
+<!-- 5 World Map -->
+<section class="slide" data-n="n5">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · World<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / world</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span class="on">World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k5"></p>
+      <h2 data-i="h5"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="b5a"></span></li><li><span class="n">2</span><span data-i="b5b"></span></li><li><span class="n">3</span><span data-i="b5c"></span></li></ul>
+        <div class="shot"><img src="project-deck-img/map.png" alt=""></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">5</div>
+  </div>
+</section>
+
+<!-- 6 My House -->
+<section class="slide" data-n="n6">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · My House<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / my-house</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span class="on">My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k6"></p>
+      <h2 data-i="h6"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="b6a"></span></li><li><span class="n">2</span><span data-i="b6b"></span></li><li><span class="n">3</span><span data-i="b6c"></span></li><li><span class="n">4</span><span data-i="b6d"></span></li></ul>
+        <div class="shot"><img src="project-deck-img/myhouse_room.png" alt=""><div class="chipbox"><span class="chip g">● Live mockup</span></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">6</div>
+  </div>
+</section>
+
+<!-- 7 สะพานไป ROPC -->
+<section class="slide" data-n="n7">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Cross-Play<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / cross-play</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span>Earn</span><span class="on">Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k7"></p>
+      <h2 data-i="h7"></h2>
+      <div class="legs">
+        <div class="leg"><span class="tag">①</span><h3 data-i="l1t"></h3><p data-i="l1d"></p></div>
+        <div class="leg"><span class="tag">②</span><h3 data-i="l2t"></h3><p data-i="l2d"></p></div>
+        <div class="leg"><span class="tag">③</span><h3 data-i="l3t"></h3><p data-i="l3d"></p></div>
+      </div>
+      <div class="legnote"><img src="project-deck-img/npc_mailbox.png" alt=""><span data-i="l_note"></span></div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">7</div>
+  </div>
+</section>
+
+<!-- 8 เควสต์ -->
+<section class="slide" data-n="n8">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Quests<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / quests</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span class="on">Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k8"></p>
+      <h2 data-i="h8"></h2>
+      <div class="quest">
+        <div class="qcol">
+          <div class="qbox"><h3><small data-i="q_leg"></small><span data-i="qw_t"></span></h3><p data-i="qw_d"></p></div>
+          <div class="qbox"><h3><small data-i="q_leg"></small><span data-i="qg_t"></span></h3><p data-i="qg_d"></p></div>
+          <div class="qbox set"><h3><span data-i="qs_t"></span></h3><p data-i="qs_d"></p></div>
+        </div>
+        <div class="qarrow">›</div>
+        <div class="qcol">
+          <div class="qbox"><h3><small data-i="q_rw"></small><span data-i="rw_t"></span></h3><p data-i="rw_d"></p></div>
+          <div class="qbox"><h3><small data-i="q_rw"></small><span data-i="rg_t"></span></h3><p data-i="rg_d"></p></div>
+          <div class="qbox set"><h3><span data-i="rb_t"></span></h3><p data-i="rb_d"></p></div>
+        </div>
+      </div>
+      <p class="qnote" data-i="q_note"></p>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">8</div>
+  </div>
+</section>
+
+<!-- 9 มินิเกม -->
+<section class="slide" data-n="n9">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Games<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / games</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span class="on">Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k9"></p>
+      <h2 data-i="h9"></h2>
+      <p class="lead" data-i="lead9"></p>
+      <div class="tiles">
+        <div class="tile"><img src="project-deck-img/gt_whack.jpg" alt=""><span class="chip r">Hot</span><div>Whack a Poring</div></div>
+        <div class="tile"><img src="project-deck-img/gt_peco.jpg" alt=""><span class="chip r">Hot</span><div>Peco Peco Dash</div></div>
+        <div class="tile"><img src="project-deck-img/gt_pop.jpg" alt=""><span class="chip b">New</span><div>Poring Pop Parade</div></div>
+        <div class="tile"><img src="project-deck-img/gt_snack.jpg" alt=""><div>Poring Snack Shop</div></div>
+        <div class="tile"><img src="project-deck-img/gt_crane.jpg" alt=""><div>Poring Crane Job</div></div>
+        <div class="tile"><img src="project-deck-img/gt_card.jpg" alt=""><div>Matching Card</div></div>
+      </div>
+      <div class="mgstats">
+        <div class="ms"><b data-count="14">14</b><span data-i="m1"></span></div>
+        <div class="ms"><b data-count="3">3</b><span data-i="m2"></span></div>
+        <div class="ms"><b data-count="40">40</b><span data-i="m3"></span></div>
+        <div class="ms"><b data-count="2">2</b><span data-i="m4"></span></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">9</div>
+  </div>
+</section>
+
+<!-- 10 สังคม -->
+<section class="slide" data-n="n10">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Friends<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / friends</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span class="on">Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k10"></p>
+      <h2 data-i="h10"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="b10a"></span></li><li><span class="n">2</span><span data-i="b10b"></span></li><li><span class="n">3</span><span data-i="b10c"></span></li><li><span class="n">4</span><span data-i="b10d"></span></li></ul>
+        <div class="shot"><img src="project-deck-img/myhouse_friends.png" alt=""><div class="chipbox"><span class="chip g">● 4 online</span></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">10</div>
+  </div>
+</section>
+
+<!-- 11 เฟส 2 Companion -->
+<section class="slide" data-n="n11">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Cross-Play<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / companion</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span>Earn</span><span class="on">Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k11"></p>
+      <h2 data-i="h11"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="b11a"></span></li><li><span class="n">2</span><span data-i="b11b"></span></li><li><span class="n">3</span><span data-i="b11c"></span></li></ul>
+        <div class="shot"><img src="project-deck-img/desktop.webp" alt=""><div class="chipbox"><span class="chip p">Phase 2</span></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">11</div>
+  </div>
+</section>
+
+<!-- 12 ไทม์ไลน์ -->
+<section class="slide" data-n="n12">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Roadmap<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / roadmap</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k12"></p>
+      <h2 data-i="h12"></h2>
+      <div class="tl">
+        <div class="bar2"><div class="b0"></div><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+        <div class="ph">
+          <div><b data-i="ph0"></b><small data-i="ph0d"></small></div>
+          <div><b data-i="ph1"></b><small data-i="ph1d"></small></div>
+          <div><b data-i="ph2"></b><small data-i="ph2d"></small></div>
+          <div><b data-i="ph3"></b><small data-i="ph3d"></small></div>
+        </div>
+      </div>
+      <div class="msrow">
+        <div class="msb"><b>A</b><span data-i="msA"></span><small data-i="msAd"></small></div>
+        <div class="msb"><b>B</b><span data-i="msB"></span><small data-i="msBd"></small></div>
+        <div class="msb"><b>C</b><span data-i="msC"></span><small data-i="msCd"></small></div>
+        <div class="msb go"><b>🚀</b><span data-i="msL"></span><small data-i="msLd"></small></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">12</div>
+  </div>
+</section>
+
+<!-- 13 Festa -->
+<section class="slide" data-n="n13">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Festa<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / festa-2026</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span class="on">Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k13"></p>
+      <h2 data-i="h13"></h2>
+      <div class="kpis">
+        <div class="kpi"><b data-count="249">249</b><span data-i="kp1"></span><small data-i="kp1s"></small></div>
+        <div class="kpi"><b data-count="330">330</b><span data-i="kp2"></span><small data-i="kp2s"></small></div>
+        <div class="kpi"><b data-count="31" data-suffix="%">31%</b><span data-i="kp3"></span><small data-i="kp3s"></small></div>
+        <div class="kpi"><b data-count="74" data-suffix="%">74%</b><span data-i="kp4"></span><small data-i="kp4s"></small></div>
+      </div>
+      <div class="festa">
+        <div class="shot"><img src="project-deck-img/booth_map.jpg" alt=""></div>
+        <ul class="bul"><li><span class="n">1</span><span data-i="b13a"></span></li><li><span class="n">2</span><span data-i="b13b"></span></li><li><span class="n">3</span><span data-i="b13c"></span></li></ul>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">13</div>
+  </div>
+</section>
+
+<!-- 14 สิ่งที่ต้องการ -->
+<section class="slide" data-n="n14">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone · Next<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / next-steps</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k14"></p>
+      <h2 data-i="h14"></h2>
+      <div class="final">
+        <div class="fi"><div class="no">1</div><p data-i="nd1"></p></div>
+        <div class="fi"><div class="no">2</div><p data-i="nd2"></p></div>
+        <div class="fi"><div class="no">3</div><p data-i="nd3"></p></div>
+        <div class="fi"><div class="no">4</div><p data-i="nd4"></p></div>
+        <div class="fi"><div class="no">5</div><p data-i="nd5"></p></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">14</div>
+  </div>
+</section>
+
+<!-- 15 ปิด -->
+<section class="slide cover" data-n="n15">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / see-you-2027</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="project-deck-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <img class="deco d1" src="project-deck-img/party.png" alt="" style="width:320px;left:160px;top:200px"><img class="deco d2" src="project-deck-img/costume_ice_wing.png" alt="">
+      <p class="eyebrow">Coming 2027</p>
+      <h1 data-i="h15"></h1>
+      <img class="logo" src="project-deck-img/ropz_logo.png" alt="RO PlayZone">
+      <div class="km">A home for your RO character — <b>play on the web, bring rewards back into RO.</b></div>
+      <div class="sub" data-i="sub15"></div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div>
+  </div>
+</section>
+
+</div>
+<div class="note" id="note"></div>
+<button class="navbtn prev" id="navPrev" data-t="btn_prev" onclick="show(i-1)">‹</button>
+<button class="navbtn next" id="navNext" data-t="btn_next" onclick="show(i+1)">›</button>
+<button class="copy" id="copyBtn" data-t="btn_copy_t" onclick="copySlide()"></button>
+
+<script>
+var L = {
+title:{th:"RO PlayZone — นำเสนอโครงการ",en:"RO PlayZone — Project Presentation",ko:"RO PlayZone — 프로젝트 소개",ja:"RO PlayZone — プロジェクト紹介",zh:"RO PlayZone — 项目介绍"},
+help:{th:"← → เปลี่ยนหน้า · N โน้ต · C คัดลอก · D ธีม · H ซ่อนปุ่ม · F11 เต็มจอ",en:"← → slide · N notes · C copy · D theme · H hide buttons · F11 fullscreen",ko:"← → 페이지 · N 노트 · C 복사 · D 테마 · H 버튼 숨김 · F11 전체화면",ja:"← → ページ · N ノート · C コピー · D テーマ · H ボタン非表示 · F11 全画面",zh:"← → 翻页 · N 备注 · C 复制 · D 主题 · H 隐藏按钮 · F11 全屏"},
+c_eyebrow:{th:"RO PlayZone · นำเสนอโครงการ · พ.ย. 2026",en:"RO PlayZone · Project Presentation · Nov 2026",ko:"RO PlayZone · 프로젝트 소개 · 2026년 11월",ja:"RO PlayZone · プロジェクト紹介 · 2026年11月",zh:"RO PlayZone · 项目介绍 · 2026 年 11 月"},
+c_sub:{th:"นำเสนอโครงการ · GGT Game Studio · พฤศจิกายน 2026",en:"Project Presentation · GGT Game Studio · November 2026",ko:"프로젝트 소개 · GGT Game Studio · 2026년 11월",ja:"プロジェクト紹介 · GGT Game Studio · 2026年11月",zh:"项目介绍 · GGT Game Studio · 2026年11月"},
+
+k2:{th:"RO PlayZone คืออะไร",en:"What is RO PlayZone",ko:"RO PlayZone란",ja:"RO PlayZoneとは",zh:"什么是 RO PlayZone"},
+k2s:{th:"ภาพรวม",en:"overview",ko:"개요",ja:"概要",zh:"概览"},
+h2:{th:"เว็บที่เป็น<em>บ้านของตัวละคร RO</em> ของผู้เล่นทุกคน",en:"A website that is <em>home to every RO character</em>",ko:"모든 RO 캐릭터의 <em>집이 되는 웹사이트</em>",ja:"すべてのROキャラクターの<em>ホームとなるウェブサイト</em>",zh:"每一个 RO 角色的<em>网页之家</em>"},
+b2a:{th:"<b>ไม่ใช่พอร์ทัลมินิเกม</b> แต่เป็นตัวซัพพอร์ต Ragnarok Online PC ทุกภูมิภาค",en:"<b>Not a mini game portal</b> — a companion service for Ragnarok Online PC in every region",ko:"<b>미니게임 포털이 아니라</b> 전 지역 라그나로크 온라인 PC를 지원하는 서비스",ja:"<b>ミニゲームポータルではなく</b>、全地域のラグナロクオンラインPCを支えるサービス",zh:"<b>不是小游戏门户</b>，而是面向各地区 Ragnarok Online PC 的配套服务"},
+b2b:{th:"ผู้เล่นผูกบัญชี Gnjoy แล้ว<b>ตัวละครจริงจากในเกมมาอยู่บนเว็บ</b> พร้อมชุดที่ใส่อยู่",en:"Link a Gnjoy account and <b>the real in-game character appears on the web</b>, wearing its current gear",ko:"Gnjoy 계정을 연동하면 <b>게임 속 실제 캐릭터가 웹에 등장</b>하며 착용 장비도 그대로",ja:"Gnjoyアカウントを連携すると、<b>ゲーム内の本物のキャラクターがウェブに登場</b>し、装備もそのまま",zh:"绑定 Gnjoy 账号后，<b>游戏中的真实角色出现在网页上</b>，穿着当前装备"},
+b2c:{th:"เล่นบนเว็บได้ทุกวันโดยไม่ต้องเปิดเกม แล้ว<b>ของกลับเข้า RO</b> ผ่านระบบของเกมเอง",en:"Play on the web every day without launching the game, and <b>rewards go back into RO</b> through the game itself",ko:"게임을 켜지 않아도 매일 웹에서 플레이하고 <b>보상은 게임 시스템을 통해 RO로 반환</b>",ja:"ゲームを起動しなくても毎日ウェブで遊べ、<b>報酬はゲーム自身の仕組みでROに戻る</b>",zh:"无需启动游戏也能每天在网页上玩，<b>奖励通过游戏自身系统回到 RO</b>"},
+b2d:{th:"เฟส 1 = เว็บล้วน ไทย + ไต้หวัน · <b>เปิดบริการปลาย ส.ค. 2027</b>",en:"Phase 1 = web only, Thailand + Taiwan · <b>service launch late August 2027</b>",ko:"1단계 = 웹 전용, 태국 + 대만 · <b>2027년 8월 말 서비스 오픈</b>",ja:"フェーズ1 = ウェブのみ、タイ + 台湾 · <b>2027年8月末サービス開始</b>",zh:"第一阶段 = 纯网页，泰国 + 台湾 · <b>2027年8月底正式上线</b>"},
+
+k3:{th:"ลูปผู้เล่น",en:"Player loop",ko:"플레이어 루프",ja:"プレイヤーループ",zh:"玩家循环"},
+k3s:{th:"5 ขั้น",en:"5 steps",ko:"5단계",ja:"5ステップ",zh:"5 步"},
+h3:{th:"จากในเกม <em>→ เว็บ →</em> กลับเข้าเกม",en:"From the game <em>→ web →</em> back into the game",ko:"게임에서 <em>→ 웹 →</em> 다시 게임으로",ja:"ゲームから<em>→ ウェブ →</em>ゲームへ",zh:"从游戏 <em>→ 网页 →</em> 回到游戏"},
+f1:{th:"ผูกบัญชี",en:"Link account",ko:"계정 연동",ja:"アカウント連携",zh:"绑定账号"},
+fd1:{th:"สมัคร Portal ID ผูก Gnjoy เลือกเซิร์ฟ ตัวละครจริงขึ้นจอ",en:"Create a Portal ID, link Gnjoy, pick a server; your real character appears",ko:"Portal ID 생성, Gnjoy 연동, 서버 선택 후 실제 캐릭터 표시",ja:"Portal IDを作成しGnjoyを連携、サーバーを選ぶと本物のキャラクターが表示",zh:"创建 Portal ID，绑定 Gnjoy，选择服务器，真实角色出现"},
+f2:{th:"บ้านของตัวละคร",en:"Character house",ko:"캐릭터의 집",ja:"キャラクターの家",zh:"角色之家"},
+fd2:{th:"บ้าน 1 หลังต่อเซิร์ฟ จัดของแต่งบ้าน สัตว์เลี้ยง ฟาร์ม เหมือง",en:"One house per server: decorate, pets, farm, mine",ko:"서버당 집 1채: 꾸미기, 펫, 농장, 광산",ja:"サーバーごとに家1軒：飾り付け、ペット、農場、鉱山",zh:"每个服务器一栋房子：装饰、宠物、农场、矿场"},
+f3:{th:"เล่นบนเว็บ",en:"Play on the web",ko:"웹에서 플레이",ja:"ウェブで遊ぶ",zh:"在网页上玩"},
+fd3:{th:"มินิเกม เควสต์รายวัน ฟาร์ม คราฟต์ ได้ทรัพยากรและ Poring Coin",en:"Mini games, daily quests, farming, crafting; earn resources and Poring Coin",ko:"미니게임, 일일 퀘스트, 농사, 제작으로 자원과 Poring Coin 획득",ja:"ミニゲーム、デイリークエスト、農業、クラフトで資源とPoring Coinを獲得",zh:"小游戏、每日任务、种植、制作，获得资源与 Poring Coin"},
+f4:{th:"ฝากของจาก RO",en:"Deposit from RO",ko:"RO에서 보관",ja:"ROから預ける",zh:"从 RO 存入"},
+fd4:{th:"NPC ในเกมรับฝากไอเทม เว็บเห็นทันที ถอนคืนได้ หรือคราฟต์ต่อ",en:"An in-game NPC takes item deposits; the web sees them at once, withdraw or craft",ko:"게임 내 NPC에 아이템을 맡기면 웹에서 바로 확인, 출금 또는 제작 가능",ja:"ゲーム内NPCにアイテムを預けるとウェブに即反映、引き出しやクラフトも可能",zh:"游戏内 NPC 接收存入道具，网页即时可见，可取回或制作"},
+f5:{th:"ของกลับเข้า RO",en:"Rewards back into RO",ko:"보상을 RO로",ja:"報酬をROへ",zh:"奖励回到 RO"},
+fd5:{th:"ของสิ้นเปลืองและคอสตูมส่งเข้า Rodex ในเกม ภายใต้ไวต์ลิสต์และเพดาน",en:"Consumables and costumes arrive by in-game Rodex mail, within a whitelist and caps",ko:"소모품과 코스튬이 게임 내 Rodex 우편으로 도착 (화이트리스트와 한도 내)",ja:"消耗品とコスチュームがゲーム内Rodexメールで届く（ホワイトリストと上限内）",zh:"消耗品与时装通过游戏内 Rodex 邮件送达，受白名单与上限约束"},
+
+k4:{th:"4 เสาหลัก",en:"Four pillars",ko:"4대 기둥",ja:"4つの柱",zh:"四大支柱"},
+k4s:{th:"+ ฐาน",en:"+ foundation",ko:"+ 기반",ja:"+ 基盤",zh:"+ 基础"},
+h4:{th:"ระบบทั้งหมดวางบน <em>4 เสา</em> และฐานเดียว",en:"Everything rests on <em>four pillars</em> and one foundation",ko:"모든 시스템은 <em>4개의 기둥</em>과 하나의 기반 위에",ja:"すべてのシステムは<em>4つの柱</em>と1つの基盤の上に",zh:"全部系统建立在<em>四大支柱</em>与一个基础之上"},
+p1k:{th:"เสา 1",en:"PILLAR 1",ko:"기둥 1",ja:"柱 1",zh:"支柱 1"},p1t:{th:"ตัวตน",en:"Identity",ko:"계정",ja:"アイデンティティ",zh:"身份"},
+p1d:{th:"Portal ID หนึ่งเดียว ผูก Gnjoy ประเทศละครั้ง ตัวละครจริงจากเกม กระเป๋าแยกต่อเซิร์ฟ",en:"One Portal ID, one Gnjoy link per country, real characters from the game, a wallet per server",ko:"하나의 Portal ID, 국가별 Gnjoy 연동, 게임 속 실제 캐릭터, 서버별 지갑",ja:"1つのPortal ID、国ごとにGnjoy連携、ゲームの本物のキャラクター、サーバー別ウォレット",zh:"唯一 Portal ID，每个国家绑定一次 Gnjoy，游戏真实角色，服务器独立钱包"},
+p2k:{th:"เสา 2",en:"PILLAR 2",ko:"기둥 2",ja:"柱 2",zh:"支柱 2"},p2t:{th:"บ้าน + คลัง",en:"House + storage",ko:"집 + 보관함",ja:"家 + 倉庫",zh:"房屋 + 仓库"},
+p2d:{th:"บ้านต่อเซิร์ฟ ของแต่งบ้านให้โบนัส คลังฝากจาก NPC ถอนคืนได้ โรงคราฟต์",en:"A house per server, decor that gives bonuses, NPC storage you can withdraw from, crafting",ko:"서버별 집, 보너스를 주는 장식, 출금 가능한 NPC 보관함, 제작",ja:"サーバー別の家、ボーナス付きの装飾、引き出せるNPC倉庫、クラフト",zh:"每服一栋房、带加成的装饰、可取回的 NPC 仓库、制作工坊"},
+p3k:{th:"เสา 3",en:"PILLAR 3",ko:"기둥 3",ja:"柱 3",zh:"支柱 3"},p3t:{th:"วงจรรางวัล",en:"Reward loop",ko:"보상 루프",ja:"報酬ループ",zh:"奖励循环"},
+p3d:{th:"เควสต์ 2 ขา มินิเกม ลีดเดอร์บอร์ดซีซั่น การ์ดสะสม Poring Coin ของกลับเข้าเกมทาง Rodex",en:"Two-leg quests, mini games, season leaderboards, card collection, Poring Coin, Rodex rewards",ko:"2단계 퀘스트, 미니게임, 시즌 리더보드, 카드 수집, Poring Coin, Rodex 보상",ja:"2段階クエスト、ミニゲーム、シーズンランキング、カード収集、Poring Coin、Rodex報酬",zh:"双线任务、小游戏、赛季排行榜、卡牌收集、Poring Coin、Rodex 奖励"},
+p4k:{th:"เสา 4",en:"PILLAR 4",ko:"기둥 4",ja:"柱 4",zh:"支柱 4"},p4t:{th:"สังคม",en:"Social",ko:"소셜",ja:"ソーシャル",zh:"社交"},
+p4d:{th:"เพื่อนทั้งประเทศ เยี่ยมบ้าน แชทสำเร็จรูป + สติกเกอร์ รวมตัวในบ้าน 8 คน แชร์คะแนน",en:"Friends nationwide, house visits, preset chat + stickers, 8-person gatherings, score sharing",ko:"전국 친구, 집 방문, 정형 채팅 + 스티커, 8인 모임, 점수 공유",ja:"全国の友達、家訪問、定型チャット + スタンプ、8人の集まり、スコア共有",zh:"全国好友、串门、预设聊天 + 贴纸、8 人聚会、分享成绩"},
+base:{th:"<b>ฐาน:</b> เซิร์ฟเวอร์ · แอดมิน · ความปลอดภัย · PDPA 2 เขต · วัดผล · รองรับภูมิภาคที่ 3 โดยไม่รื้อ",en:"<b>Foundation:</b> servers · admin · security · PDPA in 2 regions · analytics · a 3rd region without re-architecture",ko:"<b>기반:</b> 서버 · 관리자 · 보안 · 2개 지역 PDPA · 분석 · 구조 변경 없는 3번째 지역",ja:"<b>基盤:</b> サーバー · 管理 · セキュリティ · 2地域のPDPA · 分析 · 構造変更なしで第3地域",zh:"<b>基础：</b>服务器 · 管理后台 · 安全 · 两地区 PDPA · 数据分析 · 不重构即可接入第三地区"},
+
+k5:{th:"หน้าแรก",en:"Home page",ko:"메인 페이지",ja:"トップページ",zh:"首页"},
+k5s:{th:"World Map · RO World",en:"World Map · RO World",ko:"World Map · RO World",ja:"World Map · RO World",zh:"World Map · RO World"},
+h5:{th:"เลือกว่า<em>เล่น Ragnarok ที่ไหน</em> แล้วทุกอย่างปรับตาม",en:"Choose <em>where you play Ragnarok</em> and everything follows",ko:"<em>어디서 라그나로크를 하는지</em> 고르면 모든 것이 맞춰집니다",ja:"<em>どこでラグナロクを遊ぶか</em>を選ぶと、すべてが切り替わる",zh:"选择<em>你在哪里玩 Ragnarok</em>，一切随之切换"},
+b5a:{th:"แผนที่โลกเลือกประเทศ/เซิร์ฟเวอร์ ไทยและไต้หวันก่อน ภูมิภาคอื่นเพิ่มได้ทีหลัง",en:"A world map to pick country/server: Thailand and Taiwan first, more regions later",ko:"국가/서버를 고르는 세계지도: 태국과 대만 먼저, 다른 지역은 추후 추가",ja:"国/サーバーを選ぶ世界地図：タイと台湾から、他地域は後日追加",zh:"世界地图选择国家/服务器：泰国与台湾先行，其他地区后续加入"},
+b5b:{th:"ข่าวและกิจกรรมดึงอัตโนมัติจากเว็บเกมของแต่ละผู้ให้บริการ",en:"News and events pulled automatically from each publisher site",ko:"각 퍼블리셔 사이트에서 뉴스와 이벤트 자동 수집",ja:"各パブリッシャーサイトからニュースとイベントを自動取得",zh:"自动汇集各运营商官网的新闻与活动"},
+b5c:{th:"จุดเข้าสู่บ้านของตัวละคร เควสต์ และมินิเกม ของเซิร์ฟที่เลือก",en:"Entry point to the house, quests and mini games of the chosen server",ko:"선택한 서버의 집, 퀘스트, 미니게임으로 가는 입구",ja:"選んだサーバーの家、クエスト、ミニゲームへの入口",zh:"进入所选服务器的房屋、任务与小游戏的入口"},
+
+k6:{th:"My House",en:"My House",ko:"My House",ja:"My House",zh:"My House"},
+k6s:{th:"เสา 2",en:"pillar 2",ko:"기둥 2",ja:"柱 2",zh:"支柱 2"},
+h6:{th:"ตัวละครจริงเดินใน<em>บ้านของตัวเอง</em> ชุดตรงกับในเกม",en:"Your real character walks in <em>its own house</em>, dressed as in the game",ko:"실제 캐릭터가 <em>자기 집</em>을 걸어다니고 복장은 게임과 동일",ja:"本物のキャラクターが<em>自分の家</em>を歩き、服装はゲームと同じ",zh:"真实角色在<em>自己的家</em>中走动，装扮与游戏一致"},
+b6a:{th:"บ้าน 1 หลังต่อเซิร์ฟที่ผูก ห้อง ของ ตำแหน่ง เก็บบนเซิร์ฟเวอร์",en:"One house per linked server; rooms, items and positions saved server-side",ko:"연동 서버당 집 1채, 방·아이템·위치는 서버에 저장",ja:"連携サーバーごとに家1軒、部屋・アイテム・位置はサーバー保存",zh:"每个绑定服务器一栋房，房间、物品与位置保存在服务器"},
+b6b:{th:"ของแต่งบ้านมาจากการคราฟต์ ให้โบนัส Coin / Zeny / EXP บนเว็บ",en:"Decor comes from crafting and gives web bonuses: Coin / Zeny / EXP",ko:"장식은 제작으로 얻고 웹 보너스 제공: Coin / Zeny / EXP",ja:"装飾はクラフトで入手し、ウェブ上のボーナス（Coin / Zeny / EXP）を与える",zh:"装饰通过制作获得，提供网页加成：Coin / Zeny / EXP"},
+b6c:{th:"สัตว์เลี้ยงเว็บเดินตาม ฟาร์มหน้าบ้าน เหมือง ลูปดูแลรายวัน",en:"Web pets follow you; front-yard farm, mine, daily care loop",ko:"웹 펫이 따라다니고 앞마당 농장, 광산, 일일 돌보기 루프",ja:"ウェブペットが付いてきて、庭の農場、鉱山、毎日のお世話ループ",zh:"网页宠物跟随，前院农场、矿场、每日照料循环"},
+b6d:{th:"ชุดมาจากเกมเท่านั้น เว็บไม่มีตู้เสื้อผ้าแยก เปลี่ยนในเกมแล้วเว็บอัปเดตตามรอบ",en:"Gear comes only from the game; no separate web wardrobe, changes sync on schedule",ko:"복장은 게임에서만, 웹에 별도 옷장 없음, 변경 시 주기적으로 동기화",ja:"装備はゲームからのみ。ウェブに別の衣装棚はなく、変更は定期同期",zh:"装备只来自游戏，网页没有独立衣柜，更换后按周期同步"},
+
+k7:{th:"สะพานไป ROPC",en:"Bridge to ROPC",ko:"ROPC 연결",ja:"ROPCへの橋",zh:"通往 ROPC 的桥"},
+k7s:{th:"NPC 3 ขา",en:"3 NPC legs",ko:"NPC 3단계",ja:"NPC 3経路",zh:"NPC 三条线"},
+h7:{th:"เชื่อมเกมกับเว็บด้วย <em>NPC 3 ขา</em> ไม่แตะฐานข้อมูลเกมโดยตรง",en:"Game and web connect through <em>three NPC legs</em>, never touching the game DB directly",ko:"게임과 웹은 <em>NPC 3단계</em>로 연결, 게임 DB를 직접 건드리지 않음",ja:"ゲームとウェブは<em>3つのNPC経路</em>でつながり、ゲームDBには直接触れない",zh:"游戏与网页通过<em>三条 NPC 线</em>连接，绝不直接触碰游戏数据库"},
+l1t:{th:"ดึงตัวละคร",en:"Character export",ko:"캐릭터 추출",ja:"キャラクター取得",zh:"角色导出"},
+l1d:{th:"รอบแรกดัมทั้งเซิร์ฟ (<b>มากกว่า 1 ล้านตัวละคร</b>) จากนั้นทุก 6–8 ชม. เฉพาะบัญชีที่ผูกแล้ว · ชื่อ อาชีพ เลเวล ชุด คอสตูม",en:"First a full-server dump (<b>over 1 million characters</b>), then every 6–8 h only linked accounts · name, job, level, gear, costumes",ko:"첫 회 전 서버 덤프(<b>100만 캐릭터 이상</b>), 이후 6–8시간마다 연동 계정만 · 이름, 직업, 레벨, 장비, 코스튬",ja:"初回は全サーバーダンプ（<b>100万キャラ以上</b>）、以後6–8時間ごとに連携アカウントのみ · 名前、職業、レベル、装備、コスチューム",zh:"首次全服导出（<b>超过 100 万角色</b>），之后每 6–8 小时仅导出已绑定账号 · 名字、职业、等级、装备、时装"},
+l2t:{th:"ฝาก / ถอนของ",en:"Deposit / withdraw",ko:"보관 / 출금",ja:"預け入れ / 引き出し",zh:"存入 / 取回"},
+l2d:{th:"NPC คล้าย Kafra รับฝากไอเทมจากเกมเข้าคลังเว็บ ถอนคืนได้จนกว่าจะคราฟต์ · <b>ทดสอบรอบแรก: Jellopy → เศษกระจก</b>",en:"A Kafra-like NPC moves items from the game into web storage; withdraw until crafted · <b>first test: Jellopy → Glass Shard</b>",ko:"Kafra 유사 NPC가 게임 아이템을 웹 보관함으로, 제작 전까지 출금 가능 · <b>첫 테스트: Jellopy → 유리 조각</b>",ja:"Kafra風NPCがゲームのアイテムをウェブ倉庫へ。クラフトするまで引き出し可能 · <b>初回テスト：Jellopy → ガラスの欠片</b>",zh:"类似 Kafra 的 NPC 将游戏道具存入网页仓库，制作前可取回 · <b>首轮测试：Jellopy → 玻璃碎片</b>"},
+l3t:{th:"ส่งของเข้าเกม (Rodex)",en:"Send into the game (Rodex)",ko:"게임으로 전송 (Rodex)",ja:"ゲームへ送付 (Rodex)",zh:"送入游戏 (Rodex)"},
+l3d:{th:"ผ่าน <b>Gateway API</b> ที่ฝั่ง GP ดูแล ไม่เรียก stored procedure ตรง · ไวต์ลิสต์ของสิ้นเปลือง + คอสตูม · เพดานต่อวัน · วาล์วหยุดส่ง",en:"Through a <b>Gateway API</b> owned by GP, never calling the stored procedure directly · whitelist of consumables + costumes · daily caps · kill switch",ko:"GP가 관리하는 <b>Gateway API</b> 경유, 저장 프로시저 직접 호출 없음 · 소모품 + 코스튬 화이트리스트 · 일일 한도 · 중단 밸브",ja:"GPが管理する<b>Gateway API</b>経由。ストアドプロシージャを直接呼ばない · 消耗品 + コスチュームのホワイトリスト · 日次上限 · 停止スイッチ",zh:"经由 GP 维护的 <b>Gateway API</b>，不直接调用存储过程 · 消耗品 + 时装白名单 · 每日上限 · 紧急停止阀"},
+l_note:{th:"ทั้ง 3 ขาเป็นงานร่วมกับทีม ROPC / System · ชุดสเปกและคำถาม 22 ข้อส่งแล้ว รอคำตอบใน ธ.ค. 2026",en:"All three legs are joint work with the ROPC / System teams · spec pack and 22 questions sent, answers expected Dec 2026",ko:"3단계 모두 ROPC / 시스템팀과 협업 · 스펙과 질문 22개 전달, 2026년 12월 답변 예정",ja:"3経路ともROPC / システムチームとの協働 · 仕様と22の質問を送付済み、2026年12月回答予定",zh:"三条线均与 ROPC / 系统团队协作 · 规格与 22 个问题已发出，预计 2026 年 12 月答复"},
+
+k8:{th:"ระบบเควสต์",en:"Quest system",ko:"퀘스트 시스템",ja:"クエストシステム",zh:"任务系统"},
+k8s:{th:"เสา 3",en:"pillar 3",ko:"기둥 3",ja:"柱 3",zh:"支柱 3"},
+h8:{th:"เควสต์เดียว นับได้<em>ทั้งเว็บและในเกม</em> รางวัลเลือกฝั่งได้",en:"One quest counts <em>both web and in-game</em> play; rewards go to either side",ko:"하나의 퀘스트가 <em>웹과 게임 모두</em> 집계, 보상은 양쪽 선택 가능",ja:"1つのクエストが<em>ウェブとゲームの両方</em>を集計、報酬はどちら側にも設定可",zh:"一个任务<em>同时统计网页与游戏</em>，奖励可设在任一侧"},
+q_leg:{th:"เงื่อนไข",en:"CONDITION",ko:"조건",ja:"条件",zh:"条件"},
+qw_t:{th:"ขาเว็บ",en:"Web leg",ko:"웹 단계",ja:"ウェブ側",zh:"网页线"},
+qw_d:{th:"เล่นมินิเกม N รอบ · ทำคะแนนถึง · เก็บฟาร์ม · คราฟต์ · จัดบ้าน — เว็บรู้ทันที",en:"Play N mini game rounds · reach a score · harvest · craft · decorate — the web knows instantly",ko:"미니게임 N회 · 점수 달성 · 수확 · 제작 · 꾸미기 — 웹이 즉시 인식",ja:"ミニゲームN回 · スコア達成 · 収穫 · クラフト · 模様替え — ウェブが即時把握",zh:"玩 N 局小游戏 · 达到分数 · 收获 · 制作 · 布置房屋 — 网页即时知晓"},
+qg_t:{th:"ขาในเกม",en:"In-game leg",ko:"게임 단계",ja:"ゲーム側",zh:"游戏线"},
+qg_d:{th:"เลเวลถึง 50 · อาชีพ Knight · ใส่ไอเทมชิ้นนี้ · ฝากของกับ NPC — ตรวจจากข้อมูลตัวละครที่ดึงตามรอบ ไม่เรียลไทม์",en:"Reach Lv 50 · be a Knight · wear this item · deposit with the NPC — checked from the scheduled character export, not real time",ko:"Lv 50 달성 · Knight 직업 · 아이템 착용 · NPC 보관 — 주기적 캐릭터 추출로 확인, 실시간 아님",ja:"Lv50到達 · 職業Knight · アイテム装備 · NPCに預ける — 定期取得したキャラデータで判定、リアルタイムではない",zh:"达到 Lv 50 · 职业为 Knight · 穿戴某道具 · 向 NPC 存入 — 依据定期导出的角色数据判定，非实时"},
+qs_t:{th:"เควสต์เซ็ต = ผสม 2 ขา",en:"Quest set = both legs combined",ko:"퀘스트 세트 = 두 단계 결합",ja:"クエストセット = 両側の組み合わせ",zh:"任务组 = 两线合并"},
+qs_d:{th:"“เล่นมินิเกม 5 เกม และ เล่น Knight ใน ROPC ถึง Lv.50” ต้องครบทั้งคู่",en:"“Play 5 mini games AND level a Knight to 50 in ROPC” — both required",ko:"“미니게임 5개 플레이 그리고 ROPC에서 Knight Lv.50” — 둘 다 필요",ja:"「ミニゲーム5つ かつ ROPCでKnightをLv.50に」— 両方必要",zh:"“玩 5 个小游戏 并且 在 ROPC 把 Knight 练到 Lv.50”——两者都要完成"},
+q_rw:{th:"รางวัล",en:"REWARD",ko:"보상",ja:"報酬",zh:"奖励"},
+rw_t:{th:"ของเว็บ",en:"Web items",ko:"웹 아이템",ja:"ウェブアイテム",zh:"网页物品"},
+rw_d:{th:"ทรัพยากรคราฟต์ · ของแต่งบ้าน · Poring Coin ตามเพดานซีซั่น — เข้ากระเป๋าทันทีที่กดรับ",en:"Crafting resources · decor · Poring Coin within the season cap — in your bag the moment you claim",ko:"제작 자원 · 장식 · 시즌 한도 내 Poring Coin — 수령 즉시 가방으로",ja:"クラフト資源 · 装飾 · シーズン上限内のPoring Coin — 受け取った瞬間にバッグへ",zh:"制作资源 · 装饰 · 赛季上限内的 Poring Coin — 领取即入包"},
+rg_t:{th:"ของในเกม",en:"In-game items",ko:"게임 아이템",ja:"ゲーム内アイテム",zh:"游戏内物品"},
+rg_d:{th:"ไอเทมจากไวต์ลิสต์ ROPC (ของสิ้นเปลือง + คอสตูม) — เข้ากล่องส่ง ผู้เล่นกดส่งเอง → Rodex ในเกม",en:"Items from the ROPC whitelist (consumables + costumes) — go to an outbox, the player sends them → in-game Rodex",ko:"ROPC 화이트리스트 아이템(소모품 + 코스튬) — 발송함에 들어가고 플레이어가 전송 → 게임 내 Rodex",ja:"ROPCホワイトリストのアイテム（消耗品 + コスチューム）— 送信箱に入り、プレイヤーが送る → ゲーム内Rodex",zh:"ROPC 白名单道具（消耗品 + 时装）——进入发件箱，由玩家发送 → 游戏内 Rodex"},
+rb_t:{th:"หรือทั้งสองอย่าง",en:"Or both",ko:"또는 둘 다",ja:"または両方",zh:"或两者皆有"},
+rb_d:{th:"ตั้งค่าได้ต่อเควสต์ · คอสตูมที่แจกจะกลับมาแสดงบนเว็บเองเมื่อผู้เล่นใส่ในเกม",en:"Configured per quest · a costume you give shows up on the web by itself once worn in game",ko:"퀘스트별 설정 · 지급한 코스튬은 게임에서 착용하면 웹에 자동 표시",ja:"クエストごとに設定 · 配布したコスチュームはゲームで装備するとウェブにも自動反映",zh:"按任务配置 · 发放的时装在游戏中穿上后会自动显示在网页"},
+q_note:{th:"<b>5 ประเภท:</b> รายวัน · รายเดือน · รายซีซั่น (2 เดือน ต่อประเทศ) · พิเศษจำกัดเวลา · เซ็ต — มินิเกมเป็นส่วนประกอบของเควสต์ ไม่ใช่พระเอก",en:"<b>5 types:</b> daily · monthly · season (2 months, per country) · limited-time · set — mini games are a component of quests, not the hero",ko:"<b>5가지:</b> 일일 · 월간 · 시즌(2개월, 국가별) · 기간 한정 · 세트 — 미니게임은 퀘스트의 구성 요소이지 주인공이 아님",ja:"<b>5種類:</b> デイリー · マンスリー · シーズン（2か月、国別）· 期間限定 · セット — ミニゲームはクエストの構成要素であり主役ではない",zh:"<b>5 种类型：</b>每日 · 每月 · 赛季（2 个月，按国家）· 限时 · 任务组——小游戏是任务的组成部分，而非主角"},
+
+k9:{th:"มินิเกม",en:"Mini games",ko:"미니게임",ja:"ミニゲーム",zh:"小游戏"},
+k9s:{th:"ทำเอง",en:"in-house",ko:"자체 제작",ja:"自社制作",zh:"自研"},
+h9:{th:"มินิเกม<em>ทำเอง</em> ป้อนเควสต์และลีดเดอร์บอร์ด",en:"<em>In-house</em> mini games feed quests and leaderboards",ko:"<em>자체 제작</em> 미니게임이 퀘스트와 리더보드를 채웁니다",ja:"<em>自社制作</em>のミニゲームがクエストとランキングを支える",zh:"<em>自研</em>小游戏为任务与排行榜供能"},
+lead9:{th:"เกมสั้น เข้าใจใน 3 วินาที ไม่ต้องอ่านกติกา · 2 โหมด: เล่นฟรี / ใช้ตั๋วได้ดาว · ลีดเดอร์บอร์ดต่อเกมต่อซีซั่น ตรวจคะแนนฝั่งเซิร์ฟเวอร์",en:"Short games understood in 3 seconds, no rules to read · 2 modes: free / ticket for stars · per-game season leaderboards, server-verified scores",ko:"3초면 이해되는 짧은 게임, 규칙 불필요 · 2가지 모드: 무료 / 티켓으로 별 획득 · 게임별 시즌 리더보드, 서버 검증 점수",ja:"3秒で理解できる短いゲーム、ルール不要 · 2モード：無料 / チケットで星獲得 · ゲーム別シーズンランキング、サーバー検証スコア",zh:"3 秒即懂的短小游戏，无需读规则 · 两种模式：免费 / 用票得星 · 按游戏的赛季排行榜，服务器校验分数"},
+m1:{th:"เกมที่มีในมือ",en:"games in hand",ko:"보유 게임",ja:"手持ちのゲーム",zh:"现有游戏"},
+m2:{th:"เกมใหม่ต่อเดือน",en:"new games per month",ko:"월 신규 게임",ja:"月あたり新作",zh:"每月新增"},
+m3:{th:"เกมภายใน ก.ค. 2027",en:"games by Jul 2027",ko:"2027년 7월까지",ja:"2027年7月までに",zh:"2027 年 7 月前"},
+m4:{th:"เกมที่ Festa กินผู้เล่น 83%",en:"games took 83% of Festa players",ko:"Festa 플레이어의 83%를 차지한 게임 수",ja:"Festaで83%のプレイヤーを集めたゲーム数",zh:"Festa 上占 83% 玩家的游戏数"},
+
+k10:{th:"สังคม",en:"Social",ko:"소셜",ja:"ソーシャル",zh:"社交"},
+k10s:{th:"เสา 4",en:"pillar 4",ko:"기둥 4",ja:"柱 4",zh:"支柱 4"},
+h10:{th:"เพื่อน<em>ทั้งประเทศ</em>มาเยี่ยมบ้านกันได้ข้ามเซิร์ฟ",en:"Friends <em>across the country</em> visit each other, across servers",ko:"<em>전국</em>의 친구가 서버를 넘어 서로의 집을 방문",ja:"<em>全国</em>の友達がサーバーを越えて家を訪問",zh:"<em>全国</em>好友跨服互相串门"},
+b10a:{th:"เพื่อนและเยี่ยมบ้านทั้งประเทศ แขกคลิกดูการ์ดและป้ายที่แขวนไว้ได้",en:"Friends and house visits nationwide; guests can view cards and signs on the wall",ko:"전국 친구와 집 방문, 손님은 벽의 카드와 표지판 열람 가능",ja:"全国の友達と家訪問、来客は壁のカードや看板を閲覧可能",zh:"全国好友与串门，访客可查看墙上的卡牌与牌匾"},
+b10b:{th:"แชทสำเร็จรูป + สติกเกอร์ RO เฉพาะเพื่อน · เก็บข้อความ 30 วัน · รวมตัวในบ้าน 8 คน",en:"Preset chat + RO stickers, friends only · messages kept 30 days · gatherings of 8 in a house",ko:"정형 채팅 + RO 스티커, 친구 전용 · 메시지 30일 보관 · 집에 8명 모임",ja:"定型チャット + ROスタンプ、友達限定 · メッセージ30日保存 · 家に8人集合",zh:"预设聊天 + RO 贴纸，仅限好友 · 消息保留 30 天 · 房内 8 人聚会"},
+b10c:{th:"แชร์การ์ดคะแนนจากหน้า Result ของมินิเกมให้เพื่อน",en:"Share the score card from a mini game result page with friends",ko:"미니게임 결과 화면의 점수 카드를 친구에게 공유",ja:"ミニゲームの結果画面からスコアカードを友達に共有",zh:"从小游戏结果页分享成绩卡给好友"},
+b10d:{th:"presence service ของเราเอง แยกห้องตามประเทศ · PDPA ต่อประเทศ",en:"Our own presence service, rooms per country · PDPA per country",ko:"자체 presence 서비스, 국가별 방 · 국가별 PDPA",ja:"自前のプレゼンスサービス、国ごとにルーム · 国ごとのPDPA",zh:"自建 presence 服务，按国家分房 · 按国家 PDPA"},
+
+k11:{th:"เฟส 2",en:"Phase 2",ko:"2단계",ja:"フェーズ2",zh:"第二阶段"},
+k11s:{th:"ตั้งแต่ ก.ย. 2027",en:"from Sep 2027",ko:"2027년 9월부터",ja:"2027年9月から",zh:"2027 年 9 月起"},
+h11:{th:"ตัวละครออกจากเว็บไป<em>อยู่บนเดสก์ท็อป</em>และมือถือ",en:"The character leaves the web to <em>live on the desktop</em> and mobile",ko:"캐릭터가 웹을 벗어나 <em>데스크톱</em>과 모바일에 상주",ja:"キャラクターがウェブを離れ、<em>デスクトップ</em>やモバイルに常駐",zh:"角色走出网页，<em>常驻桌面</em>与手机"},
+b11a:{th:"ROPZ Companion: ตัวละครเดินบนเดสก์ท็อปทั้งวัน พูดคุย เชียร์ตอนเล่นมินิเกม เตือนนั่งนาน — ต้นแบบทำงานแล้วบน Windows",en:"ROPZ Companion: the character walks on your desktop all day, talks, cheers during mini games, reminds you to stand up — prototype already running on Windows",ko:"ROPZ Companion: 캐릭터가 하루 종일 데스크톱을 걸어다니며 대화하고, 미니게임 응원, 장시간 착석 알림 — Windows 프로토타입 가동 중",ja:"ROPZ Companion：キャラクターが一日中デスクトップを歩き、話しかけ、ミニゲームを応援し、座りすぎを注意 — Windowsでプロトタイプ稼働中",zh:"ROPZ Companion：角色整天在桌面上走动、说话、玩小游戏时加油、提醒久坐——Windows 原型已在运行"},
+b11b:{th:"เกมสุขภาพ (เดิน / วิ่ง) บน Android ก่อน รางวัล Poring Coin · Smart Watch เป็นขั้นถัดไป",en:"Health game (walk / run) on Android first, rewards in Poring Coin · smart watch as the next step",ko:"건강 게임(걷기 / 달리기) Android 우선, 보상은 Poring Coin · 스마트워치는 다음 단계",ja:"ヘルスゲーム（歩く / 走る）はAndroid先行、報酬はPoring Coin · スマートウォッチは次の段階",zh:"健康游戏（步行 / 跑步）先上 Android，奖励 Poring Coin · 智能手表为下一步"},
+b11c:{th:"ใช้บัญชี บ้าน และเศรษฐกิจเดียวกับเว็บ ไม่แยกระบบ",en:"Same account, house and economy as the web; no separate system",ko:"웹과 동일한 계정·집·경제, 별도 시스템 없음",ja:"ウェブと同じアカウント・家・経済、別システムにはしない",zh:"与网页共用账号、房屋与经济体系，不另起系统"},
+
+k12:{th:"ไทม์ไลน์",en:"Timeline",ko:"타임라인",ja:"タイムライン",zh:"时间线"},
+k12s:{th:"พ.ย. 2026 – ส.ค. 2027",en:"Nov 2026 – Aug 2027",ko:"2026년 11월 – 2027년 8월",ja:"2026年11月 – 2027年8月",zh:"2026 年 11 月 – 2027 年 8 月"},
+h12:{th:"10 เดือน <em>4 ช่วง</em> 3 หมุดเดฟ เปิดบริการปลาย ส.ค. 2027",en:"10 months, <em>4 phases</em>, 3 dev milestones, launch late Aug 2027",ko:"10개월, <em>4단계</em>, 개발 마일스톤 3개, 2027년 8월 말 오픈",ja:"10か月、<em>4フェーズ</em>、開発マイルストーン3つ、2027年8月末ローンチ",zh:"10 个月，<em>4 个阶段</em>，3 个开发里程碑，2027 年 8 月底上线"},
+ph0:{th:"ช่วง 0 · เตรียม + สเปก",en:"Phase 0 · Prep + specs",ko:"0단계 · 준비 + 스펙",ja:"フェーズ0 · 準備 + 仕様",zh:"阶段 0 · 准备 + 规格"},ph0d:{th:"พ.ย. – ธ.ค. 26",en:"Nov – Dec 26",ko:"26년 11–12월",ja:"26年11–12月",zh:"26 年 11–12 月"},
+ph1:{th:"ช่วง 1 · ตัวตน + บ้าน",en:"Phase 1 · Identity + house",ko:"1단계 · 계정 + 집",ja:"フェーズ1 · ID + 家",zh:"阶段 1 · 身份 + 房屋"},ph1d:{th:"ม.ค. – มี.ค. 27",en:"Jan – Mar 27",ko:"27년 1–3월",ja:"27年1–3月",zh:"27 年 1–3 月"},
+ph2:{th:"ช่วง 2 · คลัง + รางวัล + สังคม",en:"Phase 2 · Storage + rewards + social",ko:"2단계 · 보관 + 보상 + 소셜",ja:"フェーズ2 · 倉庫 + 報酬 + ソーシャル",zh:"阶段 2 · 仓库 + 奖励 + 社交"},ph2d:{th:"เม.ย. – มิ.ย. 27",en:"Apr – Jun 27",ko:"27년 4–6월",ja:"27年4–6月",zh:"27 年 4–6 月"},
+ph3:{th:"ช่วง 3 · ไต้หวัน + ปิดงาน",en:"Phase 3 · Taiwan + wrap-up",ko:"3단계 · 대만 + 마무리",ja:"フェーズ3 · 台湾 + 仕上げ",zh:"阶段 3 · 台湾 + 收尾"},ph3d:{th:"ก.ค. – ส.ค. 27",en:"Jul – Aug 27",ko:"27년 7–8월",ja:"27年7–8月",zh:"27 年 7–8 月"},
+msA:{th:"Alpha ไทย · มี.ค. 27",en:"Alpha TH · Mar 27",ko:"알파 (태국) · 27년 3월",ja:"アルファ（タイ）· 27年3月",zh:"泰国 Alpha · 27 年 3 月"},msAd:{th:"ล็อกอินแล้วเห็นตัวเองเดินในบ้าน ชุดตรงกับในเกม",en:"Log in and see your own character walk in your house, gear matching the game",ko:"로그인하면 내 캐릭터가 내 집을 걷고 장비는 게임과 동일",ja:"ログインすると自分のキャラが家を歩き、装備はゲームと同じ",zh:"登录即可看到自己的角色在家中走动，装备与游戏一致"},
+msB:{th:"Closed Beta · มิ.ย. 27",en:"Closed Beta · Jun 27",ko:"클로즈 베타 · 27년 6월",ja:"クローズドβ · 27年6月",zh:"封闭测试 · 27 年 6 月"},msBd:{th:"วงจรครบ: ฝาก → เว็บ → คราฟต์ → ของกลับเข้าเกมทาง Rodex",en:"Full loop: deposit → web → craft → back into the game via Rodex",ko:"전체 루프: 보관 → 웹 → 제작 → Rodex로 게임 반환",ja:"フルループ：預ける → ウェブ → クラフト → Rodexでゲームへ",zh:"完整循环：存入 → 网页 → 制作 → 经 Rodex 回到游戏"},
+msC:{th:"เดฟเสร็จ · ต้น ส.ค. 27",en:"Dev complete · early Aug 27",ko:"개발 완료 · 27년 8월 초",ja:"開発完了 · 27年8月初",zh:"开发完成 · 27 年 8 月初"},msCd:{th:"ไทย + ไต้หวัน ใช้ได้เต็มวงจร โหลดเทสต์ PDPA security review",en:"Thailand + Taiwan fully working; load test, PDPA, security review",ko:"태국 + 대만 전체 가동, 부하 테스트, PDPA, 보안 검토",ja:"タイ + 台湾がフル稼働、負荷テスト、PDPA、セキュリティレビュー",zh:"泰国 + 台湾全流程可用；压力测试、PDPA、安全审查"},
+msL:{th:"เปิดบริการ · ปลาย ส.ค. 27",en:"Launch · late Aug 27",ko:"서비스 오픈 · 27년 8월 말",ja:"サービス開始 · 27年8月末",zh:"正式上线 · 27 年 8 月底"},msLd:{th:"ซีซั่น 1 · ก.ย. – Q4 เป็นบัฟเฟอร์และดูแลหลังเปิด · แอป = เฟส 2",en:"Season 1 · Sep – Q4 is buffer and live ops · app = phase 2",ko:"시즌 1 · 9월 – Q4는 버퍼와 라이브 운영 · 앱 = 2단계",ja:"シーズン1 · 9月 – Q4はバッファと運用 · アプリ = フェーズ2",zh:"第 1 赛季 · 9 月 – Q4 为缓冲与运营 · 应用 = 第二阶段"},
+
+k13:{th:"หลักฐานจาก Festa",en:"Proof from Festa",ko:"Festa에서 얻은 근거",ja:"Festaでの実証",zh:"来自 Festa 的验证"},
+k13s:{th:"7 พ.ย. 2026",en:"7 Nov 2026",ko:"2026년 11월 7일",ja:"2026年11月7日",zh:"2026 年 11 月 7 日"},
+h13:{th:"บูธเต็มทั้งวัน ระบบรัน <em>11 ชั่วโมง</em>ไม่ล้ม",en:"A full booth all day; the system ran <em>11 hours</em> without a crash",ko:"하루 종일 가득 찬 부스, 시스템 <em>11시간</em> 무중단",ja:"終日満員のブース、システムは<em>11時間</em>無停止",zh:"展位整天爆满，系统<em>连续运行 11 小时</em>未崩溃"},
+kp1:{th:"ลงทะเบียน",en:"registered",ko:"등록",ja:"登録",zh:"报名"},kp1s:{th:"ได้เล่นจริง 241 คน",en:"241 actually played",ko:"241명 실제 플레이",ja:"241人が実際にプレイ",zh:"241 人实际游玩"},
+kp2:{th:"รอบที่เล่น",en:"plays",ko:"플레이 횟수",ja:"プレイ回数",zh:"游玩次数"},kp2s:{th:"3 เครื่อง คิวเต็มทุกเครื่องทั้งวัน",en:"3 machines, every queue full all day",ko:"기기 3대, 하루 종일 대기열 가득",ja:"3台、終日すべて行列",zh:"3 台机器，全天排队"},
+kp3:{th:"ไม่ได้เล่น RO",en:"do not play RO",ko:"RO 미플레이",ja:"ROを未プレイ",zh:"不玩 RO"},kp3s:{th:"สัญญาณดึงคนนอก",en:"a signal for reaching outsiders",ko:"외부 유입 가능성의 신호",ja:"外部層への到達のシグナル",zh:"吸引圈外用户的信号"},
+kp4:{th:"จะสมัครสมาชิก",en:"would sign up",ko:"가입 의향",ja:"登録意向",zh:"愿意注册"},kp4s:{th:"ถ้ามี social login (53% สมัครแน่นอน)",en:"with social login (53% definitely)",ko:"소셜 로그인 시 (53%는 반드시)",ja:"ソーシャルログインがあれば（53%は確実に）",zh:"若有社交登录（53% 一定会）"},
+b13a:{th:"2 เกมแรกกินผู้เล่น 83% — เกมที่เข้าใจใน 3 วินาทีชนะ",en:"The top 2 games took 83% of players — games understood in 3 seconds win",ko:"상위 2개 게임이 83% 차지 — 3초면 이해되는 게임이 이김",ja:"上位2ゲームで83% — 3秒で分かるゲームが勝つ",zh:"前两款游戏占 83% 玩家——3 秒就懂的游戏胜出"},
+b13b:{th:"คนแน่นช่วงบ่ายถึงเย็น พีค 17:00 · ยอดถูกจำกัดด้วยจำนวนเครื่อง",en:"Crowd peaks afternoon to evening, 17:00 · turnout capped by machine count",ko:"오후~저녁 혼잡, 피크 17:00 · 참여 수는 기기 수에 제한",ja:"午後から夕方が混雑、ピーク17:00 · 参加数は台数が上限",zh:"下午到傍晚人最多，17:00 为峰值 · 人数受机台数量限制"},
+b13c:{th:"ข้อมูลที่เก็บได้ใช้กำหนดหน้าเลือกเกม การสมัคร และเวลาจัดอีเวนต์",en:"The data now shapes the game-selection page, sign-up flow and event timing",ko:"수집 데이터로 게임 선택 화면, 가입 흐름, 이벤트 시간을 설계",ja:"得られたデータでゲーム選択画面、登録フロー、イベント時間を設計",zh:"所得数据用于设计选游戏页面、注册流程与活动时间"},
+
+k14:{th:"สิ่งที่ต้องการ",en:"What we need",ko:"필요한 것",ja:"必要なもの",zh:"我们需要什么"},
+k14s:{th:"ถัดไป",en:"next",ko:"다음",ja:"次",zh:"下一步"},
+h14:{th:"สิ่งที่ต้องได้ภายใน <em>ธ.ค. 2026</em> เพื่อให้แผนเดินต่อ",en:"What must land by <em>Dec 2026</em> to keep the plan on track",ko:"계획 유지를 위해 <em>2026년 12월</em>까지 필요한 것",ja:"計画を進めるために<em>2026年12月</em>までに必要なこと",zh:"为保持计划推进，<em>2026 年 12 月</em>前必须到位的事项"},
+nd1:{th:"<b>ROPC / System:</b> ตอบรับสเปก NPC 3 ขา + ข้อมูลตัวละคร (GID, ชุด, view id ของไอเทม) + จองรอบแพตช์ QA",en:"<b>ROPC / System:</b> accept the 3-leg NPC spec + character data (GID, gear, item view ids) + book a QA patch slot",ko:"<b>ROPC / 시스템:</b> NPC 3단계 스펙 수락 + 캐릭터 데이터(GID, 장비, 아이템 view id) + QA 패치 일정 확보",ja:"<b>ROPC / システム:</b> 3経路NPC仕様の受諾 + キャラデータ（GID、装備、アイテムview id）+ QAパッチ枠の確保",zh:"<b>ROPC / 系统：</b>确认三条线 NPC 规格 + 角色数据（GID、装备、道具 view id）+ 预约 QA 补丁窗口"},
+nd2:{th:"<b>Gateway API:</b> ทางเข้า Rodex ผ่าน API ที่ GP ดูแล (C#/.NET) แทนการเรียก stored procedure ตรง",en:"<b>Gateway API:</b> a Rodex entry point through a GP-owned API (C#/.NET) instead of calling the stored procedure directly",ko:"<b>Gateway API:</b> 저장 프로시저 직접 호출 대신 GP가 관리하는 API(C#/.NET)로 Rodex 진입",ja:"<b>Gateway API:</b> ストアドプロシージャ直接呼び出しの代わりに、GP管理のAPI（C#/.NET）でRodexへ",zh:"<b>Gateway API：</b>由 GP 维护的 API（C#/.NET）作为 Rodex 入口，取代直接调用存储过程"},
+nd3:{th:"<b>Gnjoy:</b> API รายการไอดีเกมใต้บัญชี Gnjoy (ไทย) และตัวเทียบเท่าของไต้หวัน",en:"<b>Gnjoy:</b> an API listing game IDs under a Gnjoy account (Thailand) and the Taiwan equivalent",ko:"<b>Gnjoy:</b> Gnjoy 계정의 게임 ID 목록 API(태국)와 대만 대응 API",ja:"<b>Gnjoy:</b> Gnjoyアカウント配下のゲームID一覧API（タイ）と台湾の同等API",zh:"<b>Gnjoy：</b>列出 Gnjoy 账号下游戏 ID 的 API（泰国）及台湾对应方案"},
+nd4:{th:"<b>ไวต์ลิสต์ + สิทธิ์:</b> รายการของสิ้นเปลือง/คอสตูมที่แจกได้ พร้อมเพดาน · หนังสือยืนยันสิทธิ์ใช้สไปรต์ GRF บนเว็บก่อน Closed Beta",en:"<b>Whitelist + rights:</b> the list of consumables/costumes we may grant, with caps · a letter confirming GRF sprite rights on the web before Closed Beta",ko:"<b>화이트리스트 + 권리:</b> 지급 가능한 소모품/코스튬 목록과 한도 · 클로즈 베타 전 웹에서의 GRF 스프라이트 사용 권리 확인서",ja:"<b>ホワイトリスト + 権利:</b> 配布可能な消耗品/コスチュームの一覧と上限 · クローズドβ前にウェブでのGRFスプライト使用権の確認書",zh:"<b>白名单 + 授权：</b>可发放的消耗品/时装清单与上限 · 封闭测试前取得网页使用 GRF 精灵图的授权函"},
+nd5:{th:"<b>ภายในทีม:</b> ล็อกวิธีเรนเดอร์ตัวละคร (เป้า ≤ 2 วิ) · ส่งบรีฟงานภาพให้ ART · เคาะว่าต้องจ้าง outsource มินิเกมเพิ่มไหม",en:"<b>Internal:</b> lock the character render method (target ≤ 2 s) · art brief to ART · decide whether extra mini game outsourcing is needed",ko:"<b>내부:</b> 캐릭터 렌더 방식 확정(목표 ≤ 2초) · ART 작업 브리프 · 미니게임 추가 외주 필요 여부 결정",ja:"<b>社内:</b> キャラ描画方式の確定（目標 ≤ 2秒）· ARTへの作業ブリーフ · ミニゲーム追加外注の要否決定",zh:"<b>内部：</b>确定角色渲染方案（目标 ≤ 2 秒）· 向 ART 下达美术简报 · 决定是否需要追加小游戏外包"},
+
+h15:{th:"ขอบคุณครับ",en:"Thank you",ko:"감사합니다",ja:"ありがとうございました",zh:"谢谢"},
+sub15:{th:"RO PlayZone · GGT Game Studio · เอกสารภายใน",en:"RO PlayZone · GGT Game Studio · internal",ko:"RO PlayZone · GGT Game Studio · 내부 자료",ja:"RO PlayZone · GGT Game Studio · 社内資料",zh:"RO PlayZone · GGT Game Studio · 内部资料"},
+
+btn_prev:{th:"หน้าก่อน (←)",en:"Previous (←)",ko:"이전 (←)",ja:"前へ (←)",zh:"上一页 (←)"},
+btn_next:{th:"หน้าถัดไป (→)",en:"Next (→)",ko:"다음 (→)",ja:"次へ (→)",zh:"下一页 (→)"},
+btn_copy:{th:"📋 คัดลอกข้อความหน้านี้",en:"📋 Copy this slide",ko:"📋 이 페이지 복사",ja:"📋 このページをコピー",zh:"📋 复制本页文字"},
+btn_copied:{th:"✅ คัดลอกแล้ว",en:"✅ Copied",ko:"✅ 복사됨",ja:"✅ コピーしました",zh:"✅ 已复制"},
+btn_copy_t:{th:"คัดลอกข้อความของหน้านี้ + โน้ตผู้พูด (กด C)",en:"Copy this slide plus speaker notes (press C)",ko:"이 페이지와 발표 노트 복사 (C)",ja:"このページと発表ノートをコピー (C)",zh:"复制本页文字与演讲备注 (C)"},
+cp_page:{th:"หน้า",en:"Slide",ko:"페이지",ja:"ページ",zh:"第"},
+cp_notes:{th:"[โน้ตผู้พูด]",en:"[Speaker notes]",ko:"[발표 노트]",ja:"[発表ノート]",zh:"[演讲备注]"},
+th_dark:{th:"🌙 โหมดมืด",en:"🌙 Dark",ko:"🌙 다크",ja:"🌙 ダーク",zh:"🌙 深色"},
+th_day:{th:"☀️ โหมดสว่าง",en:"☀️ Day",ko:"☀️ 라이트",ja:"☀️ ライト",zh:"☀️ 浅色"},
+
+n1:{th:"⏱ 30 วิ · เปิดด้วย key message ประโยคเดียว ไม่ต้องอธิบายเพิ่ม",en:"⏱ 30s · open with the key message alone, no elaboration",ko:"⏱ 30초 · 핵심 메시지 한 문장으로 시작",ja:"⏱ 30秒 · キーメッセージ一文で開始",zh:"⏱ 30 秒 · 只用一句核心信息开场"},
+n2:{th:"⏱ 60 วิ · ย้ำว่าพลิกทิศ 21 ต.ค.: ไม่ใช่พอร์ทัลมินิเกม แต่ซัพพอร์ต RO PC · ตัวละครจริงจากเกมคือจุดต่าง",en:"⏱ 60s · stress the 21 Oct pivot: not a mini game portal, a support layer for RO PC · the real character from the game is the differentiator",ko:"⏱ 60초 · 10/21 방향 전환 강조: 미니게임 포털이 아닌 RO PC 지원 · 게임 속 실제 캐릭터가 차별점",ja:"⏱ 60秒 · 10/21の方針転換を強調：ミニゲームポータルではなくRO PC支援 · ゲームの本物のキャラが差別化要素",zh:"⏱ 60 秒 · 强调 10/21 转向：不是小游戏门户而是 RO PC 配套 · 游戏真实角色是差异点"},
+n3:{th:"⏱ 90 วิ · เดินทีละขั้น 1→5 · ขั้น 4-5 ต้องมี NPC จาก ROPC",en:"⏱ 90s · walk through steps 1→5 · steps 4-5 need NPCs from ROPC",ko:"⏱ 90초 · 1→5 단계 순서대로 · 4-5단계는 ROPC의 NPC 필요",ja:"⏱ 90秒 · 1→5を順に · 4-5はROPCのNPCが必要",zh:"⏱ 90 秒 · 按 1→5 顺序讲 · 第 4-5 步需要 ROPC 提供 NPC"},
+n4:{th:"⏱ 60 วิ · เสา 4 สังคม แยกใหม่ใน v2 เพราะต้องมี presence service",en:"⏱ 60s · pillar 4 social was split out in v2 because it needs a presence service",ko:"⏱ 60초 · 기둥 4 소셜은 presence 서비스가 필요해 v2에서 분리",ja:"⏱ 60秒 · 柱4ソーシャルはプレゼンスサービスが必要なためv2で分離",zh:"⏱ 60 秒 · 支柱 4 社交在 v2 中拆出，因为需要 presence 服务"},
+n5:{th:"⏱ 40 วิ · ภาพจาก Festa mockup · ข่าวดึงอัตโนมัติ ไม่ต้องมีคนเขียน",en:"⏱ 40s · screenshot from the Festa mockup · news is pulled automatically, no writer needed",ko:"⏱ 40초 · Festa 목업 화면 · 뉴스는 자동 수집, 작성자 불필요",ja:"⏱ 40秒 · Festaモックアップの画面 · ニュースは自動取得、ライター不要",zh:"⏱ 40 秒 · Festa 原型截图 · 新闻自动抓取，无需编辑"},
+n6:{th:"⏱ 60 วิ · ภาพจาก mockup ที่ใช้สไปรต์ RO จริง · ART กำลังปรับ asset บ้านให้เข้ากับสไตล์ตัวละคร",en:"⏱ 60s · screenshot from the mockup using real RO sprites · ART is restyling house assets to match the characters",ko:"⏱ 60초 · 실제 RO 스프라이트를 쓴 목업 화면 · ART가 집 에셋을 캐릭터 스타일에 맞게 조정 중",ja:"⏱ 60秒 · 本物のROスプライトを使ったモックアップ · ARTが家のアセットをキャラ風に調整中",zh:"⏱ 60 秒 · 使用真实 RO 精灵图的原型截图 · ART 正在把房屋素材调成角色风格"},
+n7:{th:"⏱ 90 วิ · หน้านี้สำคัญกับ ROPC · ย้ำ: Portal ไม่แตะ DB เกม ทุกอย่างผ่าน Gateway API ของ GP",en:"⏱ 90s · the key slide for ROPC · stress: the Portal never touches the game DB, everything goes through the GP-owned Gateway API",ko:"⏱ 90초 · ROPC에 가장 중요한 페이지 · 강조: Portal은 게임 DB를 건드리지 않고 GP의 Gateway API만 사용",ja:"⏱ 90秒 · ROPC向けの要のページ · 強調：PortalはゲームDBに触れず、GPのGateway API経由のみ",zh:"⏱ 90 秒 · 对 ROPC 最关键的一页 · 强调：Portal 不碰游戏数据库，一切经 GP 的 Gateway API"},
+n8:{th:"⏱ 90 วิ · ยกตัวอย่างเควสต์เซ็ต · ขาในเกมไม่เรียลไทม์ UI ต้องบอก · รางวัลตั้งได้ต่อเควสต์",en:"⏱ 90s · give the quest-set example · the in-game leg is not real time, the UI must say so · rewards are configured per quest",ko:"⏱ 90초 · 퀘스트 세트 예시 · 게임 단계는 실시간 아님, UI에 표시 · 보상은 퀘스트별 설정",ja:"⏱ 90秒 · クエストセットの例 · ゲーム側はリアルタイムでない旨をUIで明示 · 報酬はクエストごとに設定",zh:"⏱ 90 秒 · 举任务组例子 · 游戏线非实时，UI 需说明 · 奖励按任务配置"},
+n9:{th:"⏱ 60 วิ · ทำเอง 3 เกม/เดือน จาก 14 → 40 ภายใน ก.ค. 27 · ธ.ค. เคาะแค่ว่าต้องจ้างเพิ่มไหม",en:"⏱ 60s · in-house, 3 games a month, 14 → 40 by Jul 27 · in Dec decide only whether extra outsourcing is needed",ko:"⏱ 60초 · 자체 제작 월 3개, 14 → 27년 7월 40개 · 12월엔 추가 외주 여부만 결정",ja:"⏱ 60秒 · 自社で月3本、14 → 27年7月に40本 · 12月は追加外注の要否のみ決定",zh:"⏱ 60 秒 · 自研每月 3 款，14 → 27 年 7 月达 40 款 · 12 月只决定是否追加外包"},
+n10:{th:"⏱ 45 วิ · ภาพเพื่อน 4 คนในบ้านเดียวกัน · presence เริ่มสร้าง เม.ย. 27",en:"⏱ 45s · picture: 4 friends in one house · presence service starts Apr 27",ko:"⏱ 45초 · 한 집에 친구 4명 · presence 서비스 27년 4월 착수",ja:"⏱ 45秒 · 同じ家に友達4人 · プレゼンスサービスは27年4月着手",zh:"⏱ 45 秒 · 图：4 个好友在同一房内 · presence 服务 27 年 4 月启动"},
+n11:{th:"⏱ 45 วิ · เฟส 2 ไม่อยู่ในสโคปเดฟเสร็จ ส.ค. 27 · ต้นแบบ Companion แจกคนทดสอบแล้ว",en:"⏱ 45s · phase 2 is outside the Aug 27 dev-complete scope · the Companion prototype is already with testers",ko:"⏱ 45초 · 2단계는 27년 8월 개발 완료 범위 밖 · Companion 프로토타입은 테스터 배포 완료",ja:"⏱ 45秒 · フェーズ2は27年8月の開発完了スコープ外 · Companionプロトタイプはテスター配布済み",zh:"⏱ 45 秒 · 第二阶段不在 27 年 8 月开发完成范围内 · Companion 原型已交付测试者"},
+n12:{th:"⏱ 60 วิ · เดฟเสร็จต้น ส.ค. / เปิดปลาย ส.ค. คนละหมุด · บัฟเฟอร์เหลือไม่กี่สัปดาห์ ไต้หวัน ก.ค. เลื่อนไม่ได้",en:"⏱ 60s · dev complete early Aug and launch late Aug are separate milestones · only a few weeks of buffer, Taiwan in Jul cannot slip",ko:"⏱ 60초 · 8월 초 개발 완료와 8월 말 오픈은 별개 마일스톤 · 버퍼 몇 주뿐, 7월 대만은 지연 불가",ja:"⏱ 60秒 · 8月初の開発完了と8月末のローンチは別のマイルストーン · バッファは数週間、7月の台湾は遅らせられない",zh:"⏱ 60 秒 · 8 月初开发完成与 8 月底上线是两个里程碑 · 缓冲仅数周，7 月台湾不可延期"},
+n13:{th:"⏱ 60 วิ · ตัวเลขจาก log + แบบสอบถาม 43 ชุด · เคลมได้แค่ stress test ไม่ใช่ demand ของเว็บจริง",en:"⏱ 60s · numbers from logs + 43 survey responses · claim only a stress test, not demand for the live site",ko:"⏱ 60초 · 로그와 설문 43건 기준 · 스트레스 테스트로만 주장, 실제 사이트 수요로 확대 해석 금지",ja:"⏱ 60秒 · ログと43件の調査回答 · ストレステストとしてのみ主張、実サイトの需要とは言わない",zh:"⏱ 60 秒 · 数据来自日志与 43 份问卷 · 只能作为压力测试，不能当作正式站点需求"},
+n14:{th:"⏱ 90 วิ · ปิดด้วยสิ่งที่ขอจากคนในห้อง · ธ.ค. คือเส้นตายของทุกข้อ",en:"⏱ 90s · close with the asks for the people in the room · Dec is the deadline for every item",ko:"⏱ 90초 · 참석자에게 요청사항으로 마무리 · 모든 항목의 기한은 12월",ja:"⏱ 90秒 · 出席者への依頼で締める · すべて12月が期限",zh:"⏱ 90 秒 · 以对在场各方的请求收尾 · 所有事项以 12 月为截止"},
+n15:{th:"ขอบคุณ · เปิดรับคำถาม",en:"Thank you · open for questions",ko:"감사합니다 · 질문 받겠습니다",ja:"ありがとうございました · 質疑応答へ",zh:"谢谢 · 欢迎提问"}
+};
+
+var THEME = "day";
+function applyTheme(x){
+  THEME = x;
+  document.documentElement.setAttribute("data-theme", x);
+  var b = document.getElementById("themeBtn");
+  if (b) b.textContent = (x === "day") ? t("th_dark") : t("th_day");
+  try { localStorage.setItem("ropzProjDeckTheme", x); } catch (e) {}
+}
+function toggleTheme(){ applyTheme(THEME === "day" ? "dark" : "day"); }
+
+var LANG = "th";
+var slides = document.querySelectorAll(".slide"), i = 0;
+function t(k){ var e = L[k]; if (!e) return k; return e[LANG] || e.th || k; }
+function fit(){ var k = Math.min(innerWidth / 1920, innerHeight / 1080);
+  slides.forEach(function(s){ s.style.transform = "translate(-50%,-50%) scale(" + k + ")"; }); }
+function show(n){
+  i = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach(function(s, j){ s.classList.toggle("on", j === i); });
+  document.getElementById("note").textContent = t(slides[i].getAttribute("data-n"));
+  location.hash = "s" + (i + 1);
+  document.getElementById("navPrev").disabled = i === 0;
+  document.getElementById("navNext").disabled = i === slides.length - 1;
+  countUp(slides[i]);
+}
+var cuTimers = [];
+function countUp(s){
+  cuTimers.forEach(clearInterval); cuTimers = [];
+  if (!document.body.classList.contains("anim")) return;
+  s.querySelectorAll("[data-count]").forEach(function(el, idx){
+    var target = +el.getAttribute("data-count"), suf = el.getAttribute("data-suffix") || "";
+    var t0 = null, dur = 900, delay = 350 + idx * 120;
+    el.textContent = "0" + suf;
+    var tm = setInterval(function(){
+      if (t0 === null) { t0 = Date.now() + delay; }
+      var p = (Date.now() - t0) / dur; if (p < 0) p = 0;
+      if (p >= 1) { el.textContent = target + suf; clearInterval(tm); return; }
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * e) + suf;
+    }, 16);
+    cuTimers.push(tm);
+  });
+}
+function copySlide(){
+  var s = slides[i], lines = [];
+  s.querySelectorAll(".eyebrow,h1,h2,h3,h4,p,li,.km,.sub,.base,.kpi b,.kpi span,.kpi small,.ms b,.ms span,.msb b,.msb span,.msb small,.tl .ph div,.tile div,.legnote span").forEach(function(el){
+    var x = el.innerText.replace(/\s+/g, " ").trim();
+    if (x && lines.indexOf(x) < 0) lines.push(x);
+  });
+  var txt = "[" + t("cp_page") + " " + (i + 1) + "/" + slides.length + "]\n" + lines.join("\n") +
+            "\n\n" + t("cp_notes") + "\n" + t(s.getAttribute("data-n"));
+  var done = function(){
+    var b = document.getElementById("copyBtn");
+    b.textContent = t("btn_copied");
+    setTimeout(function(){ b.textContent = t("btn_copy"); }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt); done(); });
+  else { fallbackCopy(txt); done(); }
+}
+function fallbackCopy(x){ var ta = document.createElement("textarea"); ta.value = x;
+  document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} ta.remove(); }
+function render(){
+  var n = document.querySelectorAll("[data-i]"), j;
+  for (j = 0; j < n.length; j++) n[j].innerHTML = t(n[j].getAttribute("data-i"));
+  n = document.querySelectorAll("[data-t]");
+  for (j = 0; j < n.length; j++) n[j].title = t(n[j].getAttribute("data-t"));
+  document.getElementById("copyBtn").textContent = t("btn_copy");
+  var tb = document.getElementById("themeBtn");
+  if (tb) tb.textContent = (THEME === "day") ? t("th_dark") : t("th_day");
+  document.getElementById("note").textContent = t(slides[i].getAttribute("data-n"));
+  document.title = t("title");
+}
+function setLang(l){
+  LANG = l;
+  document.documentElement.setAttribute("lang", l === "zh" ? "zh-CN" : l);
+  var b = document.querySelectorAll(".langs button"), j;
+  for (j = 0; j < b.length; j++) b[j].className = (b[j].getAttribute("data-l") === l) ? "on" : "";
+  try { localStorage.setItem("ropzProjDeckLang", l); } catch (e) {}
+  render();
+}
+addEventListener("resize", fit); fit();
+addEventListener("keydown", function(e){
+  var tag = e.target && e.target.tagName;
+  if ((tag === "INPUT" || tag === "TEXTAREA")) return;
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") show(i + 1);
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") show(i - 1);
+  else if (e.key === "Home") show(0);
+  else if (e.key === "End") show(slides.length - 1);
+  else if (e.key === "n" || e.key === "N") document.body.classList.toggle("notes");
+  else if (e.key === "c" || e.key === "C") copySlide();
+  else if (e.key === "h" || e.key === "H") document.body.classList.toggle("clean");
+  else if (e.key === "d" || e.key === "D") toggleTheme();
+});
+/* ไม่มีคลิกที่ไหนก็เปลี่ยนหน้า — ใช้ปุ่ม ‹ › หรือคีย์ลูกศร เพื่อให้ลากเลือกข้อความได้ */
+function armAnim(){ document.body.classList.add("anim"); }
+document.addEventListener("visibilitychange", armAnim);
+(function init(){
+  var th = "day";
+  try { th = localStorage.getItem("ropzProjDeckTheme") || "day"; } catch (e) {}
+  applyTheme(th === "dark" ? "dark" : "day");
+  var b = document.querySelectorAll(".langs button"), j;
+  for (j = 0; j < b.length; j++)
+    b[j].onclick = (function(el){ return function(){ setLang(el.getAttribute("data-l")); }; })(b[j]);
+  var saved = "th";
+  var q = (location.search.match(/[?&]lang=(th|en|ko|ja|zh)/) || [])[1];
+  try { saved = q || localStorage.getItem("ropzProjDeckLang") || "th"; } catch (e) { saved = q || "th"; }
+  if (!L.title[saved]) saved = "th";
+  var m = /s(\d+)/.exec(location.hash);
+  i = m ? Math.max(0, Math.min(slides.length - 1, +m[1] - 1)) : 0;
+  setLang(saved);
+  show(i);
+  armAnim();
+})();
+</script>
+</body>
+</html>

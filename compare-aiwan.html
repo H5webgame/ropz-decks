@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- [KEEP] web-publish --><meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><!-- /[KEEP] -->
+<title>Aiwan vs RO PlayZone — Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root,html[data-theme="day"]{
+    --page:#dfe4ee;            /* เวทีรอบนอก */
+    --bg:#F3F5F9;              /* พื้นหน้าเว็บจำลอง */
+    --card:#FFFFFF;--line:#E3E8F2;--urlbg:#F1F4FA;
+    --nav:#1E5EE6;--navInk:#FFFFFF;
+    --ink:#0B2A5B;--hi:#2F7BFF;--dim:#4B5A75;--tint:#E8F0FF;
+    --yellow:#FFC53D;--pink:#FF5FA2;--green:#2ECC71;--red:#FF4D4D;
+    --frame-sh:0 30px 80px rgba(11,42,91,.18);
+    --card-sh:0 8px 24px rgba(11,42,91,.08);
+    --btn-bg:#ffffff;--btn-ink:#0B2A5B;--btn-line:#C9D6F0;--btn-sh:0 8px 22px rgba(11,42,91,.14);
+    --help:#6b7893;
+  }
+  html[data-theme="dark"]{
+    --page:#060b14;
+    --bg:#0B1220;
+    --card:#141C2E;--line:#263352;--urlbg:#1A2338;
+    --nav:#1E5EE6;--navInk:#FFFFFF;
+    --ink:#F2F6FF;--hi:#5B9CFF;--dim:#A9B6D3;--tint:#1B2A4A;
+    --yellow:#FFC53D;--pink:#FF5FA2;--green:#2ECC71;--red:#FF4D4D;
+    --frame-sh:0 30px 80px rgba(0,0,0,.6);
+    --card-sh:0 8px 24px rgba(0,0,0,.35);
+    --btn-bg:#141C2E;--btn-ink:#dbe8ff;--btn-line:#263352;--btn-sh:0 8px 24px rgba(0,0,0,.5);
+    --help:#7f93b8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--page);color:var(--ink);overflow:hidden;
+    font-family:Poppins,Kanit,"Noto Sans KR","Noto Sans JP","Noto Sans SC","Segoe UI",system-ui,sans-serif}
+  html[lang="th"] body{font-family:Kanit,Poppins,system-ui,sans-serif}
+  html[lang="ko"] body{font-family:"Noto Sans KR",Poppins,system-ui,sans-serif}
+  html[lang="ja"] body{font-family:"Noto Sans JP",Poppins,system-ui,sans-serif}
+  html[lang="zh-CN"] body{font-family:"Noto Sans SC",Poppins,system-ui,sans-serif}
+  #stage{position:fixed;inset:0}
+  .slide{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center;display:none;overflow:hidden;background:var(--page)}
+  .slide.on{display:block}
+  .slide,.slide *{user-select:text;-webkit-user-select:text}
+
+  /* ---------- กรอบเบราว์เซอร์ (ทุกหน้า) ---------- */
+  .frame{position:absolute;left:84px;top:54px;right:84px;bottom:54px;background:var(--bg);border-radius:26px;overflow:hidden;box-shadow:var(--frame-sh);border:1px solid var(--line)}
+  .bar{height:64px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 24px}
+  .dots{display:flex;gap:8px}
+  .dots i{width:14px;height:14px;border-radius:50%;display:block}
+  .dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+  .tab{display:flex;align-items:center;gap:10px;background:var(--urlbg);border-radius:10px;padding:7px 16px;font-size:18px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .tab img{width:26px;height:26px;border-radius:7px}
+  .tab .plus{color:var(--dim);margin-left:12px;font-weight:500}
+  .url{flex:1;max-width:560px;margin:0 auto;background:var(--urlbg);border-radius:999px;padding:8px 20px;font-size:17px;color:var(--dim);text-align:center}
+  .url b{color:var(--ink);font-weight:600}
+  .playnow{margin-left:auto;background:var(--nav);color:#fff;border-radius:12px;padding:10px 24px;font-size:18px;font-weight:700;white-space:nowrap}
+  .nav{height:66px;background:var(--nav);display:flex;align-items:center;gap:8px;padding:0 28px}
+  .nav .brand{display:flex;align-items:center;gap:12px;color:var(--navInk);font-weight:700;font-size:21px;margin-right:34px;white-space:nowrap}
+  .nav .brand img{width:42px;height:42px;border-radius:10px}
+  .nav span{color:var(--navInk);font-size:18px;font-weight:600;padding:8px 20px;border-radius:999px;white-space:nowrap}
+  .nav span.on{background:#fff;color:var(--nav)}
+  .body{position:absolute;left:0;right:0;top:130px;bottom:0;padding:44px 72px 70px}
+  .foot{position:absolute;left:72px;bottom:24px;font-size:14px;letter-spacing:.22em;color:var(--dim);font-weight:600}
+  .pg{position:absolute;right:72px;bottom:22px;font-size:16px;color:var(--dim);font-weight:600}
+
+  .eyebrow{font-size:15px;letter-spacing:.3em;color:var(--hi);font-weight:700;text-transform:uppercase;margin:0 0 10px}
+  h1{font-size:112px;line-height:1.02;margin:0;font-weight:800;letter-spacing:-.01em}
+  h2{font-size:56px;line-height:1.12;margin:0 0 10px;font-weight:800;letter-spacing:-.01em}
+  h2 em,h1 em,.hi{font-style:normal;color:var(--hi)}
+  .grad{background:linear-gradient(90deg,var(--hi) 0%,#7c5cff 60%,var(--pink) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  p.lead{font-size:24px;line-height:1.45;color:var(--dim);margin:0 0 26px;max-width:1500px;font-weight:500}
+  p.lead b{color:var(--ink)}
+  .chip{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.14em;padding:5px 14px;border-radius:999px;text-transform:uppercase;line-height:1}
+  .chip.b{background:var(--tint);color:var(--hi)} .chip.y{background:#FFF1C9;color:#8a5a00} .chip.p{background:#FFE3F0;color:#b4246a} .chip.g{background:#DDF7E7;color:#15763f} .chip.r{background:#FFE1E1;color:#b42020}
+  html[data-theme="dark"] .chip.y{background:#3a2d12;color:var(--yellow)} html[data-theme="dark"] .chip.p{background:#3a1a2a;color:var(--pink)} html[data-theme="dark"] .chip.g{background:#13301f;color:var(--green)} html[data-theme="dark"] .chip.r{background:#3a1515;color:var(--red)}
+
+  /* ---------- ปก ---------- */
+  .cover .body{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:20px}
+  .cover .logo{width:250px;height:250px;border-radius:50%;box-shadow:0 20px 50px rgba(11,42,91,.22);margin:18px 0 26px}
+  .cover .km{margin-top:14px;font-size:30px;font-weight:600;color:var(--dim);max-width:1300px;line-height:1.4}
+  .cover .km b{color:var(--ink)}
+  .cover .sub{margin-top:22px;font-size:15px;color:var(--dim);letter-spacing:.3em;font-weight:600;text-transform:uppercase}
+  .cover .deco{position:absolute;width:150px;opacity:.95;pointer-events:none}
+  .cover .deco.d1{left:230px;top:130px;width:170px} .cover .deco.d2{right:220px;top:120px;width:210px} .cover .deco.d3{left:400px;bottom:120px;width:120px} .cover .deco.d4{right:420px;bottom:140px;width:120px}
+
+  /* ---------- ซ้ายข้อความ ขวาภาพ ---------- */
+  .split{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;height:calc(100% - 30px)}
+  .shot{border-radius:22px;overflow:hidden;box-shadow:var(--card-sh);border:1px solid var(--line);background:#0b1733;position:relative}
+  .shot img{width:100%;display:block;max-height:600px;object-fit:cover}
+  .shot .chipbox{position:absolute;left:18px;top:18px;display:flex;gap:8px}
+  .bul{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+  .bul li{display:flex;gap:16px;align-items:flex-start;font-size:25px;line-height:1.4;color:var(--ink)}
+  .bul li .n{flex:none;width:40px;height:40px;border-radius:50%;background:var(--nav);color:#fff;font-weight:800;font-size:19px;display:grid;place-items:center;margin-top:4px}
+  .bul li:nth-child(2) .n{background:var(--yellow);color:#4a3400} .bul li:nth-child(3) .n{background:var(--pink)} .bul li:nth-child(4) .n{background:var(--green);color:#0d3b22}
+  .bul b{color:var(--hi)}
+
+  /* ---------- flow 5 ขั้น ---------- */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:22px}
+  .st{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 22px 20px;box-shadow:var(--card-sh);min-height:470px}
+  .st .no{width:46px;height:46px;border-radius:50%;background:var(--nav);color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;margin-bottom:12px}
+  .st:nth-child(2) .no{background:var(--yellow);color:#4a3400}.st:nth-child(3) .no{background:var(--pink)}.st:nth-child(4) .no{background:var(--green);color:#0d3b22}.st:nth-child(5) .no{background:#7c5cff}
+  .st img{height:150px;width:100%;display:block;margin:0 auto 14px;object-fit:contain;border-radius:14px}
+  .st img.cover{object-fit:cover}
+  .st h3{margin:0 0 8px;font-size:25px;font-weight:700;line-height:1.2}
+  .st p{margin:0;font-size:18.5px;color:var(--dim);line-height:1.42}
+  .st:after{content:"›";position:absolute;right:-19px;top:44%;font-size:48px;color:var(--hi);font-weight:800}
+  .st:last-child:after{content:""}
+
+  /* ---------- 4 เสา ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:18px}
+  .pl{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 24px;box-shadow:var(--card-sh);min-height:430px;border-top:6px solid var(--nav)}
+  .pl:nth-child(2){border-top-color:var(--yellow)}.pl:nth-child(3){border-top-color:var(--pink)}.pl:nth-child(4){border-top-color:var(--green)}
+  .pl .ic{font-size:50px;line-height:1;margin-bottom:12px}
+  .pl h3{margin:0 0 8px;font-size:28px;font-weight:800}
+  .pl h3 small{display:block;font-size:13px;color:var(--hi);letter-spacing:.24em;font-weight:800;margin-bottom:6px}
+  .pl p{margin:0;font-size:19.5px;color:var(--dim);line-height:1.45}
+  .base{margin-top:18px;background:var(--tint);border-radius:16px;padding:14px 24px;font-size:20px;line-height:1.4;color:var(--ink)}
+  .base b{color:var(--hi)}
+
+  /* ---------- NPC 3 ขา ---------- */
+  .legs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:18px}
+  .leg{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 28px;box-shadow:var(--card-sh);min-height:400px}
+  .leg .tag{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--nav);color:#fff;font-weight:800;font-size:26px;margin-bottom:14px}
+  .leg:nth-child(2) .tag{background:var(--yellow);color:#4a3400}.leg:nth-child(3) .tag{background:var(--pink)}
+  .leg h3{margin:0 0 10px;font-size:29px;font-weight:800}
+  .leg p{margin:0;font-size:20.5px;color:var(--dim);line-height:1.45}
+  .leg p b{color:var(--ink)}
+  .legnote{margin-top:18px;font-size:20px;color:var(--dim);display:flex;gap:22px;align-items:center;background:var(--tint);border-radius:16px;padding:10px 24px}
+  .legnote img{height:84px}
+
+  /* ---------- เควสต์ ---------- */
+  .quest{display:grid;grid-template-columns:1fr 80px 1fr;gap:16px;align-items:stretch;margin-top:10px}
+  .qcol{display:grid;gap:14px}
+  .qbox{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 24px;box-shadow:var(--card-sh)}
+  .qbox h3{margin:0 0 6px;font-size:26px;font-weight:800}
+  .qbox h3 small{display:block;font-size:12px;letter-spacing:.24em;color:var(--hi);font-weight:800;margin-bottom:4px}
+  .qbox p{margin:0;font-size:19px;color:var(--dim);line-height:1.42}
+  .qbox.set{background:var(--tint);border-color:transparent}
+  .qarrow{display:grid;place-items:center;font-size:60px;color:var(--hi);font-weight:800}
+  .qnote{margin-top:14px;font-size:19.5px;color:var(--dim);line-height:1.45}
+  .qnote b{color:var(--ink)}
+
+  /* ---------- มินิเกม ---------- */
+  .tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:6px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--card-sh);position:relative}
+  .tile img{width:100%;height:150px;object-fit:cover;display:block}
+  .tile div{padding:10px 14px;font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tile .chip{position:absolute;left:10px;top:10px}
+  .mgstats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
+  .ms{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 20px;text-align:center;box-shadow:var(--card-sh)}
+  .ms b{display:block;font-size:56px;line-height:1;font-weight:800;color:var(--hi)}
+  .ms span{display:block;margin-top:6px;font-size:18px;color:var(--dim);font-weight:500}
+
+  /* ---------- ไทม์ไลน์ ---------- */
+  .tl{margin-top:22px}
+  .tl .bar2{display:flex;height:22px;border-radius:8px;overflow:hidden;gap:4px}
+  .tl .bar2 div{height:100%;border-radius:6px;transform-origin:left}
+  .tl .b0{background:#8d97a8;width:20%} .tl .b1{background:var(--nav);width:30%} .tl .b2{background:var(--yellow);width:30%} .tl .b3{background:var(--pink);width:20%}
+  .tl .ph{display:grid;grid-template-columns:20% 30% 30% 20%;margin-top:12px}
+  .tl .ph div{padding:0 10px;font-size:19px;line-height:1.3}
+  .tl .ph b{display:block;font-size:22px;font-weight:800}
+  .tl .ph small{display:block;color:var(--dim);font-size:17px}
+  .msrow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+  .msb{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--card-sh);min-height:230px}
+  .msb b{display:block;font-size:40px;color:var(--hi);line-height:1;font-weight:800}
+  .msb span{display:block;font-size:21px;font-weight:700;margin-top:8px}
+  .msb small{display:block;font-size:17px;color:var(--dim);margin-top:6px;line-height:1.35}
+  .msb.go{background:var(--nav);color:#fff;border-color:transparent}
+  .msb.go b,.msb.go small{color:#fff}
+
+  /* ---------- KPI ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:4px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;text-align:center;box-shadow:var(--card-sh)}
+  .kpi b{display:block;font-size:70px;line-height:1;font-weight:800;color:var(--hi)}
+  .kpi span{display:block;margin-top:8px;font-size:21px;font-weight:700}
+  .kpi small{display:block;margin-top:6px;font-size:17px;color:var(--dim);line-height:1.35}
+  .festa{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;margin-top:22px}
+  .festa .shot img{max-height:300px}
+
+  /* ---------- สิ่งที่ต้องการ ---------- */
+  .final{display:grid;gap:12px;margin-top:4px}
+  .fi{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 24px;box-shadow:var(--card-sh)}
+  .fi .no{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;background:var(--nav);color:#fff}
+  .fi:nth-child(2) .no{background:var(--yellow);color:#4a3400}.fi:nth-child(3) .no{background:var(--pink)}.fi:nth-child(4) .no{background:var(--green);color:#0d3b22}.fi:nth-child(5) .no{background:#7c5cff}
+  .fi p{margin:0;font-size:21.5px;line-height:1.42;padding-top:7px}
+  .fi p b{color:var(--hi)}
+
+  /* ---------- ปุ่มคุม ---------- */
+  .note{position:fixed;left:0;right:0;bottom:0;background:#0f1a33;color:#ffe9b0;font-size:22px;line-height:1.5;padding:18px 40px 22px;border-top:2px solid var(--hi);display:none;max-height:42vh;overflow:auto;white-space:pre-wrap;z-index:700}
+  body.notes .note{display:block}
+  .help{position:fixed;right:16px;top:12px;color:var(--help);font-size:13px;opacity:.75;font-family:system-ui}
+  .navbtn{position:fixed;bottom:18px;z-index:500;width:64px;height:64px;border-radius:50%;border:2px solid var(--btn-line);background:var(--btn-bg);color:var(--hi);font-size:34px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:var(--btn-sh);transition:transform .12s,background .12s;font-family:system-ui}
+  .navbtn:hover{background:var(--nav);color:#fff;transform:scale(1.08)}
+  .navbtn:disabled{opacity:.25;cursor:default;transform:none}
+  .navbtn.prev{left:18px} .navbtn.next{right:18px}
+  .copy{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:500;border:1px solid var(--btn-line);background:var(--btn-bg);color:var(--btn-ink);font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy:hover{background:var(--nav);color:#fff}
+  .langs{position:fixed;left:16px;top:12px;z-index:600;display:flex;gap:5px}
+  .langs button,.themeBtn{font:inherit;font-size:13px;line-height:1;color:var(--btn-ink);background:var(--btn-bg);border:1px solid var(--btn-line);border-radius:8px;padding:7px 11px;cursor:pointer;box-shadow:var(--btn-sh)}
+  .langs button:hover{border-color:var(--hi);color:var(--hi)}
+  .langs button.on{background:var(--nav);border-color:var(--nav);color:#fff;font-weight:700}
+  .themeBtn{position:fixed;right:16px;top:40px;z-index:600}
+  body.clean .navbtn,body.clean .copy,body.clean .help,body.clean .themeBtn,body.clean .langs{display:none}
+
+  /* ---------- แอนิเมชัน ---------- */
+  @keyframes slFade{from{opacity:0}to{opacity:1}}
+  @keyframes slRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+  @keyframes slPop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+  @keyframes slLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  @keyframes slRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  @keyframes slFrame{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+  @keyframes slWide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.25);opacity:.7}}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+
+  body.anim .slide.on .frame{animation:slFrame .5s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .nav span.on{animation:slPop .45s .35s cubic-bezier(.2,.8,.3,1.2) both}
+  body.anim .slide.on .body>*{animation:slRise .55s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .body>*:nth-child(1){animation-delay:.18s}
+  body.anim .slide.on .body>*:nth-child(2){animation-delay:.28s}
+  body.anim .slide.on .body>*:nth-child(3){animation-delay:.38s}
+  body.anim .slide.on .body>*:nth-child(4){animation-delay:.48s}
+  body.anim .slide.on .body>*:nth-child(5){animation-delay:.58s}
+  body.anim .slide.on .cover .logo{animation:slPop .7s .2s cubic-bezier(.2,.8,.3,1.15) both,floaty 4s 1s ease-in-out infinite}
+  body.anim .slide.on .cover h1{animation:slRise .6s .4s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .grad{background-size:200% 100%;animation:shimmer 6s linear infinite}
+  body.anim .slide.on .cover .deco{animation:slPop .6s both,bob 5s 1s ease-in-out infinite}
+  body.anim .slide.on .cover .deco.d1{animation-delay:.5s,1s}.body.anim .slide.on .cover .deco.d2{animation-delay:.6s,1.4s}
+  body.anim .slide.on .cover .deco.d3{animation-delay:.7s,1.8s}body.anim .slide.on .cover .deco.d4{animation-delay:.8s,2.2s}
+  body.anim .slide.on .st{animation:slPop .5s cubic-bezier(.2,.8,.3,1.1) both}
+  body.anim .slide.on .st:nth-child(1){animation-delay:.35s}body.anim .slide.on .st:nth-child(2){animation-delay:.5s}body.anim .slide.on .st:nth-child(3){animation-delay:.65s}body.anim .slide.on .st:nth-child(4){animation-delay:.8s}body.anim .slide.on .st:nth-child(5){animation-delay:.95s}
+  body.anim .slide.on .st:after{animation:slFade .4s both;animation-delay:inherit}
+  body.anim .slide.on .pl,body.anim .slide.on .leg,body.anim .slide.on .tile,body.anim .slide.on .kpi,body.anim .slide.on .msb,body.anim .slide.on .ms,body.anim .slide.on .fi{animation:slRise .5s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .pl:nth-child(1),body.anim .slide.on .leg:nth-child(1),body.anim .slide.on .tile:nth-child(1),body.anim .slide.on .kpi:nth-child(1),body.anim .slide.on .msb:nth-child(1),body.anim .slide.on .ms:nth-child(1),body.anim .slide.on .fi:nth-child(1){animation-delay:.35s}
+  body.anim .slide.on .pl:nth-child(2),body.anim .slide.on .leg:nth-child(2),body.anim .slide.on .tile:nth-child(2),body.anim .slide.on .kpi:nth-child(2),body.anim .slide.on .msb:nth-child(2),body.anim .slide.on .ms:nth-child(2),body.anim .slide.on .fi:nth-child(2){animation-delay:.47s}
+  body.anim .slide.on .pl:nth-child(3),body.anim .slide.on .leg:nth-child(3),body.anim .slide.on .tile:nth-child(3),body.anim .slide.on .kpi:nth-child(3),body.anim .slide.on .msb:nth-child(3),body.anim .slide.on .ms:nth-child(3),body.anim .slide.on .fi:nth-child(3){animation-delay:.59s}
+  body.anim .slide.on .pl:nth-child(4),body.anim .slide.on .tile:nth-child(4),body.anim .slide.on .kpi:nth-child(4),body.anim .slide.on .msb:nth-child(4),body.anim .slide.on .ms:nth-child(4),body.anim .slide.on .fi:nth-child(4){animation-delay:.71s}
+  body.anim .slide.on .tile:nth-child(5),body.anim .slide.on .fi:nth-child(5){animation-delay:.83s}
+  body.anim .slide.on .tile:nth-child(6){animation-delay:.95s}
+  body.anim .slide.on .bul li{animation:slLeft .5s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .bul li:nth-child(1){animation-delay:.4s}body.anim .slide.on .bul li:nth-child(2){animation-delay:.55s}body.anim .slide.on .bul li:nth-child(3){animation-delay:.7s}body.anim .slide.on .bul li:nth-child(4){animation-delay:.85s}
+  body.anim .slide.on .split .shot{animation:slRight .6s .45s cubic-bezier(.2,.75,.3,1) both}
+  body.anim .slide.on .qcol:first-child .qbox{animation:slLeft .5s both}
+  body.anim .slide.on .qcol:last-child .qbox{animation:slRight .5s both}
+  body.anim .slide.on .qbox:nth-child(1){animation-delay:.4s}body.anim .slide.on .qbox:nth-child(2){animation-delay:.55s}body.anim .slide.on .qbox:nth-child(3){animation-delay:.7s}
+  body.anim .slide.on .qarrow{animation:slFade .4s .9s both,pulse 1.6s 1.3s ease-in-out infinite}
+  body.anim .slide.on .tl .bar2 div{animation:slWide .7s cubic-bezier(.2,.8,.3,1) both}
+  body.anim .slide.on .tl .b0{animation-delay:.4s}body.anim .slide.on .tl .b1{animation-delay:.6s}body.anim .slide.on .tl .b2{animation-delay:.8s}body.anim .slide.on .tl .b3{animation-delay:1s}
+  body.anim .slide.on .legnote{animation-delay:.95s}
+  body.anim .slide.on .base{animation-delay:.9s}
+  body.anim .slide.on .mgstats{animation-delay:.9s}
+  @media (prefers-reduced-motion:reduce),print{.slide.on,.slide.on *{animation:none !important}}
+
+  /* ---------- เพิ่มสำหรับเด็คเปรียบเทียบ ---------- */
+  .aiwan{color:#ff7a1a;font-weight:800}
+  .vs{display:grid;grid-template-columns:1fr 70px 1fr;gap:18px;align-items:center;margin-top:10px}
+  .vs .mid{font-size:34px;font-weight:800;color:var(--dim);text-align:center}
+  .side{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 26px;box-shadow:var(--card-sh);min-height:560px}
+  .side h3{margin:0 0 12px;font-size:30px;font-weight:800}
+  .side h3 small{display:block;font-size:12px;letter-spacing:.24em;font-weight:800;margin-bottom:4px}
+  .side.a h3 small{color:#ff7a1a}.side.r h3 small{color:var(--hi)}
+  .side .bul li{font-size:21px;gap:12px}
+  .side .bul li .n{width:32px;height:32px;font-size:15px;margin-top:2px}
+  .side .bul{gap:12px}
+  .shots4{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  .shots4 .shot img{max-height:250px}
+  .cap{position:absolute;left:14px;bottom:12px;background:rgba(11,42,91,.82);color:#fff;font-size:16px;font-weight:700;padding:5px 12px;border-radius:999px}
+  table.cmp{width:100%;border-collapse:separate;border-spacing:0;margin-top:6px;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--card-sh)}
+  table.cmp th{background:var(--tint);font-size:19px;font-weight:800;padding:12px 18px;text-align:left;color:var(--ink)}
+  table.cmp th.a{color:#ff7a1a} table.cmp th.r{color:var(--hi)}
+  table.cmp td{padding:10px 18px;font-size:18.5px;line-height:1.35;border-top:1px solid var(--line);vertical-align:top;color:var(--ink)}
+  table.cmp td.k{font-weight:700;width:170px;color:var(--dim)}
+  table.cmp td.a{width:42%}
+  .navmock{display:flex;align-items:center;gap:6px;background:var(--nav);border-radius:14px;padding:12px 16px;margin:10px 0 14px}
+  .navmock.o{background:#ffffff;border:1px solid var(--line)}
+  .navmock span{font-size:16px;font-weight:700;color:#fff;padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .navmock.o span{color:#1f2a44}
+  .navmock span.on{background:#fff;color:var(--nav)}
+  .navmock.o span.on{background:#e9f0ff;color:var(--nav)}
+  .navmock .lg{font-weight:800;margin-right:10px;font-size:18px}
+  .navmock.o .lg{color:#ff7a1a}
+  .why{font-size:20px;color:var(--dim);line-height:1.45}
+  .why b{color:var(--ink)}
+  .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:14px}
+  .c4{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 22px;box-shadow:var(--card-sh);min-height:420px;border-top:6px solid var(--nav)}
+  .c4:nth-child(2){border-top-color:var(--yellow)}.c4:nth-child(3){border-top-color:var(--pink)}.c4:nth-child(4){border-top-color:var(--green)}
+  .c4 .ic{font-size:44px;margin-bottom:10px}
+  .c4 h3{margin:0 0 8px;font-size:25px;font-weight:800}
+  .c4 p{margin:0;font-size:19px;color:var(--dim);line-height:1.45}
+  .c4 p b{color:var(--ink)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:10px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 28px;box-shadow:var(--card-sh);min-height:520px}
+  .box.no{border-top:6px solid var(--red)} .box.yes{border-top:6px solid var(--green)}
+  .box h3{margin:0 0 14px;font-size:28px;font-weight:800}
+  .box .bul li{font-size:21px}
+  body.anim .slide.on .side.a{animation:slLeft .55s .35s both}body.anim .slide.on .side.r{animation:slRight .55s .45s both}
+  body.anim .slide.on .vs .mid{animation:slPop .5s .7s both}
+  body.anim .slide.on table.cmp tr{animation:slRise .45s both}
+  body.anim .slide.on table.cmp tr:nth-child(1){animation-delay:.35s}body.anim .slide.on table.cmp tr:nth-child(2){animation-delay:.42s}body.anim .slide.on table.cmp tr:nth-child(3){animation-delay:.49s}body.anim .slide.on table.cmp tr:nth-child(4){animation-delay:.56s}body.anim .slide.on table.cmp tr:nth-child(5){animation-delay:.63s}body.anim .slide.on table.cmp tr:nth-child(6){animation-delay:.70s}body.anim .slide.on table.cmp tr:nth-child(7){animation-delay:.77s}body.anim .slide.on table.cmp tr:nth-child(8){animation-delay:.84s}
+  body.anim .slide.on .c4{animation:slRise .5s both}body.anim .slide.on .c4:nth-child(1){animation-delay:.35s}body.anim .slide.on .c4:nth-child(2){animation-delay:.47s}body.anim .slide.on .c4:nth-child(3){animation-delay:.59s}body.anim .slide.on .c4:nth-child(4){animation-delay:.71s}
+  body.anim .slide.on .shots4 .shot{animation:slPop .5s both}body.anim .slide.on .shots4 .shot:nth-child(1){animation-delay:.35s}body.anim .slide.on .shots4 .shot:nth-child(2){animation-delay:.47s}body.anim .slide.on .shots4 .shot:nth-child(3){animation-delay:.59s}body.anim .slide.on .shots4 .shot:nth-child(4){animation-delay:.71s}
+  body.anim .slide.on .box.no{animation:slLeft .55s .35s both}body.anim .slide.on .box.yes{animation:slRight .55s .45s both}
+</style>
+</head>
+<body>
+<div class="langs">
+  <button data-l="th">ไทย</button><button data-l="en">EN</button><button data-l="ko">한국어</button>
+</div>
+<button class="themeBtn" id="themeBtn" onclick="toggleTheme()"></button>
+<div class="help" data-i="help"></div>
+<div id="stage">
+
+<!-- 1 ปก -->
+<section class="slide cover" data-n="n1">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone · Compare<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / compare / aiwan</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="c_eyebrow"></p>
+      <h1><span class="aiwan">Aiwan</span> <span style="color:var(--dim);font-size:70px">vs</span> <span class="grad">RO PlayZone</span></h1>
+      <img class="logo" src="compare-aiwan-img/ropz_logo.png" alt="RO PlayZone">
+      <div class="km" data-i="c_km"></div>
+      <div class="sub" data-i="c_sub"></div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div>
+  </div>
+</section>
+
+<!-- 2 Aiwan คืออะไร -->
+<section class="slide" data-n="n2">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Aiwan · Home<span class="plus">+</span></div><div class="url">🔒 <b>pre.aiwan.com</b> / home</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k2"></p>
+      <h2 data-i="h2"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="a1"></span></li><li><span class="n">2</span><span data-i="a2"></span></li><li><span class="n">3</span><span data-i="a3"></span></li><li><span class="n">4</span><span data-i="a4"></span></li></ul>
+        <div class="shot"><img src="compare-aiwan-img/aiwan_home.jpg" alt=""><div class="chipbox"><span class="chip y">pre.aiwan.com</span></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">2</div>
+  </div>
+</section>
+
+<!-- 3 ระบบนิเวศ Aiwan -->
+<section class="slide" data-n="n3">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Aiwan · Pages<span class="plus">+</span></div><div class="url">🔒 <b>pre.aiwan.com</b> / games · shorts · community · developers</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k3"></p>
+      <h2 data-i="h3"></h2>
+      <div class="shots4">
+        <div class="shot"><img src="compare-aiwan-img/aiwan_games.jpg" alt=""><div class="cap" data-i="s3a"></div></div>
+        <div class="shot"><img src="compare-aiwan-img/aiwan_shorts.jpg" alt=""><div class="cap" data-i="s3b"></div></div>
+        <div class="shot"><img src="compare-aiwan-img/aiwan_community.jpg" alt=""><div class="cap" data-i="s3c"></div></div>
+        <div class="shot"><img src="compare-aiwan-img/aiwan_dev.jpg" alt=""><div class="cap" data-i="s3d"></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">3</div>
+  </div>
+</section>
+
+<!-- 4 ROPZ คืออะไร -->
+<section class="slide" data-n="n4">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone · My House<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / my-house</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span>Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span class="on">My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k4"></p>
+      <h2 data-i="h4"></h2>
+      <div class="split">
+        <ul class="bul"><li><span class="n">1</span><span data-i="r1"></span></li><li><span class="n">2</span><span data-i="r2"></span></li><li><span class="n">3</span><span data-i="r3"></span></li><li><span class="n">4</span><span data-i="r4"></span></li></ul>
+        <div class="shot"><img src="compare-aiwan-img/myhouse_room.png" alt=""><div class="chipbox"><span class="chip g">● Live mockup</span></div></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">4</div>
+  </div>
+</section>
+
+<!-- 5 ตารางเทียบ -->
+<section class="slide" data-n="n5">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Compare · Table<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / compare / table</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k5"></p>
+      <h2 data-i="h5"></h2>
+      <table class="cmp">
+        <tr><th data-i="t_dim"></th><th class="a">Aiwan</th><th class="r">RO PlayZone</th></tr>
+        <tr><td class="k" data-i="t1"></td><td class="a" data-i="t1a"></td><td data-i="t1r"></td></tr>
+        <tr><td class="k" data-i="t2"></td><td class="a" data-i="t2a"></td><td data-i="t2r"></td></tr>
+        <tr><td class="k" data-i="t3"></td><td class="a" data-i="t3a"></td><td data-i="t3r"></td></tr>
+        <tr><td class="k" data-i="t4"></td><td class="a" data-i="t4a"></td><td data-i="t4r"></td></tr>
+        <tr><td class="k" data-i="t5"></td><td class="a" data-i="t5a"></td><td data-i="t5r"></td></tr>
+        <tr><td class="k" data-i="t6"></td><td class="a" data-i="t6a"></td><td data-i="t6r"></td></tr>
+        <tr><td class="k" data-i="t7"></td><td class="a" data-i="t7a"></td><td data-i="t7r"></td></tr>
+        <tr><td class="k" data-i="t8"></td><td class="a" data-i="t8a"></td><td data-i="t8r"></td></tr>
+      </table>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">5</div>
+  </div>
+</section>
+
+<!-- 6 โครงหน้าเว็บ -->
+<section class="slide" data-n="n6">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Compare · Structure<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / compare / structure</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k6"></p>
+      <h2 data-i="h6"></h2>
+      <div class="vs">
+        <div class="side a">
+          <h3><small>AIWAN</small><span data-i="s6a"></span></h3>
+          <div class="navmock o"><span class="lg">Aiwan</span><span class="on">Home</span><span>Games</span><span>Shorts</span><span>Community</span></div>
+          <p class="why" data-i="w6a"></p>
+          <ul class="bul"><li><span class="n">1</span><span data-i="w6a1"></span></li><li><span class="n">2</span><span data-i="w6a2"></span></li><li><span class="n">3</span><span data-i="w6a3"></span></li></ul>
+        </div>
+        <div class="mid">VS</div>
+        <div class="side r">
+          <h3><small>RO PLAYZONE</small><span data-i="s6r"></span></h3>
+          <div class="navmock"><span class="lg">RO PlayZone</span><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span></div>
+          <p class="why" data-i="w6r"></p>
+          <ul class="bul"><li><span class="n">1</span><span data-i="w6r1"></span></li><li><span class="n">2</span><span data-i="w6r2"></span></li><li><span class="n">3</span><span data-i="w6r3"></span></li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">6</div>
+  </div>
+</section>
+
+<!-- 7 ควรหยิบมาใช้ -->
+<section class="slide" data-n="n7">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Compare · Learn<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / compare / learn</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k7"></p>
+      <h2 data-i="h7"></h2>
+      <div class="cards4">
+        <div class="c4"><div class="ic">🧩</div><h3 data-i="l1t"></h3><p data-i="l1d"></p></div>
+        <div class="c4"><div class="ic">🔑</div><h3 data-i="l2t"></h3><p data-i="l2d"></p></div>
+        <div class="c4"><div class="ic">📝</div><h3 data-i="l3t"></h3><p data-i="l3d"></p></div>
+        <div class="c4"><div class="ic">🎬</div><h3 data-i="l4t"></h3><p data-i="l4d"></p></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">7</div>
+  </div>
+</section>
+
+<!-- 8 ไม่เลียนแบบ / จุดต่าง -->
+<section class="slide" data-n="n8">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Compare · Position<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / compare / position</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k8"></p>
+      <h2 data-i="h8"></h2>
+      <div class="two">
+        <div class="box no"><h3 data-i="no_t"></h3><ul class="bul"><li><span class="n">1</span><span data-i="no1"></span></li><li><span class="n">2</span><span data-i="no2"></span></li><li><span class="n">3</span><span data-i="no3"></span></li></ul></div>
+        <div class="box yes"><h3 data-i="yes_t"></h3><ul class="bul"><li><span class="n">1</span><span data-i="yes1"></span></li><li><span class="n">2</span><span data-i="yes2"></span></li><li><span class="n">3</span><span data-i="yes3"></span></li></ul></div>
+      </div>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">8</div>
+  </div>
+</section>
+
+<!-- 9 คำถามที่ต้องเคลียร์ -->
+<section class="slide" data-n="n9">
+  <div class="frame">
+    <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="tab"><img src="compare-aiwan-img/ropz_logo.png" alt="">Compare · Open questions<span class="plus">+</span></div><div class="url">🔒 <b>roplayzone</b> / compare / questions</div><div class="playnow">▶ Play Now</div></div>
+    <div class="nav"><div class="brand"><img src="compare-aiwan-img/ropz_logo.png" alt="">RO PlayZone</div><span class="on">Home</span><span>World</span><span>Play</span><span>Earn</span><span>Cross-Play</span><span>Quests</span><span>My House</span><span>Friends</span><span>Games</span></div>
+    <div class="body">
+      <p class="eyebrow" data-i="k9"></p>
+      <h2 data-i="h9"></h2>
+      <div class="final">
+        <div class="fi"><div class="no">1</div><p data-i="q1"></p></div>
+        <div class="fi"><div class="no">2</div><p data-i="q2"></p></div>
+        <div class="fi"><div class="no">3</div><p data-i="q3"></p></div>
+        <div class="fi"><div class="no">4</div><p data-i="q4"></p></div>
+      </div>
+      <p class="qnote" data-i="q_sum"></p>
+    </div>
+    <div class="foot">RO PLAYZONE · GGT GAME STUDIO</div><div class="pg">9</div>
+  </div>
+</section>
+
+</div>
+<div class="note" id="note"></div>
+<button class="navbtn prev" id="navPrev" data-t="btn_prev" onclick="show(i-1)">‹</button>
+<button class="navbtn next" id="navNext" data-t="btn_next" onclick="show(i+1)">›</button>
+<button class="copy" id="copyBtn" data-t="btn_copy_t" onclick="copySlide()"></button>
+
+<script>
+var L = {
+title:{th:"Aiwan vs RO PlayZone — เปรียบเทียบ",en:"Aiwan vs RO PlayZone — Comparison",ko:"Aiwan vs RO PlayZone — 비교"},
+help:{th:"← → เปลี่ยนหน้า · N โน้ต · C คัดลอก · D ธีม · H ซ่อนปุ่ม",en:"← → slide · N notes · C copy · D theme · H hide buttons",ko:"← → 페이지 · N 노트 · C 복사 · D 테마 · H 버튼 숨김"},
+c_eyebrow:{th:"มองคู่เทียบ · สำรวจ pre.aiwan.com เมื่อ 12 พ.ย. 2026",en:"Competitive look · pre.aiwan.com surveyed 12 Nov 2026",ko:"경쟁 분석 · 2026년 11월 12일 pre.aiwan.com 조사"},
+c_km:{th:"คนละประเภทผลิตภัณฑ์: Aiwan คือ<b>ร้านกระจายเกม</b> ส่วน ROPZ คือ<b>บ้านของตัวละคร RO PC</b> ซ้อนกันแค่ชั้นมินิเกม Poring",en:"Different products: Aiwan is a <b>game distribution store</b>, ROPZ is a <b>home for the RO PC character</b>. They overlap only on Poring mini games",ko:"다른 종류의 제품: Aiwan은 <b>게임 유통 스토어</b>, ROPZ는 <b>RO PC 캐릭터의 집</b>. Poring 미니게임에서만 겹침"},
+c_sub:{th:"เอกสารภายใน · GGT Game Studio · พฤศจิกายน 2026",en:"Internal · GGT Game Studio · November 2026",ko:"내부 자료 · GGT Game Studio · 2026년 11월"},
+
+k2:{th:"Aiwan คืออะไร",en:"What is Aiwan",ko:"Aiwan이란"},
+h2:{th:"แพลตฟอร์ม<em>กระจายเว็บเกม</em>แบบ Steam-lite",en:"A Steam-lite <em>web game distribution</em> platform",ko:"Steam-lite 방식의 <em>웹게임 유통</em> 플랫폼"},
+a1:{th:"สโลแกน: <b>the game distribution platform connecting players and developers</b> — เป้าคือจำนวนเกมและการซื้อในเกม",en:"Tagline: <b>the game distribution platform connecting players and developers</b> — the goal is game count and in-game purchases",ko:"슬로건: <b>플레이어와 개발자를 잇는 게임 유통 플랫폼</b> — 목표는 게임 수와 인게임 결제"},
+a2:{th:"18 เกม (12 พ.ย.): นำด้วย <b>Ragnarok Twilight</b> (RO idle) และ Path of Destiny ตามด้วยมินิเกม Poring 10 กว่าเกม",en:"18 games (12 Nov): led by <b>Ragnarok Twilight</b> (RO idle) and Path of Destiny, then 10+ Poring mini games",ko:"게임 18개 (11/12): <b>Ragnarok Twilight</b>(RO 방치형)와 Path of Destiny가 선두, 이어 Poring 미니게임 10여 개"},
+a3:{th:"เข้าเว็บแล้วได้บัญชี <b>Guest อัตโนมัติ</b> ผูกภายหลังได้ 7 ช่องทาง: Email · Google · Apple · Facebook · Line · X · Discord",en:"A <b>guest account is created automatically</b>; link later via 7 channels: Email · Google · Apple · Facebook · Line · X · Discord",ko:"접속 즉시 <b>게스트 계정 자동 생성</b>, 이후 7개 채널로 연동: Email · Google · Apple · Facebook · Line · X · Discord"},
+a4:{th:"ยังเป็น environment ทดสอบ (pre.) ยอดวิว Shorts หลักหน่วย และมี user ทดสอบ XSS ค้างในหน้า Community",en:"Still a test environment (pre.): Shorts views in single digits and an XSS test user still visible in Community",ko:"아직 테스트 환경(pre.): Shorts 조회수 한 자릿수, Community에 XSS 테스트 계정 잔존"},
+
+k3:{th:"ระบบนิเวศ Aiwan",en:"The Aiwan ecosystem",ko:"Aiwan 생태계"},
+h3:{th:"4 ส่วน: <em>เกม · Shorts · Community · Developer</em>",en:"Four parts: <em>Games · Shorts · Community · Developers</em>",ko:"4개 구성: <em>게임 · Shorts · 커뮤니티 · 개발자</em>"},
+s3a:{th:"Games — กริดเกม + ป้าย RPG/Casual/Puzzle + Coming Soon",en:"Games — grid with RPG/Casual/Puzzle tags + Coming Soon",ko:"Games — 그리드 + RPG/Casual/Puzzle 태그 + Coming Soon"},
+s3b:{th:"Shorts — วิดีโอแนวตั้งแบบ TikTok มีปุ่ม Play เกมนั้น",en:"Shorts — vertical TikTok-style video with a Play button",ko:"Shorts — TikTok식 세로 영상 + 해당 게임 Play 버튼"},
+s3c:{th:"Community — ฟอรัมต่อเกม โพสต์ Follow แนะนำผู้ใช้",en:"Community — per-game forum, posts, Follow, suggested users",ko:"Community — 게임별 포럼, 게시글, 팔로우, 추천 유저"},
+s3d:{th:"Developer Center — SDK 3 ขั้น auth · payment · analytics · 7 ภาษา 11 สกุลเงิน",en:"Developer Center — 3-step SDK: auth · payment · analytics · 7 languages, 11 currencies",ko:"Developer Center — 3단계 SDK: 인증 · 결제 · 분석 · 7개 언어 11개 통화"},
+
+k4:{th:"RO PlayZone คืออะไร",en:"What is RO PlayZone",ko:"RO PlayZone이란"},
+h4:{th:"เว็บที่เป็น<em>บ้านของตัวละคร RO PC</em> ไม่ใช่ร้านเกม",en:"A website that is <em>home to the RO PC character</em>, not a game store",ko:"게임 스토어가 아닌 <em>RO PC 캐릭터의 집</em>이 되는 웹사이트"},
+r1:{th:"ผูก Gnjoy แล้ว<b>ตัวละครจริงจากในเกม</b>ขึ้นจอ พร้อมชุดที่ใส่อยู่ เดินในบ้านของตัวเอง",en:"Link Gnjoy and <b>the real in-game character</b> appears, wearing its gear, walking in its own house",ko:"Gnjoy 연동 시 <b>게임 속 실제 캐릭터</b>가 장비 그대로 자기 집을 걸어다님"},
+r2:{th:"วงจร <b>ฝากของกับ NPC → เว็บ → คราฟต์ → ของกลับเข้า RO ทาง Rodex</b> คือหัวใจ ไม่ใช่การขายของในเกม",en:"The core loop is <b>deposit with an NPC → web → craft → back into RO via Rodex</b>, not in-game sales",ko:"핵심은 <b>NPC 보관 → 웹 → 제작 → Rodex로 RO 반환</b> 루프이지 인게임 판매가 아님"},
+r3:{th:"เควสต์ 2 ขา (เว็บ + ในเกม) ลีดเดอร์บอร์ดซีซั่น การ์ด Poring Coin — มินิเกมเป็นส่วนประกอบ",en:"Two-leg quests (web + in-game), season leaderboards, cards, Poring Coin — mini games are a component",ko:"2단계 퀘스트(웹 + 게임), 시즌 리더보드, 카드, Poring Coin — 미니게임은 구성 요소"},
+r4:{th:"สังคมรอบบ้าน: เพื่อนทั้งประเทศเยี่ยมบ้าน แชทสำเร็จรูป รวมตัว 8 คน แชร์คะแนน",en:"Social around the house: friends nationwide visit, preset chat, 8-person gatherings, score sharing",ko:"집 중심 소셜: 전국 친구 방문, 정형 채팅, 8인 모임, 점수 공유"},
+
+k5:{th:"เทียบทีละมิติ",en:"Side by side",ko:"항목별 비교"},
+h5:{th:"8 มิติ <em>ต่างกันแทบทุกข้อ</em>",en:"Eight dimensions, <em>different on almost every one</em>",ko:"8개 항목, <em>거의 모두 다름</em>"},
+t_dim:{th:"มิติ",en:"Dimension",ko:"항목"},
+t1:{th:"ตำแหน่ง",en:"Positioning",ko:"포지셔닝"},t1a:{th:"ร้านรวมเกม + โซเชียลรอบเกม",en:"Game store + social around games",ko:"게임 스토어 + 게임 중심 소셜"},t1r:{th:"บ้านของตัวละคร RO PC ผูกคนเล่นให้อยู่ยาว",en:"Home for the RO PC character; keeps players engaged long term",ko:"RO PC 캐릭터의 집, 장기 유지"},
+t2:{th:"ตัวตน",en:"Identity",ko:"계정"},t2a:{th:"Guest อัตโนมัติ → ผูก social 7 ช่องทาง",en:"Auto guest → link 7 social channels",ko:"자동 게스트 → 소셜 7채널 연동"},t2r:{th:"Portal ID → ผูก Gnjoy → ตัวละครจริงจากเกม",en:"Portal ID → Gnjoy link → real character from the game",ko:"Portal ID → Gnjoy 연동 → 게임 속 실제 캐릭터"},
+t3:{th:"ของจากเกม PC",en:"Items from the PC game",ko:"PC 게임 아이템"},t3a:{th:"ไม่มี ทุกเกมจบในตัว",en:"None; every game is self-contained",ko:"없음, 모든 게임이 독립"},t3r:{th:"NPC 3 ขา: ดึงตัวละคร · ฝาก/ถอน · Rodex",en:"3 NPC legs: export · deposit/withdraw · Rodex",ko:"NPC 3단계: 추출 · 보관/출금 · Rodex"},
+t4:{th:"สิ่งที่ผู้เล่นมี",en:"What the player owns",ko:"플레이어 보유물"},t4a:{th:"โปรไฟล์ ประวัติเล่น โพสต์ ผู้ติดตาม",en:"Profile, play history, posts, followers",ko:"프로필, 플레이 기록, 게시글, 팔로워"},t4r:{th:"บ้าน ของแต่งบ้าน สัตว์เลี้ยง คลัง Poring Coin",en:"House, decor, pets, storage, Poring Coin",ko:"집, 장식, 펫, 보관함, Poring Coin"},
+t5:{th:"เควสต์ / รางวัล",en:"Quests / rewards",ko:"퀘스트 / 보상"},t5a:{th:"ไม่มีข้ามเกม แต่ละเกมมีของตัวเอง",en:"None across games; each game has its own",ko:"게임 간 없음, 게임별 자체 시스템"},t5r:{th:"เควสต์ 2 ขา ลีดเดอร์บอร์ดซีซั่น การ์ด ของกลับเข้า RO",en:"Two-leg quests, season leaderboards, cards, rewards back into RO",ko:"2단계 퀘스트, 시즌 리더보드, 카드, RO 반환 보상"},
+t6:{th:"สังคม",en:"Social",ko:"소셜"},t6a:{th:"Follow · ฟอรัม · Shorts",en:"Follow · forum · Shorts",ko:"팔로우 · 포럼 · Shorts"},t6r:{th:"เพื่อนเยี่ยมบ้าน · แชทสำเร็จรูป · รวมตัวในบ้าน",en:"House visits · preset chat · gatherings in a house",ko:"집 방문 · 정형 채팅 · 집 모임"},
+t7:{th:"เงิน",en:"Money",ko:"경제"},t7a:{th:"Payment gateway ในเกมผ่าน SDK",en:"In-game payment gateway via SDK",ko:"SDK 인게임 결제 게이트웨이"},t7r:{th:"Poring Coin / Zeny ต่อเซิร์ฟ ไม่ cash-out",en:"Poring Coin / Zeny per server, no cash-out",ko:"서버별 Poring Coin / Zeny, 현금화 없음"},
+t8:{th:"นักพัฒนาภายนอก",en:"External developers",ko:"외부 개발자"},t8a:{th:"เปิด SDK ตั้งแต่วันแรก",en:"Open SDK from day one",ko:"첫날부터 SDK 공개"},t8r:{th:"ทำเองก่อน โมเดลพาร์ตเนอร์พักไว้",en:"In-house first; partner model on hold",ko:"자체 제작 우선, 파트너 모델 보류"},
+
+k6:{th:"โครงหน้าเว็บ",en:"Site structure",ko:"사이트 구조"},
+h6:{th:"เมนูบอกตัวตน: <em>ร้านเกม</em> กับ <em>บ้าน</em>",en:"The menu reveals the identity: <em>store</em> versus <em>home</em>",ko:"메뉴가 정체성을 말함: <em>스토어</em> 대 <em>집</em>"},
+s6a:{th:"หน้าแรก = กริดเกม",en:"Home = a grid of games",ko:"메인 = 게임 그리드"},
+w6a:{th:"4 เมนู ทุกอย่างวนรอบ \"เกม\" ผู้เล่นคือคนดูร้าน",en:"Four menus; everything revolves around games. The player is a shopper.",ko:"메뉴 4개, 모든 것이 게임 중심. 플레이어는 손님."},
+w6a1:{th:"Hero banner = เกมเด่น + Play Now",en:"Hero banner = featured game + Play Now",ko:"히어로 배너 = 대표 게임 + Play Now"},
+w6a2:{th:"หน้าเกมมาตรฐานทุกเกม: Play · ชุมชน · About · วิดีโอ · ประกาศ",en:"Same game page everywhere: Play · Community · About · Videos · Announcements",ko:"모든 게임 동일 페이지: Play · 커뮤니티 · About · 영상 · 공지"},
+w6a3:{th:"โปรไฟล์ = ประวัติเล่น โพสต์ การจองล่วงหน้า",en:"Profile = play history, posts, pre-registrations",ko:"프로필 = 플레이 기록, 게시글, 사전등록"},
+s6r:{th:"หน้าแรก = World Map + ตัวละคร",en:"Home = World Map + your character",ko:"메인 = World Map + 내 캐릭터"},
+w6r:{th:"8 เมนู วนรอบ \"ตัวละครของฉัน\" ผู้เล่นคือเจ้าของบ้าน",en:"Eight menus; everything revolves around my character. The player is a homeowner.",ko:"메뉴 8개, 모든 것이 내 캐릭터 중심. 플레이어는 집주인."},
+w6r1:{th:"World = เลือกว่าเล่น RO ที่ไหน ข่าวดึงอัตโนมัติ",en:"World = choose where you play RO, auto news",ko:"World = RO 플레이 지역 선택, 자동 뉴스"},
+w6r2:{th:"My House / Friends = ของที่สะสมและคนที่มาเยี่ยม",en:"My House / Friends = what you collect and who visits",ko:"My House / Friends = 수집한 것과 방문자"},
+w6r3:{th:"Earn / Quests / Cross-Play = ทางที่ของกลับเข้าเกม",en:"Earn / Quests / Cross-Play = the path back into the game",ko:"Earn / Quests / Cross-Play = 게임으로 돌아가는 길"},
+
+k7:{th:"สิ่งที่ควรหยิบมาใช้",en:"Worth borrowing",ko:"가져올 만한 것"},
+h7:{th:"4 อย่างที่ Aiwan ทำดี และ<em>เข้ากับเรา</em>",en:"Four things Aiwan does well that <em>fit us</em>",ko:"Aiwan이 잘하고 <em>우리에게 맞는</em> 4가지"},
+l1t:{th:"หน้าเกมมาตรฐาน",en:"Standard game page",ko:"표준 게임 페이지"},l1d:{th:"Play Now · ไปชุมชน · About · วิดีโอ/สกรีนช็อต · ประกาศ โครงเดียวทุกเกม ทำง่าย ผู้เล่นคุ้น <b>ใช้กับมินิเกม 40 เกมของเราได้ทันที</b>",en:"Play Now · Community · About · Videos · Announcements, one template for every game, easy to build and familiar. <b>Reusable for our 40 mini games right away</b>",ko:"Play Now · 커뮤니티 · About · 영상 · 공지, 모든 게임 동일 템플릿. <b>우리 미니게임 40개에 바로 적용 가능</b>"},
+l2t:{th:"Social login 7 ช่องทาง",en:"Seven social logins",ko:"소셜 로그인 7채널"},l2d:{th:"Email · Google · Apple · Facebook · Line · X · Discord ตรงกับข้อมูล Festa: <b>สมัครแน่นอน 53% → 74% ถ้ามี social login</b>",en:"Email · Google · Apple · Facebook · Line · X · Discord. Matches the Festa data: <b>53% would sign up, 74% with social login</b>",ko:"Email · Google · Apple · Facebook · Line · X · Discord. Festa 데이터와 일치: <b>가입 의향 53% → 소셜 로그인 시 74%</b>"},
+l3t:{th:"จองล่วงหน้าในโปรไฟล์",en:"Pre-registration in the profile",ko:"프로필 내 사전등록"},l3d:{th:"\"My pre-registrations\" + ป้าย Coming Soon บนการ์ดเกม <b>เหมาะกับการเปิดจองซีซั่นและเกมใหม่</b> ก่อนเปิดบริการ ส.ค. 27",en:"\"My pre-registrations\" plus Coming Soon tags on game cards. <b>Good for season and new-game pre-registration</b> before the Aug 27 launch",ko:"\"My pre-registrations\" + 게임 카드 Coming Soon 태그. <b>시즌·신규 게임 사전등록에 적합</b>, 27년 8월 오픈 전 활용"},
+l4t:{th:"Shorts — ดูไว้ ยังไม่ทำ",en:"Shorts — watch, do not build yet",ko:"Shorts — 관찰만, 아직 제작 금지"},l4d:{th:"ไฮไลต์มินิเกมแบบวิดีโอแนวตั้งน่าสนใจ แต่ของ Aiwan เองยอดวิวหลักหน่วย <b>ไม่คุ้มลงทุนก่อนมีฐานผู้เล่น</b>",en:"Vertical mini game highlights are interesting, but Aiwan's own views are in single digits. <b>Not worth building before we have an audience</b>",ko:"세로 영상 하이라이트는 흥미롭지만 Aiwan 자체 조회수가 한 자릿수. <b>이용자 기반 확보 전에는 투자 가치 없음</b>"},
+
+k8:{th:"ตำแหน่งของเรา",en:"Our position",ko:"우리의 위치"},
+h8:{th:"ไม่กลายเป็น Aiwan อีกเจ้า — <em>จุดต่างคือตัวละครและของกลับเข้าเกม</em>",en:"Do not become another Aiwan — <em>our edge is the character and rewards back into the game</em>",ko:"또 하나의 Aiwan이 되지 않기 — <em>차별점은 캐릭터와 게임 반환 보상</em>"},
+no_t:{th:"🚫 ไม่ควรเลียนแบบ",en:"🚫 Do not copy",ko:"🚫 따라 하지 말 것"},
+no1:{th:"หน้าแรกเป็นกริดเกม — นั่นคือทิศที่เราพลิกออกมาเมื่อ 21 ต.ค. ถ้าทำตามจะไม่มีจุดต่าง",en:"A home page that is a grid of games — the direction we pivoted away from on 21 Oct; copying it erases our edge",ko:"게임 그리드 메인 — 10/21에 벗어난 방향, 따라 하면 차별점 소멸"},
+no2:{th:"โซเชียลแบบ Follow/ฟอรัมทั่วไป ที่ไม่มีของให้โชว์ — ของเราคือบ้านและการ์ดที่แขวนไว้",en:"Generic follow/forum social with nothing to show off — ours is the house and the cards on the wall",ko:"보여줄 게 없는 일반 팔로우/포럼 소셜 — 우리는 집과 벽의 카드"},
+no3:{th:"เปิด SDK ให้นักพัฒนานอกตั้งแต่แรก — ทำเองให้ครบวงจรก่อน แล้วค่อยเปิด",en:"Opening an SDK to outside developers from day one — complete our own loop first, then open",ko:"첫날부터 외부 개발자 SDK 개방 — 우리 루프를 먼저 완성한 뒤 개방"},
+yes_t:{th:"✅ จุดต่างที่ Aiwan ไม่มี",en:"✅ What Aiwan does not have",ko:"✅ Aiwan에 없는 것"},
+yes1:{th:"ตัวละครจริงจากเกมเดินในบ้าน ชุดตรงกับในเกม",en:"The real in-game character walking in its house, gear as in game",ko:"게임 속 실제 캐릭터가 집을 걷고 장비도 동일"},
+yes2:{th:"ของฝากจาก NPC → คราฟต์ → ของกลับเข้า RO ผ่าน Rodex",en:"NPC deposits → craft → items back into RO via Rodex",ko:"NPC 보관 → 제작 → Rodex로 RO 반환"},
+yes3:{th:"เควสต์ที่นับทั้งเว็บและในเกม รางวัลเลือกฝั่งได้",en:"Quests that count both web and in-game play, rewards on either side",ko:"웹과 게임 모두 집계하는 퀘스트, 보상 양쪽 선택"},
+
+k9:{th:"คำถามที่ต้องเคลียร์",en:"Open questions",ko:"확인해야 할 질문"},
+h9:{th:"ถ้า Aiwan อยู่ในเครือเดียวกัน ต้องเคาะ <em>4 ข้อ</em>",en:"If Aiwan is in the same group, <em>four things</em> to settle",ko:"Aiwan이 같은 그룹이라면 <em>4가지</em> 결정 필요"},
+q1:{th:"<b>มินิเกม Poring ของเรา</b> จะไปอยู่บน Aiwan ผ่าน SDK ของเขาด้วยไหม หรือแยกกันชัด",en:"<b>Our Poring mini games</b> — do they also go on Aiwan through its SDK, or stay separate?",ko:"<b>우리 Poring 미니게임</b>을 Aiwan SDK로도 올릴지, 분리할지"},
+q2:{th:"<b>Poring Coin</b> ของเรากับระบบเงินของ Aiwan เป็นคนละระบบ ต้องสื่อสารไม่ให้ผู้เล่นสับสน",en:"<b>Poring Coin</b> and the Aiwan money system are separate; players must not confuse them",ko:"<b>Poring Coin</b>과 Aiwan 경제는 별개, 플레이어 혼동 방지 필요"},
+q3:{th:"<b>Ragnarok Twilight / Path of Destiny</b> บน Aiwan จะมีลิงก์กับตัวละคร RO PC ไหม ถ้ามี จะชนกับเราหรือเสริมกัน",en:"<b>Ragnarok Twilight / Path of Destiny</b> on Aiwan — any link to the RO PC character? If so, does it compete with us or complement us?",ko:"Aiwan의 <b>Ragnarok Twilight / Path of Destiny</b>가 RO PC 캐릭터와 연동되는지, 경쟁인지 보완인지"},
+q4:{th:"<b>บัญชี</b>: Aiwan ใช้ Guest + social ส่วนเราใช้ Portal ID + Gnjoy จะให้ล็อกอินข้ามกันได้ไหม",en:"<b>Accounts</b>: Aiwan uses guest + social, we use Portal ID + Gnjoy. Should they cross-login?",ko:"<b>계정</b>: Aiwan은 게스트 + 소셜, 우리는 Portal ID + Gnjoy. 교차 로그인 여부"},
+q_sum:{th:"<b>สรุป:</b> Aiwan ตอบโจทย์ \"หาเกมเล่น\" ส่วน ROPZ ตอบโจทย์ \"ตัวละคร RO ของฉันมีบ้านและได้ของกลับเข้าเกม\" — อยู่ร่วมกันได้ถ้าแบ่งบทบาทชัดและไม่ทำหน้าแรกเหมือนกัน",en:"<b>Bottom line:</b> Aiwan answers \"find a game to play\"; ROPZ answers \"my RO character has a home and brings rewards back into the game\". Both can coexist if roles are clear and the home pages do not look alike",ko:"<b>결론:</b> Aiwan은 \"놀 게임 찾기\", ROPZ는 \"내 RO 캐릭터의 집과 게임 반환 보상\". 역할이 명확하고 메인이 다르면 공존 가능"},
+
+btn_prev:{th:"หน้าก่อน (←)",en:"Previous (←)",ko:"이전 (←)"},
+btn_next:{th:"หน้าถัดไป (→)",en:"Next (→)",ko:"다음 (→)"},
+btn_copy:{th:"📋 คัดลอกข้อความหน้านี้",en:"📋 Copy this slide",ko:"📋 이 페이지 복사"},
+btn_copied:{th:"✅ คัดลอกแล้ว",en:"✅ Copied",ko:"✅ 복사됨"},
+btn_copy_t:{th:"คัดลอกข้อความของหน้านี้ + โน้ตผู้พูด (กด C)",en:"Copy this slide plus speaker notes (press C)",ko:"이 페이지와 발표 노트 복사 (C)"},
+cp_page:{th:"หน้า",en:"Slide",ko:"페이지"},
+cp_notes:{th:"[โน้ตผู้พูด]",en:"[Speaker notes]",ko:"[발표 노트]"},
+th_dark:{th:"🌙 โหมดมืด",en:"🌙 Dark",ko:"🌙 다크"},
+th_day:{th:"☀️ โหมดสว่าง",en:"☀️ Day",ko:"☀️ 라이트"},
+n1:{th:"⏱ 30 วิ · สรุปใน 1 ประโยค: คนละประเภทผลิตภัณฑ์",en:"⏱ 30s · one sentence: different product types",ko:"⏱ 30초 · 한 문장: 다른 종류의 제품"},
+n2:{th:"⏱ 60 วิ · สำรวจ 12 พ.ย. จาก pre.aiwan.com เป็น environment ทดสอบ ตัวเลขอาจไม่ใช่ของจริง",en:"⏱ 60s · surveyed 12 Nov on pre.aiwan.com, a test environment; numbers may not be production",ko:"⏱ 60초 · 11/12 pre.aiwan.com 조사, 테스트 환경이라 수치는 실제와 다를 수 있음"},
+n3:{th:"⏱ 45 วิ · Developer Center เป็นจีนตัวเต็ม แปลว่าเป้าหมายแรกคือ dev ไต้หวัน/จีน",en:"⏱ 45s · the Developer Center is in Traditional Chinese, so the first target is Taiwan/China developers",ko:"⏱ 45초 · Developer Center가 번체 중국어, 1차 타깃은 대만/중국 개발자"},
+n4:{th:"⏱ 45 วิ · ย้ำ key message: A home for your RO character",en:"⏱ 45s · restate the key message: A home for your RO character",ko:"⏱ 45초 · 핵심 메시지 재강조: A home for your RO character"},
+n5:{th:"⏱ 90 วิ · ไล่ทีละแถว เน้นแถว 3 และ 5 ที่ Aiwan ไม่มีเลย",en:"⏱ 90s · go row by row; stress rows 3 and 5, which Aiwan lacks entirely",ko:"⏱ 90초 · 행별로 설명, Aiwan에 전혀 없는 3행과 5행 강조"},
+n6:{th:"⏱ 60 วิ · ชี้เมนู 2 แถบ: ร้าน vs บ้าน",en:"⏱ 60s · point at the two menu bars: store versus home",ko:"⏱ 60초 · 메뉴 두 줄 비교: 스토어 대 집"},
+n7:{th:"⏱ 60 วิ · ข้อ 1-3 ทำได้ในเฟส 1 โดยไม่เพิ่มสโคปมาก · ข้อ 4 แค่จับตา",en:"⏱ 60s · items 1-3 fit phase 1 without much extra scope; item 4 is watch only",ko:"⏱ 60초 · 1-3번은 1단계에 큰 추가 없이 가능, 4번은 관찰만"},
+n8:{th:"⏱ 60 วิ · หน้านี้คือคำตอบว่าทำไมไม่รวมกับ Aiwan",en:"⏱ 60s · this slide is the answer to why we do not merge with Aiwan",ko:"⏱ 60초 · 왜 Aiwan과 합치지 않는지에 대한 답"},
+n9:{th:"⏱ 60 วิ · ปิดด้วยคำถาม 4 ข้อ ให้ PM/ผู้บริหารเคาะ",en:"⏱ 60s · close with four questions for PM/management to decide",ko:"⏱ 60초 · PM/경영진이 결정할 4가지 질문으로 마무리"}
+};
+var THEME = "day";
+function applyTheme(x){ THEME = x; document.documentElement.setAttribute("data-theme", x); var b = document.getElementById("themeBtn"); if (b) b.textContent = (x === "day") ? t("th_dark") : t("th_day"); try { localStorage.setItem("ropzCmpDeckTheme", x); } catch (e) {} }
+function toggleTheme(){ applyTheme(THEME === "day" ? "dark" : "day"); }
+var LANG = "th", slides = document.querySelectorAll(".slide"), i = 0;
+function t(k){ var e = L[k]; if (!e) return k; return e[LANG] || e.th || k; }
+function fit(){ var k = Math.min(innerWidth / 1920, innerHeight / 1080); slides.forEach(function(s){ s.style.transform = "translate(-50%,-50%) scale(" + k + ")"; }); }
+function show(n){
+  i = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach(function(s, j){ s.classList.toggle("on", j === i); });
+  document.getElementById("note").textContent = t(slides[i].getAttribute("data-n"));
+  location.hash = "s" + (i + 1);
+  document.getElementById("navPrev").disabled = i === 0;
+  document.getElementById("navNext").disabled = i === slides.length - 1;
+}
+function copySlide(){
+  var s = slides[i], lines = [];
+  s.querySelectorAll(".eyebrow,h1,h2,h3,p,li,.km,.sub,.cap,table.cmp td,table.cmp th").forEach(function(el){
+    var x = el.innerText.replace(/\s+/g, " ").trim(); if (x && lines.indexOf(x) < 0) lines.push(x); });
+  var txt = "[" + t("cp_page") + " " + (i + 1) + "/" + slides.length + "]\n" + lines.join("\n") + "\n\n" + t("cp_notes") + "\n" + t(s.getAttribute("data-n"));
+  var done = function(){ var b = document.getElementById("copyBtn"); b.textContent = t("btn_copied"); setTimeout(function(){ b.textContent = t("btn_copy"); }, 1500); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt); done(); }); else { fallbackCopy(txt); done(); }
+}
+function fallbackCopy(x){ var ta = document.createElement("textarea"); ta.value = x; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} ta.remove(); }
+function render(){
+  var n = document.querySelectorAll("[data-i]"), j;
+  for (j = 0; j < n.length; j++) n[j].innerHTML = t(n[j].getAttribute("data-i"));
+  n = document.querySelectorAll("[data-t]");
+  for (j = 0; j < n.length; j++) n[j].title = t(n[j].getAttribute("data-t"));
+  document.getElementById("copyBtn").textContent = t("btn_copy");
+  var tb = document.getElementById("themeBtn"); if (tb) tb.textContent = (THEME === "day") ? t("th_dark") : t("th_day");
+  document.getElementById("note").textContent = t(slides[i].getAttribute("data-n"));
+  document.title = t("title");
+}
+function setLang(l){ LANG = l; document.documentElement.setAttribute("lang", l); var b = document.querySelectorAll(".langs button"), j; for (j = 0; j < b.length; j++) b[j].className = (b[j].getAttribute("data-l") === l) ? "on" : ""; try { localStorage.setItem("ropzCmpDeckLang", l); } catch (e) {} render(); }
+addEventListener("resize", fit); fit();
+addEventListener("keydown", function(e){
+  var tag = e.target && e.target.tagName; if (tag === "INPUT" || tag === "TEXTAREA") return;
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") show(i + 1);
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") show(i - 1);
+  else if (e.key === "Home") show(0); else if (e.key === "End") show(slides.length - 1);
+  else if (e.key === "n" || e.key === "N") document.body.classList.toggle("notes");
+  else if (e.key === "c" || e.key === "C") copySlide();
+  else if (e.key === "h" || e.key === "H") document.body.classList.toggle("clean");
+  else if (e.key === "d" || e.key === "D") toggleTheme();
+});
+function armAnim(){ document.body.classList.add("anim"); }
+document.addEventListener("visibilitychange", armAnim);
+(function init(){
+  var th = "day"; try { th = localStorage.getItem("ropzCmpDeckTheme") || "day"; } catch (e) {}
+  applyTheme(th === "dark" ? "dark" : "day");
+  var b = document.querySelectorAll(".langs button"), j;
+  for (j = 0; j < b.length; j++) b[j].onclick = (function(el){ return function(){ setLang(el.getAttribute("data-l")); }; })(b[j]);
+  var saved = "th", q = (location.search.match(/[?&]lang=(th|en|ko)/) || [])[1];
+  try { saved = q || localStorage.getItem("ropzCmpDeckLang") || "th"; } catch (e) { saved = q || "th"; }
+  if (!L.title[saved]) saved = "th";
+  var m = /s(\d+)/.exec(location.hash); i = m ? Math.max(0, Math.min(slides.length - 1, +m[1] - 1)) : 0;
+  setLang(saved); show(i); armAnim();
+})();
+</script>
+</body>
+</html>
