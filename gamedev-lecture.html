@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="th" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- [KEEP] web-publish --><meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><!-- /[KEEP] -->
+<title>จากไอเดียสู่เกมที่คนเล่นได้ — บรรยาย 2 ชั่วโมง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root,html[data-theme="day"]{
+    --page:#e9edf3;--bg:#FFFFFF;--card:#F5F7FB;--line:#E1E6EF;
+    --ink:#10213F;--dim:#5B6A85;--hi:#2F6BFF;--hi2:#FF7A1A;--tint:#EAF0FF;--tint2:#FFF1E6;
+    --yellow:#FFC53D;--pink:#FF5FA2;--green:#1FB667;--red:#F04848;
+    --sh:0 24px 70px rgba(16,33,63,.14);--csh:0 8px 22px rgba(16,33,63,.07);
+    --btn-bg:#fff;--btn-ink:#10213F;--btn-line:#C9D6F0;--btn-sh:0 8px 22px rgba(16,33,63,.14);
+  }
+  html[data-theme="dark"]{
+    --page:#070b13;--bg:#0D1526;--card:#16203A;--line:#263352;
+    --ink:#F2F6FF;--dim:#A9B6D3;--hi:#5B9CFF;--hi2:#FF9A4D;--tint:#1B2A4A;--tint2:#3A2A1E;
+    --sh:0 24px 70px rgba(0,0,0,.6);--csh:0 8px 22px rgba(0,0,0,.35);
+    --btn-bg:#16203A;--btn-ink:#dbe8ff;--btn-line:#263352;--btn-sh:0 8px 24px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--page);color:var(--ink);overflow:hidden;font-family:Kanit,Poppins,"Segoe UI",system-ui,sans-serif}
+  #stage{position:fixed;inset:0}
+  .slide{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center;display:none;overflow:hidden;background:var(--page)}
+  .slide.on{display:block}
+  .slide,.slide *{user-select:text;-webkit-user-select:text}
+  .paper{position:absolute;left:70px;top:48px;right:70px;bottom:48px;background:var(--bg);border-radius:28px;box-shadow:var(--sh);border:1px solid var(--line);overflow:hidden}
+  body.anim .slide.on .paper{animation:slFrame .5s both}
+
+  /* แถบขั้นตอน 7 ขั้น */
+  .steps{height:74px;display:flex;align-items:center;gap:6px;padding:0 40px;border-bottom:1px solid var(--line);background:var(--card)}
+  .steps span{flex:1;text-align:center;font-size:19px;font-weight:500;color:var(--dim);padding:10px 6px;border-radius:12px;position:relative;white-space:nowrap}
+  .steps span b{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--line);color:var(--dim);font-size:15px;margin-right:8px;vertical-align:middle;font-weight:700}
+  .steps span.cur{background:var(--hi);color:#fff;font-weight:700}
+  .steps span.cur b{background:#fff;color:var(--hi)}
+  .steps span.done{color:var(--ink)}
+  .steps span.done b{background:var(--green);color:#fff}
+  .steps .time{flex:none;font-family:Poppins;font-weight:800;font-size:18px;color:var(--hi2);background:var(--tint2);border-radius:999px;padding:8px 18px;margin-left:10px}
+
+  .body{position:absolute;left:0;right:0;top:74px;bottom:0;padding:44px 72px 60px}
+  .eyebrow{margin:0 0 6px;font-size:21px;font-weight:600;color:var(--hi);letter-spacing:.12em;text-transform:uppercase}
+  h1{margin:0;font-size:92px;line-height:1.08;font-weight:800;letter-spacing:-.01em}
+  h2{margin:0 0 28px;font-size:60px;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+  h2 em{font-style:normal;color:var(--hi)}
+  h3{margin:0 0 10px;font-size:30px;font-weight:700}
+  p{margin:0;font-size:27px;line-height:1.5;color:var(--ink)}
+  p.sub{font-size:30px;color:var(--dim);font-weight:300}
+  .foot{position:absolute;left:72px;bottom:22px;font-size:15px;letter-spacing:.2em;color:var(--dim);font-family:Poppins;font-weight:600}
+  .pg{position:absolute;right:72px;bottom:22px;font-size:16px;color:var(--dim);font-family:Poppins;font-weight:600}
+  .notes{display:none}
+
+  /* เลย์เอาต์ */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .cols.w{grid-template-columns:1.25fr 1fr}
+  .cols.n{grid-template-columns:1fr 1.25fr}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 30px;box-shadow:var(--csh)}
+  .card h3{margin-bottom:8px}
+  .card p{font-size:24px;line-height:1.45;color:var(--dim)}
+  .card p b{color:var(--ink)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+  .big{font-family:Poppins;font-size:84px;font-weight:800;line-height:1;color:var(--hi);margin-bottom:6px}
+  .big.o{color:var(--hi2)}.big.g{color:var(--green)}.big.p{color:var(--pink)}
+  .tag{display:inline-block;background:var(--tint);color:var(--hi);border-radius:999px;padding:5px 16px;font-size:19px;font-weight:600;margin-bottom:10px}
+  .tag.o{background:var(--tint2);color:var(--hi2)}
+  ul.b{margin:0;padding:0;list-style:none}
+  ul.b li{position:relative;padding-left:40px;font-size:27px;line-height:1.45;margin-bottom:14px}
+  ul.b li:before{content:"";position:absolute;left:4px;top:15px;width:16px;height:16px;border-radius:50%;background:var(--hi)}
+  ul.b li b{color:var(--hi)}
+  ul.b.o li:before{background:var(--hi2)} ul.b.o li b{color:var(--hi2)}
+  ul.b.g li:before{background:var(--green)}
+  .shot{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--csh);background:#000}
+  .shot img{display:block;width:100%;height:100%;object-fit:cover}
+  .cap{font-size:20px;color:var(--dim);margin-top:10px}
+  .num{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--hi);color:#fff;font-family:Poppins;font-weight:800;font-size:26px;flex:none}
+  .row{display:flex;gap:20px;align-items:flex-start}
+  .quote{background:var(--ink);color:#fff;border-radius:22px;padding:28px 36px;font-size:34px;line-height:1.4;font-weight:600}
+  html[data-theme="dark"] .quote{background:var(--hi)}
+  .quote b{color:var(--yellow)}
+  .vs{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:10px}
+  .vs .mid{font-family:Poppins;font-weight:800;font-size:40px;color:var(--dim);text-align:center}
+  table.t{border-collapse:collapse;width:100%;font-size:24px}
+  table.t th{background:var(--tint);color:var(--ink);text-align:left;padding:14px 18px;border-bottom:2px solid var(--hi);font-weight:700}
+  table.t td{padding:13px 18px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4}
+  table.t td.k{font-weight:700;color:var(--hi);white-space:nowrap}
+  table.t td.ok{color:var(--green);font-weight:700}
+  /* ลูป */
+  .loop{display:grid;grid-template-columns:repeat(3,1fr);gap:0;align-items:center;margin:20px 0 28px}
+  .loop .n{background:var(--tint);border:2px solid var(--hi);border-radius:26px;padding:28px 20px;text-align:center;font-size:34px;font-weight:700;color:var(--ink);position:relative}
+  .loop .n small{display:block;font-size:21px;color:var(--dim);font-weight:400;margin-top:4px}
+  .loop .n:after{content:"→";position:absolute;right:-34px;top:50%;transform:translateY(-50%);font-size:44px;color:var(--hi2);font-weight:800;font-family:Poppins}
+  .loop .n:last-child:after{content:"↺";right:-40px}
+  .loop .n{margin-right:56px}
+  /* agenda */
+  .agenda{display:grid;grid-template-columns:150px 1fr;gap:0 26px}
+  .agenda div{padding:11px 0;border-bottom:1px solid var(--line);font-size:26px;line-height:1.4}
+  .agenda div.t{font-family:Poppins;font-weight:800;color:var(--hi2);font-size:22px;padding-top:15px}
+  .agenda div.h{font-weight:700}
+  .agenda div span{color:var(--dim);font-weight:300;font-size:22px}
+  /* pitch form */
+  .form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form .f{background:var(--bg);border:2px dashed var(--line);border-radius:16px;padding:14px 20px;min-height:104px}
+  .form .f.full{grid-column:1/3}
+  .form .f label{display:block;font-size:17px;letter-spacing:.1em;color:var(--hi);font-weight:700;text-transform:uppercase;margin-bottom:4px}
+  .form .f span{font-size:23px;line-height:1.4;color:var(--ink)}
+  .form.filled{gap:12px}
+  .form.filled .f{border-style:solid;background:var(--card);min-height:72px;padding:10px 18px}
+  .form.filled .f span{font-size:20.5px;line-height:1.35}
+  /* gallery */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .gal .shot{aspect-ratio:1/1}
+  .gal.wide .shot{aspect-ratio:2/1}
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .pipe .lane{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;min-height:220px}
+  .pipe .lane h3{font-size:26px}
+  .pipe .lane p{font-size:21px;color:var(--dim);line-height:1.4}
+  .pipe .lane.k{border-color:var(--hi2);background:var(--tint2)}
+  /* decision */
+  .dec{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .dec .d{border-radius:22px;padding:30px 32px;color:#fff;min-height:430px}
+  .dec .d h3{font-size:38px;color:#fff;margin-bottom:6px}
+  .dec .d p{color:rgba(255,255,255,.92);font-size:25px;line-height:1.5}
+  .dec .kill{background:#D63B3B}.dec .pivot{background:#E07B14}.dec .go{background:#1A9D5A}
+  /* three rules */
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:20px}
+  .three .r{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:34px 30px;text-align:center}
+  .three .r .big{font-size:120px}
+  .three .r h3{font-size:40px;margin:10px 0 6px}
+  .three .r p{font-size:23px;color:var(--dim)}
+  /* cover */
+  .gth{float:right;object-fit:cover;border-radius:12px;border:1px solid var(--line);margin:2px 0 8px 18px;box-shadow:var(--csh);background:#000}
+  .gth.px{image-rendering:pixelated}
+  .cover .mosaic{position:absolute;right:0;top:0;bottom:0;width:700px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:6px}
+  .cover .mosaic img{width:100%;height:100%;object-fit:cover;display:block;min-height:0}
+  .xp{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .xp .card{padding:0;overflow:hidden}
+  .xp .card img{display:block;width:100%;aspect-ratio:460/215;object-fit:cover}
+  .xp .card .in{padding:12px 18px 16px}
+  .xp .card h3{font-size:25px;margin:6px 0 6px}
+  .xp .card p{font-size:19.5px;line-height:1.42}
+  .xp .card p.les{margin-top:8px;color:var(--ink);font-weight:500}
+  .cover .paper{background:#0B1733}
+  .cover .art{position:absolute;inset:0;background:radial-gradient(circle at 82% 28%,rgba(47,107,255,.55),transparent 38%),radial-gradient(circle at 72% 82%,rgba(255,122,26,.45),transparent 34%),radial-gradient(circle at 30% 70%,rgba(255,197,61,.18),transparent 30%),repeating-linear-gradient(45deg,rgba(255,255,255,.035) 0 2px,transparent 2px 44px)}
+  .cover .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,23,51,.96) 0%,rgba(11,23,51,.75) 55%,rgba(11,23,51,.2) 100%)}
+  .cover .txt{position:absolute;left:90px;top:170px;width:960px;color:#fff}
+  .cover .eyebrow{color:#FFC53D}
+  .cover h1{font-size:104px;color:#fff}
+  .cover h1 em{font-style:normal;color:#FFC53D}
+  .cover p{color:#D7E1FF;font-size:32px;margin-top:22px;font-weight:300}
+  .cover .meta{position:absolute;left:90px;bottom:64px;color:#B9C7EB;font-size:22px;display:flex;flex-direction:column;gap:6px}
+  .cover .meta b{color:#fff}
+  .cover .logo{position:absolute;right:70px;bottom:60px;height:62px;opacity:.9}
+  /* ปุ่ม */
+  .navbtn{position:fixed;bottom:18px;z-index:500;width:64px;height:64px;border-radius:50%;border:2px solid var(--btn-line);background:var(--btn-bg);color:var(--hi);font-size:34px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:var(--btn-sh);transition:transform .12s,background .12s;font-family:system-ui}
+  .navbtn:hover{background:var(--hi);color:#fff;transform:scale(1.08)}
+  .navbtn:disabled{opacity:.25;cursor:default;transform:none}
+  .navbtn.prev{left:18px} .navbtn.next{right:18px}
+  .copy{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:500;border:1px solid var(--btn-line);background:var(--btn-bg);color:var(--btn-ink);font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy:hover{background:var(--hi);color:#fff}
+  .themeBtn{position:fixed;right:16px;top:12px;z-index:600;font:inherit;font-size:13px;line-height:1;color:var(--btn-ink);background:var(--btn-bg);border:1px solid var(--btn-line);border-radius:8px;padding:7px 11px;cursor:pointer;box-shadow:var(--btn-sh)}
+  .help{position:fixed;left:16px;top:14px;z-index:600;font-size:12px;color:var(--dim);background:var(--btn-bg);border:1px solid var(--btn-line);border-radius:8px;padding:6px 10px}
+  .note{position:fixed;left:0;right:0;bottom:0;background:#0f1a33;color:#ffe9b0;font-size:22px;line-height:1.5;padding:18px 40px 22px;border-top:2px solid var(--hi);display:none;max-height:42vh;overflow:auto;white-space:pre-wrap;z-index:700}
+  body.notes .note{display:block}
+  body.clean .navbtn,body.clean .copy,body.clean .help,body.clean .themeBtn{display:none}
+  /* แอนิเมชัน */
+  @keyframes slFrame{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+  @keyframes slRise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes slPop{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
+  @keyframes slLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  @keyframes slRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  body.anim .slide.on h2,body.anim .slide.on h1,body.anim .slide.on .eyebrow{animation:slRise .5s .15s both}
+  body.anim .slide.on .a1{animation:slRise .5s .35s both}
+  body.anim .slide.on .a2{animation:slRise .5s .5s both}
+  body.anim .slide.on .a3{animation:slRise .5s .65s both}
+  body.anim .slide.on .a4{animation:slRise .5s .8s both}
+  body.anim .slide.on .a5{animation:slRise .5s .95s both}
+  body.anim .slide.on .a6{animation:slRise .5s 1.1s both}
+  body.anim .slide.on .pl{animation:slLeft .55s .35s both}
+  body.anim .slide.on .pr{animation:slRight .55s .5s both}
+  body.anim .slide.on .pp{animation:slPop .5s .6s both}
+</style>
+</head>
+<body>
+<button class="themeBtn" id="themeBtn" onclick="toggleTheme()">● ธีมมืด</button>
+<div class="help">← → เปลี่ยนหน้า · N โน้ตผู้สอน · C คัดลอก · D ธีม · H ซ่อนปุ่ม</div>
+<div id="stage">
+
+<!-- 1 ปก -->
+<section class="slide cover">
+  <div class="paper">
+    <div class="art"></div><div class="mosaic"><img src="gamedev-lecture-img/celeste_color.jpg" alt=""><img src="gamedev-lecture-img/vs_early.jpg" alt=""><img src="gamedev-lecture-img/amongus_meet.jpg" alt=""><img src="gamedev-lecture-img/sts_play.jpg" alt=""><img src="gamedev-lecture-img/mom_play.jpg" alt=""><img src="gamedev-lecture-img/balatro_play.jpg" alt=""></div><div class="veil"></div>
+    <div class="txt">
+      <p class="eyebrow">โครงการอบรมดิจิทัลคอนเทนต์และเกม</p>
+      <h1>จากไอเดีย<br>สู่เกมที่<em>คนเล่นได้</em></h1>
+      <p class="a1">ขั้นตอนพัฒนาเกมตั้งแต่ต้นจนปล่อยให้คนเล่น เล่าผ่านเกมที่คุณรู้จัก: Celeste ที่เริ่มจาก 4 วัน · Vampire Survivors ที่เริ่มจากลิงก์ฟรีบน itch.io · Among Us ที่เกือบถูกหยุดก่อนจะดัง</p>
+    </div>
+    <div class="meta a2"><span>สำหรับ <b>นักศึกษาหลักสูตรเทคโนโลยีสารสนเทศ</b></span><span>ภาพเกมเป็นลิขสิทธิ์ของผู้พัฒนาแต่ละราย ใช้ประกอบการสอน</span></div>
+  </div>
+  <div class="notes">⏱ 0:00 · แนะนำตัว 1 นาที บอกว่าวันนี้ไม่สอนเครื่องมือ สอน "ลำดับการตัดสินใจ" ที่ทำให้เกมเสร็จ · ถามห้อง: ใครเคยทำเกมจนจบบ้าง (ส่วนใหญ่ยกมือว่าเริ่มแต่ไม่จบ = จุดที่เราจะแก้วันนี้) · บอกตั้งแต่ต้น: คาบนี้ไม่มีการลงมือทำเกม เน้นทำความเข้าใจลำดับการตัดสินใจ</div>
+</section>
+
+<!-- 2 แผนที่ -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span><b>1</b>ไอเดีย</span><span><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">แผนที่วันนี้</p>
+      <h2>7 ขั้น <em>1 เกม</em> ตั้งแต่ต้นจนจบ</h2>
+      <div class="cols w">
+        <div class="agenda a1">
+          <div class="t">01</div><div class="h">เกมเกิดจากอะไร <span>ลูปสนุก · 3 คำถามก่อนเขียนโค้ด</span></div>
+          <div class="t">02</div><div class="h">จากไอเดียเป็น 1 หน้ากระดาษ <span>One-page pitch</span></div>
+          <div class="t">03</div><div class="h">Prototype ก่อนสวย <span>กล่องเทา · เลือกเครื่องมือ</span></div>
+          <div class="t">04</div><div class="h">Playtest และตัดสินใจ <span>วัด 3 อย่าง · kill / pivot / go</span></div>
+          <div class="t">05</div><div class="h">Production จริง <span>4 สายงาน · vertical slice · scope</span></div>
+          <div class="t">06</div><div class="h">Polish และปล่อย <span>juice · ปล่อยผ่านลิงก์ · telemetry</span></div>
+          <div class="t">07</div><div class="h">Portfolio และงานจริง <span>สิ่งที่คนรับงานเปิดดู · เรื่องจริง 5 สาย</span></div>
+          <div class="t">08</div><div class="h">วิเคราะห์เกม <span>วิเคราะห์ ≠ รีวิว · กรอบ MDA · ตัวอย่าง 1 หน้า</span></div>
+          <div class="t">09</div><div class="h">กิจกรรมกลุ่ม <span>เขียน pitch 10 นาที นำเสนอ 2 นาที</span></div>
+          <div class="t">10</div><div class="h">ถาม-ตอบ <span>3 ข้อให้จำกลับบ้าน</span></div>
+        </div>
+        <div class="pr">
+          <div class="quote">วันนี้ไม่สอน engine<br>สอน<b>ลำดับการตัดสินใจ</b>ที่ทำให้เกม "เสร็จ" ไม่ใช่แค่ "เริ่ม"</div>
+          <div class="card" style="margin-top:26px"><h3>ทุกขั้นมีตัวอย่างจริง</h3><p>เกมที่ทุกคนรู้จัก: <b>Flappy Bird · Celeste · Vampire Survivors · Balatro · Among Us · Mind Over Magnet</b> และเกมที่ใช้เวลา 14 ปี จะเล่าทั้งที่สำเร็จและที่พัง</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">2</div>
+  </div>
+  <div class="notes">⏱ 1:00 · ไล่ agenda เร็วๆ 1 นาที เน้นว่ามีกิจกรรมตอนท้าย ให้เตรียมคิดไอเดียไว้ระหว่างฟัง</div>
+</section>
+
+<!-- 3 เล่นก่อน -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span><b>1</b>ไอเดีย</span><span><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ก่อนเริ่ม</p>
+      <h2>เล่นก่อน <em>2 นาที</em> แล้วค่อยคุย</h2>
+      <div class="cols n">
+        <div class="pl">
+          <div class="card"><h3>หยิบมือถือขึ้นมา</h3><p>เปิดลิงก์บนจอ เล่นเกมไหนก็ได้ 1 เกมจนจบ 1 รอบ ไม่ต้องอ่านอะไร ไม่มีคนอธิบาย</p></div>
+          <div class="card" style="margin-top:20px"><h3>ระหว่างเล่น สังเกต 3 อย่าง</h3>
+            <ul class="b" style="margin-top:8px"><li>รู้ว่าต้องทำอะไรภายในกี่วินาที</li><li>รอบแรกใช้เวลานานแค่ไหน</li><li>จบแล้วอยากกดเล่นอีกไหม เพราะอะไร</li></ul></div>
+          <p class="cap" style="margin-top:18px">ทั้ง 4 เกมเล่นฟรีบนเบราว์เซอร์ ไม่ต้องติดตั้ง · สอนออนไลน์: วางลิงก์ในแชทก่อนเริ่ม</p>
+        </div>
+        <div class="grid2 pr">
+          <div class="card"><img class="gth" src="gamedev-lecture-img/g2048.png" alt="" style="width:118px;aspect-ratio:1"><span class="tag">เว็บ · ฟรี</span><h3>2048</h3><p>play2048.co · ปัดเลขให้รวมกัน รอบละ 1–3 นาที โค้ดเปิด (MIT) อ่านได้ทั้งเกม</p></div>
+          <div class="card"><img class="gth px" src="gamedev-lecture-img/celeste_classic.png" alt="" style="width:118px;aspect-ratio:1"><span class="tag">เว็บ · ฟรี</span><h3>Celeste Classic</h3><p>lexaloffle.com/bbs (PICO-8) · เกม 4 วันที่กลายเป็น Celeste ลูกศร + กระโดด + dash</p></div>
+          <div class="card"><div class="gth" style="width:118px;aspect-ratio:1;background:#fff;position:relative;overflow:hidden"><div style="position:absolute;left:0;right:0;bottom:30%;height:2px;background:#535353"></div><div style="position:absolute;left:18%;bottom:31%;width:20%;height:26%;background:#535353;border-radius:3px 7px 2px 2px"></div><div style="position:absolute;left:66%;bottom:31%;width:7%;height:18%;background:#535353"></div><div style="position:absolute;left:77%;bottom:31%;width:5%;height:12%;background:#535353"></div><div style="position:absolute;right:8px;top:8px;font:700 11px Poppins;color:#535353">HI 00042</div></div><span class="tag">ออฟไลน์</span><h3>Chrome Dino</h3><p>chrome://dino · กดเว้นวรรค เกมที่คนเล่นมากที่สุดในโลกโดยไม่ตั้งใจ รอบละ 20–60 วิ</p></div>
+          <div class="card"><img class="gth px" src="gamedev-lecture-img/flappy.png" alt="" style="width:118px;aspect-ratio:1"><span class="tag">เว็บ · ฟรี</span><h3>Flappy Bird (clone)</h3><p>flappybird.io · แตะนิ้วเดียว รอบละ 5–30 วิ ต้นแบบของเกม "ง่ายแต่หัวร้อน"</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">3</div>
+  </div>
+  <div class="notes">⏱ 2:00 · เปิดลิงก์เกมบนจอ ให้ทั้งห้องเล่นจริง 2 นาที · จุดประสงค์: ให้ทุกคนมีภาพ "เกมที่เสร็จแล้ว" ก่อนฟังว่ามันเกิดมาอย่างไร · 3 ข้อสังเกตคือสิ่งเดียวกับที่เราใช้วัดตอน playtest (จะวกกลับมาหน้า 13 และใช้เป็นขั้นแรกของการวิเคราะห์เกม หน้า 24)</div>
+</section>
+
+<!-- 4 ลูป -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="cur"><b>1</b>ไอเดีย</span><span><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 1 · ไอเดีย</p>
+      <h2>เกมไม่ใช่กราฟิกหรือเรื่องราว เกมคือ<em>ลูป</em></h2>
+      <div class="loop a1">
+        <div class="n">ผู้เล่นทำ<small>แตะ · ลาก · เลือก · ตัดสินใจ</small></div>
+        <div class="n">เกมตอบ<small>คะแนน · เสียง · ของตก · ผลลัพธ์ทันที</small></div>
+        <div class="n">อยากทำอีก<small>ใกล้สำเร็จ · เห็นทางที่ดีกว่า · มีของใหม่</small></div>
+      </div>
+      <div class="cols">
+        <div class="card a2"><img class="gth px" src="gamedev-lecture-img/flappy.png" alt="" style="width:100px;aspect-ratio:3/4"><h3>ลูปของ Flappy Bird</h3><p><b>แตะ</b> → นกกระโดด ผ่านช่องท่อ +1 พร้อมเสียง "ติ๊ง" → <b>อยากแตะอีก</b>เพราะเพิ่งตายที่ 7 ทั้งที่สถิติคือ 9 ลูปนี้วนได้ทั้งรอบใน 10 วินาที ไม่ต้องมีเรื่องราวสักบรรทัด</p></div>
+        <div class="card a3"><h3>วิธีทดสอบไอเดียในหัว</h3><p>เขียนลูปให้ได้ใน <b>1 ประโยค</b> ที่มีคำว่า "แล้ว" และ "เพราะ": "ผู้เล่น ___ แล้วได้ ___ เพราะอยาก ___" ถ้าเขียนไม่ออก แปลว่ายังไม่ใช่เกม ยังเป็นแค่ฉากหรือตัวละคร</p></div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">4</div>
+  </div>
+  <div class="notes">⏱ 4:00 · ความผิดพลาดอันดับ 1 ของนักศึกษา: เริ่มจากตัวละคร/โลก/เรื่อง แล้วค่อยหา gameplay ทีหลัง · ให้ห้องลองเขียนลูปของเกมที่เพิ่งเล่นเป็น 1 ประโยค ถามสัก 2 คน</div>
+</section>
+
+<!-- 5 สามคำถาม -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="cur"><b>1</b>ไอเดีย</span><span><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 1 · ไอเดีย</p>
+      <h2>ตอบ <em>3 คำถาม</em> ก่อนเขียนโค้ดบรรทัดแรก</h2>
+      <div class="grid3">
+        <div class="card a1"><div class="big">1</div><h3>เล่นบนอะไร</h3><p>มือถือแนวตั้ง · เบราว์เซอร์ · PC · คอนโซล คำตอบนี้กำหนดวิธีควบคุม ขนาดปุ่ม ความยาวรอบ และเครื่องมือที่ใช้ <b>เปลี่ยนทีหลังแพงที่สุด</b></p></div>
+        <div class="card a2"><div class="big o">2</div><h3>เล่นนานเท่าไร</h3><p>1 รอบกี่วินาที 1 วันกี่รอบ เกมบนเว็บและมือถือต้องสนุกภายใน <b>60–90 วินาทีแรก</b> เพราะผู้เล่นตัดสินใจปิดหน้าภายในเวลานั้น</p></div>
+        <div class="card a3"><div class="big p">3</div><h3>ใครเล่น</h3><p>คนที่เล่นเกมอยู่แล้ว หรือคนที่ไม่เคยเล่น อายุเท่าไร เล่นตอนไหนของวัน <b>ชื่อคนจริง 1 คน</b>ดีกว่ากลุ่มเป้าหมายกว้างๆ</p></div>
+      </div>
+      <div class="quote a4" style="margin-top:30px">ตัวอย่าง Flappy Bird: <b>มือถือแนวตั้ง แตะนิ้วเดียว</b> · รอบละ <b>5–60 วินาที</b> · คนที่มี<b>เวลาว่าง 1 นาที</b>ระหว่างรอ — สามคำตอบนี้คือเหตุผลที่เกมที่ทำใน 2–3 วันมีคนเล่นทั้งโลก</div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">5</div>
+  </div>
+  <div class="notes">⏱ 7:00 · เน้นข้อ 1: เราเคยเห็นทีมทำเกม PC แล้วอยากย้ายลงมือถือตอนท้าย ต้องรื้อ UI และคอนโทรลทั้งหมด · ข้อ 3: "ทุกคน" ไม่ใช่คำตอบ</div>
+</section>
+
+<!-- 6 one page pitch -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="cur"><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 2 · Pitch</p>
+      <h2>ไอเดียที่ใช้ได้ ต้องอยู่ใน <em>1 หน้ากระดาษ</em></h2>
+      <div class="cols w">
+        <div class="form a1">
+          <div class="f full"><label>ชื่อเกม + 1 ประโยค</label><span>"เกม ___ ที่ผู้เล่น ___ เพื่อ ___" (ลูปจากหน้าที่แล้ว)</span></div>
+          <div class="f"><label>Core loop</label><span>ทำอะไร → ได้อะไร → ทำไมอยากทำอีก</span></div>
+          <div class="f"><label>กติกาแพ้ / ชนะ / จบรอบ</label><span>รอบจบเมื่อไร อะไรคือคะแนน อะไรทำให้แพ้</span></div>
+          <div class="f"><label>แพลตฟอร์ม · ความยาวรอบ · ผู้เล่น</label><span>คำตอบ 3 คำถามจากขั้น 1</span></div>
+          <div class="f"><label>ขนาดงาน</label><span>กี่ฉาก กี่ศัตรู กี่ภาพ กี่เสียง ใครทำ ใช้เวลากี่สัปดาห์</span></div>
+          <div class="f full"><label>ความเสี่ยง 1 ข้อที่ต้องพิสูจน์ก่อน</label><span>"ถ้า ___ ไม่สนุก เกมนี้ไม่มีทางรอด" นี่คือสิ่งที่ prototype ต้องตอบ</span></div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>ทำไมต้อง 1 หน้า</h3><p>เพราะ<b>คนอื่นจะอ่านจบ</b> เพื่อนร่วมทีม อาจารย์ ผู้ให้ทุน ต่างอ่านหน้าเดียวแล้วบอกได้ทันทีว่าเข้าใจหรือไม่ และ<b>คุณจะเขียนเสร็จจริง</b>ภายในชั่วโมงเดียว</p></div>
+          <div class="card" style="margin-top:20px"><h3>สิ่งที่ยังไม่ต้องมี</h3><p>เรื่องราว ตัวละครทุกตัว ระบบเงิน อัปเกรด 40 แบบ ด่าน 60 ด่าน ทั้งหมดนี้รอได้ จนกว่า prototype จะบอกว่าลูปหลักสนุก</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">6</div>
+  </div>
+  <div class="notes">⏱ 10:00 · แบบฟอร์มนี้คือสิ่งที่กลุ่มจะได้เขียนตอนกิจกรรม บอกล่วงหน้า · ช่อง "ความเสี่ยง 1 ข้อ" สำคัญที่สุด เพราะเป็นตัวกำหนดว่า prototype ต้องทดสอบอะไร</div>
+</section>
+
+<!-- 7 pitch ตัวอย่าง -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="cur"><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 2 · Pitch · ตัวอย่างจริง</p>
+      <h2>Flappy Bird ใน <em>1 หน้า</em></h2>
+      <div class="cols w">
+        <div class="form filled a1">
+          <div class="f full"><label>ชื่อเกม + 1 ประโยค</label><span>แตะให้นกบินผ่านช่องท่อให้ได้มากที่สุด เพราะอยากแก้มือจากรอบที่เพิ่งพลาดไปท่อเดียว</span></div>
+          <div class="f"><label>Core loop</label><span>แตะ → นกกระโดด ผ่านท่อ +1 + เสียง → แตะอีกให้จังหวะพอดีก่อนชน</span></div>
+          <div class="f"><label>แพ้ / ชนะ / จบรอบ</label><span>ชนท่อหรือพื้น = จบทันที คะแนนคือผล ไม่มีชนะ มีแต่ "ครั้งนี้เกินสถิติไหม"</span></div>
+          <div class="f"><label>แพลตฟอร์ม · รอบ · ผู้เล่น</label><span>มือถือแนวตั้ง · 5–60 วิ · คนที่ว่าง 1 นาที</span></div>
+          <div class="f"><label>ขนาดงาน</label><span>นก 1 ตัว ท่อ 1 แบบ พื้นหลัง 1 ภาพ เสียง 3 เสียง · 1 คน 2–3 วัน</span></div>
+          <div class="f full"><label>ความเสี่ยงที่ต้องพิสูจน์ก่อน</label><span>ถ้า "แตะให้พอดีช่อง" ไม่ทำให้หัวร้อนแบบอยากลองอีก เกมนี้จะถูกปิดใน 10 วินาที → prototype ทดสอบแค่แรงกระโดดกับระยะท่อ</span></div>
+        </div>
+        <div class="pr">
+          <div style="aspect-ratio:5/4;border-radius:20px;background:#10213F;overflow:hidden;border:1px solid var(--line);box-shadow:var(--csh);display:flex;justify-content:center"><img src="gamedev-lecture-img/flappy.png" alt="" style="height:100%;image-rendering:pixelated"></div>
+          <p class="cap">ปล่อยปี 2013 โดยนักพัฒนาคนเดียว ใช้เวลา 2–3 วัน ภาพน้อยกว่าเกมนักศึกษาส่วนใหญ่ แต่ลูปชัดใน 1 ประโยค</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">7</div>
+  </div>
+  <div class="notes">⏱ 14:00 · ชี้ช่องขนาดงาน: นก 1 ท่อ 1 นี่คือเหตุผลที่เสร็จใน 3 วัน · ชี้ช่องความเสี่ยง: สิ่งที่ต้องพิสูจน์คือ "จังหวะ" ไม่ใช่ภาพ prototype ของเกมนี้เป็นสี่เหลี่ยมกับเส้นก็ตอบได้</div>
+</section>
+
+<!-- 8 GDD ยาวพัง -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="cur"><b>2</b>Pitch</span><span><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 2 · Pitch · บทเรียนจากเกมจริง</p>
+      <h2>เอกสารออกแบบ 100 หน้าตั้งแต่วันแรก คือ<em>กับดัก</em></h2>
+      <div class="vs">
+        <div class="card pl"><img class="gth" src="gamedev-lecture-img/dnf_h.jpg" alt="" style="width:250px;aspect-ratio:460/215"><span class="tag o">เคสที่ใช้ 14 ปี</span><h3>Duke Nukem Forever</h3>
+          <ul class="b o" style="margin-top:10px"><li>ประกาศปี <b>1997</b> วางขายปี <b>2011</b> · เปลี่ยน engine หลายรอบเพราะอยากให้ "สมบูรณ์" ก่อนให้ใครเล่น</li><li>ระหว่างทาง เกมแนวเดียวกันออกไปหลายสิบเกม สิ่งที่ออกแบบไว้ล้าสมัยก่อนได้เล่น</li><li>วันวางขาย คะแนนรีวิวต่ำ เพราะโลกไปไกลกว่าเอกสารออกแบบแล้ว</li></ul></div>
+        <div class="mid">vs</div>
+        <div class="card pr"><img class="gth px" src="gamedev-lecture-img/celeste_classic.png" alt="" style="width:130px;aspect-ratio:1"><span class="tag">เคสที่ใช้ 4 วัน</span><h3>Celeste Classic</h3>
+          <ul class="b g" style="margin-top:10px"><li>game jam บน PICO-8 สิงหาคม <b>2015</b> ทำ <b>4 วัน</b> จอ 128×128 16 สี</li><li>มีคนเล่นทันที เห็นว่ากลไกกระโดด + dash + ปีนสนุกจริงตั้งแต่ยังไม่มีเนื้อเรื่อง</li><li>ต่อยอดเป็น <b>Celeste (2018)</b> ตัวเต็ม และซ่อนเวอร์ชัน 4 วันไว้ในเกมนั้นเป็นมินิเกม</li></ul></div>
+      </div>
+      <div class="quote a3" style="margin-top:26px">เอกสารยาวทำให้<b>รู้สึก</b>ว่าคืบหน้า แต่สิ่งเดียวที่พิสูจน์ความสนุกได้คือ<b>คนเล่น</b> ออกแบบให้พอ prototype แล้วหยุด</div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">8</div>
+  </div>
+  <div class="notes">⏱ 18:00 · ไม่ได้บอกว่าเอกสารไม่ดี แต่ "เขียนตอนไหน" สำคัญกว่า Celeste ตัวเต็มก็มีเอกสารเยอะ แต่เขียนหลังจากกลไกพิสูจน์แล้ว · ถามห้องว่ามีใครเล่น Celeste Classic ตอนต้นชั่วโมงบ้าง</div>
+</section>
+
+<!-- 9 prototype -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="cur"><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 3 · Prototype</p>
+      <h2>ต้องสนุกตั้งแต่ตอนเป็น<em>สี่เหลี่ยมสีเทา</em></h2>
+      <div class="vs">
+        <div class="pl"><div class="shot" style="aspect-ratio:2/1;position:relative;background:#000"><img src="gamedev-lecture-img/celeste_classic.png" alt="" style="object-fit:contain;image-rendering:pixelated"><div style="position:absolute;right:16px;top:12px;font:700 16px Poppins;color:#fff;letter-spacing:.1em;background:rgba(0,0,0,.62);padding:3px 12px;border-radius:9px">128×128 · 16 COLORS · 4 DAYS</div></div><p class="cap">Celeste Classic (2015): สี่เหลี่ยมไม่กี่สีบน PICO-8 ไม่มีเนื้อเรื่อง แต่ความรู้สึกตอนกระโดดและ dash ครบตั้งแต่วันที่ 4</p></div>
+        <div class="mid">→</div>
+        <div class="pr"><div class="shot" style="aspect-ratio:2/1;position:relative"><img src="gamedev-lecture-img/celeste_play.jpg" alt=""><div style="position:absolute;right:16px;top:12px;font:700 16px Poppins;color:#fff;letter-spacing:.1em;background:rgba(0,0,0,.62);padding:3px 12px;border-radius:9px">ART · SOUND · STORY · 2018</div></div><p class="cap">Celeste (2018): ภาพ เสียง และเนื้อเรื่องทั้งหมดใส่หลังจากกล่องเทาพิสูจน์แล้ว 3 ปี กลไกหลักยังเป็นชุดเดิม</p></div>
+      </div>
+      <div class="grid3 a3" style="margin-top:22px">
+        <div class="card"><h3>ถ้ากล่องเทาสนุก</h3><p>ภาพสวยจะทำให้สนุก<b>ขึ้นอีก</b></p></div>
+        <div class="card"><h3>ถ้ากล่องเทาไม่สนุก</h3><p>ภาพสวยจะ<b>ซ่อน</b>ปัญหาไว้ได้แค่ 30 วินาที</p></div>
+        <div class="card"><h3>ดังนั้น</h3><p>ห้ามเปิดโปรแกรมวาดภาพ จนกว่าจะมีคนเล่นกล่องเทาแล้ว<b>ขอเล่นอีก</b></p></div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">9</div>
+  </div>
+  <div class="notes">⏱ 25:00 · ภาพซ้ายคือ Celeste Classic ของจริง ภาพขวาคือ Celeste ตัวเต็ม ถ้าเน็ตดี เปิด Celeste Classic บน lexaloffle เล่นสด 30 วินาทีให้เห็นว่ากล่องเทาสนุกได้ · ถามห้อง: ใครเริ่มทำเกมด้วยการวาดตัวละครก่อน (ส่วนใหญ่) นี่คือสิ่งที่ต้องกลับด้าน</div>
+</section>
+
+<!-- 10 เครื่องมือ -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="cur"><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 3 · Prototype · เครื่องมือ</p>
+      <h2>เลือกเครื่องมือจาก<em>แพลตฟอร์ม</em> ไม่ใช่จากความชอบ</h2>
+      <table class="t a1">
+        <tr><th style="width:230px">เครื่องมือ</th><th>เหมาะกับ</th><th>ข้อดี</th><th>ระวัง</th></tr>
+        <tr><td class="k">HTML5 / Phaser / PixiJS</td><td>เกมเว็บ เกมมือถือผ่านเบราว์เซอร์ รอบสั้น</td><td>เปิดลิงก์เล่นได้ทันที ไม่ต้องติดตั้ง แชร์ง่าย ทีมเราใช้ทำมินิเกมทั้งหมด</td><td>เกม 3D หนักๆ ไม่เหมาะ</td></tr>
+        <tr><td class="k">Godot</td><td>2D และ 3D เบาถึงกลาง มือถือ/PC</td><td>ฟรี เปิดโค้ด เบา เรียนเร็ว export ได้ทั้งเว็บ มือถือ PC</td><td>ชุมชนเล็กกว่า Unity หาคำตอบยากกว่า</td></tr>
+        <tr><td class="k">Unity</td><td>มือถือ PC คอนโซล ทั้ง 2D/3D</td><td>ตัวอย่างและปลั๊กอินมากที่สุด บริษัทเกมไทยใช้มากที่สุด</td><td>โปรเจกต์บวมง่าย ใบอนุญาตมีเงื่อนไขเมื่อมีรายได้</td></tr>
+        <tr><td class="k">Unreal</td><td>3D คุณภาพสูง PC/คอนโซล</td><td>กราฟิกระดับสูงสุด Blueprint ไม่ต้องเขียนโค้ดมาก</td><td>หนัก เรียนนาน ไม่เหมาะกับเกมเล็กหรือเว็บ</td></tr>
+        <tr><td class="k">กระดาษ + ดินสอ</td><td>เกมที่กติกาคือหัวใจ (การ์ด บอร์ด พัซเซิล)</td><td>prototype ได้ใน 1 ชั่วโมง ทดสอบกติกาก่อนเขียนโค้ด</td><td>ทดสอบ "ความรู้สึก" ของการควบคุมไม่ได้</td></tr>
+      </table>
+      <p class="sub a2" style="margin-top:22px">กติกาเดียว: ถ้าคำตอบข้อ 1 คือ "เบราว์เซอร์" เลือกแถวแรก ถ้า "มือถือติดตั้ง" เลือก Godot หรือ Unity ไม่ต้องเรียนหลายตัว เรียนตัวเดียวให้ทำเกมเสร็จ</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">10</div>
+  </div>
+  <div class="notes">⏱ 30:00 · อย่าลงลึกเครื่องมือ 2 ชั่วโมงไม่พอ · ทิ้งข้อความ: เครื่องมือเปลี่ยนทุก 3 ปี แต่ 7 ขั้นนี้ไม่เปลี่ยน</div>
+</section>
+
+<!-- 11 กติกา prototype -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="cur"><b>3</b>Prototype</span><span><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 3 · Prototype · กติกา</p>
+      <h2>5 กติกาของ prototype ที่<em>ได้คำตอบ</em></h2>
+      <div class="cols">
+        <div>
+          <div class="row a1" style="margin-bottom:22px"><span class="num">1</span><div><h3>ตอบคำถามเดียว</h3><p class="sub" style="font-size:24px">คำถามจากช่อง "ความเสี่ยง" ใน pitch ไม่ใช่ทำเกมทั้งเกมแบบย่อ</p></div></div>
+          <div class="row a2" style="margin-bottom:22px"><span class="num">2</span><div><h3>กรอบเวลา 1–2 สัปดาห์</h3><p class="sub" style="font-size:24px">ถ้าเกิน แปลว่าคำถามใหญ่ไป แบ่งคำถามให้เล็กลง</p></div></div>
+          <div class="row a3" style="margin-bottom:22px"><span class="num">3</span><div><h3>โค้ดโยนทิ้งได้</h3><p class="sub" style="font-size:24px">เขียนเร็ว เขียนสกปรก ไม่ต้องมีโครงสร้าง เพราะ 70% จะถูกเขียนใหม่ตอน production</p></div></div>
+          <div class="row a4" style="margin-bottom:22px"><span class="num">4</span><div><h3>ใช้ของสำเร็จรูปทุกอย่าง</h3><p class="sub" style="font-size:24px">สี่เหลี่ยม วงกลม เสียงฟรี ฟอนต์ระบบ เวลาทั้งหมดไปที่ "ความรู้สึกตอนเล่น"</p></div></div>
+          <div class="row a5"><span class="num">5</span><div><h3>ให้คนอื่นเล่นภายในวันที่ 3</h3><p class="sub" style="font-size:24px">ไม่ใช่วันสุดท้าย เพราะคุณจะเริ่มมองไม่เห็นปัญหาของตัวเองตั้งแต่วันที่ 4</p></div></div>
+        </div>
+        <div class="pr">
+          <div class="card"><span class="tag">ตัวอย่างจริง · ดูฟรีทั้งซีรีส์</span><h3>Mind Over Magnet (Game Maker’s Toolkit)</h3><p>Mark Brown บันทึกการทำเกมตั้งแต่ต้นจนปล่อยในซีรีส์ <b>Developing</b> บน YouTube · เปิด prototype แม่เหล็กให้ชุมชนเล่นตั้งแต่ตอนที่ 4 ตอนยังเป็นกล่องกับเส้น เพื่อเก็บ feedback ก่อนมีอาร์ต · ปล่อยเดโมบน itch.io ก่อนขายจริงบน Steam <b>13 พ.ย. 2024</b></p></div>
+          <div class="quote" style="margin-top:18px;font-size:26px">เขาเขียนเองว่า "กำลังใจจาก playtest ที่ดีประเมินค่าไม่ได้" และเกือบท้ายโปรเจกต์ยัง<b>ตัดแผน</b>เพื่อลด asset และย่อเนื้อเรื่องให้ทันวันปล่อย</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">11</div>
+  </div>
+  <div class="notes">⏱ 36:00 · ข้อ 5 สำคัญที่สุดและถูกข้ามมากที่สุด · ซีรีส์ Developing ของ GMTK คือบันทึกการทำเกม 1 เกมตั้งแต่ prototype ถึงปล่อยที่ดูฟรี แนะนำให้ดูทั้งซีรีส์ (จะวกกลับมาอีกครั้งตอน scope)</div>
+</section>
+
+<!-- 12 playtest -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="cur"><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 4 · Playtest</p>
+      <h2>ให้คนแปลกหน้าเล่น <em>โดยไม่อธิบาย</em></h2>
+      <div class="cols">
+        <div class="pl">
+          <div class="card"><h3>กติกาตอนนั่งดูคนเล่น</h3>
+            <ul class="b" style="margin-top:10px"><li><b>ห้ามพูด</b> จนกว่าเขาจะวางมือ ถ้าต้องอธิบาย แปลว่าเกมอธิบายตัวเองไม่ได้</li><li><b>ดูสิ่งที่เขาทำ</b> ไม่ใช่สิ่งที่เขาพูด คนมักพูดว่า "สนุกดี" แล้วไม่กดเล่นอีก</li><li><b>จดเวลา</b> ที่เขาเริ่มทำสิ่งที่ถูกต้องครั้งแรก และจุดที่เขาหยุดนิ่งหรือกดผิด</li><li>ถามแค่ 2 คำถามตอนจบ: "เกมนี้ให้ทำอะไร" และ "อยากเล่นอีกไหม ทำไม"</li></ul></div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>ใครคือ "คนแปลกหน้า"</h3><p>ไม่ใช่เพื่อนร่วมทีม ไม่ใช่เพื่อนสนิท เพราะทั้งสองกลุ่มรู้ว่าเกมควรเล่นอย่างไรอยู่แล้ว หรือไม่กล้าบอกว่าไม่สนุก</p><p style="margin-top:10px">หาได้จาก: เพื่อนของเพื่อน คนในโรงอาหาร ญาติที่ไม่เล่นเกม <b>5 คนพอ</b> ที่จะเห็นปัญหาซ้ำกัน 80%</p></div>
+          <div class="quote" style="margin-top:20px;font-size:28px">ถ้าคน 3 ใน 5 ติดที่จุดเดียวกัน<br>นั่นคือ<b>บั๊กของการออกแบบ</b> ไม่ใช่ผู้เล่นโง่</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">12</div>
+  </div>
+  <div class="notes">⏱ 45:00 · เหตุผลที่ห้ามอธิบาย: ตอนปล่อยจริงไม่มีคุณยืนข้างผู้เล่น เกมต้องสอนตัวเอง · ให้ห้องจำว่าตอนต้นชั่วโมงไม่มีใครอธิบาย 2048 หรือ Dino ให้ แต่ทุกคนเล่นได้</div>
+</section>
+
+<!-- 13 วัด 3 อย่าง -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="cur"><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 4 · Playtest · วัดอะไร</p>
+      <h2>วัดแค่ <em>3 อย่าง</em> เหมือนที่ให้ทุกคนสังเกตตอนต้นชั่วโมง</h2>
+      <div class="grid3">
+        <div class="card a1"><div class="big">3 วิ</div><h3>เข้าใจไหม</h3><p>นับเวลาจากหน้าจอแรกจนเขาทำสิ่งที่ถูกต้องครั้งแรก เกินกว่านี้ = หน้าจอแรกต้องแก้ ไม่ใช่เพิ่มบทสอน</p></div>
+        <div class="card a2"><div class="big o">1 รอบ</div><h3>เล่นจบรอบแรกไหม</h3><p>วางมือก่อนจบ = ความยาวรอบผิด หรือมีจุดที่ไม่รู้ว่าต้องทำอะไรต่อ หาจุดนั้นจากที่จดไว้</p></div>
+        <div class="card a3"><div class="big g">อีก?</div><h3>กดเล่นอีกเองไหม</h3><p>โดยไม่มีใครขอ นี่คือตัววัดเดียวที่โกหกไม่ได้ ถ้าไม่กด ถามว่าขาดอะไรถึงจะกด</p></div>
+      </div>
+      <div class="cols w a4" style="margin-top:26px">
+        <div class="card"><img class="gth" src="gamedev-lecture-img/sts_play.jpg" alt="" style="width:230px;aspect-ratio:16/9"><span class="tag">ตัวอย่างจริง</span><h3>Slay the Spire วัดทุกรันตั้งแต่ early access</h3><p>การ์ดหลายร้อยใบ ทีม 2 คนสมดุลด้วยมือไม่ไหว จึงตั้งเซิร์ฟเวอร์เก็บข้อมูล<b>ทุกรัน</b>ตั้งแต่ต้น: การ์ดไหนถูกเลือก ชนะกี่ % ตายชั้นไหน แล้วใช้ตัวเลขตอบทุกคำบ่น · คำเตือนจากทีมเอง: <b>ผู้เล่นที่เล่นหนักผิดปกติทำค่าเฉลี่ยเพี้ยน</b> ต้องแยกออกก่อนอ่าน</p></div>
+        <div style="aspect-ratio:3/1;border-radius:20px;background:var(--bg);border:1px solid var(--line);box-shadow:var(--csh);padding:18px 26px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;align-items:end;position:relative">
+  <div><div style="height:160px;display:flex;align-items:end"><div style="width:100%;height:78%;background:var(--hi);border-radius:10px 10px 0 0"></div></div><p style="font-size:19px;margin-top:6px"><b>78%</b> เข้าใจใน 3 วิ</p></div>
+  <div><div style="height:160px;display:flex;align-items:end"><div style="width:100%;height:61%;background:var(--hi2);border-radius:10px 10px 0 0"></div></div><p style="font-size:19px;margin-top:6px"><b>61%</b> เล่นจบรอบแรก</p></div>
+  <div><div style="height:160px;display:flex;align-items:end"><div style="width:100%;height:44%;background:var(--green);border-radius:10px 10px 0 0"></div></div><p style="font-size:19px;margin-top:6px"><b>44%</b> กดเล่นอีกเอง</p></div>
+  <div style="position:absolute;right:16px;top:10px;font-size:14px;color:var(--dim);letter-spacing:.1em">ตัวอย่างสมมติ · 20 ผู้เล่น</div>
+</div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">13</div>
+  </div>
+  <div class="notes">⏱ 50:00 · วกกลับไปหน้า 3: ทุกคนเพิ่งเป็นผู้เล่นทดสอบ ถามห้องว่าเกมที่เล่นผ่าน 3 ข้อนี้ไหม · กราฟเป็นตัวเลขสมมติเพื่อให้เห็นรูปแบบ ของจริงดู GDC talk "Slay the Spire: Metrics Driven Design and Balance"</div>
+</section>
+
+<!-- 14 ตัดสินใจ -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="cur"><b>4</b>Playtest</span><span><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 4 · Playtest · ตัดสินใจ</p>
+      <h2>หลัง playtest มีทางเลือกแค่ <em>3 ทาง</em> และต้องเลือก</h2>
+      <div class="dec">
+        <div class="d kill a1"><h3>หยุด</h3><p>ลูปหลักไม่สนุกแม้แก้ 2 รอบแล้ว · คนไม่กดเล่นอีก · ไม่ใช่ความล้มเหลว คือ<b>ประหยัดเวลา 6 เดือน</b></p><p style="margin-top:14px;opacity:.85">Among Us 2: ประกาศแล้ว<b>ยกเลิก</b> ก.ย. 2020 เพื่อทุ่มคนทั้งหมดให้ภาคแรกที่กำลังดัง หยุดสิ่งที่ยังไม่พิสูจน์ ไปต่อกับสิ่งที่พิสูจน์แล้ว</p><img src="gamedev-lecture-img/amongus_h.jpg" alt="" style="display:block;width:100%;height:130px;object-fit:cover;border-radius:14px;margin-top:16px"></div>
+        <div class="d pivot a2"><h3>เปลี่ยนทิศ</h3><p>มีบางอย่างที่คนชอบ แต่ไม่ใช่สิ่งที่เราตั้งใจ · เก็บส่วนที่คนชอบ ทิ้งที่เหลือ · เขียน pitch ใหม่ 1 หน้า</p><p style="margin-top:14px;opacity:.85">Vampire Survivors: ปล่อยฟรีบน itch.io ปี 2021 แทบไม่มีคนสนใจ แต่<b>คนที่เล่นแล้วเล่นนาน</b> → ย้ายไปขายบน Steam ธ.ค. 2021 ด้วยภาพแทบเท่าเดิม</p><img src="gamedev-lecture-img/vs_early.jpg" alt="" style="display:block;width:100%;height:130px;object-fit:cover;border-radius:14px;margin-top:16px"></div>
+        <div class="d go a3"><h3>ไปต่อ</h3><p>ผ่าน 3 ตัววัด · คนขอเล่นอีกเอง · ตอนนี้ถึงเวลาวาดภาพ ใส่เสียง และขยาย</p><p style="margin-top:14px;opacity:.85">Among Us: ยอดต่ำทั้งปี 2018 ทีมเกือบหยุดต้นปี 2019 แต่คนที่เล่น<b>กลับมาเล่นซ้ำ</b> จึงอัปเดตต่อ และระเบิดในปี 2020</p><img src="gamedev-lecture-img/amongus_meet.jpg" alt="" style="display:block;width:100%;height:130px;object-fit:cover;border-radius:14px;margin-top:16px"></div>
+      </div>
+      <p class="sub a4" style="margin-top:26px">สิ่งที่ห้ามทำ: "ปรับอีกนิดแล้วค่อยดู" ซ้ำเกิน 2 รอบโดยไม่เปลี่ยนคำถาม นั่นคือการหยุดที่ไม่ยอมรับว่าหยุด</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">14</div>
+  </div>
+  <div class="notes">⏱ 55:00 · ทั้ง 3 เคสเป็นทีม 1–3 คน · ชี้ว่า Among Us ไม่ได้ดังเพราะโชค แต่เพราะ "ยังอยู่" ให้โชคเจอ ตัววัดที่ทำให้ยังอยู่คือเล่นซ้ำ · ทางซ้ายต้องพูดให้ "หยุด" ฟังดูเป็นเรื่องดี</div>
+</section>
+
+<!-- 15 production 4 สาย -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="cur"><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 5 · Production</p>
+      <h2>งาน 4 สาย และคำถามเดียว: <em>ใครรอใคร</em></h2>
+      <div class="pipe">
+        <div class="lane k a1"><h3>Design</h3><p>กติกา ตัวเลข ด่าน UI flow · ต้อง<b>นำหน้า</b>ทุกสาย 1–2 สัปดาห์ เพราะอีก 3 สายรอสเปกจากตรงนี้</p></div>
+        <div class="lane a2"><h3>Art</h3><p>ตัวละคร ฉาก UI เอฟเฟกต์ · ใช้เวลานานที่สุด · เริ่มได้เมื่อ design ล็อก "ขนาด จำนวน สไตล์" แล้ว</p></div>
+        <div class="lane a3"><h3>Code</h3><p>ระบบเกม UI เซฟ · เริ่มจาก prototype ที่ผ่านแล้ว แต่<b>เขียนใหม่</b>ให้มีโครงสร้าง · ใช้ภาพชั่วคราวระหว่างรอ art</p></div>
+        <div class="lane a4"><h3>Sound</h3><p>เสียงเอฟเฟกต์ เพลง · สายที่ถูกลืมบ่อยที่สุด แต่ใช้เวลาน้อยและเปลี่ยนความรู้สึกมาก · เริ่มได้ตั้งแต่กลางทาง</p></div>
+      </div>
+      <div class="cols a5" style="margin-top:26px">
+        <div class="card"><h3>ตารางงานที่ดีมีแค่ 2 คอลัมน์</h3><p>"งานนี้<b>รอ</b>อะไร" และ "งานนี้<b>ปลดล็อก</b>อะไร" ถ้าเขียน 2 คอลัมน์นี้ได้ครบ ลำดับงานจะออกมาเอง เครื่องมือ (Trello, Notion, กระดาษ) ไม่สำคัญ</p></div>
+        <div class="card"><h3>ทีมนักศึกษา 3–4 คน</h3><p>1 คนทำ design + sound · 1 คน art · 1–2 คน code · ทุกคนเล่นเกมทุกวันศุกร์ด้วยกัน 15 นาที นี่คือ "ประชุม" ที่จำเป็นอย่างเดียว</p></div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">15</div>
+  </div>
+  <div class="notes">⏱ 60:00 · เน้น design ต้องนำ ถ้า art เริ่มก่อนสเปกล็อก จะวาดใหม่ · ทีม 1–3 คนก็สลับหมวก 4 ใบนี้ตามลำดับเดียวกัน Celeste ทำด้วยทีมไม่ถึง 10 คน</div>
+</section>
+
+<!-- 16 vertical slice -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="cur"><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 5 · Production · ลำดับการสร้าง</p>
+      <h2>ทำ <em>1 ชิ้นให้สมบูรณ์</em> ก่อนทำ 10 ชิ้นครึ่งๆ กลางๆ</h2>
+      <div class="cols n">
+        <div class="pl">
+          <div class="card"><h3>Vertical slice</h3><p>เกมส่วนเล็กที่สุดที่มี<b>ทุกชั้น</b>ครบ: ภาพจริง เสียงจริง UI จริง 1 ด่าน 1 ศัตรู 1 ไอเทม เล่นได้ตั้งแต่เปิดจนจบรอบ</p></div>
+          <div class="card" style="margin-top:18px"><h3>ทำไมต้องชิ้นเดียวก่อน</h3>
+            <ul class="b" style="margin-top:8px"><li>รู้ต้นทุนจริงต่อ 1 ชิ้น → คูณออกมาเป็นทั้งเกมได้ว่าทันหรือไม่</li><li>ทุกสายงานเห็น "มาตรฐาน" เดียวกันจากชิ้นแรก</li><li>ถ้าต้องหยุดกลางทาง ยังมีของที่เล่นได้และโชว์ได้</li></ul></div>
+        </div>
+        <div class="pr">
+          <div class="card"><img class="gth" src="gamedev-lecture-img/celeste_color.jpg" alt="" style="width:200px;aspect-ratio:16/9"><span class="tag">ตัวอย่างจริง</span><h3>Celeste Classic คือ vertical slice ของ Celeste</h3><p>กระโดด · dash · ปีนกำแพง · ด่านสั้นหลายห้อง · หน้าจบ ทุกชั้นครบใน <b>4 วัน</b> · ตัวเต็มปี 2018 เพิ่มจำนวนด่าน เนื้อเรื่อง ภาพ เสียง แต่กลไกหลักยังเป็นชุดเดิม</p></div>
+          <div class="card" style="margin-top:18px"><img class="gth" src="gamedev-lecture-img/vs_early.jpg" alt="" style="width:200px;aspect-ratio:16/9"><h3>Vampire Survivors ก็เริ่มแบบนี้</h3><p>เวอร์ชันแรกบน itch.io มี<b>ตัวละครไม่กี่ตัว ด่านเดียว</b> แต่ลูป "เดินหลบ เก็บเลเวล เลือกอาวุธ" ครบ คนที่เล่นแล้วติด คือหลักฐานพอให้ลงทุนต่อ</p></div>
+          <p class="cap" style="margin-top:14px">slice ที่สมบูรณ์ 1 ชิ้นบอกได้ว่าเกมเต็มต้องใช้แรงเท่าไร ก่อนตัดสินใจลงทุน 3 ปี</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">16</div>
+  </div>
+  <div class="notes">⏱ 63:00 · ความผิดพลาดคลาสสิกของโปรเจกต์จบ: ทำ 10 ด่านพร้อมกัน วันส่งงานไม่มีด่านไหนเสร็จ · slice เดียวที่สมบูรณ์ส่งอาจารย์ได้ดีกว่า 10 ด่านครึ่งๆ</div>
+</section>
+
+<!-- 17 scope -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="cur"><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 5 · Production · สิ่งที่ฆ่าเกมนักศึกษา</p>
+      <h2>Scope creep: ฟีเจอร์ "อีกนิดเดียว" คือ<em>สาเหตุอันดับ 1</em> ที่เกมไม่เสร็จ</h2>
+      <div class="cols">
+        <div class="pl">
+          <div class="card"><h3>มันเกิดขึ้นแบบนี้</h3><p>สัปดาห์ 3: "เพิ่มระบบอัปเกรดนิดหน่อย" · สัปดาห์ 5: "มีบอสด้วยดีไหม" · สัปดาห์ 7: "ต้องมีเนื้อเรื่องไม่งั้นไม่มีเหตุผล" · สัปดาห์ 9: ไม่มีอะไรเสร็จสักอย่าง และลูปหลักที่เคยสนุกตอน prototype กลับไม่สนุกแล้ว</p></div>
+          <div class="quote" style="margin-top:20px">กติกาที่ใช้ได้ทุกทีม:<br><b>ตัดฟีเจอร์ ไม่เลื่อนวัน</b><br><span style="font-size:24px;font-weight:400">ทุกไอเดียใหม่ไปลงกล่อง "เวอร์ชัน 1.1" ไม่ใช่เวอร์ชันนี้</span></div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>วิธีป้องกัน 3 ข้อ</h3>
+            <ul class="b o" style="margin-top:8px"><li><b>ขีดเส้นตายจริง</b> ที่มีคนรอดู (งานโชว์ วันส่ง อาจารย์ เพื่อนที่นัดไว้) เส้นตายที่ไม่มีใครรอ ไม่ใช่เส้นตาย</li><li><b>รายการ "ไม่ทำ"</b> เขียนไว้ข้างรายการ "ทำ" ตั้งแต่วันแรก และยาวกว่า</li><li><b>ทุกฟีเจอร์ใหม่ต้องตอบ</b> "ทำให้ 3 ตัววัดดีขึ้นไหม" ถ้าไม่ → 1.1</li></ul></div>
+          <div class="card" style="margin-top:18px"><img class="gth" src="gamedev-lecture-img/mom_play.jpg" alt="" style="width:150px;aspect-ratio:16/9"><span class="tag o">สองขั้วจากเกมจริง</span><p><b>Mind Over Magnet:</b> ใกล้ปล่อย ผู้ทำเปลี่ยนแผนเพื่อ<b>ลด asset และย่อเนื้อเรื่อง</b> ให้ออกตรงวันครบรอบ 10 ปีของช่อง 13 พ.ย. 2024 · <b>Stardew Valley:</b> คนเดียวทำ 4 ปีกว่าเพราะขยายสโคปเรื่อยๆ ได้เกมดีแต่เป็นข้อยกเว้น ไม่ใช่แผนที่นักศึกษาควรเลียนแบบ</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">17</div>
+  </div>
+  <div class="notes">⏱ 66:00 · ถามห้อง: ใครเคยเพิ่มฟีเจอร์ตอนใกล้ส่ง (ทุกคน) · Stardew สำเร็จแต่เป็นข้อยกเว้นที่คนชอบยกมาอ้าง อย่าใช้เป็นแผน · เส้นตายที่มีคนรอดูคือสิ่งที่ Mind Over Magnet ใช้ (วันครบรอบช่อง)</div>
+</section>
+
+<!-- 18 แม่แบบเดียว -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="cur"><b>5</b>Production</span><span><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 5 · Production · ทำเร็วได้อย่างไร</p>
+      <h2>ทำเกมเสร็จซ้ำได้เพราะ<em>กรอบเดียวกัน</em> ไม่ใช่เพราะเก่งขึ้น</h2>
+      <div class="grid3 a1">
+        <div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px"><div class="big" style="white-space:nowrap;margin:0">128×128</div><img src="gamedev-lecture-img/celeste_classic.png" alt="" style="height:92px;flex:0 1 auto;min-width:0;max-width:210px;object-fit:cover;border-radius:12px;border:1px solid var(--line);image-rendering:pixelated"></div><h3>PICO-8 · กรอบที่บังคับให้เล็ก</h3><p>16 สี โค้ดจำกัด จอเดียว คนทำเกมเสร็จบนกรอบนี้เป็นพันเกม <b>Celeste Classic</b> คือหนึ่งในนั้น</p></div>
+        <div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px"><div class="big o" style="white-space:nowrap;margin:0">48 ชม.</div><img src="gamedev-lecture-img/baba_h.jpg" alt="" style="height:92px;flex:0 1 auto;min-width:0;max-width:210px;object-fit:cover;border-radius:12px;border:1px solid var(--line)"></div><h3>Game Jam · Ludum Dare / GMTK</h3><p>ธีมเดียว เวลาเดียว เกมเสร็จหลายพันเกมในสุดสัปดาห์เดียว เพราะกรอบ<b>ตัดสินใจแทน</b>ไปแล้ว 80% · <b>Baba Is You</b> ก็เริ่มจาก Nordic Game Jam 2017</p></div>
+        <div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px"><div class="big g" style="white-space:nowrap;margin:0">1 คน</div><img src="gamedev-lecture-img/vs_h.jpg" alt="" style="height:92px;flex:0 1 auto;min-width:0;max-width:210px;object-fit:cover;border-radius:12px;border:1px solid var(--line)"></div><h3>Vampire Survivors · Phaser + asset สำเร็จรูป</h3><p>สร้างบนเฟรมเวิร์กเว็บฟรี ใช้ภาพซื้อสำเร็จ แรงทั้งหมดไปที่ลูป ขายได้หลายล้านชุดก่อนมีทีม</p></div>
+      </div>
+      <div class="grid3 a3" style="margin-top:22px">
+        <div class="card"><h3>สิ่งที่ใช้ร่วมกันทุกเกม</h3><p>โครงหน้าเกม · หน้าจบรอบ · ระบบคะแนน · เสียงพื้นฐาน · ปุ่ม · ฟอนต์ · วิธีเซฟ ทำครั้งเดียว ใช้ทุกเกมถัดไป</p></div>
+        <div class="card"><h3>สิ่งที่ทำใหม่ต่อเกม</h3><p>ลูปหลัก 1 อย่าง · ภาพประกอบ 1 ชุด · เสียงเฉพาะ 3–5 เสียง นี่คือ 20% ของงาน แต่คือ 100% ของความต่าง</p></div>
+        <div class="card"><h3>บทเรียนสำหรับนักศึกษา</h3><p>เกมที่ 2 ของคุณควรใช้โค้ด 60% จากเกมแรก ถ้าเริ่มจากศูนย์ทุกครั้ง จะไม่มีวันเร็วขึ้น</p></div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">18</div>
+  </div>
+  <div class="notes">⏱ 69:00 · คำถามของหน้านี้: ทำไมบางคนทำเกมเสร็จได้เรื่อยๆ ทั้งที่ไม่ได้เก่งกว่าคนอื่น คำตอบคือเขาไม่เริ่มจากศูนย์ และทำงานในกรอบที่ตัดสินใจเรื่องส่วนใหญ่ไว้ให้แล้ว · เปิดด้วยการถามห้อง: "ถ้าให้ทำเกมที่ 2 จะเริ่มจากอะไร" ส่วนใหญ่ตอบว่าเปิดโปรเจกต์ใหม่ แล้วชี้ว่าคนทำเป็นอาชีพจะเปิดโปรเจกต์เก่าแล้วลบของที่ไม่ใช้ออก · แถวบนคือกรอบ 3 แบบ — PICO-8: จำกัดจอ สี และความยาวโค้ด คนทำจึงไม่ต้องคิดเรื่องภาพหรือขนาดเกม แรงที่เหลือไปลงที่กลไก (Celeste Classic 4 วัน) — Game Jam: กำหนดธีมและเวลาให้ ไม่มีใครขยายสโคปได้เพราะเวลาหมดคือจบ Baba Is You ชนะ Nordic Game Jam 2017 แล้วใช้อีก 2 ปีทำเป็นเกมเต็ม — Vampire Survivors: ไม่เขียน engine เอง ไม่วาดภาพเอง แรงทั้งหมดไปที่ลูป · แถวล่างคือวิธีนำไปใช้: ของที่ทำครั้งเดียวใช้ได้ทุกเกม (หน้าเริ่ม หน้าจบรอบ คะแนน ปุ่ม เสียงพื้นฐาน) กับของที่ต้องทำใหม่ต่อเกม (ลูป ภาพ เสียงเฉพาะ) เกมที่ 2 จึงควรยกโค้ดจากเกมแรกมาเกินครึ่ง · ประโยคปิด: กรอบไม่ใช่ข้อจำกัด คือสิ่งที่ตัดสินใจแทนคุณ และเป็นวิธีกันสโคปบาน (หน้า 17) โดยไม่ต้องอาศัยวินัย · เกมเล็กหลายเกม = ฝึก 7 ขั้นหลายรอบ ดีกว่าเกมใหญ่เกมเดียวที่ไม่เคยถึงขั้น 7 · ถ้าถูกถามที่มาของ 80% 60% 20%: เป็นสัดส่วนเชิงเปรียบเทียบให้เห็นภาพ ไม่ใช่ผลวิจัย</div>
+</section>
+
+<!-- 19 polish -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="cur"><b>6</b>Polish</span><span><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 6 · Polish</p>
+      <h2>"Juice": เวลา <em>10%</em> เปลี่ยนความรู้สึก <em>50%</em></h2>
+      <div class="cols n">
+        <div class="pl">
+          <div class="card"><h3>รายการ juice ที่ใส่ได้ใน 1 วัน</h3>
+            <ul class="b" style="margin-top:8px"><li><b>เสียง</b>ทุกการกระทำของผู้เล่น แตะ ชน เก็บ ชนะ แพ้ ไม่มีการกระทำไหนเงียบ</li><li><b>สั่น/เด้ง</b> จอสั่นตอนชน ปุ่มยุบตอนกด ตัวเลขเด้งตอนได้คะแนน</li><li><b>อนุภาค</b> เศษกระจายตอนทำลาย ประกายตอนเก็บ</li><li><b>คอมโบและตัวเลขลอย</b> +100 ลอยขึ้นจากจุดที่เกิด ไม่ใช่แค่เปลี่ยนตัวเลขมุมจอ</li><li><b>ความเร็วที่เพิ่มขึ้น</b> ทุกอย่างเร็วขึ้นเล็กน้อยเมื่อใกล้จบ</li><li><b>หน้าจบรอบ</b> ที่โชว์สถิติเก่า vs ใหม่ ให้เหตุผลกดเล่นอีก</li></ul></div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>ดู 2 คลิปนี้ก่อนใส่ juice</h3>
+            <ul class="b" style="margin-top:8px"><li><b>Juice it or lose it</b> (GDC 2012, 15 นาที) เกม Breakout กล่องเทาเกมเดียว ใส่ juice ทีละอย่างให้เห็นก่อน/หลัง</li><li><b>The Art of Screenshake</b> (Vlambeer, 15 นาที) 30 เทคนิค ใส่ทีละข้อบนเกมยิงกล่องสี่เหลี่ยม</li></ul></div>
+          <p class="cap">ทั้ง 2 คลิปใช้เกมกล่องเทาเป็นตัวสาธิต เห็นชัดว่า juice ใส่หลังลูปเล่นได้แล้ว และใส่ได้ในวันเดียว</p>
+          <div class="quote" style="margin-top:16px;font-size:26px">ลำดับคือ <b>สนุก → สวย → juice</b> ไม่ใช่กลับกัน juice บนเกมที่ไม่สนุก เหมือนน้ำตาลบนอาหารเสีย</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">19</div>
+  </div>
+  <div class="notes">⏱ 72:00 · ถ้ามีเวลา เปิดคลิป "Juice it or lose it" (GDC) 1 นาที · ถามห้อง: เกมที่เล่นตอนต้นชั่วโมง มีเสียงตอนแตะไหม สังเกตไหม</div>
+</section>
+
+<!-- 20 ปล่อย -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="cur"><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 7 · ปล่อย</p>
+      <h2>"ปล่อย" = คนแปลกหน้าเปิด<em>ลิงก์</em>แล้วเล่นได้ ไม่ต้องรอ Store</h2>
+      <table class="t a1" style="font-size:22px">
+        <tr><th style="width:220px">ช่องทาง</th><th>เหมาะกับ</th><th>ขั้นตอน</th><th>ค่าใช้จ่าย</th></tr>
+        <tr><td class="k">itch.io</td><td>เกมเว็บ (HTML5) และไฟล์ติดตั้ง PC · ที่ที่นักพัฒนาอินดี้ทั้งโลกปล่อยเกมแรก</td><td>สมัคร → อัปโหลด zip → ตั้งค่า "เล่นในเบราว์เซอร์" → ได้ลิงก์ใน 10 นาที</td><td class="ok">ฟรี</td></tr>
+        <tr><td class="k">GitHub Pages</td><td>เกมเว็บที่มีซอร์สโค้ดใน GitHub อยู่แล้ว</td><td>push โค้ด → เปิด Pages → ได้ลิงก์ ชื่อผู้ใช้.github.io/ชื่อเกม · ทีมเราใช้วิธีนี้กับเอกสารและเดโม</td><td class="ok">ฟรี</td></tr>
+        <tr><td class="k">Netlify / Vercel</td><td>เกมเว็บ อยากได้โดเมนสวยและอัปเดตอัตโนมัติ</td><td>ลากโฟลเดอร์วางในหน้าเว็บ → ได้ลิงก์ทันที</td><td class="ok">ฟรี (ระดับเริ่มต้น)</td></tr>
+        <tr><td class="k">ไฟล์ .apk / .exe ส่งตรง</td><td>เกมมือถือ/PC ที่ยังไม่ขึ้น Store ให้กลุ่มทดสอบ</td><td>export → แชร์ผ่าน Drive/LINE · Android ต้องเปิด "ติดตั้งจากแหล่งที่ไม่รู้จัก"</td><td class="ok">ฟรี</td></tr>
+      </table>
+      <div class="grid3 a2" style="margin-top:22px">
+        <div class="card"><h3>หน้าเกมต้องมี</h3><p>ภาพปก 1 · สกรีนช็อต 3 · คำอธิบาย <b>2 บรรทัด</b> ที่บอกว่าทำอะไรและเล่นบนอะไร · ปุ่มเล่นที่เห็นทันที</p></div>
+        <div class="card"><h3>ก่อนปล่อย 1 วัน</h3><p>เปิดลิงก์จาก<b>เครื่องอื่น</b> มือถือคนอื่น เน็ตอื่น ถ้าเปิดได้แค่เครื่องตัวเอง ยังไม่นับว่าปล่อย</p></div>
+        <div class="card"><h3>ส่งให้ใคร</h3><p>กลุ่ม 20–50 คนแรก: เพื่อน กลุ่มเฟซบุ๊กนักพัฒนาเกมไทย Discord ของ engine ที่ใช้ ขอ feedback ตรงๆ ไม่ขอให้ชม</p></div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">20</div>
+  </div>
+  <div class="notes">⏱ 75:00 · ย้ำว่าวันนี้ไม่พูดเรื่อง Store เพราะขั้นตอน Store เป็นงานเอกสาร ไม่ใช่งานพัฒนาเกม · กติกา "เปิดจากเครื่องอื่นก่อนบอกว่าเสร็จ" คือกติกาจริงของทีมเราทุกครั้งที่ปล่อยแพตช์</div>
+</section>
+
+<!-- 21 telemetry -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="cur"><b>7</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ขั้น 7 · ปล่อย · หลังปล่อย</p>
+      <h2>เวอร์ชัน 1.0 คือ<em>จุดเริ่ม</em> ไม่ใช่จุดจบ</h2>
+      <div class="cols">
+        <div class="pl">
+          <div class="card"><h3>เก็บข้อมูลขั้นต่ำ 4 อย่าง</h3>
+            <ul class="b" style="margin-top:8px"><li><b>เริ่มรอบ</b> กี่ครั้ง (คนกดเล่นจริงกี่คน)</li><li><b>จบรอบ</b> กี่ครั้ง (อัตราเล่นจบ = ตัววัดข้อ 2)</li><li><b>ตาย/ออกตรงไหน</b> ด่านไหน วินาทีที่เท่าไร (จุดที่ต้องแก้)</li><li><b>เล่นซ้ำ</b> กี่ครั้งต่อคน (ตัววัดข้อ 3)</li></ul>
+            <p style="margin-top:10px">ใช้ Google Analytics ฟรี หรือส่ง 1 บรรทัดไป Google Sheet ก็พอ ไม่ต้องมีระบบใหญ่</p></div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>รอบหลังปล่อย</h3><p>ดูข้อมูล 3 วัน → แก้<b>จุดเดียว</b>ที่คนออกมากที่สุด → ปล่อย 1.1 → ดูอีก 3 วัน วนแบบนี้ 3–4 รอบ เกมจะดีขึ้นมากกว่าที่คุณคิดเองได้ 3 เดือน</p></div>
+          <div class="card" style="margin-top:18px"><img class="gth" src="gamedev-lecture-img/sts_h.jpg" alt="" style="width:200px;aspect-ratio:460/215"><h3>ตัวอย่างจริง: Slay the Spire</h3><p>เก็บข้อมูลทุกรันตั้งแต่ early access (พ.ย. 2017) จนถึง 1.0 (ม.ค. 2019) ทุกแพตช์ปรับจาก<b>ตัวเลขจริง</b>ว่าการ์ดไหนไม่มีใครเลือก ไม่ใช่จากความรู้สึกของทีม</p></div>
+          <div class="quote" style="margin-top:18px;font-size:26px">เกมที่ปล่อยแล้วมีคนเล่น 50 คน สอนคุณได้มากกว่าเกมที่สมบูรณ์แบบในฮาร์ดดิสก์</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">21</div>
+  </div>
+  <div class="notes">⏱ 78:00 · ถ้าห้องเป็นสายโค้ด บอกว่า telemetry = fetch 1 บรรทัดไป endpoint ฟรี ไม่ถึง 20 บรรทัด · ปิดช่วงบรรยายตรงนี้ เตรียมเข้ากิจกรรม</div>
+</section>
+
+<!-- 22 portfolio -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">หลังปล่อย · Portfolio</p>
+      <h2>Portfolio ที่คนรับงานอยากเห็น = <em>ลิงก์ที่เล่นได้</em></h2>
+      <div class="cols w">
+        <div class="pl">
+          <div class="quote">เกมเล่นได้ <b>1 เกม</b>บนลิงก์ ชนะ GDD 30 หน้า และชนะเกม "เกือบเสร็จ" 5 เกมในฮาร์ดดิสก์</div>
+          <div class="grid2" style="margin-top:20px">
+            <div class="card a1"><h3>เปิดแล้วเล่นได้ใน 10 วิ</h3><p>ลิงก์เดียว ไม่ต้องติดตั้ง ไม่ต้องอ่านคู่มือ · เปิดจากมือถือคนอื่นได้ (กติกาหน้า 20)</p></div>
+            <div class="card a2"><h3>มีตัวเลขจริง</h3><p>คนเล่นกี่คน เล่นจบกี่ % เล่นซ้ำไหม · ตัวเลขจาก 30 คน มีค่ากว่าคำว่า "สนุก" ที่เขียนเอง</p></div>
+            <div class="card a3"><h3>บอกว่าทำส่วนไหน</h3><p>งานกลุ่มเขียนให้ชัดว่าคุณทำอะไร (ลูป ด่าน โค้ด ภาพ เสียง) และตัดสินใจอะไรไป</p></div>
+            <div class="card a4"><h3>เล่าสิ่งที่พัง</h3><p>post-mortem 10 บรรทัด: playtest เจออะไร แก้ยังไง · คนรับงานเชื่อคนที่เคยพังแล้วแก้ได้</p></div>
+          </div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>สิ่งที่เราเปิดดูจริง ตามลำดับ</h3>
+            <div class="row" style="margin-top:10px"><div class="num">1</div><p style="font-size:24px"><b>ลิงก์เกม</b> กดเล่นก่อนอ่านอะไรทั้งนั้น (3 นาที)</p></div>
+            <div class="row" style="margin-top:12px"><div class="num">2</div><p style="font-size:24px"><b>หน้าเกม / README</b> รู้ไหมว่าตัวเองทำอะไรและทำไม</p></div>
+            <div class="row" style="margin-top:12px"><div class="num">3</div><p style="font-size:24px"><b>โค้ดหรือไฟล์งาน</b> ดูวิธีจัดระเบียบ ไม่ได้ดูความฉลาด</p></div>
+            <div class="row" style="margin-top:12px"><div class="num" style="background:var(--dim)">4</div><p style="font-size:24px;color:var(--dim)"><b>เกรด</b> ดูท้ายสุด และแทบไม่เปลี่ยนผล</p></div>
+          </div>
+          <div class="card pp" style="margin-top:16px"><img class="gth" src="gamedev-lecture-img/mom_h.jpg" alt="" style="width:190px;aspect-ratio:460/215"><h3>ตัวอย่าง: เดโมก่อนเกมเสร็จก็เป็น portfolio</h3><p>Mind Over Magnet ปล่อยเดโมบน itch.io ก่อนขายจริง · Vampire Survivors เวอร์ชัน itch.io คือ "เดโม" ที่ยังอยู่จนวันนี้ · กล่องเทาที่มีคนเล่นแล้ว + ตัวเลข = ชิ้นแรกของคุณ</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">22</div>
+  </div>
+  <div class="notes">⏱ 80:00 · หน้านี้ตอบวัตถุประสงค์โครงการข้อ 3 (Portfolio) · เล่าจริงว่าเวลาคัดคนเข้าทีม เราเปิดลิงก์เกมก่อนเปิด resume · ย้ำ "1 เกมที่จบ" ไม่ใช่จำนวน · ถ้ามีเวลา ถามห้องว่าใครมีลิงก์เกมตัวเองอยู่แล้วบ้าง</div>
+</section>
+
+<!-- 23 เรื่องจริง 5 สาย -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">หลังปล่อย · งานจริงเป็นอย่างไร</p>
+      <h2>เรื่องจริงจากคนทำงาน <em>5 สาย</em></h2>
+      <div class="xp">
+        <div class="card a1"><img src="gamedev-lecture-img/hades_h.jpg" alt=""><div class="in"><span class="tag">Game Design</span><h3>Hades</h3><p>อยู่ใน early access ราว 2 ปี ปล่อยอัปเดตใหญ่ทุกสองสามเดือน ทีมเรียกแต่ละรอบว่า "การเปิดตัวเกมขนาดย่อ" และอ่านคำขอของผู้เล่นใน Discord ทุกข้อ</p><p class="les">งานออกแบบไม่จบที่เอกสาร คือการแก้ซ้ำกับผู้เล่นจริงเป็นปี</p></div></div>
+        <div class="card a1"><img src="gamedev-lecture-img/cuphead_h.jpg" alt=""><div class="in"><span class="tag o">ART</span><h3>Cuphead</h3><p>วาดมือลงกระดาษทุกเฟรม 24 ภาพต่อวินาที แบบการ์ตูนยุค 1930 สองพี่น้องผู้สร้างลาออกจากงานและจำนองบ้านเพื่อทำให้จบ</p><p class="les">สไตล์ภาพคือการตัดสินใจเรื่องเวลาและเงิน ไม่ใช่แค่ความสวย</p></div></div>
+        <div class="card a2"><img src="gamedev-lecture-img/vs_h.jpg" alt=""><div class="in"><span class="tag">Dev</span><h3>Vampire Survivors</h3><p>เขียนครั้งแรกด้วย Phaser เฟรมเวิร์กเว็บที่ทำได้เร็ว พอเกมพิสูจน์ตัวเองแล้ว จึงย้ายทั้งเกมไป engine ใหม่ในเวอร์ชัน 1.6 (ส.ค. 2023) ให้ลื่นขึ้นและพอร์ตง่ายขึ้น</p><p class="les">โค้ดชุดแรกมีไว้พิสูจน์เกม เขียนใหม่ได้เมื่อเกมรอดแล้ว</p></div></div>
+        <div class="card a2"><img src="gamedev-lecture-img/cyberpunk_h.jpg" alt=""><div class="in"><span class="tag o">QA</span><h3>Cyberpunk 2077</h3><p>วางขาย ธ.ค. 2020 ขณะที่เวอร์ชันคอนโซลรุ่นเก่ายังค้างและบั๊กมาก ราว 1 สัปดาห์ต่อมา Sony ถอดเกมออกจาก PlayStation Store และคืนเงินเต็มจำนวน</p><p class="les">บั๊กที่หลุดถึงมือผู้เล่น แพงกว่าเวลาที่ใช้ทดสอบเสมอ</p></div></div>
+        <div class="card a3"><img src="gamedev-lecture-img/stardew_h.jpg" alt=""><div class="in"><span class="tag">Production</span><h3>Stardew Valley</h3><p>ทำคนเดียว 4 ปีครึ่ง ผู้สร้างประเมินเองว่าทำราว 10 ชั่วโมงต่อวัน ทุกวัน เป็นการทำงานหนักที่ไม่มีใครสั่ง และไม่มีใครช่วยตัดสโคป</p><p class="les">งาน Production มีไว้เพื่อให้เกมเสร็จโดยไม่ต้องแลกกับชีวิตคนทำ</p></div></div>
+      </div>
+      <p class="cap" style="margin-top:16px">ทั้ง 5 เรื่องมาจากบทสัมภาษณ์และข่าวที่เปิดเผยต่อสาธารณะ · งานประจำวันในสตูดิโอส่วนใหญ่ไม่หนักขนาดนี้ แต่ปัญหาเป็นชนิดเดียวกัน</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">23</div>
+  </div>
+  <div class="notes">⏱ 86:00 · เล่าเต็มแค่ 2 เรื่องที่ตรงกับห้องที่สุด (แนะนำ ART กับ QA) ที่เหลือให้อ่านเอง · หลังแต่ละเรื่อง เล่าประสบการณ์ของผู้บรรยายเองในสายเดียวกัน 1 ประโยค จะน่าเชื่อกว่าสไลด์ · โยงกลับ: Design = หน้า 13–14 · Dev = หน้า 10 · QA และ Production = หน้า 17 "ตัดฟีเจอร์ ไม่เลื่อนวัน" แต่ไม่ปล่อยของพัง</div>
+</section>
+
+<!-- 24 วิเคราะห์ ไม่ใช่รีวิว -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">วิเคราะห์เกม · อ่านเกมคนอื่นให้ออก</p>
+      <h2>วิเคราะห์เกม ไม่ใช่<em>รีวิวเกม</em></h2>
+      <div class="cols w">
+        <div class="pl">
+          <table class="t a1" style="font-size:22px">
+            <tr><th style="width:140px">&nbsp;</th><th style="width:270px">รีวิว</th><th>วิเคราะห์</th></tr>
+            <tr><td class="k">คำถาม</td><td>สนุกไหม ควรเล่นไหม</td><td><b>ทำไม</b>ถึงสนุก ผู้สร้างตัดสินใจอะไร และแลกกับอะไร</td></tr>
+            <tr><td class="k">หลักฐาน</td><td>ความรู้สึกของฉัน</td><td>สิ่งที่เกิดบนจอ <b>นับได้ จับเวลาได้</b> คนอื่นเปิดเกมแล้วเห็นตรงกัน</td></tr>
+            <tr><td class="k">ผลลัพธ์</td><td>คะแนน คำแนะนำ</td><td>ข้อที่<b>นำไปใช้</b>กับเกมของตัวเองได้ และข้อที่ใช้ไม่ได้</td></tr>
+            <tr><td class="k">ตัวอย่าง</td><td>"Flappy Bird ยากแต่เพลิน เล่นแล้ววางไม่ลง"</td><td>"Flappy Bird ตายแล้วเริ่มรอบใหม่ได้ทันที ไม่มีหน้าโหลด ไม่เสียอะไร คนจึงกดเล่นซ้ำ"</td></tr>
+          </table>
+          <p class="cap" style="margin-top:16px">คนทำเกมวิเคราะห์เกมของคนอื่นเป็นประจำ เพื่อไม่ต้องลองผิดซ้ำในเรื่องที่มีคนพิสูจน์ให้ดูแล้ว</p>
+        </div>
+        <div class="pr">
+          <div class="card a2"><h3>3 ขั้นของการวิเคราะห์</h3>
+            <div class="row" style="margin-top:14px"><div class="num">1</div><p style="font-size:24px"><b>สังเกต</b> เล่นแล้วจดสิ่งที่เกิดขึ้น ยังไม่ตีความ (3 ข้อจากหน้า 3 คือจุดเริ่ม)</p></div>
+            <div class="row" style="margin-top:14px"><div class="num">2</div><p style="font-size:24px"><b>ตีความ</b> ผู้สร้างเลือกแบบนี้เพราะอะไร และยอมเสียอะไรไป</p></div>
+            <div class="row" style="margin-top:14px"><div class="num">3</div><p style="font-size:24px"><b>นำไปใช้</b> ข้อไหนใช้กับเกมของเราได้ ข้อไหนไม่ได้ เพราะอะไร</p></div>
+          </div>
+          <div class="quote a3" style="margin-top:18px;font-size:28px">ทุกประโยคในบทวิเคราะห์ ต้องตอบได้ว่า <b>เห็นจากตรงไหนในเกม</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">24</div>
+  </div>
+  <div class="notes">⏱ 88:00 · ย้อนไปหน้า 3: ทุกคนสังเกต 3 อย่างไปแล้วตั้งแต่ต้นชั่วโมง นั่นคือขั้น 1 ของการวิเคราะห์ · ให้ห้องลองเปลี่ยนประโยครีวิว 1 ประโยคของเกมที่เล่น เป็นประโยควิเคราะห์ (30 วินาที)</div>
+</section>
+
+<!-- 25 กรอบ MDA -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">วิเคราะห์เกม · กรอบ MDA</p>
+      <h2>ผู้สร้างเริ่มจาก<em>กติกา</em> ผู้เล่นเริ่มจาก<em>ความรู้สึก</em></h2>
+      <div class="grid3">
+        <div class="card a1"><div class="big">M</div><h3>Mechanics · กติกา</h3><p>สิ่งที่ผู้สร้างเขียนลงไปตรงๆ: ปุ่ม กฎ ตัวเลข เงื่อนไขแพ้ชนะ · คือคำตอบของ 3 คำถามในหน้า 5</p></div>
+        <div class="card a2"><div class="big o">D</div><h3>Dynamics · พฤติกรรม</h3><p>สิ่งที่เกิดขึ้นเมื่อคนเล่นกติกานั้นจริง: กลยุทธ์ จังหวะ จุดที่พลาดซ้ำ · เห็นได้ตอน playtest เท่านั้น (หน้า 12)</p></div>
+        <div class="card a3"><div class="big g">A</div><h3>Aesthetics · ความรู้สึก</h3><p>อารมณ์ที่ผู้เล่นได้กลับไป: ท้าทาย ค้นพบ ได้อยู่กับเพื่อน · คือเหตุผลที่เขากดเล่นอีก (หน้า 13)</p></div>
+      </div>
+      <div class="cols w a4" style="margin-top:24px">
+        <div class="card"><h3>อ่านได้ 2 ทิศ</h3><p><b>ผู้สร้าง</b>แก้ได้แค่ M แล้วหวังให้เกิด D และ A · <b>ผู้เล่น</b>รู้สึก A ก่อน แล้วค่อยเห็น D และ M · <b>คนวิเคราะห์</b>เดินย้อน: เริ่มจากความรู้สึก ถามว่าพฤติกรรมไหนทำให้รู้สึกแบบนั้น แล้วกติกาข้อไหนทำให้เกิดพฤติกรรมนั้น</p></div>
+        <div class="card"><span class="tag o">ความสนุก 8 แบบในบทความต้นฉบับ</span><p>Sensation · Fantasy · Narrative · Challenge · Fellowship · Discovery · Expression · Submission</p><p style="margin-top:8px">แต่ละเกมเน้นไม่เท่ากัน บอกให้ได้ว่าเกมที่วิเคราะห์<b>เด่นแบบไหน</b></p></div>
+      </div>
+      <p class="cap" style="margin-top:14px">ที่มา: Hunicke, LeBlanc, Zubek (2004) "MDA: A Formal Approach to Game Design and Game Research" · อ่านฟรี 5 หน้า ใช้อ้างอิงในรายงานได้</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">25</div>
+  </div>
+  <div class="notes">⏱ 91:00 · กรอบนี้มาจากเวิร์กช็อปที่งาน GDC ช่วงปี 2001–2004 ใช้ทั้งในสตูดิโอและงานวิชาการ · ตัวอย่างสั้น Flappy Bird: M = แตะเพื่อกระพือ ชนคือจบ · D = คนเล่นจับจังหวะและพลาดที่ช่องแคบ · A = Challenge ล้วน · ถามห้อง: เกมที่เล่นตอนต้นชั่วโมงเด่นความสนุกแบบไหนใน 8 แบบ</div>
+</section>
+
+<!-- 26 ตัวอย่างวิเคราะห์ -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">วิเคราะห์เกม · ตัวอย่าง 1 หน้า</p>
+      <h2>วิเคราะห์ <em>Vampire Survivors</em> ด้วย MDA</h2>
+      <div style="position:absolute;right:72px;top:34px;display:flex;gap:14px"><div style="position:relative;width:236px;height:132px;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--csh)"><img src="gamedev-lecture-img/vs_early.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:8px;bottom:6px;font-size:15px;font-weight:600;color:#fff;background:rgba(0,0,0,.65);border-radius:8px;padding:1px 9px">ต้นรอบ</span></div><div style="position:relative;width:236px;height:132px;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--csh)"><img src="gamedev-lecture-img/vs_late.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:8px;bottom:6px;font-size:15px;font-weight:600;color:#fff;background:rgba(0,0,0,.65);border-radius:8px;padding:1px 9px">ปลายรอบ</span></div></div>
+      <table class="t a1" style="font-size:21.5px">
+        <tr><th style="width:200px">ชั้น</th><th>สิ่งที่เห็นในเกม (หลักฐาน)</th><th style="width:600px">ตีความ: ผู้สร้างตัดสินใจอะไร</th></tr>
+        <tr><td class="k">M · กติกา</td><td>ผู้เล่นทำได้แค่<b>เดิน</b> อาวุธยิงเองทั้งหมด · เก็บอัญมณีเพื่อขึ้นเลเวล · ทุกเลเวลเลือกอัปเกรด 1 อย่างจาก 3–4 ตัวเลือก · รอบมีเวลาจำกัด สูงสุด 30 นาที</td><td>ตัดปุ่มโจมตีและการเล็งทิ้ง เหลือการตัดสินใจ 2 เรื่อง: <b>เดินไปทางไหน</b> และ<b>เลือกอะไร</b></td></tr>
+        <tr><td class="k">D · พฤติกรรม</td><td>ต้นรอบต้องหนีศัตรู ปลายรอบศัตรูเต็มจอแต่ล้มเป็นแถบ · ผู้เล่นทดลองจับคู่อาวุธกับไอเทมเพื่อให้อาวุธวิวัฒน์</td><td>ความเก่งมาจาก<b>การเลือก</b> ไม่ใช่ความเร็วมือ คนที่ไม่ถนัดเกมแอ็กชันก็ชนะได้</td></tr>
+        <tr><td class="k">A · ความรู้สึก</td><td>รู้สึกแข็งแกร่งขึ้นเรื่อยๆ ในรอบเดียว · จบรอบแล้วอยากลองชุดอาวุธใหม่</td><td>เด่นที่ <b>Discovery</b> และ <b>Challenge</b> · ตรงกับตัววัด "กดเล่นอีกเอง" (หน้า 13)</td></tr>
+        <tr><td class="k">สิ่งที่ตัดออก</td><td>ไม่มีเนื้อเรื่อง · ภาพพิกเซลเรียบง่าย · ตอนเปิดตัวเล่นได้คนเดียว (โหมดเล่นหลายคนเพิ่มทีหลังในปี 2023)</td><td>สโคปที่<b>คน 1 คน</b>ทำจบได้ ของที่เหลือรอจนเกมพิสูจน์ตัวเองแล้ว (หน้า 17–18)</td></tr>
+      </table>
+      <div class="card a2" style="margin-top:20px;border-color:var(--hi2);background:var(--tint2);padding:20px 28px"><h3>นำไปใช้กับเกม 60 วินาทีของกลุ่ม</h3><p style="font-size:22.5px"><b>ใช้ได้:</b> ตัดให้เหลือการกระทำเดียว · ให้ผู้เล่นได้ "เลือก" อย่างน้อย 1 ครั้งต่อรอบ &nbsp;·&nbsp; <b>ใช้ไม่ได้:</b> รอบ 30 นาทีไม่เหมาะกับคนรอคิว ต้องย่อความรู้สึก "แข็งแกร่งขึ้น" ให้เกิดใน 60 วินาที</p></div>
+      <p class="cap" style="margin-top:12px">รูปแบบนี้ใช้วิเคราะห์เกมไหนก็ได้: ตาราง 4 แถว + ข้อที่นำไปใช้และไม่นำไปใช้ ยาวไม่เกิน 1 หน้า</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">26</div>
+  </div>
+  <div class="notes">⏱ 94:00 · ไล่ทีละแถว ช่องกลาง = สิ่งที่ใครเปิดเกมก็เห็นตรงกัน ช่องขวา = ความเห็นของเราที่ต้องมีช่องกลางรองรับ · แถว "สิ่งที่ตัดออก" คือสิ่งที่รีวิวไม่พูดถึง แต่คนทำเกมดูเป็นอย่างแรก · ส่งเข้ากิจกรรม: เดี๋ยวจะเขียน pitch ของกลุ่ม ให้คิดไว้ว่าเกมอ้างอิงของกลุ่มคือเกมไหน</div>
+</section>
+
+<!-- 27 กิจกรรม -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">กิจกรรมกลุ่ม</p>
+      <h2>เขียน one-page pitch ใน <em>10 นาที</em> นำเสนอ <em>2 นาที</em></h2>
+      <div class="cols w">
+        <div class="pl">
+          <div class="quote"><b>โจทย์:</b> เกมบนมือถือ เล่นรอบละ 60 วินาที ธีม "โรงอาหารมหาวิทยาลัย" ผู้เล่นคือนักศึกษาที่รอคิวซื้อข้าว</div>
+          <div class="card" style="margin-top:20px"><h3>กติกา</h3>
+            <ul class="b" style="margin-top:8px"><li>กลุ่มละ 4–5 คน · กระดาษ 1 แผ่น · เขียนครบ 6 ช่องตามแบบฟอร์มหน้า 6</li><li>ช่องที่ให้คะแนนมากที่สุด: <b>ลูป 1 ประโยค</b> และ <b>ความเสี่ยงที่ต้องพิสูจน์ก่อน</b></li><li>สุ่ม 2 กลุ่มนำเสนอ 2 นาที ผู้บรรยายให้ feedback สดแบบเดียวกับที่ให้ทีมจริง</li></ul></div>
+          <div class="card a2" style="margin-top:16px;border-color:var(--hi2);background:var(--tint2)"><h3>เสร็จแล้วลองต่ออีกขั้น</h3><p style="font-size:22px">มอง pitch ของกลุ่มด้วย <b>MDA</b> (หน้า 24–26): กติกาคืออะไร และอยากให้ผู้เล่น<b>รู้สึกอะไร</b></p></div>
+        </div>
+        <div class="pr">
+          <div class="form">
+            <div class="f full"><label>ชื่อเกม + 1 ประโยค</label><span>&nbsp;</span></div>
+            <div class="f"><label>Core loop</label><span>&nbsp;</span></div>
+            <div class="f"><label>แพ้ / ชนะ / จบรอบ</label><span>&nbsp;</span></div>
+            <div class="f"><label>แพลตฟอร์ม · รอบ · ผู้เล่น</label><span>มือถือ · 60 วิ · นักศึกษารอคิว</span></div>
+            <div class="f"><label>ขนาดงาน</label><span>&nbsp;</span></div>
+            <div class="f full"><label>ความเสี่ยง 1 ข้อที่ต้องพิสูจน์ก่อน</label><span>&nbsp;</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">27</div>
+  </div>
+  <div class="notes">⏱ 96:00 · แจกกระดาษแบบฟอร์ม (พิมพ์หน้านี้) ถ้าสอนผ่าน Discord ให้แต่ละกลุ่มพิมพ์ 6 ช่องลงห้องแชทของกลุ่ม · จับเวลา 10 นาทีบนจอ · ตอน feedback ถามกลุ่มว่า "ถ้ามีเวลา 1 สัปดาห์ prototype ของคุณทดสอบอะไร" ถ้าตอบไม่ได้ = ช่องความเสี่ยงยังไม่ชัด</div>
+</section>
+
+<!-- 28 สามข้อ -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span></div>
+    <div class="body">
+      <p class="eyebrow">ปิดท้าย</p>
+      <h2>ถ้าจำได้แค่ <em>3 ข้อ</em></h2>
+      <div class="three">
+        <div class="r a1"><div class="big">1</div><h3>ทำเล็ก</h3><p>เกมที่เสร็จใน 3 สัปดาห์ ชนะเกมที่ "เกือบเสร็จ" มา 3 ปี · pitch 1 หน้า · ลูป 1 ประโยค · ความเสี่ยง 1 ข้อ</p></div>
+        <div class="r a2"><div class="big o">2</div><h3>ให้คนเล่นเร็ว</h3><p>กล่องเทาภายใน 2 สัปดาห์ · คนแปลกหน้า 5 คน · วัด 3 อย่าง · แล้วกล้าเลือก หยุด / เปลี่ยน / ไปต่อ</p></div>
+        <div class="r a3"><div class="big g">3</div><h3>ปล่อยแล้วค่อยแก้</h3><p>ลิงก์ที่คนอื่นเปิดได้คือ "ปล่อย" · 1.0 คือจุดเริ่ม · ตัดฟีเจอร์ ไม่เลื่อนวัน</p></div>
+      </div>
+      <p class="sub a4" style="margin-top:30px;text-align:center">เครื่องมือจะเปลี่ยนทุก 3 ปี แต่ 7 ขั้นนี้เหมือนเดิมมา 30 ปี</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">28</div>
+  </div>
+  <div class="notes">⏱ 112:00 · พูด 3 ข้อช้าๆ แล้วเปิดถาม-ตอบ · ถ้าไม่มีคำถาม ถามกลับ: "เกมแรกของคุณจะเสร็จวันไหน" ให้ตอบเป็นวันที่</div>
+</section>
+
+<!-- 29 ไปต่อ -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span><span class="time">ถาม-ตอบ</span></div>
+    <div class="body">
+      <p class="eyebrow">ไปต่อด้วยตัวเอง</p>
+      <h2>ของฟรีที่ควรเปิดดู<em>คืนนี้</em></h2>
+      <div class="cols">
+        <div class="pl">
+          <div class="card"><h3>ดู (รวมไม่ถึง 1 ชั่วโมง)</h3>
+            <ul class="b" style="margin-top:8px"><li><b>Juice it or lose it</b> (GDC, 15 นาที) ทำไมเกมเดียวกันรู้สึกต่างกัน</li><li><b>The Art of Screenshake</b> (Jan Willem Nijman, 15 นาที) 30 เทคนิค juice ทีละข้อ</li><li><b>Game Maker's Toolkit</b> (YouTube) ตอน "How to start making games"</li></ul></div>
+          <div class="card" style="margin-top:18px"><h3>อ่าน</h3>
+            <ul class="b" style="margin-top:8px"><li><b>The Art of Game Design: A Book of Lenses</b> (Jesse Schell) เล่มเดียวที่ควรมี</li><li><b>Godot Docs</b> → "Your first 2D game" ทำตามจบใน 1 วัน</li><li><b>Phaser 3 examples</b> ก็อปโค้ดได้ทันทีสำหรับเกมเว็บ</li></ul></div>
+        </div>
+        <div class="pr">
+          <div class="card"><h3>อยากลงมือเอง (ไม่บังคับ · 30 วัน)</h3>
+            <ul class="b g" style="margin-top:8px"><li>เลือก engine 1 ตัวจากหน้า 10 และ<b>ไม่เปลี่ยน</b></li><li>เขียน pitch 1 หน้าของเกมที่เล่นจบใน 60 วินาที</li><li>กล่องเทาใน 7 วัน ให้คน 5 คนเล่น</li><li>ปล่อยบน itch.io ภายในวันที่ 30 ส่งลิงก์ให้เพื่อน 20 คน</li></ul></div>
+          <div class="card" style="margin-top:18px"><h3>เข้าชุมชน</h3><p>Game Jam ที่ใกล้ที่สุด (Global Game Jam ทุกเดือนมกราคม · Ludum Dare ปีละ 2 ครั้ง) การทำเกมจบใน 48 ชั่วโมงคือการเรียน 7 ขั้นนี้แบบอัดแน่นที่สุด</p></div>
+          <div class="quote" style="margin-top:18px;font-size:26px;text-align:center">ขอบคุณครับ · คำถามส่งมาได้เสมอ</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">29</div>
+  </div>
+  <div class="notes">⏱ 116:00 · ทิ้งหน้านี้ค้างไว้ตอนถาม-ตอบ ให้คนถ่ายรูป · ถ้าสะดวก ใส่ช่องทางติดต่อ/QR ของทีมที่มุมขวาล่าง</div>
+</section>
+
+<!-- 30 ภาคผนวก หลักสูตร -->
+<section class="slide">
+  <div class="paper">
+    <div class="steps"><span class="done"><b>✓</b>ไอเดีย</span><span class="done"><b>✓</b>Pitch</span><span class="done"><b>✓</b>Prototype</span><span class="done"><b>✓</b>Playtest</span><span class="done"><b>✓</b>Production</span><span class="done"><b>✓</b>Polish</span><span class="done"><b>✓</b>ปล่อย</span><span class="time">ภาคผนวก</span></div>
+    <div class="body">
+      <p class="eyebrow">ภาคผนวก · สำหรับอาจารย์ผู้รับผิดชอบหลักสูตร (ไม่บรรยาย)</p>
+      <h2>ข้อเสนอแนะต่อหลักสูตร <em>4 ข้อ</em> จากมุมสถานประกอบการ</h2>
+      <table class="t a1" style="font-size:21.5px">
+        <tr><th style="width:60px">#</th><th style="width:420px">ข้อเสนอ</th><th>เหตุผลจากการรับคนจริง</th><th style="width:360px">ทำได้ทันทีโดย</th></tr>
+        <tr><td class="k">1</td><td><b>วิชาเกมที่มีชั่วโมงปฏิบัติ จบด้วยเกมที่เล่นได้บนลิงก์</b> คู่กับรายงาน</td><td>ตอนคัดคนเราเปิดลิงก์ก่อนอ่านเอกสาร นักศึกษาส่วนใหญ่มีรายงานแต่ไม่มีลิงก์</td><td>กำหนดส่งงานเป็น URL itch.io / GitHub Pages + สกรีนช็อต 3 ภาพ</td></tr>
+        <tr><td class="k">2</td><td><b>Playtest กับคนนอกกลุ่ม</b> เป็นส่วนหนึ่งของคะแนนตั้งแต่ปี 2</td><td>ทักษะที่ขาดมากที่สุดคือรับ feedback จากคนแปลกหน้าแล้วแก้ ไม่ใช่เขียนโค้ด</td><td>ให้คะแนน "บันทึก playtest 5 คน + สิ่งที่แก้" 20% ของงาน</td></tr>
+        <tr><td class="k">3</td><td><b>สอน pitch 1 หน้าและการตัดสโคป</b> ก่อนสอน engine</td><td>โปรเจกต์นักศึกษาล้มเพราะใหญ่เกิน ไม่ใช่เพราะเครื่องมือ</td><td>1 คาบ: แบบฟอร์ม 6 ช่อง (หน้า 6) + กติกา kill / pivot / go (หน้า 14)</td></tr>
+        <tr><td class="k">4</td><td><b>ใช้ engine ที่ปล่อยบนเว็บได้</b> (Godot / Phaser / Unity WebGL) เป็นค่าตั้งต้น</td><td>เกมเว็บคือสิ่งที่สตูดิโอไทยหลายแห่งรวมถึงเราทำอยู่จริง และนักศึกษาปล่อยเองได้ฟรี</td><td>ไม่ต้องเปลี่ยนวิชา แค่กำหนด target เป็น HTML5 build</td></tr>
+      </table>
+      <p class="cap a2" style="margin-top:16px">ยินดีให้ข้อมูลเพิ่มเติมสำหรับการพัฒนาหลักสูตร (วัตถุประสงค์ข้อ 4 ของโครงการ) · ติดต่อผ่านอาจารย์ผู้ประสานงาน</p>
+    </div>
+    <div class="foot">GAME DEV LECTURE · GGT GAME STUDIO</div><div class="pg">30</div>
+  </div>
+  <div class="notes">ภาคผนวก ไม่บรรยาย · ส่งให้อาจารย์หลังอบรมพร้อมไฟล์เด็ค ใช้ตอบวัตถุประสงค์ข้อ 4 "ข้อเสนอแนะจากภาคอุตสาหกรรม"</div>
+</section>
+
+</div>
+<div class="note" id="note"></div>
+<button class="navbtn prev" id="navPrev" title="หน้าก่อน (←)" onclick="show(i-1)">‹</button>
+<button class="navbtn next" id="navNext" title="หน้าถัดไป (→)" onclick="show(i+1)">›</button>
+<button class="copy" id="copyBtn" title="คัดลอกข้อความหน้านี้ (C)" onclick="copySlide()">📋 คัดลอกข้อความหน้านี้</button>
+
+<script>
+var THEME = "day", slides = document.querySelectorAll(".slide"), i = 0;
+function applyTheme(x){ THEME = x; document.documentElement.setAttribute("data-theme", x); document.getElementById("themeBtn").textContent = (x === "day") ? "● ธีมมืด" : "○ ธีมสว่าง"; try { localStorage.setItem("gdLectureTheme", x); } catch (e) {} }
+function toggleTheme(){ applyTheme(THEME === "day" ? "dark" : "day"); }
+function fit(){ var k = Math.min(innerWidth / 1920, innerHeight / 1080); slides.forEach(function(s){ s.style.transform = "translate(-50%,-50%) scale(" + k + ")"; }); }
+function noteOf(s){ var n = s.querySelector(".notes"); return n ? n.textContent : ""; }
+function show(n){
+  i = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach(function(s, j){ s.classList.toggle("on", j === i); });
+  document.getElementById("note").textContent = noteOf(slides[i]);
+  location.hash = "s" + (i + 1);
+  document.getElementById("navPrev").disabled = i === 0;
+  document.getElementById("navNext").disabled = i === slides.length - 1;
+}
+function copySlide(){
+  var s = slides[i], lines = [];
+  s.querySelectorAll(".eyebrow,h1,h2,h3,p,li,.quote,.cap,td,th,.f,.agenda div,.loop .n").forEach(function(el){
+    if (el.closest(".notes")) return;
+    var x = el.innerText.replace(/\s+/g, " ").trim(); if (x && lines.indexOf(x) < 0) lines.push(x); });
+  var txt = "[หน้า " + (i + 1) + "/" + slides.length + "]\n" + lines.join("\n") + "\n\nโน้ตผู้สอน:\n" + noteOf(s);
+  var done = function(){ var b = document.getElementById("copyBtn"); b.textContent = "✓ คัดลอกแล้ว"; setTimeout(function(){ b.textContent = "📋 คัดลอกข้อความหน้านี้"; }, 1500); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt); done(); }); else { fallbackCopy(txt); done(); }
+}
+function fallbackCopy(x){ var ta = document.createElement("textarea"); ta.value = x; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} ta.remove(); }
+addEventListener("resize", fit); fit();
+addEventListener("keydown", function(e){
+  var tag = e.target && e.target.tagName; if (tag === "INPUT" || tag === "TEXTAREA") return;
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") show(i + 1);
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") show(i - 1);
+  else if (e.key === "Home") show(0); else if (e.key === "End") show(slides.length - 1);
+  else if (e.key === "n" || e.key === "N") document.body.classList.toggle("notes");
+  else if (e.key === "c" || e.key === "C") copySlide();
+  else if (e.key === "h" || e.key === "H") document.body.classList.toggle("clean");
+  else if (e.key === "d" || e.key === "D") toggleTheme();
+});
+function armAnim(){ document.body.classList.add("anim"); }
+document.addEventListener("visibilitychange", armAnim);
+(function init(){
+  var th = "day"; try { th = localStorage.getItem("gdLectureTheme") || "day"; } catch (e) {}
+  applyTheme(th === "dark" ? "dark" : "day");
+  var m = /s(\d+)/.exec(location.hash); i = m ? Math.max(0, Math.min(slides.length - 1, +m[1] - 1)) : 0;
+  show(i); armAnim();
+})();
+</script>
+</body>
+</html>

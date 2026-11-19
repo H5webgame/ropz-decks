@@ -1,0 +1,27 @@
+Reference-game images used in GameDev_Lecture_PUBLIC_TH (teaching use only).
+All game images remain the property of their respective owners.
+
+celeste_h.jpg | Celeste | Steam store page asset (app 504230) | (c) its developer/publisher: Maddy Makes Games Inc., Extremely OK Games, Ltd.
+celeste_play.jpg | Celeste | Steam store page asset (app 504230) | (c) its developer/publisher: Maddy Makes Games Inc., Extremely OK Games, Ltd.
+celeste_color.jpg | Celeste | Steam store page asset (app 504230) | (c) its developer/publisher: Maddy Makes Games Inc., Extremely OK Games, Ltd.
+vs_h.jpg | Vampire Survivors | Steam store page asset (app 1794680) | (c) its developer/publisher: poncle
+vs_early.jpg | Vampire Survivors | Steam store page asset (app 1794680) | (c) its developer/publisher: poncle
+vs_late.jpg | Vampire Survivors | Steam store page asset (app 1794680) | (c) its developer/publisher: poncle
+amongus_h.jpg | Among Us | Steam store page asset (app 945360) | (c) its developer/publisher: Innersloth
+amongus_meet.jpg | Among Us | Steam store page asset (app 945360) | (c) its developer/publisher: Innersloth
+amongus_emg.jpg | Among Us | Steam store page asset (app 945360) | (c) its developer/publisher: Innersloth
+mom_h.jpg | Mind Over Magnet | Steam store page asset (app 2685900) | (c) its developer/publisher: Game Maker's Toolkit
+mom_play.jpg | Mind Over Magnet | Steam store page asset (app 2685900) | (c) its developer/publisher: Game Maker's Toolkit
+sts_h.jpg | Slay the Spire | Steam store page asset (app 646570) | (c) its developer/publisher: Mega Crit
+sts_play.jpg | Slay the Spire | Steam store page asset (app 646570) | (c) its developer/publisher: Mega Crit
+balatro_h.jpg | Balatro | Steam store page asset (app 2379780) | (c) its developer/publisher: LocalThunk
+balatro_play.jpg | Balatro | Steam store page asset (app 2379780) | (c) its developer/publisher: LocalThunk
+dnf_h.jpg | Duke Nukem Forever | Steam store page asset (app 57900) | (c) its developer/publisher: Gearbox Software
+cuphead_h.jpg | Cuphead | Steam store page asset (app 268910) | (c) its developer/publisher: Studio MDHR Entertainment Inc.
+hades_h.jpg | Hades | Steam store page asset (app 1145360) | (c) its developer/publisher: Supergiant Games
+cyberpunk_h.jpg | Cyberpunk 2077 | Steam store page asset (app 1091500) | (c) its developer/publisher: CD PROJEKT RED
+stardew_h.jpg | Stardew Valley | Steam store page asset (app 413150) | (c) its developer/publisher: ConcernedApe
+flappy.png | Flappy Bird gameplay screenshot | en.wikipedia.org File:Flappy_Bird_gameplay.png | non-free, (c) .GEARS / Dong Nguyen, used for teaching
+g2048.png | 2048 screenshot | commons.wikimedia.org File:2048_Screenshot.png | MIT (Gabriele Cirulli)
+celeste_classic.png | Celeste Classic screenshot | commons.wikimedia.org File:CelesteClassic.png | MIT
+baba_h.jpg | Baba Is You | Steam store page asset (app 736260) | (c) its developer/publisher: Hempuli Oy
