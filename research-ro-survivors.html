@@ -1,0 +1,1277 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- [KEEP] web-publish --><meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><!-- /[KEEP] -->
+<title>วิเคราะห์เกม RO Survivors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;800&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--page:#eef1f6;--bg:#fff;--card:#f5f7fb;--line:#e1e6ef;--ink:#10213f;--dim:#5b6a85;--hi:#2f6bff;--hi2:#ff7a1a;--tint:#eaf0ff;--tint2:#fff1e6;--green:#17a05c;--gtint:#e6f7ee;--red:#d93d3d;--rtint:#fdecec;--sh:0 10px 30px rgba(16,33,63,.08)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#070b13;--bg:#0d1526;--card:#16203a;--line:#263352;--ink:#f2f6ff;--dim:#a9b6d3;--hi:#6ea6ff;--hi2:#ff9a4d;--tint:#1b2a4a;--tint2:#3a2a1e;--green:#4ad28d;--gtint:#12301f;--red:#ff7b7b;--rtint:#3a1a1a;--sh:0 10px 30px rgba(0,0,0,.45)}}
+  :root[data-theme="dark"]{--page:#070b13;--bg:#0d1526;--card:#16203a;--line:#263352;--ink:#f2f6ff;--dim:#a9b6d3;--hi:#6ea6ff;--hi2:#ff9a4d;--tint:#1b2a4a;--tint2:#3a2a1e;--green:#4ad28d;--gtint:#12301f;--red:#ff7b7b;--rtint:#3a1a1a;--sh:0 10px 30px rgba(0,0,0,.45)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:Kanit,"Segoe UI",system-ui,sans-serif;font-weight:300;font-size:17px;line-height:1.65}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px 80px}
+  header.hero{background:linear-gradient(135deg,#0b1733,#1b3a8a 60%,#3b2a7a);color:#fff;border-radius:0 0 28px 28px;padding:44px 16px 36px;margin-bottom:26px}
+  header.hero .in{max-width:1088px;margin:0 auto}
+  .eyebrow{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ffc53d;font-weight:600;margin:0 0 6px}
+  h1{font-size:clamp(30px,5vw,50px);line-height:1.15;margin:0 0 10px;font-weight:800}
+  .hero p{color:#d7e1ff;margin:0;max-width:820px}
+  .hero .meta{margin-top:16px;font-size:14px;color:#b9c7eb}
+  h2{font-size:clamp(23px,3.2vw,31px);margin:44px 0 12px;font-weight:700;line-height:1.25;scroll-margin-top:16px}
+  h2 .n{display:inline-grid;place-items:center;min-width:38px;height:38px;border-radius:12px;background:var(--hi);color:#fff;font-family:Poppins;font-size:17px;margin-right:10px;vertical-align:3px;padding:0 6px}
+  h3{font-size:20px;margin:22px 0 6px;font-weight:600}
+  p{margin:8px 0}
+  b,strong{font-weight:600}
+  a{color:var(--hi)}
+  .sec{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:22px 24px;box-shadow:var(--sh);margin-top:14px}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+  .card h4{margin:0 0 4px;font-size:17px;font-weight:600}
+  .card p{margin:4px 0;color:var(--dim);font-size:16px}
+  .kpi .v{font-family:Poppins;font-weight:800;font-size:30px;color:var(--hi);line-height:1.1}
+  .kpi .l{font-size:15px;color:var(--dim)}
+  .tablewrap{overflow-x:auto;margin-top:10px}
+  table{border-collapse:collapse;width:100%;font-size:15.5px;min-width:560px}
+  th{background:var(--tint);text-align:left;padding:9px 12px;border-bottom:2px solid var(--hi);font-weight:600}
+  td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.k{font-weight:600;white-space:nowrap}
+  ul{margin:6px 0;padding-left:22px}
+  li{margin:4px 0}
+  .tag{display:inline-block;font-size:12.5px;font-weight:600;border-radius:999px;padding:1px 9px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+  .t-web{background:var(--tint);color:var(--hi)}
+  .t-data{background:var(--tint2);color:var(--hi2)}
+  .t-me{background:var(--card);color:var(--dim);border:1px solid var(--line)}
+  .t-news{background:var(--gtint);color:var(--green)}
+  figure{margin:14px 0 4px}
+  figure img{width:100%;display:block;border-radius:14px;border:1px solid var(--line)}
+  figcaption{font-size:14.5px;color:var(--dim);margin-top:6px}
+  .note{background:var(--tint2);border:1px solid var(--hi2);border-radius:14px;padding:12px 16px;margin-top:12px}
+  .good{background:var(--gtint);border:1px solid var(--green)}
+  .bad{background:var(--rtint);border:1px solid var(--red)}
+  .good h4{color:var(--green)}.bad h4{color:var(--red)}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  nav.toc a{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:15px;text-decoration:none;color:var(--ink)}
+  .loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}
+  .loop .b{border-radius:16px;padding:14px 16px;border:2px solid var(--hi);background:var(--tint)}
+  .loop .b:nth-child(2){border-color:var(--hi2);background:var(--tint2)}
+  .loop .b:nth-child(3){border-color:var(--green);background:var(--gtint)}
+  .loop .b h4{margin:0 0 4px;font-size:18px}
+  .bar{position:relative;height:26px;background:var(--card);border:1px solid var(--line);border-radius:8px;min-width:240px}
+  .bar i{position:absolute;top:-3px;bottom:-3px;width:4px;background:var(--hi2);border-radius:2px}
+  .bar i.m{background:var(--red);width:6px}
+  .legend{font-size:14px;color:var(--dim);margin-top:8px}
+  .legend span{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin:0 4px 0 10px}
+  .btns{position:fixed;right:14px;bottom:14px;display:flex;gap:8px}
+  .btns button{font:500 14px Kanit;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer;box-shadow:var(--sh)}
+  @media print{.btns,nav.toc{display:none}.sec{box-shadow:none;break-inside:avoid}}
+</style>
+<style>
+  .lang[hidden]{display:none}
+  .lang[data-lang="ko"]{font-family:"Noto Sans KR",Kanit,"Malgun Gothic",system-ui,sans-serif;font-weight:400;font-size:16px}
+  .lang[data-lang="ko"] h1,.lang[data-lang="ko"] h2,.lang[data-lang="ko"] h3,.lang[data-lang="ko"] h4,.lang[data-lang="ko"] b,.lang[data-lang="ko"] th,.lang[data-lang="ko"] td.k{font-weight:700}
+  .langsw{margin:14px 0 0;display:flex;gap:8px;flex-wrap:wrap}
+  .lsw{font:500 15px Kanit,"Noto Sans KR",sans-serif;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 16px;cursor:pointer}
+  .lsw.on{background:#ffc53d;border-color:#ffc53d;color:#10213f;font-weight:600}
+</style>
+</head>
+<body>
+<div class="lang" data-lang="th" lang="th">
+<header class="hero"><div class="in">
+  <p class="eyebrow">Game Analysis · เอกสารภายใน</p>
+  <h1>RO Survivors</h1>
+  <p>เกมแฟนเมดแนว survivors บนเบราว์เซอร์ ที่ใช้โลกและกราฟิกของ Ragnarok Online · วิเคราะห์ระบบทั้งเกม ข้อดีข้อเสีย และเทียบกับ Ragnarok: Endless Trail</p>
+  <p class="meta">ro-survivors.com · ตรวจเมื่อ 20 พ.ย. 2026 · เวอร์ชันที่ตรวจ Beta 0.7.6 (build 18 พ.ย. 2026)</p>
+  <p class="langsw"><button type="button" class="lsw on" onclick="setLang('th')">ไทย</button><button type="button" class="lsw" onclick="setLang('en')">English</button><button type="button" class="lsw" onclick="setLang('ko')">한국어</button></p>
+</div></header>
+
+<div class="wrap">
+<nav class="toc">
+  <a href="#th-s1">1 สรุป</a><a href="#th-s2">2 วิธีตรวจ</a><a href="#th-s3">3 ตัวตนของเกม</a><a href="#th-s4">4 ไทม์ไลน์</a><a href="#th-s5">5 Core loop</a><a href="#th-s6">6 รอบเล่น</a><a href="#th-s7">7 อาชีพและบิลด์</a><a href="#th-s8">8 ความก้าวหน้า</a><a href="#th-s9">9 Endgame</a><a href="#th-s10">10 ออนไลน์</a><a href="#th-s11">11 เทคนิค</a><a href="#th-s12">12 รายได้และสิทธิ์</a><a href="#th-s13">13 MDA</a><a href="#th-s14">14 ข้อดีข้อเสีย</a><a href="#th-s15">15 เทียบ Endless Trail</a><a href="#th-s16">16 สิ่งที่ได้</a><a href="#th-s17">17 ที่มา</a>
+</nav>
+
+<h2 id="th-s1"><span class="n">1</span>สรุปใน 1 นาที</h2>
+<div class="sec">
+  <div class="grid g4">
+    <div class="card kpi"><div class="v">17 วัน</div><div class="l">อายุเกมนับจากเบต้าสาธารณะ 3 พ.ย. 2026</div></div>
+    <div class="card kpi"><div class="v">29</div><div class="l">เวอร์ชันที่ปล่อยใน 17 วัน เกือบวันละ 2 แพตช์</div></div>
+    <div class="card kpi"><div class="v">23</div><div class="l">อาชีพ (ขั้น 1 จำนวน 9 และขั้น 2 จำนวน 14)</div></div>
+    <div class="card kpi"><div class="v">2,000</div><div class="l">เพดานความจุของลานเมืองที่ผู้ทำตั้งไว้ ไม่ใช่จำนวนผู้เล่นจริง</div></div>
+  </div>
+  <ul>
+    <li><b>เป็นเกมแฟนเมด ไม่ใช่เกมทางการ</b> ผู้ทำใช้ชื่อ Reven4nt ทำคนเดียวในเวลาว่าง และระบุเองว่าโค้ดกับข้อความส่วนใหญ่เขียนด้วย AI <span class="tag t-web">เว็บ</span></li>
+    <li><b>ใช้กราฟิก เสียง และเพลงจากไคลเอนต์ RO ตรงๆ</b> ผู้ทำเขียนไว้ในหน้าเครดิตและหน้ากฎหมาย พร้อมข้อความว่าจะถอดภายใน 3 วันถ้าเจ้าของสิทธิ์แจ้ง <span class="tag t-web">เว็บ</span></li>
+    <li><b>ไม่ใช่มินิเกม</b> เป็นเกมขนาดใหญ่: รอบเล่น 11–17 นาทีแบบ Vampire Survivors ซ้อนด้วยระบบ MMO เต็มชุด คือ ต้นไม้ทาเลนต์ อุปกรณ์ การ์ด ตีบวก สัตว์เลี้ยง ปาร์ตี้ เทรด และลานเมืองออนไลน์</li>
+    <li><b>ฟรีจริง</b> ไม่มีโฆษณา ไม่มีการเติมเงิน รับบริจาคผ่าน Buy Me a Coffee โดยไม่ให้อะไรตอบแทนในเกม <span class="tag t-web">เว็บ</span></li>
+    <li><b>มีสัญญาณว่าคนเข้าเยอะ แต่ไม่มีตัวเลขจริง</b> ผู้ทำแจ้งว่าเซิร์ฟเวอร์รับไม่ไหวในสัปดาห์แรก จึงย้ายเครื่องและเพิ่มระบบคิว ตัวเลข 2,000 คือเพดานความจุที่ตั้งไว้ ไม่ใช่จำนวนผู้เล่น</li>
+    <li><b>จุดอ่อนใหญ่ที่สุดคือความไม่แน่นอน</b> เกมยืนอยู่บนทรัพย์สินทางปัญญาของคนอื่น ผู้ทำประกาศเองว่าอาจปิดหรือล้างข้อมูลได้ทุกเมื่อ</li>
+  </ul>
+  <figure><img src="research-ro-survivors-img/ros_landing.jpg" alt="หน้าแรก RO Survivors"><figcaption>หน้าแรกของเกม ตัวละครและมอนสเตอร์ RO เดินผ่านด้านล่าง มุมขวาบนคือปุ่มบริจาค X Discord Talents News และตัวเลือกภาษา</figcaption></figure>
+</div>
+
+<h2 id="th-s2"><span class="n">2</span>วิธีตรวจและข้อจำกัด</h2>
+<div class="sec">
+  <p><b>ผมไม่ได้เล่นเกมนี้ด้วยมือ</b> เพราะเกมบังคับสร้างบัญชีก่อนเล่น และการสร้างบัญชีต้องให้คุณเป็นคนทำ เอกสารนี้จึงไม่มีภาพขณะเล่นจริง และไม่มีความเห็นเรื่องความรู้สึกตอนบังคับตัวละคร</p>
+  <p>สิ่งที่ตรวจจริงมี 4 แหล่ง ทุกข้อในเอกสารมีป้ายบอกที่มา</p>
+  <div class="grid g2">
+    <div class="card"><h4><span class="tag t-web">เว็บ</span> หน้าเว็บของเกม</h4><p>หน้าแรก หน้า News ครบ 29 เวอร์ชัน หน้า Talents หน้าเครดิต และหน้ากฎหมาย</p></div>
+    <div class="card"><h4><span class="tag t-data">ข้อมูลเกม</span> ไฟล์ที่เว็บส่งให้ทุกคน</h4><p>ข้อความในเกมราว 4,970 ข้อความ และตารางค่าของด่าน อาชีพ และมอนสเตอร์ ที่อยู่ในไฟล์สคริปต์สาธารณะ</p></div>
+    <div class="card"><h4><span class="tag t-news">ข่าว</span> แหล่งภายนอก</h4><p>ผลค้นหาเว็บ ข่าวทางการของ Endless Trail บน gnjoy.asia และสื่อเกมมือถือ</p></div>
+    <div class="card"><h4><span class="tag t-me">ตีความ</span> ความเห็นของผม</h4><p>ข้อสรุป ข้อดีข้อเสีย และข้อเปรียบเทียบ ซึ่งคุณควรตรวจกับประสบการณ์ของทีม</p></div>
+  </div>
+  <div class="note"><b>สิ่งที่ยืนยันไม่ได้:</b> จำนวนผู้เล่นจริง อัตราการกลับมาเล่น ความสมดุลของตัวเลขเมื่อเล่นจริง และสถานะล่าสุดของด่าน Orc Village กับ Morroc Pyramids ซึ่งมีในข้อมูลเกมแต่บันทึกแพตช์แรกเขียนว่า "เร็วๆ นี้" ตัวเลข 2,000 เป็นแค่ความจุที่ผู้ทำประกาศ และอาจเป็นเป้าที่ตั้งเผื่อไว้</div>
+</div>
+
+<h2 id="th-s3"><span class="n">3</span>ตัวตนของเกม</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:200px">หัวข้อ</th><th>รายละเอียด</th></tr>
+    <tr><td class="k">ประเภท</td><td>Survivors-like (แนวเดียวกับ Vampire Survivors) ผสมระบบ MMORPG ถาวร <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">แพลตฟอร์ม</td><td>เบราว์เซอร์ทั้ง PC และมือถือ ติดตั้งเป็นแอปจากเบราว์เซอร์ได้ ไม่มีบนสโตร์ <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">ผู้ทำ</td><td>Reven4nt ทำคนเดียว น่าจะอยู่สเปน เพราะต้นฉบับเป็นภาษาสเปนและหน้ากฎหมายอ้างหน่วยงานคุ้มครองข้อมูลของสเปน <span class="tag t-me">ตีความ</span></td></tr>
+    <tr><td class="k">วิธีสร้าง</td><td>หน้าเครดิตระบุว่าโค้ด ข้อความส่วนใหญ่ และเครื่องมือ เขียนด้วย Claude ตามไอเดียและการออกแบบของผู้ทำ <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">แรงบันดาลใจ</td><td>Vampire Survivors และเกมแฟนเมดแนวเดียวกันของ IP อื่น เช่น Pokémon Survivors และ Azeroth Survivors <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">ภาษา</td><td>สเปน อังกฤษ จีนตัวเต็ม โปรตุเกสบราซิล ญี่ปุ่น และมีห้องแชทแยกภาษาจีน อินโดนีเซีย ญี่ปุ่น <span class="tag t-data">ข้อมูลเกม</span></td></tr>
+    <tr><td class="k">ราคา</td><td>ฟรี ไม่มีโฆษณา ไม่มีการซื้อในเกม <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">สถานะ</td><td>Beta ผู้ทำเขียนว่าอาจเปลี่ยน ล้างความคืบหน้า หรือปิดได้โดยไม่ชดเชย <span class="tag t-web">เว็บ</span></td></tr>
+  </table></div>
+  <figure><img src="research-ro-survivors-img/ros_og.jpg" alt="ภาพโปรโมต RO Survivors"><figcaption>ภาพโปรโมตของเกม พื้นหลังคือลานน้ำพุ Prontera ที่เรนเดอร์เป็น 3 มิติ จากโมเดลแผนที่ของ RO</figcaption></figure>
+</div>
+
+<h2 id="th-s4"><span class="n">4</span>ไทม์ไลน์ 17 วันแรก</h2>
+<div class="sec">
+  <p>ความเร็วในการปล่อยของคือจุดที่ผิดปกติที่สุดของโครงการนี้ ทั้งหมดอ่านจากหน้า News <span class="tag t-web">เว็บ</span></p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:120px">วันที่ (2026)</th><th style="width:130px">เวอร์ชัน</th><th>สิ่งที่เพิ่ม</th></tr>
+    <tr><td class="k">3 พ.ย.</td><td>0.1</td><td>เบต้าสาธารณะ: 6 อาชีพ 4 ด่าน โหมดเนื้อเรื่อง สัตว์เลี้ยง 24 ตัว ลานเมืองออนไลน์ ปาร์ตี้ 3 คน เทรด 2 ภาษา</td></tr>
+    <tr><td class="k">4–5 พ.ย.</td><td>0.2.1 – 0.3</td><td>กระซิบ ตัวเลขดาเมจแบบ RO รายชื่อเพื่อน ช่างทำผม รองรับจอยเกม คำถามกู้บัญชี</td></tr>
+    <tr><td class="k">6 พ.ย.</td><td>0.4 – 0.4.2</td><td>ลดการใช้หน่วยความจำบนมือถือ แก้ปัญหา iPhone บอสไม่ทำดาเมจเมื่อแตะตัว</td></tr>
+    <tr><td class="k">8 พ.ย.</td><td>0.5</td><td>Endless Tower บรรณารักษ์ (วิกิในเกม) หน้า Talents และ Discord</td></tr>
+    <tr><td class="k">9 พ.ย.</td><td>0.5.2 – 0.5.3</td><td>ภาษาจีนตัวเต็ม แชทแบบแท็บ <b>ย้ายเซิร์ฟเวอร์ใหม่ที่แรงขึ้น และเพิ่มคิวเข้าเกม</b></td></tr>
+    <tr><td class="k">11 พ.ย.</td><td>0.6 – 0.6.4</td><td>แบ่งลานเมืองเป็น 4 ล็อบบี้ บุรุษไปรษณีย์ในเกม เร่งความเร็วในหอคอย ข้ามเนื้อเรื่องได้ ภาษาโปรตุเกสจากชุมชน</td></tr>
+    <tr><td class="k">12–14 พ.ย.</td><td>0.6.5 – 0.6.9</td><td>คิวล็อกอิน สัตว์เลี้ยงพูดระหว่างรอบ ของดรอปกลับมาแสดงระหว่างรอบ เบรกสแปมแชท</td></tr>
+    <tr><td class="k">15 พ.ย.</td><td>0.6.10 – 0.7.1</td><td>อีเวนต์ตามฤดูกาล Lantern Festival ลูกบอลกาชา คอสเมติก ความสำเร็จ ภาษาญี่ปุ่น</td></tr>
+    <tr><td class="k">16–19 พ.ย.</td><td>0.7.2 – 0.7.6</td><td>ปรับอีเวนต์ ค่าความสนิทกับเพื่อน ปุ่มเลเวลอัปอัตโนมัติ <b>ยกเลิกโหมด Guest ต้องมีบัญชีจึงเล่นได้</b></td></tr>
+  </table></div>
+  <figure><img src="research-ro-survivors-img/ros_news.jpg" alt="หน้า News"><figcaption>หน้า News ในเกม รายการซ้ายคือทุกเวอร์ชัน แต่ละข้อมีป้าย NEW CHANGE IMPROVEMENT FIX ชัดเจน</figcaption></figure>
+  <p><span class="tag t-me">ตีความ</span> เกมขนาดนี้ปกติใช้ทีมหลายคนหลายเดือน การที่คนเดียวปล่อยได้เร็วระดับนี้ สอดคล้องกับที่ผู้ทำบอกว่าใช้ AI เขียนโค้ด และเป็นตัวอย่างจริงว่าคู่แข่งรายย่อยผลิตเนื้อหาได้เร็วแค่ไหนในปี 2026</p>
+</div>
+
+<h2 id="th-s5"><span class="n">5</span>Core loop สามชั้น</h2>
+<div class="sec">
+  <div class="loop">
+    <div class="b"><h4>ชั้น 1 · รอบเล่น 11–17 นาที</h4>เดินหลบฝูงมอนสเตอร์ สกิลออกเอง เก็บ EXP เลเวลอัปแล้วเลือกการ์ด 1 ใบ เจอมินิบอสตามเวลา ปิดด้วย MVP</div>
+    <div class="b"><h4>ชั้น 2 · ตัวละครถาวร</h4>ของที่ดรอปกลับไปเป็นอุปกรณ์ การ์ด ไข่สัตว์เลี้ยง เลเวลและ Job Lv เพิ่ม ได้แต้มทาเลนต์ คะแนนอุปกรณ์สูงพอจึงเปิดด่านถัดไป</div>
+    <div class="b"><h4>ชั้น 3 · ลานเมือง Prontera</h4>เจอผู้เล่นอื่น แชท ตั้งปาร์ตี้ เทรดของ ตีบวก ขายของแลก Kafra Points แล้วออกไปเล่นรอบใหม่</div>
+  </div>
+  <p style="margin-top:12px"><span class="tag t-me">ตีความ</span> ชั้น 1 ให้ความสนุกทันทีแบบเกม survivors ชั้น 2 ให้เหตุผลเล่นรอบถัดไป ชั้น 3 ให้เหตุผลกลับมาพรุ่งนี้ เกม survivors ส่วนใหญ่มีแค่ชั้น 1 กับชั้น 2 แบบบางๆ เกมนี้เอาชั้น 2 และ 3 ของ MMORPG มาใส่เต็มรูปแบบ</p>
+</div>
+
+<h2 id="th-s6"><span class="n">6</span>โครงสร้างรอบเล่น</h2>
+<div class="sec">
+  <h3>ด่านและเวลา</h3>
+  <p>ทุกด่านมีเวลาตายตัว บอสออกตามนาฬิกา ขีดส้มคือมินิบอส ขีดแดงคือ MVP <span class="tag t-data">ข้อมูลเกม</span></p>
+  <div class="tablewrap"><table>
+    <tr><th>ด่าน</th><th style="width:76px">เลเวล</th><th style="width:76px">ความยาว</th><th style="width:270px">จังหวะบอส</th><th>เงื่อนไขเข้า</th></tr>
+    <tr><td class="k">Prontera Fields</td><td>1–8</td><td>15 นาที</td><td><div class="bar"><i style="left:16.7%"></i><i style="left:33.3%"></i><i style="left:50%"></i><i style="left:66.7%"></i><i class="m" style="left:80%"></i></div></td><td>ด่านแรก MVP คือ Mastering นาทีที่ 12</td></tr>
+    <tr><td class="k">Prontera Sewers</td><td>9–12</td><td>11 นาที</td><td><div class="bar"><i style="left:27.3%"></i><i class="m" style="left:72.7%"></i></div></td><td>คะแนนอุปกรณ์ 20 · MVP Golden Thief Bug</td></tr>
+    <tr><td class="k">Sunken Ship</td><td>13–15</td><td>13 นาที</td><td><div class="bar"><i style="left:23.1%"></i><i style="left:46.2%"></i><i class="m" style="left:76.9%"></i></div></td><td>คะแนนอุปกรณ์ 40 และผ่านเนื้อเรื่องเรือจม · MVP Drake</td></tr>
+    <tr><td class="k">Byalan Island</td><td>16–20</td><td>15 นาที</td><td><div class="bar"><i style="left:20%"></i><i style="left:40%"></i><i style="left:60%"></i><i class="m" style="left:80%"></i></div></td><td>คะแนนอุปกรณ์ 110 · MVP Kraken</td></tr>
+    <tr><td class="k">Payon Forest</td><td>21–25</td><td>17 นาที</td><td><div class="bar"><i style="left:17.6%"></i><i style="left:35.3%"></i><i style="left:58.8%"></i><i class="m" style="left:82.4%"></i></div></td><td>คะแนนอุปกรณ์ 135 · MVP Eddga</td></tr>
+    <tr><td class="k">Payon Cave</td><td>26–30</td><td>17 นาที</td><td><div class="bar"><i style="left:17.6%"></i><i style="left:35.3%"></i><i style="left:58.8%"></i><i class="m" style="left:82.4%"></i></div></td><td>คะแนนอุปกรณ์ 165 · MVP Moonlight Flower</td></tr>
+    <tr><td class="k">Prontera Castle</td><td>31–35</td><td>1.5 นาที</td><td><div class="bar"><i class="m" style="left:96%"></i></div></td><td>เนื้อเรื่องเท่านั้น ต้อง Job Lv 50 · จบแล้วได้เปลี่ยนอาชีพขั้น 2</td></tr>
+    <tr><td class="k">Lantern Festival</td><td>26–30</td><td>17 นาที</td><td><div class="bar"><i style="left:14.7%"></i><i style="left:29.4%"></i><i style="left:44.1%"></i><i style="left:58.8%"></i><i style="left:70.6%"></i><i class="m" style="left:82.4%"></i></div></td><td>อีเวนต์ตามฤดูกาล บอส 7 ตัว ดรอปลูกบอลกาชาแทนของ</td></tr>
+    <tr><td class="k">Orc Village · Morroc Pyramids</td><td>31–50</td><td>ไม่ทราบ</td><td>ไม่มีข้อมูลเวลา</td><td>มีในข้อมูลเกม คะแนนอุปกรณ์ 800 และ 1,200 ยังไม่ยืนยันว่าเปิดแล้ว</td></tr>
+  </table></div>
+  <p class="legend"><span style="background:var(--hi2)"></span>มินิบอส <span style="background:var(--red)"></span>MVP</p>
+
+  <h3>ความหนาแน่นของศัตรู</h3>
+  <p>ด่านแรกเริ่มที่ 1.2 ตัวต่อวินาที มีได้พร้อมกัน 40 ตัว แล้วไต่ขึ้นเป็น 3.5 ตัวต่อวินาที 140 ตัวในนาทีที่ 5–7 <span class="tag t-data">ข้อมูลเกม</span> ผู้เล่นปรับเองได้อีกชั้นก่อนออกเดินทาง ด้วยแถบเลื่อน 5 ตัว คือ จำนวนศัตรู ดาเมจ HP ความเร็ว และเหตุการณ์ ยิ่งยากของยิ่งเยอะ สูงสุด ×2.5 เมื่อเล่นเดี่ยว <span class="tag t-web">เว็บ</span></p>
+
+  <h3>การเลือกระหว่างรอบ</h3>
+  <ul>
+    <li><b>การ์ดเลเวลอัป</b> มี 3 ชนิด: สกิลใหม่ อัปเกรดสกิลเดิม และ Deity ซึ่งเป็นพลังพิเศษประจำสกิล สลับ Deity กลางรอบได้แต่ระดับที่สะสมไว้หาย <span class="tag t-data">ข้อมูลเกม</span></li>
+    <li><b>เครื่องมือคุมดวง</b> Reroll เปลี่ยนการ์ด Banish ตัดตัวเลือกออกทั้งรอบ Focus ให้ของที่อยากได้โผล่ก่อน <span class="tag t-data">ข้อมูลเกม</span></li>
+    <li><b>หีบสมบัติ</b> ซื้อด้วย zeny ที่เก็บในรอบ ให้อุปกรณ์เพิ่ม <span class="tag t-data">ข้อมูลเกม</span></li>
+    <li><b>สะสมเลเวลอัป</b> เลือกได้ว่าจะหยุดเกมเลือกการ์ดทันที หรือสะสมไว้กดเลือกรวดเดียว และมีปุ่ม Auto สุ่มเลือกให้โดยไม่หยุดเกม <span class="tag t-web">เว็บ</span></li>
+    <li><b>ของดรอป</b> ตกเป็นเครื่องหมาย "?" ไม่ต้องเก็บ คุณสมบัติจริงเปิดเผยตอนจบรอบ <span class="tag t-web">เว็บ</span></li>
+    <li><b>ตัวช่วยอ่านเกม</b> มีมิเตอร์ดาเมจแยกรายสกิล กลางวันกลางคืน และสภาพอากาศ <span class="tag t-web">เว็บ</span></li>
+  </ul>
+</div>
+
+<h2 id="th-s7"><span class="n">7</span>อาชีพและการสร้างบิลด์</h2>
+<div class="sec">
+  <figure><img src="research-ro-survivors-img/ros_talents_jobs.jpg" alt="หน้า Talents รายชื่ออาชีพ"><figcaption>หน้า Talents แสดงสายอาชีพทั้งหมด เปิดดูได้โดยไม่ต้องล็อกอิน Ninja และ Gunslinger ยังไม่มีขั้น 2</figcaption></figure>
+  <h3>รายชื่ออาชีพ</h3>
+  <div class="tablewrap"><table>
+    <tr><th>ขั้น 1</th><th style="width:70px">HP</th><th style="width:90px">ความเร็ว</th><th>สกิลเริ่ม</th><th>ขั้น 2</th></tr>
+    <tr><td class="k">Swordsman</td><td>130</td><td>150</td><td>Bash</td><td>Knight · Crusader (ขี่ Peco)</td></tr>
+    <tr><td class="k">Mage</td><td>80</td><td>145</td><td>Fire Bolt</td><td>Wizard · Sage</td></tr>
+    <tr><td class="k">Archer</td><td>95</td><td>165</td><td>Double Strafe</td><td>Hunter · Bard / Dancer</td></tr>
+    <tr><td class="k">Acolyte</td><td>105</td><td>150</td><td>Heal</td><td>Priest · Monk</td></tr>
+    <tr><td class="k">Thief</td><td>90</td><td>175</td><td>Envenom</td><td>Assassin · Rogue</td></tr>
+    <tr><td class="k">Merchant</td><td>130</td><td>145</td><td>Mammonite</td><td>Blacksmith · Alchemist</td></tr>
+    <tr><td class="k">Taekwon</td><td>110</td><td>160</td><td>Tornado Kick</td><td>Star Gladiator · Soul Linker</td></tr>
+    <tr><td class="k">Ninja</td><td>90</td><td>165</td><td>Shuriken</td><td>ยังไม่มี</td></tr>
+    <tr><td class="k">Gunslinger</td><td>95</td><td>155</td><td>Triple Action</td><td>ยังไม่มี</td></tr>
+  </table></div>
+  <p><span class="tag t-data">ข้อมูลเกม</span> อาชีพขั้น 2 มี HP 205–380 และหน้า Talents เขียนกำกับว่ายังอยู่ระหว่างพัฒนา</p>
+
+  <h3>ชั้นของบิลด์</h3>
+  <div class="grid g2">
+    <div class="card"><h4>ค่าสเตตัส 6 ตัวแบบ RO</h4><p>STR เพิ่ม ATK · AGI ลดคูลดาวน์ทุกสกิล สูงสุด 40% ที่ 99 แต้ม · VIT เพิ่ม HP 2% ต่อแต้ม · INT เพิ่ม MATK · DEX ร่ายเร็วจนร่ายทันทีที่ 100 แต้ม · LUK เพิ่มคริติคอล <span class="tag t-data">ข้อมูลเกม</span></p></div>
+    <div class="card"><h4>ต้นไม้ทาเลนต์</h4><p>อาชีพละ 3 สาย ได้ 50 แต้ม แต้มละ 1 Job Lv แถวใหม่เปิดทุก 5 แต้มที่ลงในสายนั้น Swordsman มีรวม 157 ระดับให้เลือกลง จึงลงได้ไม่ถึงหนึ่งในสาม <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>อาชีพขั้น 2</h4><p>เก็บต้นไม้ขั้น 1 ไว้ และได้ต้นไม้ใหม่อีก 3 สาย แต่เลือกได้สายเดียวเป็นความเชี่ยวชาญ เปลี่ยนสายต้องจ่าย Kafra Points <span class="tag t-data">ข้อมูลเกม</span></p></div>
+    <div class="card"><h4>Deity ประจำสกิล</h4><p>ทุกสกิลมี Deity ของตัวเองที่เปลี่ยนวิธีทำงานของสกิล เช่น Fire Bolt ที่ได้อัปเกรดของ Cold Bolt และ Lightning Bolt มารวมกัน <span class="tag t-data">ข้อมูลเกม</span></p></div>
+  </div>
+  <figure><img src="research-ro-survivors-img/ros_talents_tree.jpg" alt="ต้นไม้ทาเลนต์ Swordsman"><figcaption>ต้นไม้ทาเลนต์ของ Swordsman 3 สาย: Weapons, Fury, Protection กรอบเขียวคือทาเลนต์ที่ให้สกิล กรอบทองคือทาเลนต์สุดสาย</figcaption></figure>
+  <p><span class="tag t-me">ตีความ</span> บิลด์หนึ่งตัวถูกกำหนดจาก 5 ชั้นซ้อนกัน คือ สเตตัส ทาเลนต์ Deity อุปกรณ์กับการ์ด และการ์ดที่สุ่มได้ในรอบ ลึกกว่าเกม survivors ทั่วไปมาก ซึ่งเป็นทั้งจุดขายสำหรับแฟน RO และกำแพงสำหรับคนเล่นสบายๆ</p>
+</div>
+
+<h2 id="th-s8"><span class="n">8</span>ความก้าวหน้าถาวรและเศรษฐกิจ</h2>
+<div class="sec">
+  <div class="grid g2">
+    <div class="card"><h4>อุปกรณ์</h4><p>ระดับ common ถึง legendary แบ่ง tier ตามแผนที่ มีช่องใส่การ์ดมอนสเตอร์ รวมเป็นคะแนนอุปกรณ์ที่ใช้เปิดด่าน <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>ตีบวก</h4><p>ใช้ Oridecon และ Elunium กับช่างตีเหล็ก เซิร์ฟเวอร์เป็นคนตัดสินผลทุกครั้ง <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>Kafra Points</h4><p>สกุลเงินถาวร ได้จากการขายอุปกรณ์และการ์ดเท่านั้น <b>ซื้อด้วยเงินจริงไม่ได้</b> ใช้ซื้อแร่ อาวุธเริ่มต้น และรีเซ็ตสาย <span class="tag t-data">ข้อมูลเกม</span></p></div>
+    <div class="card"><h4>zeny</h4><p>สกุลเงินในรอบเล่น ใช้ซื้อหีบ และเป็นเชื้อเพลิงของสกิลสาย Merchant เช่น Mammonite ที่ใช้ 5 zeny ต่อครั้ง <span class="tag t-data">ข้อมูลเกม</span></p></div>
+    <div class="card"><h4>สัตว์เลี้ยง</h4><p>เริ่มที่ 24 ตัว ไข่ดรอปจากมอนสเตอร์ตัวนั้น มีค่าความสนิท ใส่เครื่องประดับได้ และวิวัฒน์เป็นสัตว์เลี้ยงบอสเมื่อชนะบอสครบจำนวน <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>ความสำเร็จและคอสเมติก</h4><p>ชนะบอสแต่ละตัว 200 ครั้งได้หมวกคอสเมติกของบอสนั้น คอสเมติกเปลี่ยนหน้าตาอย่างเดียวและเทรดไม่ได้ <span class="tag t-web">เว็บ</span></p></div>
+  </div>
+  <div class="note"><b>กติกาเทรดออกแบบมากันโกงตั้งแต่ต้น</b> <span class="tag t-web">เว็บ</span> บัญชีต้องอายุ 3 วันขึ้นไป เทรดได้วันละ 5 ครั้ง ของที่เคยสวมแล้วผูกกับบัญชีทันที และเซิร์ฟเวอร์ยอมให้เทรดเฉพาะของที่ตัวเองเห็นว่าบัญชีนั้นได้มาจากการเล่นจริง</div>
+</div>
+
+<h2 id="th-s9"><span class="n">9</span>Endgame และอีเวนต์</h2>
+<div class="sec">
+  <h3>Endless Tower</h3>
+  <ul>
+    <li>เปิดให้ตัวละครขั้น 2 เท่านั้น ชั้นละ 1 นาที ทุก 10 ชั้นฉากเปลี่ยนและเจอ MVP <span class="tag t-web">เว็บ</span></li>
+    <li>ในหอคอยไม่มี EXP ไม่มีหีบ ไม่มีของดรอป ก่อนแต่ละชั้นเลือกการ์ดอัปเกรด 1 ใบ พลังที่เหลือมาจากอุปกรณ์และ Deity <span class="tag t-data">ข้อมูลเกม</span></li>
+    <li>คะแนนหอคอยซื้ออัปเกรดถาวรที่มีผลเฉพาะในหอคอย เซฟรอบได้ 1 ครั้งและกลับมาเล่นต่อได้ใน 7 วัน <span class="tag t-data">ข้อมูลเกม</span></li>
+    <li>มีอันดับรายเดือน ทั้งรวมและแยกตามอาชีพขั้น 2 <b>เซิร์ฟเวอร์เล่นรอบซ้ำจากข้อมูลการเคลื่อนที่เพื่อตรวจผลก่อนนับคะแนน</b> <span class="tag t-web">เว็บ</span></li>
+  </ul>
+  <h3>Lantern Festival</h3>
+  <ul>
+    <li>ด่านตามฤดูกาลใน Louyang เปิดถึงคริสต์มาส บอสไม่ดรอปของ แต่ดรอปลูกบอลกาชา <span class="tag t-web">เว็บ</span></li>
+    <li>ลูกบอลให้คอสเมติก 29.5% อุปกรณ์เฉพาะอีเวนต์ 70% และการ์ด 0.5% ผู้ทำประกาศอัตราเองในบันทึกแพตช์ <span class="tag t-web">เว็บ</span></li>
+    <li>คอสเมติกซ้ำกลายเป็นเศษ ใช้ทำธูป ธูปเพิ่มโอกาสเจอบอสหายากจาก 16% เป็น 50% <span class="tag t-web">เว็บ</span></li>
+  </ul>
+  <p><span class="tag t-me">ตีความ</span> นี่คือวงจรกาชาครบรูปแบบ มีอัตราดรอป ของซ้ำ ระบบแลกเศษ แต่ไม่มีการจ่ายเงิน ผู้เล่นจ่ายด้วยเวลาแทน เป็นการใช้ความตื่นเต้นของกาชาเพื่อยืดอายุการเล่นโดยไม่แตะเรื่องเงิน</p>
+  <h3>โหมดเนื้อเรื่อง</h3>
+  <p>มีตัวละครประจำเรื่อง 3 คน คือ Selene, Lain, Haru เรื่องเรือจมเล่าว่าลูกเรือของกัปตัน Drake ฟื้นขึ้นมา เรื่องปราสาท Prontera เป็นงานแต่งงานของเจ้าหญิงที่ถูกออร์คลักพาตัว และจบด้วยการเปลี่ยนอาชีพขั้น 2 ตัวละครอื่นในบัญชีข้ามเนื้อเรื่องที่ผ่านแล้วได้ <span class="tag t-data">ข้อมูลเกม</span></p>
+</div>
+
+<h2 id="th-s10"><span class="n">10</span>ระบบออนไลน์และชุมชน</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:190px">ระบบ</th><th>รายละเอียด</th></tr>
+    <tr><td class="k">ลานเมือง Prontera</td><td>แบ่งเป็น 4 ล็อบบี้ ชื่อ Asgard, Midgard, Alfheim, Vanaheim แต่ละล็อบบี้มีหลายช่อง ช่องละ 25 คน รวมรับได้ 2,000 คน <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">แชท</td><td>แท็บ Channel, General, Trade, Party กระซิบ อีโมต ห้องแยกภาษา และเบรกสแปม 15 ข้อความต่อนาที <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">ปาร์ตี้</td><td>สูงสุด 3 คน หัวหน้าเลือกด่าน มอนสเตอร์เพิ่ม ×2 เมื่อ 2 คน และ ×2.75 เมื่อ 3 คน เพื่อนชุบชีวิตกันได้ ถ้าหัวหน้าหลุดคนถัดไปรับช่วงต่อ <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">แบ่งของ</td><td>Need / Greed ตอนจบรอบ คนละ 2 Need และ Need ได้เฉพาะของที่อาชีพตัวเองใส่ได้ <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">เพื่อน</td><td>รายชื่อเพื่อนและค่าความสนิท 0–30 เพิ่มวันละ 1 เมื่อเล่นปาร์ตี้ด้วยกันจนล้ม MVP <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">NPC บริการ</td><td>ช่างตีเหล็ก ร้านแร่ ร้านอาวุธ ผู้ดูแลสัตว์เลี้ยง ช่างทำผม (ฟรี) บรรณารักษ์ (วิกิ) บุรุษไปรษณีย์ ผู้เฝ้าหอคอย เจ้าภาพเทศกาล <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">ความปลอดภัยชุมชน</td><td>ปุ่มรายงานผู้เล่น ตรวจด้วยคน เก็บแชท 24 ชั่วโมง มีรายการคำต้องห้าม <span class="tag t-web">เว็บ</span></td></tr>
+    <tr><td class="k">ความจุ</td><td>เซิร์ฟเวอร์เต็มแล้วเข้าคิวอัตโนมัติ อยู่นิ่ง 5 นาทีถูกเตะออกเพื่อคืนที่ <span class="tag t-data">ข้อมูลเกม</span></td></tr>
+  </table></div>
+  <p><span class="tag t-me">ตีความ</span> ความรู้สึก "กลับบ้าน" ของแฟน RO มาจากส่วนนี้มากกว่าตัวรอบเล่น การยืนคุยกันที่น้ำพุ Prontera พร้อมเพลงเดิม คือสิ่งที่เกม survivors ทั่วไปไม่มี</p>
+</div>
+
+<h2 id="th-s11"><span class="n">11</span>เทคนิคและการดูแลระบบ</h2>
+<div class="sec">
+  <div class="grid g2">
+    <div class="card"><h4>ตัวเกม</h4><p>PixiJS คู่กับ Three.js โลกเป็น 3 มิติ หมุนกล้องและซูมจากมุมบนถึงมุมบุคคลที่สามได้ ตัวละครเป็นสไปรต์ 2 มิติ สร้างด้วย Vite และ TypeScript <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>การบังคับ</h4><p>คีย์บอร์ดและเมาส์ ระบบสัมผัสบนมือถือ และจอยเกม <span class="tag t-data">ข้อมูลเกม</span></p></div>
+    <div class="card"><h4>โครงสร้างพื้นฐาน</h4><p>เซิร์ฟเวอร์ Node.js บน OVHcloud ในแคนาดา หน้าเว็บผ่าน Cloudflare ไม่ใช้คุกกี้ ไม่มีตัววัดสถิติจากบุคคลที่สาม <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>บัญชีไม่ใช้อีเมล</h4><p>ใช้ชื่อกับรหัสผ่าน กู้บัญชีด้วยคำถาม 5 ข้อธีม RO เช่น เมืองที่ชอบ MVP ที่นับถือ ตอบผิดได้ 3 ครั้งต่อสัปดาห์ <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>กันโกงฝั่งเซิร์ฟเวอร์</h4><p>เซิร์ฟเวอร์ตรวจทุกรอบ ทุกการตีบวก ทุกการเทรด และเก็บประวัติของแต่ละชิ้น บัญชีใหม่จากเครือข่ายเดียวกันต้องเว้นระยะ เพื่อกันฟาร์มบัญชี <span class="tag t-web">เว็บ</span></p></div>
+    <div class="card"><h4>กันก๊อป</h4><p>ชื่อหน้าเว็บและเลขเวอร์ชันฝังอักขระที่มองไม่เห็นไว้เป็นลายน้ำ และประกาศห้ามนำเกมไปโฮสต์ที่อื่น ผลค้นหาพบเว็บลักษณะคล้ายกันอีก 2 แห่งที่ผมยังไม่ได้ตรวจ <span class="tag t-data">ข้อมูลเกม</span></p></div>
+  </div>
+  <h3>เครื่องมือที่ใช้พัฒนา</h3>
+  <p>เกมนี้ไม่ได้ใช้ game engine สำเร็จรูปอย่าง Unity หรือ Godot ผู้ทำเขียนเป็นเว็บแอปด้วยเครื่องมือฝั่งเว็บทั้งหมด <span class="tag t-web">เว็บ</span></p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:170px">ส่วนงาน</th><th style="width:250px">เครื่องมือ</th><th>หน้าที่</th></tr>
+    <tr><td class="k">วาดภาพ 2 มิติ</td><td>PixiJS</td><td>แสดงสไปรต์ตัวละคร มอนสเตอร์ เอฟเฟกต์ และ UI ในเกม</td></tr>
+    <tr><td class="k">โลก 3 มิติ</td><td>Three.js</td><td>เรนเดอร์แผนที่ RO เป็น 3 มิติ หมุนกล้องและซูมได้</td></tr>
+    <tr><td class="k">ภาษาโปรแกรม</td><td>TypeScript</td><td>เขียนทั้งตัวเกมและเซิร์ฟเวอร์</td></tr>
+    <tr><td class="k">ตัวสร้างไฟล์</td><td>Vite</td><td>รวมและย่อโค้ดให้โหลดผ่านเบราว์เซอร์</td></tr>
+    <tr><td class="k">เซิร์ฟเวอร์</td><td>Node.js</td><td>เก็บบัญชี ตรวจผลรอบเล่น ตีบวก เทรด และลานเมืองออนไลน์</td></tr>
+    <tr><td class="k">เขียนโค้ด</td><td>Claude ของ Anthropic</td><td>ผู้ทำระบุว่าโค้ด ข้อความส่วนใหญ่ และเครื่องมือ เขียนด้วย AI ตามไอเดียและการออกแบบของเขา</td></tr>
+    <tr><td class="k">อ่านไฟล์ RO</td><td>เครื่องมือจากชุมชน rAthena</td><td>ดึงกราฟิกจากไฟล์ GRF และข้อมูลมอนสเตอร์ ของดรอป สัตว์เลี้ยง</td></tr>
+    <tr><td class="k">เอฟเฟกต์</td><td>อ้างอิงจาก roBrowser</td><td>เอฟเฟกต์แบบไคลเอนต์ RO</td></tr>
+    <tr><td class="k">โฮสต์</td><td>OVHcloud และ Cloudflare</td><td>เครื่องเซิร์ฟเวอร์อยู่แคนาดา หน้าเว็บส่งผ่าน Cloudflare</td></tr>
+    <tr><td class="k">ภาพและเสียง</td><td>ไม่ได้ทำเอง</td><td>กราฟิก แผนที่ โมเดล ไอคอน เสียง และเพลง มาจากไคลเอนต์ Ragnarok Online จึงไม่ต้องใช้โปรแกรมวาดภาพหรือทำเพลง</td></tr>
+  </table></div>
+  <p><span class="tag t-me">ตีความ</span> ชุดเครื่องมือนี้ใกล้กับที่ทีมเราใช้ทำมินิเกมเว็บ ต่างกันตรงที่เขาใช้ PixiJS คู่กับ Three.js แทน Phaser การไม่ต้องทำภาพและเสียงเองคือเหตุผลหลักที่คนเดียวทำเกมขนาดนี้ได้ใน 17 วัน</p>
+
+  <h3>การใช้ AI ในการพัฒนา</h3>
+  <p>ผู้ทำยอมรับเองในหน้าเครดิต ภายใต้หัวข้อ "Made with artificial intelligence" <span class="tag t-web">เว็บ</span></p>
+  <div class="grid g3">
+    <div class="card"><h4>หลักฐานแวดล้อมที่สอดคล้อง</h4>
+      <ul>
+        <li>ปล่อย 29 เวอร์ชันใน 17 วัน โดยคนเดียวในเวลาว่าง</li>
+        <li>ข้อความในเกมเกือบ 5,000 ข้อความ แปลครบ 5 ภาษา จีนตัวเต็มออกหลังเปิดเกม 6 วัน</li>
+        <li>บันทึกแพตช์ยาวและเป็นระเบียบทุกวัน บอกตัวเลขก่อนและหลังทุกจุด</li>
+        <li>มีระบบบัญชี กันโกง เทรด ปาร์ตี้ และอันดับ ซึ่งปกติใช้ทีมหลายคน</li>
+      </ul></div>
+    <div class="card"><h4>ส่วนที่ AI ไม่ได้ทำ</h4>
+      <ul>
+        <li>การออกแบบเกม ผู้ทำบอกว่าเป็นไอเดียของเขาเอง</li>
+        <li>ภาพและเสียง ไม่ได้สร้างด้วย AI แต่เอามาจากไคลเอนต์ RO</li>
+        <li>คำแปลภาษาโปรตุเกส มาจากคนในชุมชน</li>
+      </ul></div>
+    <div class="card"><h4>สิ่งที่ยืนยันไม่ได้</h4>
+      <ul>
+        <li>สัดส่วนจริงที่ AI เขียน และผู้ทำแก้มือมากแค่ไหน</li>
+        <li>ใช้ Claude ผ่านเครื่องมือตัวไหน และใช้ AI ตัวอื่นร่วมหรือไม่</li>
+        <li>ฐานข้อมูลและเครื่องมือแก้ไขโค้ดที่ใช้</li>
+        <li>คุณภาพโค้ดระยะยาว เพราะเห็นแค่ไฟล์ที่ย่อแล้ว</li>
+      </ul></div>
+  </div>
+  <p><span class="tag t-me">ตีความ</span> คนที่ออกแบบเกมเป็นและรู้จัก RO ดีหนึ่งคน ใช้ AI เขียนโค้ดแทนทีมโปรแกรมเมอร์ได้ในระดับที่เปิดให้บริการออนไลน์จริงได้ ส่วนที่ AI ยังแทนไม่ได้ในกรณีนี้คือการตัดสินใจออกแบบ และงานภาพที่เขาเลี่ยงด้วยการใช้ของ RO</p>
+
+  <figure><img src="research-ro-survivors-img/ros_account_gate.jpg" alt="หน้าบังคับสร้างบัญชี"><figcaption>ตั้งแต่แพตช์ล่าสุด เกมบังคับสร้างบัญชีก่อนเล่น แผงขวาคือฟอร์มสมัครที่ไม่ขออีเมล และคำถามกู้บัญชีธีม RO</figcaption></figure>
+  <p><span class="tag t-me">ตีความ</span> การยกเลิกโหมด Guest หลังเปิดได้ 2 สัปดาห์เป็นข้อมูลที่น่าสนใจ หน้ากฎหมายอธิบายเหตุผลว่าความคืบหน้าของ Guest ตรวจที่มาไม่ได้ จึงเทรดไม่ได้ เมื่อเกมมีเศรษฐกิจระหว่างผู้เล่น โหมด Guest กลายเป็นภาระมากกว่าประโยชน์</p>
+</div>
+
+<h2 id="th-s12"><span class="n">12</span>โมเดลรายได้และสถานะด้านสิทธิ์</h2>
+<div class="sec">
+  <ul>
+    <li><b>ไม่มีรายได้จากเกม</b> ไม่มีโฆษณา ไม่มีร้านค้าเงินจริง การบริจาคไม่ให้อะไรในเกม <span class="tag t-web">เว็บ</span></li>
+    <li><b>ห้ามซื้อขายด้วยเงินจริงเด็ดขาด</b> โทษคือลบบัญชีทั้งผู้ซื้อและผู้ขาย <span class="tag t-web">เว็บ</span></li>
+    <li><b>ผู้ทำอ้างสิทธิ์เฉพาะโค้ด การออกแบบ และข้อความ</b> และยอมรับว่ากราฟิก แผนที่ โมเดล เอฟเฟกต์ ไอคอน เสียง และเพลง มาจากไคลเอนต์ RO และเป็นของ Gravity กับ Lee Myoung-Jin <span class="tag t-web">เว็บ</span></li>
+    <li><b>มีช่องทางแจ้งถอด</b> ผู้ทำเขียนว่าจะถอดสิ่งที่ถูกขอ ทั้งบางส่วนหรือทั้งเกม ภายใน 3 วัน <span class="tag t-web">เว็บ</span></li>
+  </ul>
+  <div class="note"><b>หมายเหตุ:</b> เอกสารนี้วิเคราะห์เกมในมุมผลิตภัณฑ์ การตัดสินใจว่าจะดำเนินการอย่างไรกับการใช้ทรัพย์สินของ RO เป็นอำนาจของฝ่ายกฎหมายและฝ่ายดูแล IP ไม่ใช่ข้อเสนอในเอกสารนี้</div>
+  <p><span class="tag t-me">ตีความ</span> การไม่หารายได้เลยน่าจะเป็นการลดความเสี่ยงด้านสิทธิ์โดยตั้งใจ ผลข้างเคียงคือเกมไม่มีแรงกดดันให้ออกแบบเพื่อขาย ระบบจึงเอื้อผู้เล่นมากกว่าเกมเชิงพาณิชย์ทำได้ และนั่นคือมาตรฐานที่ผู้เล่นจะเอาไปเทียบกับเกมทางการ</p>
+</div>
+
+<h2 id="th-s13"><span class="n">13</span>วิเคราะห์ด้วยกรอบ MDA</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:150px">ชั้น</th><th>สิ่งที่เห็น</th><th style="width:38%">ตีความ: ผู้ทำตัดสินใจอะไร</th></tr>
+    <tr><td class="k">M · กติกา</td><td>ผู้เล่นคุมแค่การเดิน สกิลออกเอง · เลเวลอัปเลือกการ์ด 1 ใบ · บอสออกตามนาฬิกา · คะแนนอุปกรณ์เปิดด่าน · เซิร์ฟเวอร์เป็นคนตัดสินของทุกชิ้น</td><td>ยืมแกนของ Vampire Survivors มาทั้งชุด แล้วใช้กติกาถาวรของ RO เป็นประตูกั้นเนื้อหา</td></tr>
+    <tr><td class="k">D · พฤติกรรม</td><td>ผู้เล่นวางบิลด์ข้าม 5 ชั้น · ฟาร์มด่านเดิมซ้ำเพื่อของ การ์ด และไข่ · ชวนเพื่อนตั้งปาร์ตี้ · เทรดของที่ไม่ใช้</td><td>เปลี่ยนเกมจบในรอบ ให้เป็นเกมที่มีเหตุผลกลับมาทุกวัน โดยใช้ของหายากเป็นตัวดึง</td></tr>
+    <tr><td class="k">A · ความรู้สึก</td><td>เพลง Payon ลานน้ำพุ Prontera สไปรต์เดิม · รู้สึกแข็งแกร่งขึ้นในรอบเดียว · ได้ของหายากแล้วอยากอวด</td><td>เด่นที่ Fantasy (ได้กลับไปโลก RO) และ Fellowship (เจอคนที่คิดถึงสิ่งเดียวกัน) รองลงมาคือ Challenge และ Discovery</td></tr>
+    <tr><td class="k">สิ่งที่ตัดออก</td><td>ไม่มีการเล็ง ไม่มีการสู้กันระหว่างผู้เล่น ไม่มีกิลด์ ไม่มีแผนที่เปิดให้เดินสำรวจ ไม่มีระบบเงินจริง</td><td>ตัดทุกอย่างที่ต้องใช้เซิร์ฟเวอร์เรียลไทม์หนักๆ ทำให้คนเดียวดูแลได้ และรอบเล่นคำนวณในเครื่องผู้เล่นได้</td></tr>
+  </table></div>
+</div>
+
+<h2 id="th-s14"><span class="n">14</span>ข้อดีและข้อเสีย</h2>
+<div class="sec">
+  <p>ทั้งหมดในหัวข้อนี้คือ <span class="tag t-me">ตีความ</span> จากหลักฐานในหัวข้อก่อนหน้า</p>
+  <div class="grid g2">
+    <div class="card good"><h4>ข้อดี</h4>
+      <ul>
+        <li><b>เข้าเล่นง่ายมาก</b> เปิดเบราว์เซอร์แล้วเล่น ไม่ต้องโหลด ไม่ขออีเมล เล่นได้ทั้ง PC มือถือ และจอยเกม</li>
+        <li><b>ความคิดถึงแบบของแท้</b> ใช้สไปรต์ แผนที่ และเพลงเดิม แฟน RO จำได้ทันทีโดยไม่ต้องอธิบาย</li>
+        <li><b>ลึกพอให้เล่นนาน</b> 23 อาชีพ ทาเลนต์ 3 สาย Deity การ์ด และอุปกรณ์ ให้บิลด์ไม่ซ้ำ</li>
+        <li><b>มีเหตุผลกลับมาเล่นหลายชั้น</b> เปิดด่านถัดไป สัตว์เลี้ยง หอคอยรายเดือน อีเวนต์ตามฤดูกาล เพื่อน</li>
+        <li><b>เล่นด้วยกันได้จริง</b> ปาร์ตี้ 3 คน ชุบกันได้ แบ่งของยุติธรรม มีลานเมืองให้เจอกัน</li>
+        <li><b>ไม่มี pay-to-win</b> ทุกอย่างได้จากการเล่น เงินจริงซื้ออะไรไม่ได้</li>
+        <li><b>ยุติธรรมเพราะเซิร์ฟเวอร์ตัดสิน</b> ตีบวก ของดรอป อันดับ และการเทรด ตรวจที่เซิร์ฟเวอร์ทั้งหมด</li>
+        <li><b>พัฒนาเร็วและโปร่งใส</b> แพตช์เกือบทุกวัน บอกอัตราดรอปและเหตุผลของการปรับสมดุลทุกครั้ง</li>
+        <li><b>เคารพเวลาผู้เล่น</b> ปรับความยากเอง ข้ามเนื้อเรื่องซ้ำได้ เร่งความเร็วชั้นที่เคยผ่าน เลเวลอัปอัตโนมัติ</li>
+        <li><b>มีคู่มือในเกม</b> บรรณารักษ์อธิบายสูตรและสกิลทุกอาชีพ และหน้า Talents เปิดดูนอกเกมได้</li>
+      </ul>
+    </div>
+    <div class="card bad"><h4>ข้อเสีย</h4>
+      <ul>
+        <li><b>อาจหายไปได้ทุกวัน</b> เกมตั้งอยู่บนทรัพย์สินของคนอื่น ผู้ทำรับเองว่าจะถอดเมื่อถูกแจ้ง เวลาที่ผู้เล่นลงไปไม่มีหลักประกัน</li>
+        <li><b>ขึ้นกับคนคนเดียว</b> ถ้าผู้ทำหยุด เกมหยุด ไม่มีทีมสำรอง ไม่มีรายได้เลี้ยงเซิร์ฟเวอร์นอกจากเงินบริจาค</li>
+        <li><b>ยังไม่นิ่ง</b> 29 แพตช์ใน 17 วันแปลว่ามีบั๊กและการปรับสมดุลทุกวัน บิลด์ที่ลงทุนไว้เปลี่ยนค่าได้ข้ามคืน</li>
+        <li><b>ซับซ้อนเกินไปสำหรับคนเล่นสบายๆ</b> ข้อความในเกมเกือบ 5,000 ข้อความ สกิลหลายตัวมีคำอธิบายยาวหลายบรรทัด</li>
+        <li><b>เนื้อหาปลายทางยังบาง</b> ด่านหลักจบที่เลเวล 30–35 อาชีพขั้น 2 ยังอยู่ระหว่างพัฒนา 2 อาชีพยังไม่มีขั้น 2</li>
+        <li><b>ต้องฟาร์มหนัก</b> ความสำเร็จต้องชนะบอส 200 ครั้ง และด่านเปิดด้วยคะแนนอุปกรณ์ ซึ่งบังคับให้เล่นด่านเดิมซ้ำ</li>
+        <li><b>กู้บัญชียาก</b> ไม่มีอีเมล ถ้าลืมรหัสและจำคำตอบไม่ได้ บัญชีหายถาวร</li>
+        <li><b>เซิร์ฟเวอร์มีเพดาน</b> เต็มแล้วต้องเข้าคิว และต้องต่อเน็ตตลอดจึงเริ่มรอบได้</li>
+        <li><b>การบังคับสร้างบัญชีเพิ่มแรงเสียดทาน</b> ขัดกับคำโปรยเดิมที่ว่าเล่นได้โดยไม่ต้องสมัคร</li>
+        <li><b>ระบบเทรดเปิดช่องให้ตลาดมืด</b> แม้มีกติกาเข้ม ของหายากที่เทรดได้ย่อมมีคนพยายามขายด้วยเงินจริง</li>
+        <li><b>คุณภาพระยะยาวของโค้ดที่ AI เขียนยังไม่พิสูจน์</b> ความเร็วในการเพิ่มของอาจแลกมากับหนี้ทางเทคนิค</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 id="th-s15"><span class="n">15</span>เทียบกับ Ragnarok: Endless Trail</h2>
+<div class="sec">
+  <div class="note"><b>ข้อจำกัด:</b> ข้อมูล Endless Trail ในตารางมาจากแหล่งสาธารณะเท่านั้น คือข่าวทางการบน gnjoy.asia สื่อเกมมือถือ และเอกสารนักลงทุนของ Gravity ผมไม่ได้เล่นและหารีวิวหรือคะแนนสโตร์ไม่พบ ทีมคุณมีข้อมูลภายในที่แม่นกว่านี้ ช่องไหนผิดให้ถือข้อมูลของทีมเป็นหลัก</div>
+  <div class="tablewrap"><table>
+    <tr><th style="width:170px">หัวข้อ</th><th>RO Survivors</th><th>Ragnarok: Endless Trail</th></tr>
+    <tr><td class="k">สถานะ</td><td>แฟนเมด ไม่ได้รับอนุญาต</td><td>เกมทางการ <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">ผู้พัฒนา</td><td>คนเดียว ใช้ AI เขียนโค้ด</td><td>Gravity Game Tech ทีมไทย เผยแพร่โดย Gravity Game Hub <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">แพลตฟอร์ม</td><td>เบราว์เซอร์ทุกอุปกรณ์</td><td>iOS และ Android <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">พื้นที่</td><td>ทั่วโลก 5 ภาษา</td><td>เอเชียตะวันออกเฉียงใต้ <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">เปิดให้เล่น</td><td>3 พ.ย. 2026 (เบต้า)</td><td>Open Beta 26 ก.พ. 2026 หลังรอบทดสอบที่เริ่มตั้งแต่ ส.ค. 2025 <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">แนวเกม</td><td>Survivors เล่นกับมอนสเตอร์ล้วน</td><td>Roguelike ผสม Battle Royale มีทั้งสู้มอนสเตอร์และสู้ผู้เล่น <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">การจับถือ</td><td>แนวนอนเป็นหลัก คีย์บอร์ด สัมผัส หรือจอย</td><td>แนวตั้ง เล่นมือเดียว <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">อาชีพ</td><td>9 สาย 23 อาชีพ</td><td>4 สาย: Swordsman→Knight, Mage→Wizard, Archer→Hunter, Thief→Assassin <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">โหมด</td><td>ด่านหลัก 6 ด่าน โหมดเนื้อเรื่อง Endless Tower และอีเวนต์ตามฤดูกาล</td><td>Battle Royale จับคู่และห้องส่วนตัว · Explore 100 ด่าน · Nightmare 100 ด่าน · Endless Tower 250 ชั้น · MVP Challenge · Zeny Dungeon <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">ตัวช่วยในรอบ</td><td>สัตว์เลี้ยงตามตัวและให้โบนัส</td><td>ทหารรับจ้างมีระดับ เช่น Sif, Ragnar, Celene ระดับ S+ <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">ความก้าวหน้าถาวร</td><td>ทาเลนต์ อุปกรณ์ การ์ด ตีบวก สัตว์เลี้ยง</td><td>อุปกรณ์และการเสริมพลัง รายละเอียดอื่นไม่พบในแหล่งสาธารณะ <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">สังคม</td><td>ลานเมืองออนไลน์ แชท เพื่อน ปาร์ตี้ 3 คน เทรด</td><td>ห้องส่วนตัวเล่นกับเพื่อน ระบบอื่นไม่พบในแหล่งสาธารณะ <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">รายได้</td><td>ไม่มี รับบริจาคอย่างเดียว</td><td>เติม Poring Crystal ผ่านเว็บช็อปและตัวแทน มีตู้กาชา <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">กระแสตอนเปิด</td><td>ผู้ทำแจ้งว่าเซิร์ฟเวอร์รับไม่ไหวในสัปดาห์แรก เพดานความจุ 2,000 คน ไม่มีตัวเลขผู้เล่นจริง</td><td>ลงทะเบียนล่วงหน้ากว่า 150,000 คน <span class="tag t-news">ข่าว</span></td></tr>
+    <tr><td class="k">ภาพ</td><td>สไปรต์และแผนที่เดิมของ RO PC</td><td>ไม่พบข้อมูลยืนยัน สื่อรายหนึ่งติเรื่องภาพในช่วงทดสอบแรก <span class="tag t-news">ข่าว</span></td></tr>
+  </table></div>
+
+  <h3>อ่านผลเทียบ</h3>
+  <p>ทั้งหมดคือ <span class="tag t-me">ตีความ</span></p>
+  <div class="grid g2">
+    <div class="card"><h4>สองเกมแก้โจทย์คนละข้อ</h4><p>RO Survivors ตอบคนที่อยากกลับไป RO แบบเดิมโดยเล่นสั้นลง Endless Trail ตอบคนเล่นมือถือที่อยากได้แมตช์เร็วและการแข่งกับคนอื่น แกนร่วมมีแค่ roguelike กับ IP</p></div>
+    <div class="card"><h4>จุดที่ RO Survivors เหนือกว่า</h4><p>เข้าเล่นง่ายกว่าเพราะไม่ต้องติดตั้ง ความคิดถึงตรงกว่าเพราะใช้ของเดิม ความลึกของอาชีพมากกว่า มีพื้นที่สังคม และไม่มีแรงกดดันเรื่องเงิน</p></div>
+    <div class="card"><h4>จุดที่ Endless Trail เหนือกว่า</h4><p>ถูกต้องตามสิทธิ์และอยู่ได้ยาว มีรายได้เลี้ยงทีม ออกแบบมาเพื่อมือถือแนวตั้งโดยตรง มีการแข่งกับผู้เล่นซึ่งสร้างคอนเทนต์และการแข่งขันได้ และมีปริมาณด่านมากกว่าหลายเท่า</p></div>
+    <div class="card"><h4>สิ่งที่ข้อมูลนี้บอก</h4><p>ผู้เล่นกลุ่มหนึ่งให้ค่ากับความเหมือน RO ดั้งเดิมและการเล่นร่วมกันแบบ MMO มากกว่าโหมดแข่งขัน ถ้าทีมมีตัวเลขการกลับมาเล่นของ Endless Trail แยกตามโหมด จะตรวจสมมติฐานนี้ได้ทันที</p></div>
+  </div>
+</div>
+
+<h2 id="th-s16"><span class="n">16</span>สิ่งที่ทีมเอาไปใช้ได้</h2>
+<div class="sec">
+  <p>ทั้งหมดคือ <span class="tag t-me">ตีความ</span> และเป็นข้อเสนอให้ทีมพิจารณา</p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:240px">ข้อสังเกต</th><th>ความหมายต่องานของเรา</th></tr>
+    <tr><td class="k">สัญญาณความต้องการเกม RO บนเบราว์เซอร์</td><td>เกมแฟนเมดที่ไม่มีงบการตลาดต้องขยายเซิร์ฟเวอร์ในสัปดาห์แรก และมีคนอาสาช่วยแปลหลายภาษา เป็นสัญญาณว่าผู้เล่นพร้อมเล่น RO ผ่านเว็บ ซึ่งเป็นพื้นที่เดียวกับ RO PlayZone แต่ยังไม่มีตัวเลขยืนยันขนาด</td></tr>
+    <tr><td class="k">Guest ก่อน แล้วค่อยบังคับบัญชี</td><td>เกมนี้เริ่มด้วย Guest และยกเลิกใน 2 สัปดาห์ เพราะความคืบหน้าของ Guest ตรวจที่มาไม่ได้เมื่อมีการเทรด เป็นกรณีศึกษาสำหรับ flow Guest-first ของเรา ว่าควรขีดเส้นตรงไหน</td></tr>
+    <tr><td class="k">บัญชีไม่ใช้อีเมล</td><td>ลดแรงเสียดทานได้มาก แต่แลกกับการกู้บัญชีที่อ่อน คำถามกู้บัญชีธีม RO เป็นลูกเล่นที่ทำให้ขั้นตอนน่าเบื่อกลายเป็นส่วนหนึ่งของโลกเกม</td></tr>
+    <tr><td class="k">ภาษาตามหลังผู้เล่น</td><td>จีนตัวเต็มมาในวันที่ 6 โปรตุเกสจากชุมชนวันที่ 8 ญี่ปุ่นวันที่ 12 และมีห้องแชทอินโดนีเซีย บอกได้ว่าผู้เล่นมาจากไหนโดยไม่ต้องมีตัวเลข</td></tr>
+    <tr><td class="k">ความโปร่งใสสร้างความเชื่อใจ</td><td>บันทึกแพตช์ที่บอกตัวเลขก่อนและหลังทุกครั้ง รวมถึงอัตรากาชา เป็นมาตรฐานที่ผู้เล่นจะคาดหวังจากเกมทางการด้วย</td></tr>
+    <tr><td class="k">ความเร็วของคู่แข่งรายย่อยเปลี่ยนไปแล้ว</td><td>คนเดียวกับ AI ปล่อยระบบระดับ MMO ได้ใน 17 วัน ข้อได้เปรียบของทีมทางการจึงไม่ใช่ปริมาณฟีเจอร์ แต่คือความถูกต้องตามสิทธิ์ การเชื่อมกับบัญชีและไอเทม RO จริง และความต่อเนื่อง</td></tr>
+    <tr><td class="k">ระบบที่น่าศึกษาต่อ</td><td>แถบปรับความยากแลกของดรอป · การสะสมเลเวลอัปแล้วกดรวด · Need / Greed ตอนจบรอบ · เซิร์ฟเวอร์เล่นซ้ำเพื่อตรวจอันดับ · คิวเมื่อเซิร์ฟเวอร์เต็ม</td></tr>
+  </table></div>
+  <h3>ถ้าต้องการให้ลึกกว่านี้</h3>
+  <ul>
+    <li>ถ้าคุณสร้างบัญชีและล็อกอินไว้ในเบราว์เซอร์ ผมเข้าไปเล่นและเก็บภาพขณะเล่นจริงมาเพิ่มในเอกสารนี้ได้</li>
+    <li>ถ้ามีตัวเลขภายในของ Endless Trail ผมปรับตารางเทียบให้ใช้ข้อมูลจริงแทนข่าวสาธารณะได้</li>
+  </ul>
+</div>
+
+<h2 id="th-s17"><span class="n">17</span>ที่มา</h2>
+<div class="sec">
+  <ul>
+    <li><a href="https://ro-survivors.com/">ro-survivors.com</a> หน้าแรก หน้า News หน้า <a href="https://ro-survivors.com/talents.html">Talents</a> หน้า <a href="https://ro-survivors.com/credits.html">Credits</a> และหน้า <a href="https://ro-survivors.com/legal.html">Legal notice</a></li>
+    <li><a href="https://buymeacoffee.com/reven4nt">Buy Me a Coffee ของผู้ทำ</a></li>
+    <li><a href="https://www.youtube.com/watch?v=H4yZX-vIf_0">วิดีโอแนะนำเกมจากช่องไต้หวัน PFY</a> (เห็นเฉพาะชื่อเรื่องในผลค้นหา ไม่ได้เปิดดู)</li>
+    <li><a href="https://www.gnjoy.asia/news/detail.php?id=185">gnjoy.asia: ข่าวเปิด Open Beta ของ Ragnarok: Endless Trail</a></li>
+    <li><a href="https://gamingonphone.com/news/gravitys-next-entry-to-ragnarok-franchise-ragnarok-endless-trails-delivers-battle-royale-roguelike-action/">GamingonPhone: Ragnarok Endless Trails pre-CBT</a></li>
+    <li><a href="https://img.gravity.co.kr/GravityUpload/0000/2026/02/13/Gravity%20IR%20Presentation_2025_4Q_EN.pdf">Gravity IR Presentation 4Q 2025</a></li>
+    <li><a href="https://www.joytify.com/blog/en-us/rpg-others/ragnarok/ragnarok-endless-trails-breakdown/">Joytify: Ragnarok Endless Trails breakdown</a> (บล็อกบุคคลที่สาม ใช้ประกอบเท่านั้น)</li>
+  </ul>
+  <p style="color:var(--dim);font-size:15px">ภาพหน้าจอทั้งหมดถ่ายจากเว็บ ro-survivors.com เมื่อ 20 พ.ย. 2026 กราฟิกของ Ragnarok Online เป็นของ Gravity Co., Ltd. และ Lee Myoung-Jin</p>
+</div>
+</div>
+
+<div class="btns">
+  <button onclick="var r=document.documentElement,d=r.getAttribute('data-theme');r.setAttribute('data-theme',d==='dark'?'light':'dark')">สลับธีม</button>
+  <button onclick="window.scrollTo({top:0})">กลับบนสุด</button>
+</div>
+</div>
+
+<div class="lang" data-lang="en" lang="en" hidden>
+<header class="hero"><div class="in">
+  <p class="eyebrow">Game Analysis · Internal document</p>
+  <h1>RO Survivors</h1>
+  <p>A fan-made, browser-based survivors game built on the world and graphics of Ragnarok Online · full system analysis, strengths and weaknesses, and a comparison with Ragnarok: Endless Trail</p>
+  <p class="meta">ro-survivors.com · reviewed Nov 20, 2026 · version reviewed: Beta 0.7.6 (build Nov 18, 2026)</p>
+  <p class="langsw"><button type="button" class="lsw" onclick="setLang('th')">ไทย</button><button type="button" class="lsw on" onclick="setLang('en')">English</button><button type="button" class="lsw" onclick="setLang('ko')">한국어</button></p>
+</div></header>
+
+<div class="wrap">
+<nav class="toc">
+  <a href="#en-s1">1 Summary</a><a href="#en-s2">2 Method</a><a href="#en-s3">3 Identity</a><a href="#en-s4">4 Timeline</a><a href="#en-s5">5 Core loop</a><a href="#en-s6">6 The run</a><a href="#en-s7">7 Jobs and builds</a><a href="#en-s8">8 Progression</a><a href="#en-s9">9 Endgame</a><a href="#en-s10">10 Online</a><a href="#en-s11">11 Tech</a><a href="#en-s12">12 Revenue and rights</a><a href="#en-s13">13 MDA</a><a href="#en-s14">14 Pros and cons</a><a href="#en-s15">15 vs Endless Trail</a><a href="#en-s16">16 Takeaways</a><a href="#en-s17">17 Sources</a>
+</nav>
+
+<h2 id="en-s1"><span class="n">1</span>One-minute summary</h2>
+<div class="sec">
+  <div class="grid g4">
+    <div class="card kpi"><div class="v">17 days</div><div class="l">Age of the game since its public beta on Nov 3, 2026</div></div>
+    <div class="card kpi"><div class="v">29</div><div class="l">Versions shipped in 17 days, close to two patches a day</div></div>
+    <div class="card kpi"><div class="v">23</div><div class="l">Jobs (9 first jobs and 14 second jobs)</div></div>
+    <div class="card kpi"><div class="v">2,000</div><div class="l">Capacity ceiling of the town square set by the developer. Not an actual player count.</div></div>
+  </div>
+  <ul>
+    <li><b>It is a fan game, not an official title.</b> The developer goes by Reven4nt, works alone in spare time, and states that most of the code and text was written with AI. <span class="tag t-web">Web</span></li>
+    <li><b>It uses graphics, sound and music taken directly from the RO client.</b> The developer says so on the credits and legal pages, and promises to remove content within 3 days if a rights holder asks. <span class="tag t-web">Web</span></li>
+    <li><b>It is not a mini game.</b> It is a large game: 11 to 17 minute runs in the style of Vampire Survivors, layered with a full MMO system set of talent trees, gear, cards, refining, pets, parties, trading and an online town square.</li>
+    <li><b>It is truly free.</b> No ads and no purchases. Donations through Buy Me a Coffee give nothing in the game. <span class="tag t-web">Web</span></li>
+    <li><b>There are signs of heavy traffic, but no real numbers.</b> The developer reported server overload in the first week, moved to a stronger server and added a queue. The figure 2,000 is a configured capacity ceiling, not a player count.</li>
+    <li><b>Its biggest weakness is uncertainty.</b> The game stands on someone else's intellectual property, and the developer states it may shut down or wipe progress at any time.</li>
+  </ul>
+  <figure><img src="research-ro-survivors-img/ros_landing.jpg" alt="RO Survivors title screen"><figcaption>Title screen. RO characters and monsters walk along the bottom. Top right: donation, X, Discord, Talents, News and the language selector.</figcaption></figure>
+</div>
+
+<h2 id="en-s2"><span class="n">2</span>Method and limits</h2>
+<div class="sec">
+  <p><b>This analysis did not include hands-on play.</b> The game requires an account before playing, and none was created for this review. The document therefore has no in-run screenshots and makes no claims about how the controls feel.</p>
+  <p>Four sources were examined. Every claim carries a tag showing where it comes from.</p>
+  <div class="grid g2">
+    <div class="card"><h4><span class="tag t-web">Web</span> The game's own pages</h4><p>Title screen, the News page for all 29 versions, the Talents page, the credits page and the legal page.</p></div>
+    <div class="card"><h4><span class="tag t-data">Game data</span> Files the site serves to everyone</h4><p>About 4,970 in-game text strings, and the value tables for stages, jobs and monsters found in the public script files.</p></div>
+    <div class="card"><h4><span class="tag t-news">News</span> Outside sources</h4><p>Web search results, the official Endless Trail news on gnjoy.asia, and mobile game media.</p></div>
+    <div class="card"><h4><span class="tag t-me">Interpretation</span> The analyst's view</h4><p>Conclusions, pros and cons, and comparisons. These should be checked against the team's own experience.</p></div>
+  </div>
+  <div class="note"><b>Not verifiable:</b> actual player numbers, retention, how the balance plays out in practice, and the current status of the Orc Village and Morroc Pyramids stages. Both exist in the game data, but the first patch notes list them as "coming soon". The 2,000 figure is only the capacity the developer announced and may be a target set with headroom.</div>
+</div>
+
+<h2 id="en-s3"><span class="n">3</span>Identity of the game</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:200px">Topic</th><th>Detail</th></tr>
+    <tr><td class="k">Genre</td><td>Survivors-like (the Vampire Survivors formula) combined with persistent MMORPG systems <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Platform</td><td>Browser on PC and mobile. Installable as an app from the browser. Not on any store. <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Developer</td><td>Reven4nt, working alone. Probably based in Spain: the source text is Spanish and the legal page refers to the Spanish data protection agency. <span class="tag t-me">Interpretation</span></td></tr>
+    <tr><td class="k">How it was built</td><td>The credits page states that the code, much of the text and the tools were written with Claude, following the developer's ideas and design. <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Inspiration</td><td>Vampire Survivors, and fan survivors games for other IPs such as Pokémon Survivors and Azeroth Survivors <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Languages</td><td>Spanish, English, Traditional Chinese, Brazilian Portuguese and Japanese, plus separate chat channels for Chinese, Indonesian and Japanese <span class="tag t-data">Game data</span></td></tr>
+    <tr><td class="k">Price</td><td>Free. No ads and no in-game purchases. <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Status</td><td>Beta. The developer writes that it may change, reset progress or close without compensation. <span class="tag t-web">Web</span></td></tr>
+  </table></div>
+  <figure><img src="research-ro-survivors-img/ros_og.jpg" alt="RO Survivors promotional image"><figcaption>The game's promotional image. The background is the Prontera fountain square rendered in 3D from RO map models.</figcaption></figure>
+</div>
+
+<h2 id="en-s4"><span class="n">4</span>Timeline of the first 17 days</h2>
+<div class="sec">
+  <p>Release speed is the most unusual thing about this project. Everything below is read from the News page. <span class="tag t-web">Web</span></p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:120px">Date (2026)</th><th style="width:130px">Version</th><th>What was added</th></tr>
+    <tr><td class="k">Nov 3</td><td>0.1</td><td>Public beta: 6 jobs, 4 stages, story mode, 24 pets, online town square, parties of 3, trading, 2 languages</td></tr>
+    <tr><td class="k">Nov 4–5</td><td>0.2.1 – 0.3</td><td>Whispers, RO-style damage numbers, friends list, stylist, gamepad support, account recovery questions</td></tr>
+    <tr><td class="k">Nov 6</td><td>0.4 – 0.4.2</td><td>Lower memory use on mobile, iPhone fixes, bosses no longer deal contact damage</td></tr>
+    <tr><td class="k">Nov 8</td><td>0.5</td><td>Endless Tower, the Librarian (in-game wiki), the Talents page and a Discord server</td></tr>
+    <tr><td class="k">Nov 9</td><td>0.5.2 – 0.5.3</td><td>Traditional Chinese, tabbed chat, <b>move to a stronger server and a login queue</b></td></tr>
+    <tr><td class="k">Nov 11</td><td>0.6 – 0.6.4</td><td>Town square split into 4 lobbies, in-game mail, speed-up in the tower, skippable stories, Portuguese from the community</td></tr>
+    <tr><td class="k">Nov 12–14</td><td>0.6.5 – 0.6.9</td><td>Login queue, pet commentary during runs, drops shown again during runs, chat spam brake</td></tr>
+    <tr><td class="k">Nov 15</td><td>0.6.10 – 0.7.1</td><td>Seasonal event Lantern Festival, gacha balls, cosmetics, achievements, Japanese</td></tr>
+    <tr><td class="k">Nov 16–19</td><td>0.7.2 – 0.7.6</td><td>Event tuning, friend affinity, automatic level-up button, <b>guest mode removed: an account is now required</b></td></tr>
+  </table></div>
+  <figure><img src="research-ro-survivors-img/ros_news.jpg" alt="News page"><figcaption>The in-game News page. The left column lists every version. Each entry is tagged NEW, CHANGE, IMPROVEMENT or FIX.</figcaption></figure>
+  <p><span class="tag t-me">Interpretation</span> A game of this size normally takes a multi-person team several months. One person shipping at this pace is consistent with the developer's statement about using AI to write the code, and it is a concrete example of how fast a small competitor can produce content in 2026.</p>
+</div>
+
+<h2 id="en-s5"><span class="n">5</span>Three-layer core loop</h2>
+<div class="sec">
+  <div class="loop">
+    <div class="b"><h4>Layer 1 · The run, 11–17 minutes</h4>Dodge hordes of monsters while skills fire on their own, collect EXP, pick one card per level-up, meet mini bosses on a timer and finish with an MVP.</div>
+    <div class="b"><h4>Layer 2 · The persistent character</h4>Drops become gear, cards and pet eggs. Base and Job levels rise and grant talent points. A high enough gear score unlocks the next stage.</div>
+    <div class="b"><h4>Layer 3 · The Prontera square</h4>Meet other players, chat, form a party, trade, refine, sell items for Kafra Points, then head out for another run.</div>
+  </div>
+  <p style="margin-top:12px"><span class="tag t-me">Interpretation</span> Layer 1 delivers the instant fun of a survivors game. Layer 2 gives a reason to play the next run. Layer 3 gives a reason to come back tomorrow. Most survivors games have layer 1 and a thin layer 2. This game adds layers 2 and 3 of an MMORPG in full.</p>
+</div>
+
+<h2 id="en-s6"><span class="n">6</span>Structure of a run</h2>
+<div class="sec">
+  <h3>Stages and timing</h3>
+  <p>Every stage has a fixed length and bosses appear on the clock. Orange marks are mini bosses, red marks are the MVP. <span class="tag t-data">Game data</span></p>
+  <div class="tablewrap"><table>
+    <tr><th>Stage</th><th style="width:76px">Level</th><th style="width:76px">Length</th><th style="width:270px">Boss timing</th><th>Entry condition</th></tr>
+    <tr><td class="k">Prontera Fields</td><td>1–8</td><td>15 min</td><td><div class="bar"><i style="left:16.7%"></i><i style="left:33.3%"></i><i style="left:50%"></i><i style="left:66.7%"></i><i class="m" style="left:80%"></i></div></td><td>First stage. MVP Mastering at minute 12.</td></tr>
+    <tr><td class="k">Prontera Sewers</td><td>9–12</td><td>11 min</td><td><div class="bar"><i style="left:27.3%"></i><i class="m" style="left:72.7%"></i></div></td><td>Gear score 20 · MVP Golden Thief Bug</td></tr>
+    <tr><td class="k">Sunken Ship</td><td>13–15</td><td>13 min</td><td><div class="bar"><i style="left:23.1%"></i><i style="left:46.2%"></i><i class="m" style="left:76.9%"></i></div></td><td>Gear score 40 and the Sunken Ship story cleared · MVP Drake</td></tr>
+    <tr><td class="k">Byalan Island</td><td>16–20</td><td>15 min</td><td><div class="bar"><i style="left:20%"></i><i style="left:40%"></i><i style="left:60%"></i><i class="m" style="left:80%"></i></div></td><td>Gear score 110 · MVP Kraken</td></tr>
+    <tr><td class="k">Payon Forest</td><td>21–25</td><td>17 min</td><td><div class="bar"><i style="left:17.6%"></i><i style="left:35.3%"></i><i style="left:58.8%"></i><i class="m" style="left:82.4%"></i></div></td><td>Gear score 135 · MVP Eddga</td></tr>
+    <tr><td class="k">Payon Cave</td><td>26–30</td><td>17 min</td><td><div class="bar"><i style="left:17.6%"></i><i style="left:35.3%"></i><i style="left:58.8%"></i><i class="m" style="left:82.4%"></i></div></td><td>Gear score 165 · MVP Moonlight Flower</td></tr>
+    <tr><td class="k">Prontera Castle</td><td>31–35</td><td>1.5 min</td><td><div class="bar"><i class="m" style="left:96%"></i></div></td><td>Story only. Requires Job Lv 50. Clearing it grants the 2nd job.</td></tr>
+    <tr><td class="k">Lantern Festival</td><td>26–30</td><td>17 min</td><td><div class="bar"><i style="left:14.7%"></i><i style="left:29.4%"></i><i style="left:44.1%"></i><i style="left:58.8%"></i><i style="left:70.6%"></i><i class="m" style="left:82.4%"></i></div></td><td>Seasonal event with 7 bosses that drop gacha balls instead of loot</td></tr>
+    <tr><td class="k">Orc Village · Morroc Pyramids</td><td>31–50</td><td>Unknown</td><td>No timing data</td><td>Present in the game data with gear scores 800 and 1,200. Not confirmed as open.</td></tr>
+  </table></div>
+  <p class="legend"><span style="background:var(--hi2)"></span>Mini boss <span style="background:var(--red)"></span>MVP</p>
+
+  <h3>Enemy density</h3>
+  <p>The first stage starts at 1.2 spawns per second with up to 40 alive, and climbs to 3.5 per second with 140 alive in minutes 5 to 7. <span class="tag t-data">Game data</span> Players can tune it further before setting out with 5 sliders: enemy count, damage, HP, speed and events. Harder settings give more loot, up to ×2.5 when playing solo. <span class="tag t-web">Web</span></p>
+
+  <h3>Choices during the run</h3>
+  <ul>
+    <li><b>Level-up cards</b> come in 3 kinds: a new skill, an upgrade to a skill, or a Deity, which is a special power tied to one skill. A Deity can be switched mid-run but its accumulated ranks are lost. <span class="tag t-data">Game data</span></li>
+    <li><b>Luck controls:</b> Reroll swaps a card, Banish removes an option for the rest of the run, Focus makes a wanted item show up first. <span class="tag t-data">Game data</span></li>
+    <li><b>Chests</b> are bought with the zeny collected in the run and give extra gear. <span class="tag t-data">Game data</span></li>
+    <li><b>Saved-up level-ups:</b> the player chooses between pausing to pick a card right away or saving them up to pick all at once. An Auto button picks at random without pausing. <span class="tag t-web">Web</span></li>
+    <li><b>Drops</b> fall as a "?" and need no pickup. Their real properties are revealed when the run ends. <span class="tag t-web">Web</span></li>
+    <li><b>Reading aids:</b> a per-skill damage meter, a day and night cycle, and weather. <span class="tag t-web">Web</span></li>
+  </ul>
+</div>
+
+<h2 id="en-s7"><span class="n">7</span>Jobs and build making</h2>
+<div class="sec">
+  <figure><img src="research-ro-survivors-img/ros_talents_jobs.jpg" alt="Talents page job list"><figcaption>The Talents page lists every job line and can be viewed without logging in. Ninja and Gunslinger have no 2nd job yet.</figcaption></figure>
+  <h3>Job list</h3>
+  <div class="tablewrap"><table>
+    <tr><th>1st job</th><th style="width:70px">HP</th><th style="width:90px">Speed</th><th>Starting skill</th><th>2nd job</th></tr>
+    <tr><td class="k">Swordsman</td><td>130</td><td>150</td><td>Bash</td><td>Knight · Crusader (mounted on a Peco)</td></tr>
+    <tr><td class="k">Mage</td><td>80</td><td>145</td><td>Fire Bolt</td><td>Wizard · Sage</td></tr>
+    <tr><td class="k">Archer</td><td>95</td><td>165</td><td>Double Strafe</td><td>Hunter · Bard / Dancer</td></tr>
+    <tr><td class="k">Acolyte</td><td>105</td><td>150</td><td>Heal</td><td>Priest · Monk</td></tr>
+    <tr><td class="k">Thief</td><td>90</td><td>175</td><td>Envenom</td><td>Assassin · Rogue</td></tr>
+    <tr><td class="k">Merchant</td><td>130</td><td>145</td><td>Mammonite</td><td>Blacksmith · Alchemist</td></tr>
+    <tr><td class="k">Taekwon</td><td>110</td><td>160</td><td>Tornado Kick</td><td>Star Gladiator · Soul Linker</td></tr>
+    <tr><td class="k">Ninja</td><td>90</td><td>165</td><td>Shuriken</td><td>None yet</td></tr>
+    <tr><td class="k">Gunslinger</td><td>95</td><td>155</td><td>Triple Action</td><td>None yet</td></tr>
+  </table></div>
+  <p><span class="tag t-data">Game data</span> Second jobs have 205 to 380 HP. The Talents page notes that they are still in development.</p>
+
+  <h3>Layers of a build</h3>
+  <div class="grid g2">
+    <div class="card"><h4>Six RO-style stats</h4><p>STR adds ATK · AGI lowers all cooldowns, up to 40% at 99 points · VIT adds 2% HP per point · INT adds MATK · DEX shortens casting until it is instant at 100 points · LUK adds crit <span class="tag t-data">Game data</span></p></div>
+    <div class="card"><h4>Talent trees</h4><p>Three branches per job and 50 points, one per Job Lv. A new row opens for every 5 points spent in a branch. Swordsman has 157 ranks in total, so fewer than a third can be taken. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Second jobs</h4><p>The 1st job tree is kept and three new branches are added, but only one can be chosen as a specialization. Changing it costs Kafra Points. <span class="tag t-data">Game data</span></p></div>
+    <div class="card"><h4>A Deity per skill</h4><p>Every skill has its own Deity that changes how the skill works, for example a Fire Bolt that also receives the upgrades of Cold Bolt and Lightning Bolt. <span class="tag t-data">Game data</span></p></div>
+  </div>
+  <figure><img src="research-ro-survivors-img/ros_talents_tree.jpg" alt="Swordsman talent tree"><figcaption>The Swordsman talent tree with 3 branches: Weapons, Fury and Protection. Green frames teach a skill, gold frames are final talents.</figcaption></figure>
+  <p><span class="tag t-me">Interpretation</span> A build is defined by 5 stacked layers: stats, talents, Deity, gear with cards, and the cards drawn in the run. This is far deeper than a typical survivors game, which is both the selling point for RO fans and a wall for casual players.</p>
+</div>
+
+<h2 id="en-s8"><span class="n">8</span>Persistent progression and economy</h2>
+<div class="sec">
+  <div class="grid g2">
+    <div class="card"><h4>Gear</h4><p>Common to legendary, tiered by map, with slots for monster cards. It adds up to a gear score that unlocks stages. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Refining</h4><p>Uses Oridecon and Elunium at the blacksmith. The server decides the result of every attempt. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Kafra Points</h4><p>The persistent currency, earned only by selling gear and cards. <b>It cannot be bought with real money.</b> Used for ores, starting weapons and branch resets. <span class="tag t-data">Game data</span></p></div>
+    <div class="card"><h4>zeny</h4><p>The in-run currency. It buys chests and fuels Merchant skills such as Mammonite, which spends 5 zeny per use. <span class="tag t-data">Game data</span></p></div>
+    <div class="card"><h4>Pets</h4><p>24 at launch. Eggs drop from the matching monster. Pets have intimacy, wear accessories and evolve into boss pets after the boss is defeated enough times. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Achievements and cosmetics</h4><p>Defeating a boss 200 times gives that boss's cosmetic headgear. Cosmetics only change looks and cannot be traded. <span class="tag t-web">Web</span></p></div>
+  </div>
+  <div class="note"><b>Trading rules were designed against cheating from the start.</b> <span class="tag t-web">Web</span> Accounts must be at least 3 days old, trades are limited to 5 a day, anything that has been equipped is bound to the account, and the server only allows trading items it has seen that account earn through play.</div>
+</div>
+
+<h2 id="en-s9"><span class="n">9</span>Endgame and events</h2>
+<div class="sec">
+  <h3>Endless Tower</h3>
+  <ul>
+    <li>Open to 2nd job characters only. Each floor lasts 1 minute. Every 10 floors the scenery changes and an MVP appears. <span class="tag t-web">Web</span></li>
+    <li>There is no EXP, no chests and no loot in the tower. Before each floor the player picks one upgrade card. The rest of the power comes from gear and the Deity. <span class="tag t-data">Game data</span></li>
+    <li>Tower points buy permanent upgrades that only count in the tower. A run can be saved once and resumed within 7 days. <span class="tag t-data">Game data</span></li>
+    <li>There is a monthly ladder, overall and per 2nd job. <b>The server replays each run from the recorded movement to verify the result before it counts.</b> <span class="tag t-web">Web</span></li>
+  </ul>
+  <h3>Lantern Festival</h3>
+  <ul>
+    <li>A seasonal stage in Louyang, open until Christmas. Bosses drop gacha balls instead of items. <span class="tag t-web">Web</span></li>
+    <li>A ball gives a cosmetic 29.5% of the time, event-only gear 70% and a card 0.5%. The developer publishes these rates in the patch notes. <span class="tag t-web">Web</span></li>
+    <li>Duplicate cosmetics become fragments used to craft incense. Incense raises the chance of a rare boss from 16% to 50%. <span class="tag t-web">Web</span></li>
+  </ul>
+  <p><span class="tag t-me">Interpretation</span> This is a complete gacha loop with drop rates, duplicates and a fragment exchange, but with no payment. Players pay with time. It uses the excitement of gacha to extend play time without touching money.</p>
+  <h3>Story mode</h3>
+  <p>Three recurring characters, Selene, Lain and Haru. The Sunken Ship story is about Captain Drake's crew waking up. The Prontera Castle story is a royal wedding where orcs kidnap the princess, and it ends with the promotion to 2nd job. Other characters on the same account can skip a story that has already been cleared. <span class="tag t-data">Game data</span></p>
+</div>
+
+<h2 id="en-s10"><span class="n">10</span>Online systems and community</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:190px">System</th><th>Detail</th></tr>
+    <tr><td class="k">Prontera square</td><td>Split into 4 lobbies named Asgard, Midgard, Alfheim and Vanaheim. Each lobby has several channels of 25 players, for a total of 2,000. <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Chat</td><td>Tabs for Channel, General, Trade and Party, whispers, emotes, language channels, and a spam brake of 15 messages per minute <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Party</td><td>Up to 3 players. The leader picks the stage. Monsters are ×2 with 2 players and ×2.75 with 3. Members can revive each other, and if the leader drops, the next member takes over. <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Loot sharing</td><td>Need / Greed at the end of the run, 2 Needs per player, and Need only for what the player's job can wear <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Friends</td><td>Friends list and an affinity value from 0 to 30, +1 a day for playing a party run together until the MVP falls <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Service NPCs</td><td>Blacksmith, ore merchant, weapon dealer, Pet Keeper, stylist (free), Librarian (wiki), Mail Carrier, Tower Guardian, Festival Host <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Community safety</td><td>Player report button with manual review, chat kept for 24 hours, and a banned word list <span class="tag t-web">Web</span></td></tr>
+    <tr><td class="k">Capacity</td><td>Automatic queue when the server is full. Players idle for 5 minutes are removed to free a slot. <span class="tag t-data">Game data</span></td></tr>
+  </table></div>
+  <p><span class="tag t-me">Interpretation</span> The "coming home" feeling for RO fans comes from this part more than from the run itself. Standing and chatting at the Prontera fountain with the original music is something ordinary survivors games do not have.</p>
+</div>
+
+<h2 id="en-s11"><span class="n">11</span>Technology and operations</h2>
+<div class="sec">
+  <div class="grid g2">
+    <div class="card"><h4>The client</h4><p>PixiJS together with Three.js. The world is 3D, with a camera that rotates and zooms from top-down to third person. Characters are 2D sprites. Built with Vite and TypeScript. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Controls</h4><p>Keyboard and mouse, touch on mobile, and gamepad <span class="tag t-data">Game data</span></p></div>
+    <div class="card"><h4>Infrastructure</h4><p>A Node.js server on OVHcloud in Canada, pages served through Cloudflare, no cookies and no third-party analytics <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Accounts without email</h4><p>A username and password only. Recovery uses 5 RO-themed questions, such as favorite city and most respected MVP, with 3 tries a week. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Server-side anti-cheat</h4><p>The server checks every run, every refine and every trade, and keeps a history for each item. New accounts from the same network must wait between sign-ups to prevent account farms. <span class="tag t-web">Web</span></p></div>
+    <div class="card"><h4>Anti-copy measures</h4><p>The page title and version number carry invisible characters as a watermark, and hosting the game elsewhere is forbidden. Search results show two similar sites that were not examined. <span class="tag t-data">Game data</span></p></div>
+  </div>
+
+  <h3>Development tools</h3>
+  <p>The game does not use an off-the-shelf engine such as Unity or Godot. It is written as a web app using web tooling throughout. <span class="tag t-web">Web</span></p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:170px">Area</th><th style="width:250px">Tool</th><th>Role</th></tr>
+    <tr><td class="k">2D rendering</td><td>PixiJS</td><td>Draws character and monster sprites, effects and the in-game UI</td></tr>
+    <tr><td class="k">3D world</td><td>Three.js</td><td>Renders RO maps in 3D with a rotating, zooming camera</td></tr>
+    <tr><td class="k">Language</td><td>TypeScript</td><td>Used for both the client and the server</td></tr>
+    <tr><td class="k">Build tool</td><td>Vite</td><td>Bundles and minifies the code for the browser</td></tr>
+    <tr><td class="k">Server</td><td>Node.js</td><td>Stores accounts and verifies runs, refining, trading and the online square</td></tr>
+    <tr><td class="k">Coding</td><td>Claude by Anthropic</td><td>The developer states that the code, much of the text and the tools were written with AI, following his ideas and design</td></tr>
+    <tr><td class="k">Reading RO files</td><td>rAthena community tools</td><td>Extracts graphics from GRF files and data for monsters, drops and pets</td></tr>
+    <tr><td class="k">Effects</td><td>Based on roBrowser</td><td>RO client style effects</td></tr>
+    <tr><td class="k">Hosting</td><td>OVHcloud and Cloudflare</td><td>The server is in Canada. Pages are delivered through Cloudflare.</td></tr>
+    <tr><td class="k">Art and audio</td><td>Not made by the developer</td><td>Graphics, maps, models, icons, sounds and music come from the Ragnarok Online client, so no art or music tools were needed</td></tr>
+  </table></div>
+  <p><span class="tag t-me">Interpretation</span> This stack is close to what our team uses for web mini games. The difference is PixiJS with Three.js instead of Phaser. Not having to produce art and audio is the main reason one person could build a game of this size in 17 days.</p>
+
+  <h3>Use of AI in development</h3>
+  <p>The developer states this on the credits page, under the heading "Made with artificial intelligence". <span class="tag t-web">Web</span></p>
+  <div class="grid g3">
+    <div class="card"><h4>Supporting evidence</h4>
+      <ul>
+        <li>29 versions in 17 days by one person in spare time</li>
+        <li>Nearly 5,000 text strings in 5 languages, with Traditional Chinese arriving 6 days after launch</li>
+        <li>Long, consistent patch notes every day with before and after values</li>
+        <li>Accounts, anti-cheat, trading, parties and ladders, which normally need a team</li>
+      </ul></div>
+    <div class="card"><h4>What AI did not do</h4>
+      <ul>
+        <li>Game design. The developer says the ideas are his own.</li>
+        <li>Art and audio. They were not generated, they come from the RO client.</li>
+        <li>The Portuguese translation, which came from a community member.</li>
+      </ul></div>
+    <div class="card"><h4>Not verifiable</h4>
+      <ul>
+        <li>The real share written by AI and how much was edited by hand</li>
+        <li>Which Claude product was used and whether other AI tools were involved</li>
+        <li>The database and code editor</li>
+        <li>Long-term code quality, since only minified files are visible</li>
+      </ul></div>
+  </div>
+  <p><span class="tag t-me">Interpretation</span> One person who can design a game and knows RO well used AI in place of a programming team, to a level that runs as a live online service. What AI did not replace here is the design decisions, and the art, which was avoided by using RO assets.</p>
+
+  <figure><img src="research-ro-survivors-img/ros_account_gate.jpg" alt="Account required screen"><figcaption>Since the latest patches the game requires an account before playing. The right panel is the sign-up form with no email field and the RO-themed recovery questions.</figcaption></figure>
+  <p><span class="tag t-me">Interpretation</span> Removing guest mode two weeks after launch is a useful data point. The legal page explains that guest progress cannot be verified, so it cannot be traded. Once a game has a player-to-player economy, guest mode becomes more of a burden than a benefit.</p>
+</div>
+
+<h2 id="en-s12"><span class="n">12</span>Revenue model and rights status</h2>
+<div class="sec">
+  <ul>
+    <li><b>The game earns nothing.</b> No ads and no real-money shop. Donations give nothing in the game. <span class="tag t-web">Web</span></li>
+    <li><b>Real-money trading is strictly forbidden.</b> The penalty is deletion of both the buyer's and the seller's accounts. <span class="tag t-web">Web</span></li>
+    <li><b>The developer claims rights only over the code, design and text,</b> and acknowledges that the graphics, maps, models, effects, icons, sounds and music come from the RO client and belong to Gravity and Lee Myoung-Jin. <span class="tag t-web">Web</span></li>
+    <li><b>There is a takedown channel.</b> The developer writes that anything requested, a part or the whole game, will be removed within 3 days. <span class="tag t-web">Web</span></li>
+  </ul>
+  <div class="note"><b>Note:</b> This document analyzes the game from a product point of view. Any decision on how to respond to the use of RO assets belongs to the legal and IP teams and is not a recommendation of this document.</div>
+  <p><span class="tag t-me">Interpretation</span> Earning no revenue at all is probably a deliberate way to reduce rights risk. A side effect is that the game has no pressure to design for sales, so its systems are more generous than a commercial game can afford. That becomes the standard players will compare official games against.</p>
+</div>
+
+<h2 id="en-s13"><span class="n">13</span>MDA analysis</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:150px">Layer</th><th>What can be observed</th><th style="width:38%">Interpretation: what the developer decided</th></tr>
+    <tr><td class="k">M · Mechanics</td><td>The player only controls movement and skills fire on their own · one card per level-up · bosses on a clock · gear score unlocks stages · the server decides every item</td><td>The core of Vampire Survivors is borrowed whole, and RO's persistent rules are used as the gate to content.</td></tr>
+    <tr><td class="k">D · Dynamics</td><td>Players plan builds across 5 layers · farm the same stage for gear, cards and eggs · invite friends into parties · trade what they do not use</td><td>A game that ends with the run is turned into one with a reason to return every day, using rare items as the pull.</td></tr>
+    <tr><td class="k">A · Aesthetics</td><td>The Payon theme, the Prontera fountain and the original sprites · growing stronger within one run · wanting to show off a rare drop</td><td>Strongest in Fantasy (returning to the world of RO) and Fellowship (meeting people who miss the same thing), followed by Challenge and Discovery.</td></tr>
+    <tr><td class="k">What was cut</td><td>No aiming, no player versus player, no guilds, no open maps to explore, no real-money systems</td><td>Everything that needs heavy real-time servers was cut, so one person can operate it and runs can be computed on the player's device.</td></tr>
+  </table></div>
+</div>
+
+<h2 id="en-s14"><span class="n">14</span>Pros and cons</h2>
+<div class="sec">
+  <p>Everything in this section is <span class="tag t-me">Interpretation</span> based on the evidence in the earlier sections.</p>
+  <div class="grid g2">
+    <div class="card good"><h4>Pros</h4>
+      <ul>
+        <li><b>Very easy to start.</b> Open a browser and play. No download, no email, and it works on PC, mobile and gamepad.</li>
+        <li><b>Authentic nostalgia.</b> Original sprites, maps and music. RO fans recognize it instantly.</li>
+        <li><b>Deep enough for long play.</b> 23 jobs, three talent branches, Deities, cards and gear make builds distinct.</li>
+        <li><b>Several reasons to return.</b> Unlocking the next stage, pets, the monthly tower, seasonal events, friends.</li>
+        <li><b>Real co-op.</b> Parties of 3, revives, fair loot sharing and a town square to meet in.</li>
+        <li><b>No pay-to-win.</b> Everything is earned by playing. Money buys nothing.</li>
+        <li><b>Fair because the server decides.</b> Refining, drops, ladders and trades are all checked server-side.</li>
+        <li><b>Fast and transparent development.</b> Near-daily patches that state drop rates and the reason for each balance change.</li>
+        <li><b>Respect for the player's time.</b> Adjustable difficulty, skippable repeat stories, speed-up on cleared floors, automatic level-ups.</li>
+        <li><b>A manual inside the game.</b> The Librarian explains formulas and every job's skills, and the Talents page is readable outside the game.</li>
+      </ul>
+    </div>
+    <div class="card bad"><h4>Cons</h4>
+      <ul>
+        <li><b>It could disappear any day.</b> It stands on someone else's property and the developer says it will be removed on request. Player time has no guarantee.</li>
+        <li><b>It depends on one person.</b> If the developer stops, the game stops. No backup team and no income for the server besides donations.</li>
+        <li><b>It is not stable yet.</b> 29 patches in 17 days means daily bugs and balance changes. A build can change value overnight.</li>
+        <li><b>Too complex for casual players.</b> Nearly 5,000 text strings, and many skills have multi-line descriptions.</li>
+        <li><b>Late content is thin.</b> Main stages end around level 30 to 35, second jobs are still in development and two jobs have none.</li>
+        <li><b>Heavy grinding.</b> Achievements need 200 boss kills, and gear score gates force replaying the same stage.</li>
+        <li><b>Weak account recovery.</b> No email. A forgotten password with forgotten answers means the account is lost.</li>
+        <li><b>The server has a ceiling.</b> A queue when full, and a connection is required to start a run.</li>
+        <li><b>The account requirement adds friction</b> and contradicts the original promise of playing without sign-up.</li>
+        <li><b>Trading invites a black market.</b> Even with strict rules, tradable rare items attract real-money sellers.</li>
+        <li><b>The long-term quality of AI-written code is unproven.</b> The speed of adding features may come with technical debt.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 id="en-s15"><span class="n">15</span>Comparison with Ragnarok: Endless Trail</h2>
+<div class="sec">
+  <div class="note"><b>Limit:</b> The Endless Trail column uses public sources only: the official news on gnjoy.asia, mobile game media and Gravity's investor presentation. It was not played for this review, and no store rating or reviews were found. The GGT team's internal data supersedes anything here.</div>
+  <div class="tablewrap"><table>
+    <tr><th style="width:170px">Topic</th><th>RO Survivors</th><th>Ragnarok: Endless Trail</th></tr>
+    <tr><td class="k">Status</td><td>Fan-made, unlicensed</td><td>Official title <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Developer</td><td>One person, code written with AI</td><td>Gravity Game Tech (Thai team), published by Gravity Game Hub <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Platform</td><td>Browser on any device</td><td>iOS and Android <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Region</td><td>Worldwide, 5 languages</td><td>Southeast Asia <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Availability</td><td>Nov 3, 2026 (beta)</td><td>Open Beta Feb 26, 2026, after test rounds that began in Aug 2025 <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Genre</td><td>Survivors, against monsters only</td><td>Roguelike combined with Battle Royale, with both PvE and PvP <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Orientation</td><td>Mainly landscape, with keyboard, touch or gamepad</td><td>Portrait, one-hand play <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Jobs</td><td>9 lines, 23 jobs</td><td>4 lines: Swordsman→Knight, Mage→Wizard, Archer→Hunter, Thief→Assassin <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Modes</td><td>6 main stages, story mode, Endless Tower and a seasonal event</td><td>Battle Royale matchmaking and private rooms · Explore, 100 stages · Nightmare, 100 stages · Endless Tower, 250 floors · MVP Challenge · Zeny Dungeon <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Companions</td><td>Pets that follow the character and give a bonus</td><td>Ranked mercenaries such as Sif, Ragnar and Celene at S+ <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Persistent progression</td><td>Talents, gear, cards, refining, pets</td><td>Gear and enhancement. Other details were not found in public sources. <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Social</td><td>Online town square, chat, friends, parties of 3, trading</td><td>Private rooms to play with friends. Other systems were not found in public sources. <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Revenue</td><td>None. Donations only.</td><td>Poring Crystal top-up through the web shop and resellers, and a gacha machine <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Launch traction</td><td>The developer reported server overload in the first week. Capacity ceiling of 2,000. No actual player figures.</td><td>More than 150,000 pre-registrations <span class="tag t-news">News</span></td></tr>
+    <tr><td class="k">Visuals</td><td>Original RO PC sprites and maps</td><td>No confirmed information. One outlet criticized the visuals during the first test. <span class="tag t-news">News</span></td></tr>
+  </table></div>
+
+  <h3>Reading the comparison</h3>
+  <p>Everything below is <span class="tag t-me">Interpretation</span>.</p>
+  <div class="grid g2">
+    <div class="card"><h4>The two games solve different problems</h4><p>RO Survivors serves people who want to return to the original RO in shorter sessions. Endless Trail serves mobile players who want quick matches and competition. The only shared ground is roguelike structure and the IP.</p></div>
+    <div class="card"><h4>Where RO Survivors is ahead</h4><p>Easier to start because nothing is installed, more direct nostalgia because it uses the original assets, deeper jobs, a social space, and no money pressure.</p></div>
+    <div class="card"><h4>Where Endless Trail is ahead</h4><p>It is licensed and can last, it has revenue to support a team, it is designed for portrait mobile play, it has player competition that creates content, and it has many times more stages.</p></div>
+    <div class="card"><h4>What this tells us</h4><p>One group of players values likeness to the original RO and MMO-style play together more than competitive modes. Endless Trail retention split by mode would test this hypothesis directly.</p></div>
+  </div>
+</div>
+
+<h2 id="en-s16"><span class="n">16</span>Takeaways for the team</h2>
+<div class="sec">
+  <p>Everything below is <span class="tag t-me">Interpretation</span> offered for the team's consideration.</p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:240px">Observation</th><th>What it means for our work</th></tr>
+    <tr><td class="k">A demand signal for RO in the browser</td><td>A fan game with no marketing budget had to expand its server in the first week and attracted volunteer translations. It signals that players are ready to play RO on the web, the same space as RO PlayZone, although no figures confirm the scale.</td></tr>
+    <tr><td class="k">Guest first, then a required account</td><td>The game started with guest play and removed it within two weeks, because guest progress cannot be verified once trading exists. It is a case study for our Guest-first flow and where to draw the line.</td></tr>
+    <tr><td class="k">Accounts without email</td><td>This removes a lot of friction at the cost of weak recovery. RO-themed recovery questions turn a dull step into part of the game world.</td></tr>
+    <tr><td class="k">Languages follow the players</td><td>Traditional Chinese came 6 days after launch, community Portuguese after 8 days and Japanese after 12, and there is an Indonesian chat channel. This shows where players come from without any numbers.</td></tr>
+    <tr><td class="k">Transparency builds trust</td><td>Patch notes that give before and after values every time, including gacha rates, set a standard that players will expect from official games too.</td></tr>
+    <tr><td class="k">The speed of small competitors has changed</td><td>One person with AI shipped MMO-level systems in 17 days. The advantage of an official team is therefore not feature count, but legitimacy, the link to real RO accounts and items, and continuity.</td></tr>
+    <tr><td class="k">Systems worth studying</td><td>Difficulty sliders traded for loot · saved-up level-ups · Need / Greed at the end of the run · server-side replay to verify ladders · a queue when the server is full</td></tr>
+  </table></div>
+  <h3>Next steps if more depth is needed</h3>
+  <ul>
+    <li>A hands-on session with a registered account, to add in-run screenshots and notes on game feel.</li>
+    <li>Replace the public figures in the comparison table with internal Endless Trail data.</li>
+  </ul>
+</div>
+
+<h2 id="en-s17"><span class="n">17</span>Sources</h2>
+<div class="sec">
+  <ul>
+    <li><a href="https://ro-survivors.com/">ro-survivors.com</a> title screen, News page, <a href="https://ro-survivors.com/talents.html">Talents</a>, <a href="https://ro-survivors.com/credits.html">Credits</a> and <a href="https://ro-survivors.com/legal.html">Legal notice</a></li>
+    <li><a href="https://buymeacoffee.com/reven4nt">The developer's Buy Me a Coffee page</a></li>
+    <li><a href="https://www.youtube.com/watch?v=H4yZX-vIf_0">Introduction video by the Taiwanese channel PFY</a> (only the title was seen in search results; the video was not watched)</li>
+    <li><a href="https://www.gnjoy.asia/news/detail.php?id=185">gnjoy.asia: Ragnarok: Endless Trail Open Beta news</a></li>
+    <li><a href="https://gamingonphone.com/news/gravitys-next-entry-to-ragnarok-franchise-ragnarok-endless-trails-delivers-battle-royale-roguelike-action/">GamingonPhone: Ragnarok Endless Trails pre-CBT</a></li>
+    <li><a href="https://img.gravity.co.kr/GravityUpload/0000/2026/02/13/Gravity%20IR%20Presentation_2025_4Q_EN.pdf">Gravity IR Presentation 4Q 2025</a></li>
+    <li><a href="https://www.joytify.com/blog/en-us/rpg-others/ragnarok/ragnarok-endless-trails-breakdown/">Joytify: Ragnarok Endless Trails breakdown</a> (third-party blog, used as supporting material only)</li>
+  </ul>
+  <p style="color:var(--dim);font-size:15px">All screenshots were taken from ro-survivors.com on Nov 20, 2026. Ragnarok Online graphics belong to Gravity Co., Ltd. and Lee Myoung-Jin.</p>
+</div>
+</div>
+
+<div class="btns">
+  <button onclick="var r=document.documentElement,d=r.getAttribute('data-theme');r.setAttribute('data-theme',d==='dark'?'light':'dark')">Theme</button>
+  <button onclick="window.scrollTo({top:0})">Top</button>
+</div>
+</div>
+
+<div class="lang" data-lang="ko" lang="ko" hidden>
+<header class="hero"><div class="in">
+  <p class="eyebrow">Game Analysis · 내부 문서</p>
+  <h1>RO Survivors</h1>
+  <p>라그나로크 온라인의 세계관과 그래픽을 사용한 브라우저 기반 팬메이드 서바이버즈 게임 · 전체 시스템 분석, 장단점, Ragnarok: Endless Trail과의 비교</p>
+  <p class="meta">ro-survivors.com · 확인일 2026년 11월 20일 · 확인 버전 Beta 0.7.6 (2026년 11월 18일 빌드)</p>
+  <p class="langsw"><button type="button" class="lsw" onclick="setLang('th')">ไทย</button><button type="button" class="lsw" onclick="setLang('en')">English</button><button type="button" class="lsw on" onclick="setLang('ko')">한국어</button></p>
+</div></header>
+
+<div class="wrap">
+<nav class="toc">
+  <a href="#ko-s1">1 요약</a><a href="#ko-s2">2 조사 방법</a><a href="#ko-s3">3 게임 개요</a><a href="#ko-s4">4 타임라인</a><a href="#ko-s5">5 코어 루프</a><a href="#ko-s6">6 런 구조</a><a href="#ko-s7">7 직업과 빌드</a><a href="#ko-s8">8 성장</a><a href="#ko-s9">9 엔드게임</a><a href="#ko-s10">10 온라인</a><a href="#ko-s11">11 기술</a><a href="#ko-s12">12 수익과 권리</a><a href="#ko-s13">13 MDA</a><a href="#ko-s14">14 장단점</a><a href="#ko-s15">15 Endless Trail 비교</a><a href="#ko-s16">16 시사점</a><a href="#ko-s17">17 출처</a>
+</nav>
+
+<h2 id="ko-s1"><span class="n">1</span>1분 요약</h2>
+<div class="sec">
+  <div class="grid g4">
+    <div class="card kpi"><div class="v">17일</div><div class="l">2026년 11월 3일 공개 베타 이후 경과 일수</div></div>
+    <div class="card kpi"><div class="v">29</div><div class="l">17일 동안 배포된 버전 수. 하루 약 2회 패치</div></div>
+    <div class="card kpi"><div class="v">23</div><div class="l">직업 수 (1차 직업 9개, 2차 직업 14개)</div></div>
+    <div class="card kpi"><div class="v">2,000</div><div class="l">개발자가 설정한 광장 수용 한도. 실제 접속자 수가 아님</div></div>
+  </div>
+  <ul>
+    <li><b>공식 게임이 아닌 팬메이드 게임입니다.</b> 개발자는 Reven4nt라는 이름을 쓰며, 여가 시간에 혼자 개발하고, 코드와 텍스트 대부분을 AI로 작성했다고 직접 밝혔습니다. <span class="tag t-web">웹</span></li>
+    <li><b>RO 클라이언트의 그래픽, 사운드, 음악을 그대로 사용합니다.</b> 개발자가 크레딧 페이지와 법적 고지 페이지에 명시했으며, 권리자가 요청하면 3일 이내에 삭제하겠다고 적었습니다. <span class="tag t-web">웹</span></li>
+    <li><b>미니게임이 아닙니다.</b> Vampire Survivors 방식의 11~17분 런 위에 특성 트리, 장비, 카드, 제련, 펫, 파티, 거래, 온라인 광장까지 MMO 시스템 일체를 얹은 대형 게임입니다.</li>
+    <li><b>완전 무료입니다.</b> 광고와 결제가 없습니다. Buy Me a Coffee 후원을 받지만 게임 내 보상은 없습니다. <span class="tag t-web">웹</span></li>
+    <li><b>접속자가 많았다는 신호는 있으나 실제 수치는 없습니다.</b> 개발자는 첫 주에 서버 과부하가 있었다고 밝히고 서버를 이전하며 대기열을 추가했습니다. 2,000이라는 숫자는 설정된 수용 한도이며 이용자 수가 아닙니다.</li>
+    <li><b>가장 큰 약점은 불확실성입니다.</b> 타인의 지식재산 위에 서 있으며, 개발자 스스로 언제든 종료되거나 진행 데이터가 초기화될 수 있다고 고지합니다.</li>
+  </ul>
+  <figure><img src="research-ro-survivors-img/ros_landing.jpg" alt="RO Survivors 타이틀 화면"><figcaption>타이틀 화면. 하단에 RO 캐릭터와 몬스터가 지나갑니다. 우측 상단은 후원, X, Discord, Talents, News, 언어 선택 버튼입니다.</figcaption></figure>
+</div>
+
+<h2 id="ko-s2"><span class="n">2</span>조사 방법과 한계</h2>
+<div class="sec">
+  <p><b>본 분석은 직접 플레이를 포함하지 않습니다.</b> 게임을 하려면 계정이 필요하며, 이번 검토에서는 계정을 만들지 않았습니다. 따라서 런 진행 중의 스크린샷이 없고 조작감에 대한 평가도 없습니다.</p>
+  <p>네 가지 출처를 확인했으며, 모든 항목에 출처 태그를 달았습니다.</p>
+  <div class="grid g2">
+    <div class="card"><h4><span class="tag t-web">웹</span> 게임 공식 페이지</h4><p>타이틀 화면, 29개 버전 전체의 News 페이지, Talents 페이지, 크레딧 페이지, 법적 고지 페이지</p></div>
+    <div class="card"><h4><span class="tag t-data">게임 데이터</span> 사이트가 모든 방문자에게 제공하는 파일</h4><p>게임 내 텍스트 약 4,970개와, 공개 스크립트 파일에 포함된 스테이지, 직업, 몬스터 수치 테이블</p></div>
+    <div class="card"><h4><span class="tag t-news">보도</span> 외부 출처</h4><p>웹 검색 결과, gnjoy.asia의 Endless Trail 공식 소식, 모바일 게임 매체</p></div>
+    <div class="card"><h4><span class="tag t-me">해석</span> 분석자의 견해</h4><p>결론, 장단점, 비교. 팀의 경험과 대조해 확인이 필요합니다.</p></div>
+  </div>
+  <div class="note"><b>확인할 수 없었던 것:</b> 실제 이용자 수, 리텐션, 실제 플레이에서의 밸런스, Orc Village와 Morroc Pyramids 스테이지의 현재 상태. 두 스테이지는 게임 데이터에 존재하지만 첫 패치 노트에는 "곧 추가 예정"으로 적혀 있습니다. 2,000명은 개발자가 공지한 수용 한도일 뿐이며, 여유를 두고 잡은 목표치일 수 있습니다.</div>
+</div>
+
+<h2 id="ko-s3"><span class="n">3</span>게임 개요</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:200px">항목</th><th>내용</th></tr>
+    <tr><td class="k">장르</td><td>서바이버즈류(Vampire Survivors 방식)에 영구 성장형 MMORPG 시스템을 결합 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">플랫폼</td><td>PC와 모바일 브라우저. 브라우저에서 앱으로 설치 가능. 스토어 미출시 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">개발자</td><td>Reven4nt 1인. 원문이 스페인어이고 법적 고지가 스페인 개인정보 보호 기관을 언급하므로 스페인 거주로 추정 <span class="tag t-me">해석</span></td></tr>
+    <tr><td class="k">개발 방식</td><td>크레딧 페이지에 코드, 텍스트 대부분, 도구를 개발자의 아이디어와 설계에 따라 Claude로 작성했다고 명시 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">영감</td><td>Vampire Survivors, 그리고 Pokémon Survivors, Azeroth Survivors 등 다른 IP의 팬메이드 서바이버즈 게임 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">언어</td><td>스페인어, 영어, 중국어 번체, 브라질 포르투갈어, 일본어. 중국어, 인도네시아어, 일본어 전용 채팅 채널 제공 <span class="tag t-data">게임 데이터</span></td></tr>
+    <tr><td class="k">가격</td><td>무료. 광고와 인게임 결제 없음 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">상태</td><td>베타. 변경, 진행 초기화, 종료가 보상 없이 이뤄질 수 있다고 고지 <span class="tag t-web">웹</span></td></tr>
+  </table></div>
+  <figure><img src="research-ro-survivors-img/ros_og.jpg" alt="RO Survivors 홍보 이미지"><figcaption>게임 홍보 이미지. 배경은 RO 맵 모델을 3D로 렌더링한 프론테라 분수 광장입니다.</figcaption></figure>
+</div>
+
+<h2 id="ko-s4"><span class="n">4</span>첫 17일의 타임라인</h2>
+<div class="sec">
+  <p>이 프로젝트에서 가장 이례적인 점은 배포 속도입니다. 아래 내용은 모두 News 페이지에서 확인했습니다. <span class="tag t-web">웹</span></p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:120px">날짜 (2026)</th><th style="width:130px">버전</th><th>추가된 내용</th></tr>
+    <tr><td class="k">11월 3일</td><td>0.1</td><td>공개 베타: 직업 6개, 스테이지 4개, 스토리 모드, 펫 24종, 온라인 광장, 3인 파티, 거래, 2개 언어</td></tr>
+    <tr><td class="k">11월 4~5일</td><td>0.2.1 – 0.3</td><td>귓속말, RO 스타일 대미지 숫자, 친구 목록, 스타일리스트, 게임패드 지원, 계정 복구 질문</td></tr>
+    <tr><td class="k">11월 6일</td><td>0.4 – 0.4.2</td><td>모바일 메모리 사용량 감소, iPhone 문제 수정, 보스 접촉 대미지 제거</td></tr>
+    <tr><td class="k">11월 8일</td><td>0.5</td><td>Endless Tower, 사서(게임 내 위키), Talents 페이지, Discord 서버</td></tr>
+    <tr><td class="k">11월 9일</td><td>0.5.2 – 0.5.3</td><td>중국어 번체, 탭형 채팅, <b>더 강력한 서버로 이전 및 접속 대기열 추가</b></td></tr>
+    <tr><td class="k">11월 11일</td><td>0.6 – 0.6.4</td><td>광장을 4개 로비로 분할, 게임 내 우편, 타워 배속, 스토리 건너뛰기, 커뮤니티 제공 포르투갈어</td></tr>
+    <tr><td class="k">11월 12~14일</td><td>0.6.5 – 0.6.9</td><td>로그인 대기열, 런 중 펫 대사, 런 중 드롭 표시 복원, 채팅 도배 제한</td></tr>
+    <tr><td class="k">11월 15일</td><td>0.6.10 – 0.7.1</td><td>시즌 이벤트 Lantern Festival, 가챠 볼, 코스메틱, 업적, 일본어</td></tr>
+    <tr><td class="k">11월 16~19일</td><td>0.7.2 – 0.7.6</td><td>이벤트 조정, 친구 친밀도, 자동 레벨업 버튼, <b>게스트 모드 폐지: 계정 필수</b></td></tr>
+  </table></div>
+  <figure><img src="research-ro-survivors-img/ros_news.jpg" alt="News 페이지"><figcaption>게임 내 News 페이지. 왼쪽에 모든 버전이 나열되고, 각 항목에 NEW, CHANGE, IMPROVEMENT, FIX 태그가 붙습니다.</figcaption></figure>
+  <p><span class="tag t-me">해석</span> 이 규모의 게임은 보통 여러 명의 팀이 수개월에 걸쳐 만듭니다. 1인이 이 속도로 배포한 것은 AI로 코드를 작성했다는 개발자의 설명과 일치하며, 2026년에 소규모 경쟁자가 얼마나 빠르게 콘텐츠를 만들 수 있는지 보여 주는 실제 사례입니다.</p>
+</div>
+
+<h2 id="ko-s5"><span class="n">5</span>3단 코어 루프</h2>
+<div class="sec">
+  <div class="loop">
+    <div class="b"><h4>1단 · 11~17분의 런</h4>몬스터 무리를 피해 이동하고, 스킬은 자동으로 발동됩니다. EXP를 모아 레벨업마다 카드 1장을 고르고, 정해진 시간에 미니 보스를 만나며, MVP로 마무리합니다.</div>
+    <div class="b"><h4>2단 · 영구 캐릭터</h4>드롭은 장비, 카드, 펫 알이 됩니다. 베이스 레벨과 Job Lv가 오르며 특성 포인트를 얻고, 장비 점수가 충분해야 다음 스테이지가 열립니다.</div>
+    <div class="b"><h4>3단 · 프론테라 광장</h4>다른 이용자를 만나 채팅하고, 파티를 맺고, 거래하고, 제련하고, 아이템을 팔아 Kafra Points를 얻은 뒤 다시 런에 나섭니다.</div>
+  </div>
+  <p style="margin-top:12px"><span class="tag t-me">해석</span> 1단은 서바이버즈 게임의 즉각적인 재미를, 2단은 다음 런을 할 이유를, 3단은 내일 다시 올 이유를 줍니다. 대부분의 서바이버즈 게임은 1단과 얕은 2단만 있습니다. 이 게임은 MMORPG의 2단과 3단을 온전히 얹었습니다.</p>
+</div>
+
+<h2 id="ko-s6"><span class="n">6</span>런의 구조</h2>
+<div class="sec">
+  <h3>스테이지와 시간</h3>
+  <p>모든 스테이지는 길이가 고정되어 있고 보스는 시계에 맞춰 등장합니다. 주황색은 미니 보스, 빨간색은 MVP입니다. <span class="tag t-data">게임 데이터</span></p>
+  <div class="tablewrap"><table>
+    <tr><th>스테이지</th><th style="width:76px">레벨</th><th style="width:76px">길이</th><th style="width:270px">보스 타이밍</th><th>입장 조건</th></tr>
+    <tr><td class="k">Prontera Fields</td><td>1–8</td><td>15분</td><td><div class="bar"><i style="left:16.7%"></i><i style="left:33.3%"></i><i style="left:50%"></i><i style="left:66.7%"></i><i class="m" style="left:80%"></i></div></td><td>첫 스테이지. 12분에 MVP Mastering</td></tr>
+    <tr><td class="k">Prontera Sewers</td><td>9–12</td><td>11분</td><td><div class="bar"><i style="left:27.3%"></i><i class="m" style="left:72.7%"></i></div></td><td>장비 점수 20 · MVP Golden Thief Bug</td></tr>
+    <tr><td class="k">Sunken Ship</td><td>13–15</td><td>13분</td><td><div class="bar"><i style="left:23.1%"></i><i style="left:46.2%"></i><i class="m" style="left:76.9%"></i></div></td><td>장비 점수 40, 침몰선 스토리 클리어 · MVP Drake</td></tr>
+    <tr><td class="k">Byalan Island</td><td>16–20</td><td>15분</td><td><div class="bar"><i style="left:20%"></i><i style="left:40%"></i><i style="left:60%"></i><i class="m" style="left:80%"></i></div></td><td>장비 점수 110 · MVP Kraken</td></tr>
+    <tr><td class="k">Payon Forest</td><td>21–25</td><td>17분</td><td><div class="bar"><i style="left:17.6%"></i><i style="left:35.3%"></i><i style="left:58.8%"></i><i class="m" style="left:82.4%"></i></div></td><td>장비 점수 135 · MVP Eddga</td></tr>
+    <tr><td class="k">Payon Cave</td><td>26–30</td><td>17분</td><td><div class="bar"><i style="left:17.6%"></i><i style="left:35.3%"></i><i style="left:58.8%"></i><i class="m" style="left:82.4%"></i></div></td><td>장비 점수 165 · MVP Moonlight Flower</td></tr>
+    <tr><td class="k">Prontera Castle</td><td>31–35</td><td>1.5분</td><td><div class="bar"><i class="m" style="left:96%"></i></div></td><td>스토리 전용. Job Lv 50 필요. 클리어 시 2차 전직</td></tr>
+    <tr><td class="k">Lantern Festival</td><td>26–30</td><td>17분</td><td><div class="bar"><i style="left:14.7%"></i><i style="left:29.4%"></i><i style="left:44.1%"></i><i style="left:58.8%"></i><i style="left:70.6%"></i><i class="m" style="left:82.4%"></i></div></td><td>시즌 이벤트. 보스 7종이 아이템 대신 가챠 볼을 드롭</td></tr>
+    <tr><td class="k">Orc Village · Morroc Pyramids</td><td>31–50</td><td>미확인</td><td>시간 데이터 없음</td><td>게임 데이터에 장비 점수 800, 1,200으로 존재. 개방 여부 미확인</td></tr>
+  </table></div>
+  <p class="legend"><span style="background:var(--hi2)"></span>미니 보스 <span style="background:var(--red)"></span>MVP</p>
+
+  <h3>적의 밀도</h3>
+  <p>첫 스테이지는 초당 1.2마리, 동시 40마리로 시작해 5~7분에 초당 3.5마리, 동시 140마리까지 올라갑니다. <span class="tag t-data">게임 데이터</span> 출발 전에 적의 수, 대미지, HP, 속도, 이벤트의 5개 슬라이더로 직접 조절할 수 있습니다. 어려울수록 전리품이 늘어나며, 솔로 플레이 기준 최대 2.5배입니다. <span class="tag t-web">웹</span></p>
+
+  <h3>런 중의 선택</h3>
+  <ul>
+    <li><b>레벨업 카드</b>는 3종류입니다. 새 스킬, 기존 스킬 강화, 그리고 스킬별 특수 능력인 Deity입니다. Deity는 런 중에 바꿀 수 있지만 쌓은 랭크는 사라집니다. <span class="tag t-data">게임 데이터</span></li>
+    <li><b>운 제어 수단:</b> Reroll은 카드를 교체하고, Banish는 해당 선택지를 런 내내 제외하며, Focus는 원하는 것을 우선 등장시킵니다. <span class="tag t-data">게임 데이터</span></li>
+    <li><b>상자</b>는 런에서 모은 zeny로 구매하며 추가 장비를 줍니다. <span class="tag t-data">게임 데이터</span></li>
+    <li><b>레벨업 모아두기:</b> 즉시 멈추고 고를지, 모아 두었다가 한 번에 고를지 선택합니다. Auto 버튼은 멈추지 않고 무작위로 골라 줍니다. <span class="tag t-web">웹</span></li>
+    <li><b>드롭</b>은 "?"로 떨어지며 줍지 않아도 됩니다. 실제 옵션은 런 종료 시 공개됩니다. <span class="tag t-web">웹</span></li>
+    <li><b>판독 보조:</b> 스킬별 대미지 미터, 낮과 밤, 날씨 <span class="tag t-web">웹</span></li>
+  </ul>
+</div>
+
+<h2 id="ko-s7"><span class="n">7</span>직업과 빌드</h2>
+<div class="sec">
+  <figure><img src="research-ro-survivors-img/ros_talents_jobs.jpg" alt="Talents 페이지 직업 목록"><figcaption>Talents 페이지는 모든 직업 계열을 보여 주며 로그인 없이 볼 수 있습니다. Ninja와 Gunslinger는 아직 2차 직업이 없습니다.</figcaption></figure>
+  <h3>직업 목록</h3>
+  <div class="tablewrap"><table>
+    <tr><th>1차 직업</th><th style="width:70px">HP</th><th style="width:90px">속도</th><th>시작 스킬</th><th>2차 직업</th></tr>
+    <tr><td class="k">Swordsman</td><td>130</td><td>150</td><td>Bash</td><td>Knight · Crusader (페코 탑승)</td></tr>
+    <tr><td class="k">Mage</td><td>80</td><td>145</td><td>Fire Bolt</td><td>Wizard · Sage</td></tr>
+    <tr><td class="k">Archer</td><td>95</td><td>165</td><td>Double Strafe</td><td>Hunter · Bard / Dancer</td></tr>
+    <tr><td class="k">Acolyte</td><td>105</td><td>150</td><td>Heal</td><td>Priest · Monk</td></tr>
+    <tr><td class="k">Thief</td><td>90</td><td>175</td><td>Envenom</td><td>Assassin · Rogue</td></tr>
+    <tr><td class="k">Merchant</td><td>130</td><td>145</td><td>Mammonite</td><td>Blacksmith · Alchemist</td></tr>
+    <tr><td class="k">Taekwon</td><td>110</td><td>160</td><td>Tornado Kick</td><td>Star Gladiator · Soul Linker</td></tr>
+    <tr><td class="k">Ninja</td><td>90</td><td>165</td><td>Shuriken</td><td>아직 없음</td></tr>
+    <tr><td class="k">Gunslinger</td><td>95</td><td>155</td><td>Triple Action</td><td>아직 없음</td></tr>
+  </table></div>
+  <p><span class="tag t-data">게임 데이터</span> 2차 직업의 HP는 205~380입니다. Talents 페이지에는 2차 직업이 아직 개발 중이라고 적혀 있습니다.</p>
+
+  <h3>빌드의 층</h3>
+  <div class="grid g2">
+    <div class="card"><h4>RO식 6개 스탯</h4><p>STR은 ATK 증가 · AGI는 모든 스킬 쿨다운 감소, 99포인트에서 최대 40% · VIT는 포인트당 HP 2% · INT는 MATK 증가 · DEX는 캐스팅 단축, 100포인트에서 즉시 시전 · LUK는 크리티컬 증가 <span class="tag t-data">게임 데이터</span></p></div>
+    <div class="card"><h4>특성 트리</h4><p>직업당 3개 계열, 50포인트(Job Lv당 1포인트). 한 계열에 5포인트를 쓸 때마다 다음 줄이 열립니다. Swordsman은 총 157랭크가 있어 3분의 1도 찍을 수 없습니다. <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>2차 직업</h4><p>1차 트리를 유지한 채 새 계열 3개가 추가되지만, 특화로 한 계열만 선택할 수 있습니다. 변경에는 Kafra Points가 듭니다. <span class="tag t-data">게임 데이터</span></p></div>
+    <div class="card"><h4>스킬별 Deity</h4><p>모든 스킬에 작동 방식을 바꾸는 고유 Deity가 있습니다. 예를 들어 Fire Bolt가 Cold Bolt와 Lightning Bolt의 강화까지 함께 받습니다. <span class="tag t-data">게임 데이터</span></p></div>
+  </div>
+  <figure><img src="research-ro-survivors-img/ros_talents_tree.jpg" alt="Swordsman 특성 트리"><figcaption>Swordsman 특성 트리. Weapons, Fury, Protection의 3개 계열입니다. 초록 테두리는 스킬을 배우는 특성, 금색 테두리는 최종 특성입니다.</figcaption></figure>
+  <p><span class="tag t-me">해석</span> 하나의 빌드는 스탯, 특성, Deity, 장비와 카드, 런에서 뽑는 카드의 5개 층으로 결정됩니다. 일반적인 서바이버즈 게임보다 훨씬 깊으며, 이는 RO 팬에게는 매력이고 캐주얼 이용자에게는 장벽입니다.</p>
+</div>
+
+<h2 id="ko-s8"><span class="n">8</span>영구 성장과 경제</h2>
+<div class="sec">
+  <div class="grid g2">
+    <div class="card"><h4>장비</h4><p>커먼부터 레전더리까지, 맵에 따라 티어가 나뉘고 몬스터 카드 슬롯이 있습니다. 합산된 장비 점수로 스테이지가 열립니다. <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>제련</h4><p>대장장이에게 Oridecon과 Elunium을 사용합니다. 매번 결과는 서버가 결정합니다. <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>Kafra Points</h4><p>영구 화폐. 장비와 카드를 팔아야만 얻습니다. <b>현금으로 구매할 수 없습니다.</b> 광석, 기본 무기, 계열 초기화에 사용합니다. <span class="tag t-data">게임 데이터</span></p></div>
+    <div class="card"><h4>zeny</h4><p>런 내 화폐. 상자 구매에 쓰이고, 사용할 때마다 5 zeny를 소모하는 Mammonite 같은 Merchant 스킬의 연료가 됩니다. <span class="tag t-data">게임 데이터</span></p></div>
+    <div class="card"><h4>펫</h4><p>출시 시 24종. 알은 해당 몬스터에게서 드롭됩니다. 친밀도가 있고, 액세서리를 착용하며, 보스를 일정 횟수 처치하면 보스 펫으로 진화합니다. <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>업적과 코스메틱</h4><p>보스를 200회 처치하면 해당 보스의 코스메틱 머리 장식을 얻습니다. 코스메틱은 외형만 바꾸며 거래할 수 없습니다. <span class="tag t-web">웹</span></p></div>
+  </div>
+  <div class="note"><b>거래 규칙은 처음부터 부정 방지를 전제로 설계되었습니다.</b> <span class="tag t-web">웹</span> 계정은 생성 후 3일이 지나야 하고, 거래는 하루 5회로 제한되며, 한 번 착용한 아이템은 계정에 귀속됩니다. 서버는 해당 계정이 플레이로 획득한 것을 직접 확인한 아이템만 거래를 허용합니다.</div>
+</div>
+
+<h2 id="ko-s9"><span class="n">9</span>엔드게임과 이벤트</h2>
+<div class="sec">
+  <h3>Endless Tower</h3>
+  <ul>
+    <li>2차 직업 캐릭터만 입장 가능. 한 층은 1분이며 10층마다 배경이 바뀌고 MVP가 등장합니다. <span class="tag t-web">웹</span></li>
+    <li>타워에는 EXP, 상자, 드롭이 없습니다. 각 층 전에 강화 카드 1장을 고르고, 나머지 힘은 장비와 Deity에서 나옵니다. <span class="tag t-data">게임 데이터</span></li>
+    <li>타워 포인트로 타워 안에서만 적용되는 영구 강화를 구매합니다. 런은 1회 저장할 수 있고 7일 안에 이어 할 수 있습니다. <span class="tag t-data">게임 데이터</span></li>
+    <li>월간 랭킹이 전체와 2차 직업별로 있습니다. <b>서버가 이동 기록으로 런을 재생해 결과를 검증한 뒤에만 점수가 반영됩니다.</b> <span class="tag t-web">웹</span></li>
+  </ul>
+  <h3>Lantern Festival</h3>
+  <ul>
+    <li>Louyang의 시즌 스테이지로 크리스마스까지 열립니다. 보스는 아이템 대신 가챠 볼을 드롭합니다. <span class="tag t-web">웹</span></li>
+    <li>볼은 코스메틱 29.5%, 이벤트 전용 장비 70%, 카드 0.5% 확률로 나옵니다. 개발자가 패치 노트에 확률을 직접 공개합니다. <span class="tag t-web">웹</span></li>
+    <li>중복 코스메틱은 조각이 되어 향을 만드는 데 쓰입니다. 향은 희귀 보스 등장 확률을 16%에서 50%로 올립니다. <span class="tag t-web">웹</span></li>
+  </ul>
+  <p><span class="tag t-me">해석</span> 드롭 확률, 중복, 조각 교환을 모두 갖춘 완전한 가챠 루프이지만 결제가 없습니다. 이용자는 시간으로 지불합니다. 돈을 건드리지 않고 가챠의 기대감을 플레이 시간 연장에 사용한 설계입니다.</p>
+  <h3>스토리 모드</h3>
+  <p>고정 등장인물은 Selene, Lain, Haru 세 명입니다. 침몰선 이야기는 선장 Drake의 선원들이 깨어나는 내용이고, 프론테라 성 이야기는 왕실 결혼식에서 오크가 공주를 납치하는 내용이며 2차 전직으로 끝납니다. 같은 계정의 다른 캐릭터는 이미 클리어한 스토리를 건너뛸 수 있습니다. <span class="tag t-data">게임 데이터</span></p>
+</div>
+
+<h2 id="ko-s10"><span class="n">10</span>온라인 시스템과 커뮤니티</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:190px">시스템</th><th>내용</th></tr>
+    <tr><td class="k">프론테라 광장</td><td>Asgard, Midgard, Alfheim, Vanaheim의 4개 로비로 분할. 로비마다 25명 채널이 여러 개 있으며 전체 수용 한도는 2,000명 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">채팅</td><td>Channel, General, Trade, Party 탭, 귓속말, 이모트, 언어별 채널, 분당 15개 메시지 도배 제한 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">파티</td><td>최대 3명. 리더가 스테이지 선택. 몬스터는 2명일 때 2배, 3명일 때 2.75배. 서로 부활시킬 수 있고, 리더가 끊기면 다음 멤버가 이어받음 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">전리품 분배</td><td>런 종료 시 Need / Greed. 1인당 Need 2회, 자신의 직업이 착용할 수 있는 것만 Need 가능 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">친구</td><td>친구 목록과 0~30의 친밀도. 함께 파티로 MVP를 쓰러뜨리면 하루 1 증가 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">서비스 NPC</td><td>대장장이, 광석 상인, 무기 상인, 펫 관리인, 스타일리스트(무료), 사서(위키), 우편 배달부, 타워 수호자, 축제 진행자 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">커뮤니티 안전</td><td>이용자 신고 버튼과 수동 검토, 채팅 24시간 보관, 금칙어 목록 <span class="tag t-web">웹</span></td></tr>
+    <tr><td class="k">수용량</td><td>서버가 가득 차면 자동 대기열. 5분간 조작이 없으면 자리를 비우도록 접속 종료 <span class="tag t-data">게임 데이터</span></td></tr>
+  </table></div>
+  <p><span class="tag t-me">해석</span> RO 팬이 느끼는 "집에 돌아온 느낌"은 런 자체보다 이 부분에서 나옵니다. 원곡이 흐르는 프론테라 분수 앞에 서서 대화하는 경험은 일반적인 서바이버즈 게임에 없는 것입니다.</p>
+</div>
+
+<h2 id="ko-s11"><span class="n">11</span>기술과 운영</h2>
+<div class="sec">
+  <div class="grid g2">
+    <div class="card"><h4>클라이언트</h4><p>PixiJS와 Three.js를 함께 사용. 월드는 3D이며 카메라 회전과 탑다운부터 3인칭까지의 줌이 가능. 캐릭터는 2D 스프라이트. Vite와 TypeScript로 빌드 <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>조작</h4><p>키보드와 마우스, 모바일 터치, 게임패드 <span class="tag t-data">게임 데이터</span></p></div>
+    <div class="card"><h4>인프라</h4><p>캐나다 OVHcloud의 Node.js 서버, Cloudflare를 통한 페이지 제공, 쿠키와 제3자 분석 도구 미사용 <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>이메일 없는 계정</h4><p>아이디와 비밀번호만 사용. 복구는 좋아하는 도시, 존경하는 MVP 등 RO 테마 질문 5개로 하며 주 3회 시도 가능 <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>서버 측 부정 방지</h4><p>서버가 모든 런, 제련, 거래를 검사하고 아이템별 이력을 보관. 같은 네트워크의 신규 계정은 간격을 두어야 하며 계정 팜을 방지 <span class="tag t-web">웹</span></p></div>
+    <div class="card"><h4>복제 방지</h4><p>페이지 제목과 버전 번호에 보이지 않는 문자를 워터마크로 삽입하고, 다른 곳에서의 호스팅을 금지. 검색 결과에 유사 사이트 2곳이 보였으나 확인하지 않음 <span class="tag t-data">게임 데이터</span></p></div>
+  </div>
+
+  <h3>개발 도구</h3>
+  <p>Unity나 Godot 같은 기성 게임 엔진을 쓰지 않았습니다. 전부 웹 도구로 만든 웹 앱입니다. <span class="tag t-web">웹</span></p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:170px">영역</th><th style="width:250px">도구</th><th>역할</th></tr>
+    <tr><td class="k">2D 렌더링</td><td>PixiJS</td><td>캐릭터와 몬스터 스프라이트, 이펙트, 인게임 UI 표시</td></tr>
+    <tr><td class="k">3D 월드</td><td>Three.js</td><td>RO 맵을 3D로 렌더링, 카메라 회전과 줌</td></tr>
+    <tr><td class="k">언어</td><td>TypeScript</td><td>클라이언트와 서버 모두 작성</td></tr>
+    <tr><td class="k">빌드 도구</td><td>Vite</td><td>브라우저용으로 코드 번들링 및 압축</td></tr>
+    <tr><td class="k">서버</td><td>Node.js</td><td>계정 저장, 런과 제련과 거래 검증, 온라인 광장</td></tr>
+    <tr><td class="k">코드 작성</td><td>Anthropic의 Claude</td><td>개발자는 코드, 텍스트 대부분, 도구를 자신의 아이디어와 설계에 따라 AI로 작성했다고 명시</td></tr>
+    <tr><td class="k">RO 파일 읽기</td><td>rAthena 커뮤니티 도구</td><td>GRF 파일에서 그래픽 추출, 몬스터와 드롭과 펫 데이터</td></tr>
+    <tr><td class="k">이펙트</td><td>roBrowser 참고</td><td>RO 클라이언트 방식의 이펙트</td></tr>
+    <tr><td class="k">호스팅</td><td>OVHcloud와 Cloudflare</td><td>서버는 캐나다에 위치. 페이지는 Cloudflare로 전달</td></tr>
+    <tr><td class="k">아트와 오디오</td><td>직접 제작하지 않음</td><td>그래픽, 맵, 모델, 아이콘, 사운드, 음악은 라그나로크 온라인 클라이언트에서 가져와 아트와 음악 도구가 필요 없었음</td></tr>
+  </table></div>
+  <p><span class="tag t-me">해석</span> 이 기술 스택은 우리 팀이 웹 미니게임에 쓰는 것과 가깝습니다. 차이는 Phaser 대신 PixiJS와 Three.js를 쓴다는 점입니다. 아트와 오디오를 만들 필요가 없었던 것이 1인이 이 규모를 17일 만에 만든 가장 큰 이유입니다.</p>
+
+  <h3>개발에서의 AI 활용</h3>
+  <p>개발자가 크레딧 페이지의 "Made with artificial intelligence" 항목에서 직접 밝혔습니다. <span class="tag t-web">웹</span></p>
+  <div class="grid g3">
+    <div class="card"><h4>이를 뒷받침하는 정황</h4>
+      <ul>
+        <li>1인이 여가 시간에 17일 동안 29개 버전 배포</li>
+        <li>약 5,000개 텍스트를 5개 언어로 제공. 중국어 번체는 출시 6일 뒤 추가</li>
+        <li>매일 길고 일관된 패치 노트, 변경 전후 수치 표기</li>
+        <li>계정, 부정 방지, 거래, 파티, 랭킹 등 보통 팀이 필요한 시스템</li>
+      </ul></div>
+    <div class="card"><h4>AI가 하지 않은 것</h4>
+      <ul>
+        <li>게임 디자인. 개발자는 아이디어가 자신의 것이라고 밝힘</li>
+        <li>아트와 오디오. 생성한 것이 아니라 RO 클라이언트에서 가져옴</li>
+        <li>포르투갈어 번역. 커뮤니티 구성원이 제공</li>
+      </ul></div>
+    <div class="card"><h4>확인할 수 없는 것</h4>
+      <ul>
+        <li>AI가 작성한 실제 비율과 수작업 수정 정도</li>
+        <li>어떤 Claude 제품을 썼는지, 다른 AI 도구도 썼는지</li>
+        <li>데이터베이스와 코드 편집기</li>
+        <li>장기적인 코드 품질. 압축된 파일만 볼 수 있음</li>
+      </ul></div>
+  </div>
+  <p><span class="tag t-me">해석</span> 게임을 설계할 줄 알고 RO를 잘 아는 한 사람이 프로그래밍 팀 대신 AI를 사용해, 실제 온라인 서비스로 운영하는 수준까지 도달했습니다. 이 사례에서 AI가 대체하지 못한 것은 설계 판단이며, 아트는 RO 자산을 사용해 회피했습니다.</p>
+
+  <figure><img src="research-ro-survivors-img/ros_account_gate.jpg" alt="계정 필수 화면"><figcaption>최근 패치부터 플레이 전에 계정이 필요합니다. 오른쪽 패널은 이메일 입력란이 없는 가입 양식과 RO 테마 복구 질문입니다.</figcaption></figure>
+  <p><span class="tag t-me">해석</span> 출시 2주 만에 게스트 모드를 없앤 것은 참고할 만한 사례입니다. 법적 고지는 게스트의 진행 데이터는 출처를 검증할 수 없어 거래할 수 없다고 설명합니다. 이용자 간 경제가 생기면 게스트 모드는 이점보다 부담이 됩니다.</p>
+</div>
+
+<h2 id="ko-s12"><span class="n">12</span>수익 모델과 권리 상태</h2>
+<div class="sec">
+  <ul>
+    <li><b>게임으로 얻는 수익이 없습니다.</b> 광고도 현금 상점도 없으며, 후원은 게임 내 보상이 없습니다. <span class="tag t-web">웹</span></li>
+    <li><b>현금 거래는 엄격히 금지됩니다.</b> 구매자와 판매자 계정 모두 삭제됩니다. <span class="tag t-web">웹</span></li>
+    <li><b>개발자는 코드, 설계, 텍스트에 대해서만 권리를 주장하며,</b> 그래픽, 맵, 모델, 이펙트, 아이콘, 사운드, 음악은 RO 클라이언트에서 가져온 것으로 Gravity와 이명진 작가의 소유임을 인정합니다. <span class="tag t-web">웹</span></li>
+    <li><b>삭제 요청 창구가 있습니다.</b> 요청받은 것은 일부든 게임 전체든 3일 이내에 삭제하겠다고 적혀 있습니다. <span class="tag t-web">웹</span></li>
+  </ul>
+  <div class="note"><b>참고:</b> 본 문서는 제품 관점에서 게임을 분석합니다. RO 자산 사용에 대해 어떻게 대응할지는 법무 및 IP 담당 부서의 결정 사항이며, 본 문서의 제안이 아닙니다.</div>
+  <p><span class="tag t-me">해석</span> 수익을 전혀 내지 않는 것은 권리 위험을 줄이려는 의도적 선택으로 보입니다. 그 부수 효과로 판매를 위한 설계 압력이 없어, 상용 게임이 감당하기 어려운 수준으로 이용자에게 관대한 시스템이 되었습니다. 이것이 이용자들이 공식 게임과 비교하게 될 기준이 됩니다.</p>
+</div>
+
+<h2 id="ko-s13"><span class="n">13</span>MDA 분석</h2>
+<div class="sec">
+  <div class="tablewrap"><table>
+    <tr><th style="width:150px">층</th><th>관찰되는 것</th><th style="width:38%">해석: 개발자의 결정</th></tr>
+    <tr><td class="k">M · 메커닉</td><td>이용자는 이동만 조작하고 스킬은 자동 발동 · 레벨업마다 카드 1장 · 시계에 맞춘 보스 · 장비 점수로 스테이지 개방 · 모든 아이템을 서버가 결정</td><td>Vampire Survivors의 핵심을 통째로 가져오고, RO의 영구 성장 규칙을 콘텐츠의 관문으로 사용했습니다.</td></tr>
+    <tr><td class="k">D · 다이내믹</td><td>5개 층에 걸친 빌드 설계 · 장비, 카드, 알을 위한 같은 스테이지 반복 · 친구를 파티에 초대 · 쓰지 않는 아이템 거래</td><td>런과 함께 끝나는 게임을, 희귀 아이템을 동력으로 매일 돌아올 이유가 있는 게임으로 바꿨습니다.</td></tr>
+    <tr><td class="k">A · 미학</td><td>Payon 테마곡, 프론테라 분수, 원본 스프라이트 · 한 런 안에서 강해지는 느낌 · 희귀 드롭을 자랑하고 싶은 마음</td><td>Fantasy(RO 세계로의 귀환)와 Fellowship(같은 것을 그리워하는 사람들과의 만남)이 가장 강하고, Challenge와 Discovery가 뒤따릅니다.</td></tr>
+    <tr><td class="k">제외한 것</td><td>조준 없음, PvP 없음, 길드 없음, 탐험 가능한 오픈 맵 없음, 현금 시스템 없음</td><td>무거운 실시간 서버가 필요한 것을 모두 제외해 1인이 운영할 수 있고, 런을 이용자 기기에서 계산할 수 있게 했습니다.</td></tr>
+  </table></div>
+</div>
+
+<h2 id="ko-s14"><span class="n">14</span>장점과 단점</h2>
+<div class="sec">
+  <p>이 항목은 모두 앞선 근거에 기반한 <span class="tag t-me">해석</span>입니다.</p>
+  <div class="grid g2">
+    <div class="card good"><h4>장점</h4>
+      <ul>
+        <li><b>진입이 매우 쉽습니다.</b> 브라우저를 열면 바로 플레이. 다운로드와 이메일이 필요 없고 PC, 모바일, 게임패드 모두 지원합니다.</li>
+        <li><b>진짜 향수.</b> 원본 스프라이트, 맵, 음악을 사용해 RO 팬은 즉시 알아봅니다.</li>
+        <li><b>오래 할 만큼 깊습니다.</b> 23개 직업, 3개 특성 계열, Deity, 카드, 장비로 빌드가 다양합니다.</li>
+        <li><b>돌아올 이유가 여러 겹입니다.</b> 다음 스테이지 개방, 펫, 월간 타워, 시즌 이벤트, 친구</li>
+        <li><b>실질적인 협동 플레이.</b> 3인 파티, 부활, 공정한 분배, 만남의 광장</li>
+        <li><b>Pay-to-win이 없습니다.</b> 모든 것을 플레이로 얻으며 돈으로 살 수 있는 것이 없습니다.</li>
+        <li><b>서버가 결정하므로 공정합니다.</b> 제련, 드롭, 랭킹, 거래를 모두 서버에서 검증합니다.</li>
+        <li><b>빠르고 투명한 개발.</b> 거의 매일 패치하며 드롭 확률과 밸런스 조정 이유를 공개합니다.</li>
+        <li><b>이용자의 시간을 존중합니다.</b> 난이도 조절, 반복 스토리 건너뛰기, 클리어한 층 배속, 자동 레벨업</li>
+        <li><b>게임 내 설명서.</b> 사서가 공식과 모든 직업의 스킬을 설명하고, Talents 페이지는 게임 밖에서도 볼 수 있습니다.</li>
+      </ul>
+    </div>
+    <div class="card bad"><h4>단점</h4>
+      <ul>
+        <li><b>언제든 사라질 수 있습니다.</b> 타인의 자산 위에 서 있고 개발자도 요청 시 삭제하겠다고 밝혔습니다. 이용자가 들인 시간에 보장이 없습니다.</li>
+        <li><b>한 사람에게 의존합니다.</b> 개발자가 멈추면 게임도 멈춥니다. 예비 인력이 없고 서버 비용은 후원뿐입니다.</li>
+        <li><b>아직 안정적이지 않습니다.</b> 17일간 29회 패치는 매일 버그와 밸런스 변경이 있다는 뜻입니다. 빌드의 가치가 하룻밤에 바뀔 수 있습니다.</li>
+        <li><b>캐주얼 이용자에게 너무 복잡합니다.</b> 텍스트가 약 5,000개이며 여러 줄에 걸친 스킬 설명이 많습니다.</li>
+        <li><b>후반 콘텐츠가 얇습니다.</b> 메인 스테이지는 레벨 30~35에서 끝나고, 2차 직업은 개발 중이며, 두 직업은 2차가 없습니다.</li>
+        <li><b>반복 플레이 부담이 큽니다.</b> 업적은 보스 200회 처치가 필요하고, 장비 점수 조건이 같은 스테이지 반복을 강제합니다.</li>
+        <li><b>계정 복구가 약합니다.</b> 이메일이 없어 비밀번호와 답을 모두 잊으면 계정을 영구히 잃습니다.</li>
+        <li><b>서버에 한도가 있습니다.</b> 가득 차면 대기열이 생기고, 런을 시작하려면 항상 접속이 필요합니다.</li>
+        <li><b>계정 의무화가 진입 장벽을 높였고</b> 가입 없이 플레이한다는 원래의 문구와 어긋납니다.</li>
+        <li><b>거래는 암시장의 여지를 만듭니다.</b> 엄격한 규칙이 있어도 거래 가능한 희귀 아이템은 현금 판매 시도를 부릅니다.</li>
+        <li><b>AI가 작성한 코드의 장기 품질은 검증되지 않았습니다.</b> 기능 추가 속도는 기술 부채와 맞바꾼 것일 수 있습니다.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 id="ko-s15"><span class="n">15</span>Ragnarok: Endless Trail과의 비교</h2>
+<div class="sec">
+  <div class="note"><b>한계:</b> Endless Trail 열은 공개 출처만 사용했습니다. gnjoy.asia의 공식 소식, 모바일 게임 매체, Gravity의 IR 자료입니다. 이번 검토에서 플레이하지 않았으며 스토어 평점과 리뷰는 찾지 못했습니다. GGT 팀의 내부 데이터가 이 표의 내용보다 우선합니다.</div>
+  <div class="tablewrap"><table>
+    <tr><th style="width:170px">항목</th><th>RO Survivors</th><th>Ragnarok: Endless Trail</th></tr>
+    <tr><td class="k">지위</td><td>팬메이드, 비허가</td><td>공식 타이틀 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">개발</td><td>1인, AI로 코드 작성</td><td>Gravity Game Tech(태국 팀), 퍼블리셔 Gravity Game Hub <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">플랫폼</td><td>모든 기기의 브라우저</td><td>iOS와 Android <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">지역</td><td>전 세계, 5개 언어</td><td>동남아시아 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">서비스 시작</td><td>2026년 11월 3일 (베타)</td><td>2026년 2월 26일 오픈 베타. 2025년 8월부터 테스트 진행 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">장르</td><td>서바이버즈, 몬스터 상대 전용</td><td>로그라이크와 배틀로얄의 결합, PvE와 PvP 모두 포함 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">화면 방향</td><td>주로 가로. 키보드, 터치, 게임패드</td><td>세로, 한 손 플레이 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">직업</td><td>9개 계열, 23개 직업</td><td>4개 계열: Swordsman→Knight, Mage→Wizard, Archer→Hunter, Thief→Assassin <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">모드</td><td>메인 스테이지 6개, 스토리 모드, Endless Tower, 시즌 이벤트</td><td>배틀로얄 매칭과 비공개 방 · Explore 100 스테이지 · Nightmare 100 스테이지 · Endless Tower 250층 · MVP Challenge · Zeny Dungeon <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">동료</td><td>캐릭터를 따라다니며 보너스를 주는 펫</td><td>등급이 있는 용병. Sif, Ragnar, Celene 등 S+ <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">영구 성장</td><td>특성, 장비, 카드, 제련, 펫</td><td>장비와 강화. 그 밖의 세부 사항은 공개 출처에서 찾지 못함 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">소셜</td><td>온라인 광장, 채팅, 친구, 3인 파티, 거래</td><td>친구와 하는 비공개 방. 그 밖의 시스템은 공개 출처에서 찾지 못함 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">수익</td><td>없음. 후원만 받음</td><td>웹숍과 리셀러를 통한 Poring Crystal 충전, 가챠 머신 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">출시 초기 반응</td><td>개발자가 첫 주 서버 과부하를 공지. 수용 한도 2,000명. 실제 이용자 수치 없음</td><td>사전 등록 15만 명 이상 <span class="tag t-news">보도</span></td></tr>
+    <tr><td class="k">비주얼</td><td>RO PC 원본 스프라이트와 맵</td><td>확인된 정보 없음. 한 매체가 첫 테스트 당시 비주얼을 지적 <span class="tag t-news">보도</span></td></tr>
+  </table></div>
+
+  <h3>비교 결과 읽기</h3>
+  <p>아래는 모두 <span class="tag t-me">해석</span>입니다.</p>
+  <div class="grid g2">
+    <div class="card"><h4>두 게임은 서로 다른 문제를 풉니다</h4><p>RO Survivors는 원작 RO로 돌아가되 짧게 플레이하고 싶은 사람을 겨냥합니다. Endless Trail은 빠른 매치와 경쟁을 원하는 모바일 이용자를 겨냥합니다. 공통점은 로그라이크 구조와 IP뿐입니다.</p></div>
+    <div class="card"><h4>RO Survivors가 앞서는 점</h4><p>설치가 없어 진입이 쉽고, 원본 자산을 써서 향수가 직접적이며, 직업이 깊고, 소셜 공간이 있고, 결제 압력이 없습니다.</p></div>
+    <div class="card"><h4>Endless Trail이 앞서는 점</h4><p>권리가 확보되어 오래 지속될 수 있고, 팀을 유지할 수익이 있으며, 세로형 모바일에 맞게 설계되었고, 콘텐츠를 만들어 내는 이용자 간 경쟁이 있으며, 스테이지 수가 몇 배 더 많습니다.</p></div>
+    <div class="card"><h4>이 자료가 말해 주는 것</h4><p>일부 이용자는 경쟁 모드보다 원작 RO와의 유사성과 MMO식 협동 플레이에 더 큰 가치를 둡니다. Endless Trail의 모드별 리텐션 수치가 있다면 이 가설을 바로 검증할 수 있습니다.</p></div>
+  </div>
+</div>
+
+<h2 id="ko-s16"><span class="n">16</span>팀을 위한 시사점</h2>
+<div class="sec">
+  <p>아래는 모두 팀의 검토를 위한 <span class="tag t-me">해석</span>입니다.</p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:240px">관찰</th><th>우리 업무에 주는 의미</th></tr>
+    <tr><td class="k">브라우저 RO에 대한 수요 신호</td><td>마케팅 예산이 없는 팬메이드 게임이 첫 주에 서버를 증설했고 여러 언어의 번역 지원이 붙었습니다. 이용자가 웹에서 RO를 할 준비가 되어 있다는 신호이며, RO PlayZone과 같은 영역입니다. 다만 규모를 확인할 수치는 없습니다.</td></tr>
+    <tr><td class="k">게스트 우선, 이후 계정 의무화</td><td>게스트 플레이로 시작했다가 2주 만에 폐지했습니다. 거래가 생기면 게스트 진행 데이터를 검증할 수 없기 때문입니다. 우리의 Guest-first 흐름에서 선을 어디에 그을지에 대한 사례입니다.</td></tr>
+    <tr><td class="k">이메일 없는 계정</td><td>진입 장벽을 크게 낮추지만 복구가 약해집니다. RO 테마 복구 질문은 지루한 단계를 게임 세계의 일부로 바꾼 장치입니다.</td></tr>
+    <tr><td class="k">언어는 이용자를 따라갑니다</td><td>중국어 번체는 출시 6일 뒤, 커뮤니티 포르투갈어는 8일 뒤, 일본어는 12일 뒤에 추가되었고 인도네시아어 채팅 채널이 있습니다. 수치 없이도 이용자가 어디서 오는지 보여 줍니다.</td></tr>
+    <tr><td class="k">투명성이 신뢰를 만듭니다</td><td>가챠 확률을 포함해 변경 전후 수치를 매번 밝히는 패치 노트는 이용자가 공식 게임에도 기대하게 될 기준입니다.</td></tr>
+    <tr><td class="k">소규모 경쟁자의 속도가 달라졌습니다</td><td>1인이 AI로 MMO급 시스템을 17일 만에 배포했습니다. 공식 팀의 우위는 기능 수가 아니라 권리의 정당성, 실제 RO 계정 및 아이템과의 연동, 지속성입니다.</td></tr>
+    <tr><td class="k">살펴볼 만한 시스템</td><td>전리품과 맞바꾸는 난이도 슬라이더 · 레벨업 모아두기 · 런 종료 시 Need / Greed · 랭킹 검증을 위한 서버 재생 · 서버 만원 시 대기열</td></tr>
+  </table></div>
+  <h3>더 깊은 분석이 필요할 경우의 다음 단계</h3>
+  <ul>
+    <li>등록 계정으로 직접 플레이하여 런 진행 중 스크린샷과 조작감에 대한 기록을 추가</li>
+    <li>비교표의 공개 수치를 Endless Trail 내부 데이터로 교체</li>
+  </ul>
+</div>
+
+<h2 id="ko-s17"><span class="n">17</span>출처</h2>
+<div class="sec">
+  <ul>
+    <li><a href="https://ro-survivors.com/">ro-survivors.com</a> 타이틀 화면, News 페이지, <a href="https://ro-survivors.com/talents.html">Talents</a>, <a href="https://ro-survivors.com/credits.html">Credits</a>, <a href="https://ro-survivors.com/legal.html">Legal notice</a></li>
+    <li><a href="https://buymeacoffee.com/reven4nt">개발자의 Buy Me a Coffee 페이지</a></li>
+    <li><a href="https://www.youtube.com/watch?v=H4yZX-vIf_0">대만 채널 PFY의 소개 영상</a> (검색 결과에서 제목만 확인했으며 영상은 시청하지 않음)</li>
+    <li><a href="https://www.gnjoy.asia/news/detail.php?id=185">gnjoy.asia: Ragnarok: Endless Trail 오픈 베타 소식</a></li>
+    <li><a href="https://gamingonphone.com/news/gravitys-next-entry-to-ragnarok-franchise-ragnarok-endless-trails-delivers-battle-royale-roguelike-action/">GamingonPhone: Ragnarok Endless Trails pre-CBT</a></li>
+    <li><a href="https://img.gravity.co.kr/GravityUpload/0000/2026/02/13/Gravity%20IR%20Presentation_2025_4Q_EN.pdf">Gravity IR Presentation 4Q 2025</a></li>
+    <li><a href="https://www.joytify.com/blog/en-us/rpg-others/ragnarok/ragnarok-endless-trails-breakdown/">Joytify: Ragnarok Endless Trails breakdown</a> (제3자 블로그, 보조 자료로만 사용)</li>
+  </ul>
+  <p style="color:var(--dim);font-size:15px">모든 스크린샷은 2026년 11월 20일 ro-survivors.com에서 촬영했습니다. 라그나로크 온라인의 그래픽은 Gravity Co., Ltd.와 이명진 작가의 소유입니다.</p>
+</div>
+</div>
+
+<div class="btns">
+  <button onclick="var r=document.documentElement,d=r.getAttribute('data-theme');r.setAttribute('data-theme',d==='dark'?'light':'dark')">테마</button>
+  <button onclick="window.scrollTo({top:0})">맨 위로</button>
+</div>
+</div>
+<script>
+var TITLES = {th:"วิเคราะห์เกม RO Survivors",en:"RO Survivors Game Analysis",ko:"RO Survivors 게임 분석"};
+function setLang(l, keep){
+  if(!TITLES[l]) l = "th";
+  var y = keep ? null : (document.documentElement.scrollTop / Math.max(1, document.documentElement.scrollHeight));
+  document.querySelectorAll(".lang").forEach(function(b){ b.hidden = b.getAttribute("data-lang") !== l; });
+  document.documentElement.lang = l;
+  document.title = TITLES[l];
+  try { localStorage.setItem("rosAnalysisLang", l); } catch (e) {}
+  if(y !== null) window.scrollTo(0, y * document.documentElement.scrollHeight);
+}
+(function(){
+  var l = null, m = /[?&#]lang=(th|en|ko)/.exec(location.search + location.hash);
+  if(m) l = m[1];
+  if(!l){ var h = /^#(th|en|ko)-s\d+$/.exec(location.hash); if(h) l = h[1]; }
+  if(!l){ try { l = localStorage.getItem("rosAnalysisLang"); } catch (e) {} }
+  setLang(l || "th", true);
+  if(location.hash && document.querySelector(location.hash.replace(/[^#\w-]/g, ""))) document.querySelector(location.hash.replace(/[^#\w-]/g, "")).scrollIntoView();
+})();
+</script>
+</body>
+</html>
